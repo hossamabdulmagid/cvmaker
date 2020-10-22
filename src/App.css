@@ -1,0 +1,39 @@
+.logotext {
+  margin-top: 10px;
+}
+.relative {
+  position: absolute;
+  width: 55%;
+  margin-top: 210px;
+}
+.logo {
+  margin-right: 5px;
+}
+Button {
+  margin: 5px;
+}
+img {
+  margin: 8px;
+}
+.edit {
+  margin-bottom: 0%;
+  display: inline-flex;
+}
+.Label {
+  margin: 20px;
+  font-weight: 350;
+  width: 150px;
+}
+.checkboxterms {
+  margin: 25px;
+}
+
+.Buttonforgreen {
+  padding: 15px;
+}
+.lock {
+  padding-right: 5 px;
+}
+span {
+  margin: 12px;
+}

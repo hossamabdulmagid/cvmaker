@@ -46,6 +46,7 @@ class App extends React.Component {
   componentWillUnmount() {
     this.unsubscribeFormAuth();
   }
+      //this line for commit ..
 
   render() {
     const { currentUser } = this.props;
@@ -64,7 +65,6 @@ class App extends React.Component {
             <Route path="/policy" component={Privacy} />
             <Route path="/contact" component={Contact} />
             <Route path="/Help" component={Help} />
-
             <Route path="/tips" component={Tips} />
             <Route path="/lang" component={Lang} />
             <Route path="/create-cv" component={CreateCv} />

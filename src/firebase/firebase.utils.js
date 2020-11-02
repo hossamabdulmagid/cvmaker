@@ -30,14 +30,14 @@ export const createUserProfileDocument = async (userAuth, additionalData, cvs) =
     const createdAt = new Date();
     const cvs = {
       createdAt,
-      id: "",
+      id: snapShot.id + 1,
       basicinfo: {
-        fullName: '',
-        email: '',
+        FullName: '',
+        Email: '',
         Address1: '',
         Address2: '',
         Address3: '',
-        webSites: '',
+        WebSites: '',
         Phone: ''
       },
       workexperience: {

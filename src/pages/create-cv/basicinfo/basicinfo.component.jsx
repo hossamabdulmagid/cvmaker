@@ -4,14 +4,49 @@ import { useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/core";
 import { Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
+import { firestore } from '../../../firebase/firebase.utils'
 const BasicInfo = ({ currentUser, fetchCollectionsStartAsync }) => {
     const { handleSubmit, register, errors, getValues } = useForm();
-    const onSubmit = values => console.log(values);
+
+
     const value = getValues();
+
+
+    useEffect(() => {
+
+
+
+
+    }, [])
+    const onSubmit = values => {
+        console.log(values);
+        firestore.collection("users").doc("cvs").set({
+            FullName: value.fullname,
+            Phone: value.phone,
+            Email: value.email,
+            Address1: value.address1,
+            Address2: value.address2,
+            Address3: value.address3,
+            WebSites: value.websites
+        })
+
+            .then(function () {
+                console.log("Document successfully written!");
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
+
+
+
+
+    }
+    console.log(value.fullname, `full name only apear here`)
+    // Add a new document in collection "cities"
 
     return (
         <Fragment>
-    
+
             <Container className="container-fluid">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="container">
@@ -22,57 +57,57 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync }) => {
                                 <Label>Full name</Label>
 
                                 <Input
-                                    name="FullName"
+                                    name="fullname"
                                     ref={register()}
                                 />
-                                {errors.FullName && errors.FullName.message}
+                                {errors.fullname && errors.fullname.message}
 
                                 <Label>Phone numbers</Label>
                                 <Input
-                                    name="Phone"
+                                    name="phone"
                                     ref={register({ required: " feild is Required" })}
                                 /> <br />
-                                {errors.Phone && errors.Phone.message}
+                                {errors.phone && errors.phone.message}
 
                                 <hr />
                                 <Label>Address Line 1</Label>
                                 <Input
-                                    name="Address1"
+                                    name="address1"
                                     ref={register()}
                                 />
-                                {errors.Address1 && errors.Address1.message}
+                                {errors.address1 && errors.address1.message}
 
                                 <Label>Address Line 3</Label>
                                 <Input
-                                    name="Address3"
+                                    name="address3"
                                     ref={register()}
                                 />
-                                {errors.Address2 && errors.Address2.message}
+                                {errors.address3 && errors.address3.message}
 
                             </div>
                             <hr />
                             <div className="col-6">
                                 <Label>E-mail address</Label>
                                 <Input
-                                    name="Email"
+                                    name="email"
                                     ref={register({ required: " feild is Required" })}
                                 />
-                                {errors.Email && errors.Email.message}
+                                {errors.email && errors.email.message}
 
                                 <Label>Websites</Label>
                                 <Input
-                                    name="Websites"
+                                    name="websites"
                                     ref={register()}
                                 />
-                                {errors.Websites && errors.Websites.message}
+                                {errors.websites && errors.websites.message}
 
                                 <hr />
                                 <Label>Address Line 2</Label>
                                 <Input
-                                    name="Address2"
+                                    name="address2"
                                     ref={register()}
                                 />
-                                {errors.Address2 && errors.Address2.message}
+                                {errors.address2 && errors.address2.message}
 
                                 <br />
                                 <br />

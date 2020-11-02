@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { Title, Input, Label, P, Container, Span, IMG, Buttons, Upload } from './basicinfo.styles'
 import { useForm } from "react-hook-form";
 import { Spinner } from "@chakra-ui/core";
 import { Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
-const BasicInfo = ({ currentUser }) => {
-    const { handleSubmit, register, errors } = useForm();
+const BasicInfo = ({ currentUser, fetchCollectionsStartAsync }) => {
+    const { handleSubmit, register, errors, getValues } = useForm();
     const onSubmit = values => console.log(values);
-
+    const value = getValues();
 
     return (
-        <>
+        <Fragment>
+    
             <Container className="container-fluid">
                 <form onSubmit={handleSubmit(onSubmit)}>
-
                     <div className="container">
                         <Title> </Title>
                         <div className="row">
@@ -29,25 +29,25 @@ const BasicInfo = ({ currentUser }) => {
 
                                 <Label>Phone numbers</Label>
                                 <Input
-                                    name="phone"
+                                    name="Phone"
                                     ref={register({ required: " feild is Required" })}
                                 /> <br />
-                                {errors.phone && errors.phone.message}
+                                {errors.Phone && errors.Phone.message}
 
                                 <hr />
                                 <Label>Address Line 1</Label>
                                 <Input
-                                    name="address1"
+                                    name="Address1"
                                     ref={register()}
                                 />
-                                {errors.address1 && errors.address1.message}
+                                {errors.Address1 && errors.Address1.message}
 
                                 <Label>Address Line 3</Label>
                                 <Input
-                                    name="addressline3"
+                                    name="Address3"
                                     ref={register()}
                                 />
-                                {errors.addressline3 && errors.addressline3.message}
+                                {errors.Address2 && errors.Address2.message}
 
                             </div>
                             <hr />
@@ -69,10 +69,10 @@ const BasicInfo = ({ currentUser }) => {
                                 <hr />
                                 <Label>Address Line 2</Label>
                                 <Input
-                                    name="addressline2"
+                                    name="Address2"
                                     ref={register()}
                                 />
-                                {errors.addressline2 && errors.addressline2.message}
+                                {errors.Address2 && errors.Address2.message}
 
                                 <br />
                                 <br />
@@ -109,10 +109,12 @@ const BasicInfo = ({ currentUser }) => {
                 </form>
 
             </Container>
-        </>
+        </Fragment>
     )
 };
 const mapStateToProps = state => ({
     currentUser: state.user.currentUser
 });
-export default connect(mapStateToProps)(BasicInfo);
+
+
+export default connect(mapStateToProps, null)(BasicInfo);

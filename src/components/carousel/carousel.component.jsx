@@ -2,6 +2,11 @@ import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import '../../App.css'
 const Caro = () => {
+    let obj = {
+        One: "One1",
+        _TWO_: "Two!"
+    };
+    console.log(obj['_TWO_']);
     return (
         <div className="relative">
             <Carousel>

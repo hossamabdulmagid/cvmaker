@@ -74,7 +74,7 @@ const OldCv = () => {
                 <div className="container">
                     <Accordion defaultIndex={[0]} allowToggle show={show} handleClose={handleClose} >
                         <AccordionItem>
-                            <AccordionHeader _expanded={{ bg: "#18C7E1;", color: "white" }}>
+                            <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
                                 <Box flex="1" textAlign="left">
                                     <h1> Go <Strong>Premium </Strong> ❤ </h1>
                                     <Span> Show details ★ </Span>

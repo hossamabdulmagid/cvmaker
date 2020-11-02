@@ -55,8 +55,8 @@ padding:15px;
 
 
 export const Buttons = styled.button`
-background-color:rgb(206, 206, 206);
-color:black;
+    background-color:rgb(206, 206, 206);
+    color:black;
 border-radius:1px;
 padding:4px;
 margin:5px;

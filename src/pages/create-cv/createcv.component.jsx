@@ -27,7 +27,7 @@ import Education from './education/education.component'
 import { Spinner } from '@chakra-ui/core'
 import Workexperience from './workexperience/workexperience.component'
 import References from './references/references.component'
-import Qualifications from './references/references.component'
+import Qualifications from './qualifications/qualifications.component'
 import Interests from './interests/interests.component';
 import { Link } from 'react-router-dom';
 import {
@@ -56,9 +56,6 @@ const CreateCv = ({  AddToList, currentUser }) => {
         { section: "Interests" },
         { section: "References" }
     ]);
-
-
-
 
     const [activeSection, setActiveSection] = useState("Basic information");
 

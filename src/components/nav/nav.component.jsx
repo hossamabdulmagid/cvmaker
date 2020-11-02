@@ -4,8 +4,9 @@ import { BsFillLockFill } from "react-icons/bs";
 import { auth } from '../../firebase/firebase.utils'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { selectCurrentUser } from '../../redux/user/user.selector'
+import { createStructuredSelector } from 'reselect'
 const Nav = ({ currentUser, displayName }) => {
-
     const [languages, setLanguages] = useState([
         "English", "العربية", "Български",
         "Čeština", "Dansk", "Deutsch",
@@ -43,7 +44,7 @@ const Nav = ({ currentUser, displayName }) => {
 
                         {
                             currentUser ?
-                                <LINK onClick={() => auth.signOut()}> <span>  Sign Out</span>
+                                <LINK onClick={() => auth.signOut()} to=''> <span>  Sign Out</span>
                                     <Small> ({currentUser.displayName}) </Small>
                                 </LINK>
                                 :
@@ -64,7 +65,7 @@ const Nav = ({ currentUser, displayName }) => {
         </Rapper >
     );
 };
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
 })
 export default connect(mapStateToProps)(Nav);

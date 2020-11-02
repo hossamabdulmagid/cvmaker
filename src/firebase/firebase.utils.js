@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { toast } from "react-toastify";
 
 const config = {
   apiKey: "AIzaSyAUmsbpy_RnDfwsBoX3FjHu7I9ZdNU7DH4",
@@ -14,64 +15,70 @@ const config = {
 
 firebase.initializeApp(config);
 
-export const createUserProfileDocument = async (userAuth, additionalData) => {
+export const createUserProfileDocument = async (userAuth, additionalData, cvs) => {
   if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
   const snapShot = await userRef.get();
-  console.log(snapShot, `snapShot`);
+
+  console.log(snapShot, `SnapShot`)
+
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
+
     const createdAt = new Date();
+    const cvs = {
+      createdAt,
+      id: "",
+      basicinfo: {
+        fullName: '',
+        email: '',
+        Address1: '',
+        Address2: '',
+        Address3: '',
+        webSites: '',
+        Phone: ''
+      },
+      workexperience: {
+        companyName: '',
+        endYear: '',
+        startYear: ''
+      },
+      education: {
+        collageName: '',
+        startGraduationYear: '',
+        endGraduationYear: ''
+      },
+      interests: {
+        values: ''
+      },
+      references: {
+        values: ''
+      },
+      qualifications: {
+        values: ''
+      },
+    };
+    console.log(userRef, `userRef`)
     try {
+      console.log(`if snapShot Exits show here`);
+
       await userRef.set({
         displayName,
         email,
         createdAt,
+        cvs,
         ...additionalData
       });
     } catch (error) {
       console.log('error creating user', error.message);
     }
   }
-
   return userRef;
 };
 
 
-export const addCollectionAndDocuments = async (
-  collectionKey,
-  objectsToAdd
-) => {
-  const collectionRef = firestore.collection(collectionKey);
-
-  const batch = firestore.batch();
-  objectsToAdd.forEach(obj => {
-    const newDocRef = collectionRef.doc();
-    batch.set(newDocRef, obj);
-  });
-
-  return await batch.commit();
-};
-
-export const convertCollectionsSnapshotToMap = collections => {
-  const transformedCollection = collections.docs.map(doc => {
-    const { title, items } = doc.data();
-
-    return {
-      routeName: encodeURI(title.toLowerCase()),
-      id: doc.id,
-      title,
-      items
-    };
-  });
-
-  return transformedCollection.reduce((accumulator, collection) => {
-    accumulator[collection.title.toLowerCase()] = collection;
-    return accumulator;
-  }, {});
-};
 
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {

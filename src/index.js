@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider, theme, ColorModeProvider, CSSReset } from '@chakra-ui/core';
 
 import { Provider } from 'react-redux';
+import * as serviceWorker from './serviceWorker';
 
 
 import { PersistGate } from 'redux-persist/integration/react';
@@ -18,8 +19,8 @@ ReactDOM.render(
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <ColorModeProvider>
-          <CSSReset />
           <PersistGate persistor={persistor}>
+            <CSSReset />
             <App />
           </PersistGate>
         </ColorModeProvider>
@@ -30,3 +31,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+serviceWorker.unregister(); 

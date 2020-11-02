@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import Nav from './components/nav/nav.component';
+import React, { Fragment } from 'react'; import Nav from './components/nav/nav.component';
 import Head from './components/header/header.component';
 import Bottom from './components/bottom/bottom.component';
 import Footer from './components/footer/footer.component';
@@ -46,22 +45,22 @@ class App extends React.Component {
   componentWillUnmount() {
     this.unsubscribeFormAuth();
   }
-      //this line for commit ..
+  //this line for commit ..
 
   render() {
     const { currentUser } = this.props;
+    console.log(currentUser, `currentUser from here`)
+
     return (
       <Fragment>
         <ScrollToTop />
         <div className="Container">
           <Nav />
           <ToastContainer />
-
           <Switch>
             <Route path="/" exact component={Head} />
             <Route path="/login" exact render={() => currentUser ? (<Redirect to="/cv" />) : (<SigninSignup />)} />
             <PrivateRoute exact path="/login" component={SigninSignup} />
-
             <Route path="/policy" component={Privacy} />
             <Route path="/contact" component={Contact} />
             <Route path="/Help" component={Help} />

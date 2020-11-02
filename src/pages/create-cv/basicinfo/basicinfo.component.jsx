@@ -5,7 +5,7 @@ import { Spinner } from "@chakra-ui/core";
 import { Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { firestore } from '../../../firebase/firebase.utils'
-const BasicInfo = ({ currentUser, fetchCollectionsStartAsync }) => {
+const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
     const { handleSubmit, register, errors, getValues } = useForm();
 
 
@@ -148,7 +148,7 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync }) => {
     )
 };
 const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
 });
 
 

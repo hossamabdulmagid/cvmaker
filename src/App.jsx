@@ -25,7 +25,6 @@ import { createStructuredSelector } from 'reselect';
 class App extends React.Component {
   unsubscribeFormAuth = null;
 
-
   componentDidMount() {
     const { setCurrentUser } = this.props;
     this.unsubscribeFormAuth = auth.onAuthStateChanged(async userAuth => {
@@ -40,6 +39,7 @@ class App extends React.Component {
       }
       setCurrentUser(userAuth)
     });
+
   }
 
   componentWillUnmount() {
@@ -54,6 +54,7 @@ class App extends React.Component {
     return (
       <Fragment>
         <ScrollToTop />
+
         <div className="Container">
           <Nav />
           <ToastContainer />

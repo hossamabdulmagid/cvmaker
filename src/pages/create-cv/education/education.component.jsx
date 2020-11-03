@@ -17,62 +17,59 @@ import {
 } from "@chakra-ui/core";
 import { ButtonForEducation, P, Strong, Rapperd } from './education.styles';
 import { connect } from 'react-redux';
-const Education = ({ AddToList }) => {
-    const [education, setEducation] = useState([{
-        collageName: '',
-        startGraduationYear: '',
-        endGraduationYear: ''
-    }
-    ]
-    );
+import { firestore } from '../../../firebase/firebase.utils'
+const Education = ({ AddToList, currentUser, education }) => {
 
 
-    console.log(education, `education`)
-    useEffect(() => {
-        setEducation(education)
-    })
+    const [eduo, setEduo] = useState({
+        collage: '',
+        stateyear: '',
+        endyear: ''
+    });
+
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const initialRef = React.useRef();
     const finalRef = React.useRef();
 
-
-
-
     const { handleSubmit, register, getValues, errors } = useForm();
 
     const value = getValues();
 
-    const onSubmit = (data) => {
-        education.unshift(data)
+    const onSubmit = (value) => {
+        firestore.doc(`users/${currentUser.id}/cvs/education`).set({
+            CollageName: value.collage,
+            StartGraduationYear: value.startyear,
+            EndGraduationYear: value.endyear
+        })
+
+            .then(function () {
+                console.log("Document successfully written!");
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
         setTimeout(() => {
             onClose()
         }, 500);
-        console.log(data, `value is here`);
+        console.log(value, `value is here`);
     }
 
-    useEffect(() => {
-
-        AddToList(value);
-
-
-    }, [AddToList, setEducation])
     return (
         <div className="container">
             <div className="row">
-
-
-
                 <div className="col-5">
-                    <ButtonForEducation className="buttonforpremium" variant='success' onClick={onOpen}> + Education</ButtonForEducation>
+                    <ButtonForEducation className="buttonforpremium" variant='success' onClick={onOpen}>.
+                    + Education
+                     </ButtonForEducation>
                 </div>
             </div>
-            <Rapperd>
-                {education.filter((singleEducation, idx) => idx < 1).map((singleEducation, i) => (
-                    <Rapperd key={i}>
+            {/*
+                        <Rapperd>
+                    <Rapperd>
                         <P>
-                            collageName:  <Strong>{singleEducation.collageName}</Strong>
+                            collageName:  <Strong>{eduo.collageName}</Strong>
                         </P>
                         <P>
                             Start Year:  <Strong>{singleEducation.startGraduationYear}</Strong>
@@ -82,10 +79,9 @@ const Education = ({ AddToList }) => {
 
                         </P>
                     </Rapperd>
-                ))}
             </Rapperd>
 
-
+*/ }
 
             <>
 
@@ -103,24 +99,24 @@ const Education = ({ AddToList }) => {
 
                             <ModalBody pb={6}>
                                 <FormLabel>Collage name</FormLabel>
-                                <Input name="collageName" ref={register({ required: "this Content is Required" })} placeholder="collage name" />
-                                {errors.collageName && errors.collageName.message}
+                                <Input name="collage" ref={register({ required: "this Content is Required" })} placeholder="collage name" />
+                                {errors.collage && errors.collage.message}
                                 <br />
                                 <FormLabel>Start  Year </FormLabel>
-                                <Input name='startGraduationYear' type="date" ref={register({ required: "this Content is Required" })} />
-                                {errors.startGraduationYear && errors.startGraduationYear.message}
+                                <Input name='startyear' type="date" ref={register({ required: "this Content is Required" })} />
+                                {errors.startyear && errors.startyear.message}
                                 <br />
                                 <FormLabel> End  Year </FormLabel>
 
-                                <Input name='endGraduationYear' type="date" ref={register({ required: "this Content is Required" })} />
+                                <Input name='endyear' type="date" ref={register({ required: "this Content is Required" })} />
 
-                                {errors.endGraduationYear && errors.endGraduationYear.message}
+                                {errors.endyear && errors.endyear.message}
 
 
                             </ModalBody>
 
                             <ModalFooter>
-                                <Button variantColor="blue" mr={3} type='submit' onClick={AddToList}>
+                                <Button variantColor="blue" mr={3} type='submit'>
                                     Save
                               </Button>
                                 <Button onClick={onClose}>Cancel</Button>
@@ -135,9 +131,14 @@ const Education = ({ AddToList }) => {
 
 
 
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
+
+
 
 const mapDispatchToProps = dispatch => ({
     AddToList: (value) => dispatch(AddToList(value))
 })
 
-export default connect(null, mapDispatchToProps)(Education);
+export default connect(mapStateToProps, mapDispatchToProps)(Education);

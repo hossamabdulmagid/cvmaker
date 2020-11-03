@@ -6,7 +6,7 @@ import { Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { firestore } from '../../../firebase/firebase.utils'
 const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
-    const { handleSubmit, register, errors, getValues } = useForm();
+    const { handleSubmit, register, errors, getValues, userAuth, cvs, cid } = useForm();
 
 
     const value = getValues();
@@ -18,11 +18,10 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
 
 
     }, [])
-    const onSubmit = values => {
-        console.log(values);
-        firestore.collection("users").doc("cvs").set({
+    const onSubmit = value => {
+        firestore.doc(`users/${currentUser.id}/cvs/basicinfo`).set({
             FullName: value.fullname,
-            Phone: value.phone,
+            Phone: 20 + value.phone,
             Email: value.email,
             Address1: value.address1,
             Address2: value.address2,
@@ -38,10 +37,7 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
             });
 
 
-
-
     }
-    console.log(value.fullname, `full name only apear here`)
     // Add a new document in collection "cities"
 
     return (

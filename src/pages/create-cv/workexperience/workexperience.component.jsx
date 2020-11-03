@@ -17,21 +17,11 @@ import {
     Input
 } from "@chakra-ui/core";
 import { ButtonForWork, Rapperd, P, Strong } from './workexperience.styles';
-
-const Workexperience = ({ AddToList }) => {
-    const [work, setWork] = useState([{
-        companyName: '',
-        startWork: '',
-        endWork: ''
-    }
-    ]
-    );
+import { firestore } from '../../../firebase/firebase.utils'
+const Workexperience = ({ AddToList, currentUser }) => {
 
 
-    console.log(work, `work`)
-    useEffect(() => {
-        setWork(work)
-    })
+
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -45,21 +35,26 @@ const Workexperience = ({ AddToList }) => {
 
     const value = getValues();
 
-
-    const onSubmit = (data) => {
-        work.unshift(data)
+    const onSubmit = (value) => {
+        firestore.doc(`users/${currentUser.id}/cvs/workexpernice`).set({
+            Company: value.companyname,
+            StartWork: value.startwork,
+            EndWork: value.endwork
+        })
+            .then(function () {
+                console.log("Document successfully written!");
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
         setTimeout(() => {
             onClose()
         }, 500);
-        console.log(data, `work is here`);
+        console.log(value, `value is here`);
     }
 
-    useEffect(() => {
-
-        AddToList(value);
 
 
-    }, [AddToList, setWork])
     return (
         <div className="container">
             <div className="row">
@@ -67,7 +62,7 @@ const Workexperience = ({ AddToList }) => {
                     <ButtonForWork className="buttonforpremium" variant='success' onClick={onOpen}> +WorkExpernice</ButtonForWork>
                 </div>
             </div>
-            <Rapperd>
+            {/*   <Rapperd>
                 {work.filter((singlework, idx) => idx < 2).map((singlework, i) => (
                     <Rapperd key={i}>
                         <P>
@@ -83,6 +78,7 @@ const Workexperience = ({ AddToList }) => {
                     </Rapperd>
                 ))}
             </Rapperd>
+            */}
             <Modal
                 initialFocusRef={initialRef}
                 finalFocusRef={finalRef}
@@ -97,16 +93,16 @@ const Workexperience = ({ AddToList }) => {
                         <ModalCloseButton />
                         <ModalBody pb={6}>
                             <FormLabel>Company Name</FormLabel>
-                            <Input ref={register({ required: "this Feild is Required" })} name="companyName" placeholder="CompanyName" />
-                            {errors.companyName && errors.companyName.message}
+                            <Input ref={register({ required: "this Feild is Required" })} name="companyname" placeholder="CompanyName" />
+                            {errors.companyname && errors.companyname.message}
                             <br />
                             <FormLabel>  Start Year</FormLabel>
-                            <Input ref={register({ required: "this Feild is Required" })} name="startWork" placeholder="Graduation Year" type="date"  />
-                            {errors.startWork && errors.startWork.message}
+                            <Input ref={register({ required: "this Feild is Required" })} name="startwork" placeholder="Graduation Year" type="date" />
+                            {errors.startwork && errors.startwork.message}
                             <br />
                             <FormLabel> End Year</FormLabel>
-                            <Input ref={register({ required: "this Feild is Required" })} name="endWork" placeholder="Graduation Year" type="date" />
-                            {errors.endWork && errors.endWork.message}
+                            <Input ref={register({ required: "this Feild is Required" })} name="endwork" placeholder="Graduation Year" type="date" />
+                            {errors.endwork && errors.endwork.message}
                             <br />
                         </ModalBody>
 
@@ -124,8 +120,13 @@ const Workexperience = ({ AddToList }) => {
     )
 }
 
+
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
+
 const mapDispatchToProps = dispatch => ({
     AddToList: (value) => dispatch(AddToList(value))
 })
 
-export default connect(null, mapDispatchToProps)(Workexperience);
+export default connect(mapStateToProps, mapDispatchToProps)(Workexperience);

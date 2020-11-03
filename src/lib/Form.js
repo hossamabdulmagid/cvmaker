@@ -32,7 +32,7 @@ const From = () => {
         console.log('handleTextAreaChange', newTextAreaValue)
         return (
             setTextAreaValue(() => newTextAreaValue)
-        )
+        );
     }
 
     const handleInputChange = e => {

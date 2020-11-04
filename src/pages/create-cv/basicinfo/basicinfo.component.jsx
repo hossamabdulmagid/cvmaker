@@ -5,6 +5,8 @@ import { Spinner } from "@chakra-ui/core";
 import { Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { firestore } from '../../../firebase/firebase.utils'
+import { v4 as uuidv4 } from 'uuid';
+
 const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
     const { handleSubmit, register, errors, getValues, userAuth, cvs, cid } = useForm();
 
@@ -16,19 +18,23 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
 
 
 
+    }, [currentUser])
 
-    }, [])
-    const onSubmit = value => {
-        firestore.doc(`users/${currentUser.id}/cvs/basicinfo`).set({
-            FullName: value.fullname,
-            Phone: 20 + value.phone,
-            Email: value.email,
-            Address1: value.address1,
-            Address2: value.address2,
-            Address3: value.address3,
-            WebSites: value.websites
+
+    const onSubmit = async value => {
+
+        const cv = firestore.doc(`users/${currentUser.id}/cvs/${currentUser.cvs.id}`)
+        await cv.set({
+            BasicInfo: {
+                FullName: value.fullname,
+                Phone: 20 + value.phone,
+                Email: value.email,
+                Address1: value.address1,
+                Address2: value.address2,
+                Address3: value.address3,
+                WebSites: value.websites
+            }
         })
-
             .then(function () {
                 console.log("Document successfully written!");
             })
@@ -38,6 +44,7 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
 
 
     }
+
     // Add a new document in collection "cities"
 
     return (
@@ -62,7 +69,9 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
                                 <Input
                                     name="phone"
                                     ref={register({ required: " feild is Required" })}
-                                /> <br />
+                                />
+                                <br />
+
                                 {errors.phone && errors.phone.message}
 
                                 <hr />

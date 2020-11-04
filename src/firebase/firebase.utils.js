@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from 'uuid';
 
 const config = {
   apiKey: "AIzaSyAUmsbpy_RnDfwsBoX3FjHu7I9ZdNU7DH4",
@@ -30,6 +31,7 @@ export const createUserProfileDocument = async (userAuth, additionalData, cvs) =
     const createdAt = new Date();
     const cvs = {
       createdAt,
+      id: uuidv4(),
       basicinfo: {
         FullName: '',
         Email: '',
@@ -49,15 +51,7 @@ export const createUserProfileDocument = async (userAuth, additionalData, cvs) =
         startGraduationYear: '',
         endGraduationYear: ''
       },
-      interests: {
-        values: ''
-      },
-      references: {
-        values: ''
-      },
-      qualifications: {
-        values: ''
-      },
+
     };
     console.log(userRef, `userRef`)
     try {

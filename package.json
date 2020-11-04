@@ -35,7 +35,8 @@
     "reselect": "^4.0.0",
     "save": "^2.4.0",
     "styled-components": "^5.2.0",
-    "swr": "^0.3.2"
+    "swr": "^0.3.2",
+    "uuid": "^8.3.1"
   },
   "scripts": {
     "start": "set HTTPS=true&&react-scripts start",

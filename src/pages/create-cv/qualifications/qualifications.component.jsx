@@ -5,7 +5,9 @@ import From from '../../../lib/Form'
 const Qualifications = () => {
     return (
         <div className="container">
-      <Title>Qualifications</Title>      
+            
+            <Title>Qualifications</Title>
+
             <From />
         </div>
     )

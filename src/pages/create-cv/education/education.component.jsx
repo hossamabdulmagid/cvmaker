@@ -37,11 +37,16 @@ const Education = ({ AddToList, currentUser, education }) => {
 
     const value = getValues();
 
-    const onSubmit = (value) => {
-        firestore.doc(`users/${currentUser.id}/cvs/education`).set({
-            CollageName: value.collage,
-            StartGraduationYear: value.startyear,
-            EndGraduationYear: value.endyear
+    const onSubmit = async value => {
+        const cv = firestore.doc(`users/${currentUser.id}/cvs/${currentUser.cvs.id}`)
+
+
+        await cv.set({
+            education: {
+                CollageName: value.collage,
+                StartGraduationYear: value.startyear,
+                EndGraduationYear: value.endyear
+            }
         })
 
             .then(function () {

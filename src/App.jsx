@@ -67,7 +67,7 @@ class App extends React.Component {
             <Route path="/Help" component={Help} />
             <Route path="/tips" component={Tips} />
             <Route path="/lang" component={Lang} />
-            <Route path="/create-cv" component={CreateCv} />
+            <Route path="/create-cv/:id" component={CreateCv} />
             {/*
             <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} /> */}
             <PrivateRoute exact path="/cv" component={OldCv} />

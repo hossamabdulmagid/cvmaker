@@ -1,13 +1,16 @@
 import React, { useEffect, Fragment } from 'react';
 import { Title, Input, Label, P, Container, Span, IMG, Buttons, Upload } from './basicinfo.styles'
 import { useForm } from "react-hook-form";
+import { useParams } from 'react-router-dom';
 import { Spinner } from "@chakra-ui/core";
 import { Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { firestore } from '../../../firebase/firebase.utils'
 import { v4 as uuidv4 } from 'uuid';
 
-const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
+const BasicInfo = ({  currentUser, fetchCollectionsStartAsync, New }) => {
+    const { id } = useParams();
+    console.log("current cv id is ",id);
     const { handleSubmit, register, errors, getValues, userAuth, cvs, cid } = useForm();
 
 
@@ -20,48 +23,17 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
 
     }, [currentUser])
 
-
     const onSubmit = async value => {
-        console.log(currentUser.cvs.id, `currentUsercurrentUsercurrentUsercurrentUser.cvs`)
-        const cv = firestore.doc(`users/${currentUser.id}/cvs/${currentUser.cvs.id}`)
-        const _createdAt = new Date();
-        await cv.set({
-            _createdAt,
-            _id: uuidv4(),
-            data: {
-
-                basicinfo: {
-                    FullName: value.fullname,
-                    Phone: 20 + value.phone,
-                    Email: value.email,
-                    Address1: value.address1,
-                    Address2: value.address2,
-                    Address3: value.address3,
-                    WebSites: value.websites
-                },
-                education: {
-                    collagename: '',
-                    startyear: '',
-                    endyear: ''
-                },
-                workexperiene: {
-                    companyname: '',
-                    startyear: '',
-                    endyear: '',
-                }
-
-
-            }
-        })
-            .then(function () {
-                console.log("Document successfully written!");
-
-            })
-            .catch(function (error) {
-                console.error("Error writing document: ", error);
-            });
-
-
+    const cvRef = firestore.doc(`users/${currentUser.id}/cvs/${id}/data/basicinfo`);
+    await cvRef.set({
+            FullName: value.fullname,
+                Phone: 20 + value.phone,
+                Email: value.email,
+                Address1: value.address1,
+                Address2: value.address2,
+                Address3: value.address3,
+                WebSites: value.websites
+        });
     }
 
     // Add a new document in collection "cities"

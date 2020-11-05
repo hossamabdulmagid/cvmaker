@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from "react-hook-form";
-import { AddToList } from '../../../redux/addtolist/addtolistAction'
+import React, {useEffect, useState} from 'react';
+import {useForm} from "react-hook-form";
+import {AddToList} from '../../../redux/addtolist/addtolistAction'
 import {
+    Button,
+    FormLabel,
+    Input,
     Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
-    Button,
-    FormControl,
-    FormLabel,
-    Input
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    useDisclosure
 } from "@chakra-ui/core";
-import { ButtonForEducation, P, Strong, Rapperd } from './education.styles';
-import { connect } from 'react-redux';
-import { firestore } from '../../../firebase/firebase.utils'
-const Education = ({ AddToList, currentUser, education }) => {
+import {ButtonForEducation} from './education.styles';
+import {connect} from 'react-redux';
+import {firestore} from '../../../firebase/firebase.utils'
+import {useParams} from "react-router-dom";
 
+const Education = ({AddToList, currentUser, education}) => {
+    const { id } = useParams();
 
     const [eduo, setEduo] = useState({
         collage: '',
@@ -28,12 +29,12 @@ const Education = ({ AddToList, currentUser, education }) => {
     });
 
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const {isOpen, onOpen, onClose} = useDisclosure();
 
     const initialRef = React.useRef();
     const finalRef = React.useRef();
 
-    const { handleSubmit, register, getValues, errors } = useForm();
+    const {handleSubmit, register, getValues, errors} = useForm();
 
     const value = getValues();
 
@@ -41,41 +42,25 @@ const Education = ({ AddToList, currentUser, education }) => {
     useEffect(() => {
 
 
-
     }, [currentUser])
     const onSubmit = async value => {
-        const cv = firestore.doc(`users/${currentUser.id}/cvs/${currentUser.cvs.id}`)
-        console.log(currentUser.cvs.id, `currentUsercurrentUsercurrentUsercurrentUser.cvs`)
-
-        await cv.update({
-            data: {
-                education: {
-                    CollageName: value.collage,
-                    StartGraduationYear: value.startyear,
-                    EndGraduationYear: value.endyear
-                }
-            }
-        })
-
-            .then(function () {
-                console.log("Document successfully written!");
-            })
-            .catch(function (error) {
-                console.error("Error writing document: ", error);
-            });
-        setTimeout(() => {
-            onClose()
-        }, 500);
-        console.log(value, `value is here`);
+        const cvRef = firestore.doc(`users/${currentUser.id}/cvs/${id}/data/education`);
+        await cvRef.set({
+            CollageName: value.collage,
+            StartGraduationYear: value.startyear,
+            EndGraduationYear: value.endyear
+        });
+        onClose();
     }
+
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-5">
                     <ButtonForEducation className="buttonforpremium" variant='success' onClick={onOpen}>.
-                    + Education
-                     </ButtonForEducation>
+                        + Education
+                    </ButtonForEducation>
                 </div>
             </div>
             {/*
@@ -94,7 +79,7 @@ const Education = ({ AddToList, currentUser, education }) => {
                     </Rapperd>
             </Rapperd>
 
-*/ }
+*/}
 
             <>
 
@@ -104,24 +89,27 @@ const Education = ({ AddToList, currentUser, education }) => {
                     isOpen={isOpen}
                     onClose={onClose}
                 >
-                    <ModalOverlay />
+                    <ModalOverlay/>
                     <ModalContent>
                         <ModalHeader>Add your Eduction</ModalHeader>
-                        <ModalCloseButton />
+                        <ModalCloseButton/>
                         <form onSubmit={handleSubmit(onSubmit)}>
 
                             <ModalBody pb={6}>
                                 <FormLabel>Collage name</FormLabel>
-                                <Input name="collage" ref={register({ required: "this Content is Required" })} placeholder="collage name" />
+                                <Input name="collage" ref={register({required: "this Content is Required"})}
+                                       placeholder="collage name"/>
                                 {errors.collage && errors.collage.message}
-                                <br />
-                                <FormLabel>Start  Year </FormLabel>
-                                <Input name='startyear' type="date" ref={register({ required: "this Content is Required" })} />
+                                <br/>
+                                <FormLabel>Start Year </FormLabel>
+                                <Input name='startyear' type="date"
+                                       ref={register({required: "this Content is Required"})}/>
                                 {errors.startyear && errors.startyear.message}
-                                <br />
-                                <FormLabel> End  Year </FormLabel>
+                                <br/>
+                                <FormLabel> End Year </FormLabel>
 
-                                <Input name='endyear' type="date" ref={register({ required: "this Content is Required" })} />
+                                <Input name='endyear' type="date"
+                                       ref={register({required: "this Content is Required"})}/>
 
                                 {errors.endyear && errors.endyear.message}
 
@@ -131,7 +119,7 @@ const Education = ({ AddToList, currentUser, education }) => {
                             <ModalFooter>
                                 <Button variantColor="blue" mr={3} type='submit'>
                                     Save
-                              </Button>
+                                </Button>
                                 <Button onClick={onClose}>Cancel</Button>
                             </ModalFooter>
                         </form>
@@ -143,11 +131,9 @@ const Education = ({ AddToList, currentUser, education }) => {
 };
 
 
-
 const mapStateToProps = state => ({
     currentUser: state.user.currentUser
 })
-
 
 
 const mapDispatchToProps = dispatch => ({

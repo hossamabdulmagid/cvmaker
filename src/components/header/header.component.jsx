@@ -19,7 +19,7 @@ const Head = () => {
                         <div className='col-2'>
                             <small onClick={() => setDownload(download + 1)}>{download + " "}
                              downloads</small>
-                            <Links to='/create-cv'>
+                            <Links to='/cv'>
 
                                 <BUTTON variant="outline-dark" size="sm" variant='success'>
                                     <img src='ico_start.png' alt="" />

@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import {ButtonForPremium, Content, Green, H2, Icon, RapperdColor, Small, Span, Strong, Title} from './old-cv.styles'
-import {Accordion, AccordionHeader, AccordionItem, AccordionPanel, Box} from "@chakra-ui/core";
-import {firestore} from '../../firebase/firebase.utils';
+import React, { useEffect, useState } from 'react'
+import { ButtonForPremium, Content, Green, H2, Icon, RapperdColor, Small, Span, Strong, Title, ButtonforcreateCv } from './old-cv.styles'
+import { Accordion, AccordionHeader, AccordionItem, AccordionPanel, Box } from "@chakra-ui/core";
+import { firestore } from '../../firebase/firebase.utils';
 import { Link, useHistory } from "react-router-dom";
 import Table from 'react-bootstrap/Table'
-import {Redirect, Route} from "react-router-dom";
-import {connect} from "react-redux";
-import {v4 as uuidv4} from "uuid";
+import { Redirect, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
-const OldCv = ({currentUser}) => {
+const OldCv = ({ currentUser }) => {
     const history = useHistory();
 
     var tempDate = new Date();
@@ -28,12 +28,10 @@ const OldCv = ({currentUser}) => {
         setDatee(new Date());
     }
 
-    const createAnewCv =async () => {
-        const currentCvId =uuidv4();
+    const createAnewCv = async () => {
         const _createdAt = new Date();
-        await firestore.doc(`users/${currentUser.id}`).collection('cvs').add({
+        const docRef = await firestore.doc(`users/${currentUser.id}`).collection('cvs').add({
             _createdAt,
-            _id: currentCvId,
             data: {
                 basicinfo: {
                     FullName: "",
@@ -56,11 +54,17 @@ const OldCv = ({currentUser}) => {
                 }
             }
         });
-        console.log("done  adding a cv");
-        const newCvPath = `create-cv/${currentCvId}`;
-        history.push(newCvPath);
-        return;
+        if (docRef.id) {
+            console.log("done  adding a cv");
+            const newCvPath = `create-cv/${docRef.id}`;
+            history.push(newCvPath);
+            return;
+        } else {
+            console.log(`SomeThing Worng here`)
+        }
+
     }
+
 
 
     const [show, setShow] = useState(false);
@@ -68,44 +72,75 @@ const OldCv = ({currentUser}) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const [allcv, setAllcv] = useState([]);
+
+
+    useEffect(() => {
+        firestore.doc(`users/${currentUser.id}`).collection('cvs').get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+
+
+
+
+                // doc.data() is never undefined for query doc snapshots
+
+
+
+                console.log(doc.id, " => ", doc.data(), `here should show data`);
+
+
+                let allcv = doc.data();
+                let GG = Object.values(doc);
+                
+                console.log(GG,`GGGGGGGGGGGG`)
+                console.log(doc, `doc only`)
+            });
+        });
+
+    }, [])
+
+
+
     return (
         <RapperdColor className="container-fluid">
             <Content className="container">
                 <Title>Your CVs</Title>
-                <button onClick={createAnewCv}>Create a new CV</button>
+                <ButtonforcreateCv onClick={createAnewCv}>Create a new CV</ButtonforcreateCv>
             </Content>
             <div className='container'>
                 <Table striped bordered hover>
                     <thead>
-                    <tr>
-                        <th> Name</th>
-                        <th>Last modified</th>
-                        <th>Options</th>
-                    </tr>
+                        <tr>
+                            <th> Name</th>
+                            <th>Last modified</th>
+                            <th>Options</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>My CV <Span>Englsih <Icon/></Span></td>
-                        <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
-                        <td>Edit now</td>
-                    </tr>
-                    <tr>
-                        <td>Maado CV <Span>Englsih <Icon/></Span></td>
-                        <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
-                        <td>Edit now</td>
-                    </tr>
-                    <tr>
-                        <td>Zaki CV <Span>Englsih <Icon/></Span></td>
-                        <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
-                        <td>Edit now</td>
 
-                    </tr>
+                        <tr>
+                            <td>My CV <Span>Englsih <Icon /></Span></td>
+                            <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
+                            <td>Edit now</td>
+                        </tr>
+                        <tr>
+                            <td>Maado CV <Span>Englsih <Icon /></Span></td>
+                            <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
+                            <td>Edit now</td>
+                        </tr>
+
+                        <tr>
+                            <td>Zaki CV <Span>Englsih <Icon /></Span></td>
+                            <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
+                            <td>Edit now</td>
+
+                        </tr>
                     </tbody>
                 </Table>
                 <div className="container">
                     <Accordion defaultIndex={[0]} allowToggle show={show} handleClose={handleClose}>
                         <AccordionItem>
-                            <AccordionHeader _expanded={{bg: "gray", color: "darkgray"}}>
+                            <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
                                 <Box flex="1" textAlign="left">
                                     <h1> Go <Strong>Premium </Strong> ❤ </h1>
                                     <Span> Show details ★ </Span>
@@ -144,7 +179,7 @@ const OldCv = ({currentUser}) => {
                                                 templates</Small>
                                             <Small>$16 / year</Small>
                                             <ButtonForPremium>Upgrade to Premium ♥</ButtonForPremium>
-                                            <img src='paypal.png' alt=""/>
+                                            <img src='paypal.png' alt="" />
                                         </div>
 
                                     </div>
@@ -160,23 +195,23 @@ const OldCv = ({currentUser}) => {
 }
 
 const PrivateRoute = ({
-                          component: Component,
-                          currentUser,
-                          ...rest
-                      }) => (
-    <Route
-        {...rest}
-        render={(props) =>
-            currentUser != null ? (
-                <Component {...props} />
-            ) : (
-                <Redirect
-                    to={{pathname: "/login", state: {from: props.location}}}
-                />
-            )
-        }
-    />
-);
+    component: Component,
+    currentUser,
+    ...rest
+}) => (
+        <Route
+            {...rest}
+            render={(props) =>
+                currentUser != null ? (
+                    <Component {...props} />
+                ) : (
+                        <Redirect
+                            to={{ pathname: "/login", state: { from: props.location } }}
+                        />
+                    )
+            }
+        />
+    );
 
 const mapStateToProps = (state) => ({
     currentUser: state.user.currentUser,

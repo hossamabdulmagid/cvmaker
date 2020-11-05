@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { BiCog } from "react-icons/bi";
-
+import { Button } from 'react-bootstrap'
 
 export const RapperdColor = styled.div`
 text-align:;
@@ -22,12 +22,12 @@ font-size:25px;
 margin:5px;
 `;
 
-export const LinkforcreateCv = styled(Link)`
+export const ButtonforcreateCv = styled(Button)`
 border-radius: 15px;
 background-color:#18C7E1;
 color:black;
 font-size:13px;
-padding:6px;
+padding:3px;
 line-height: revert;
 height: 28px;
 width: 150px;

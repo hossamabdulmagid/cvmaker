@@ -67,10 +67,10 @@ class App extends React.Component {
             <Route path="/Help" component={Help} />
             <Route path="/tips" component={Tips} />
             <Route path="/lang" component={Lang} />
-            <Route path="/create-cv/:id" component={CreateCv} />
+            <Route path="/create-cv/:id" render={() => currentUser ? (<Redirect to="/cv" />) : (<SigninSignup />)} component={CreateCv} />
             {/*
             <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} /> */}
-            <PrivateRoute exact path="/cv" component={OldCv} />
+            <PrivateRoute exact path="/cv" render={() => currentUser ? (<Redirect to="/cv" />) : (<SigninSignup />)} component={OldCv} />
 
           </Switch>
           <Bottom />

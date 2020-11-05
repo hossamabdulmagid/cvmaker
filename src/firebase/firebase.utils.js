@@ -30,27 +30,7 @@ export const createUserProfileDocument = async (userAuth, additionalData, cvs) =
 
     const createdAt = new Date();
     const cvs = {
-      createdAt,
-      id: uuidv4(),
-      basicinfo: {
-        FullName: '',
-        Email: '',
-        Address1: '',
-        Address2: '',
-        Address3: '',
-        WebSites: '',
-        Phone: ''
-      },
-      workexperience: {
-        companyName: '',
-        endYear: '',
-        startYear: ''
-      },
-      education: {
-        collageName: '',
-        startGraduationYear: '',
-        endGraduationYear: ''
-      },
+      id:uuidv4()
 
     };
     console.log(userRef, `userRef`)

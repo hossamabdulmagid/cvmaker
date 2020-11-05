@@ -37,15 +37,23 @@ const Education = ({ AddToList, currentUser, education }) => {
 
     const value = getValues();
 
+
+    useEffect(() => {
+
+
+
+    }, [currentUser])
     const onSubmit = async value => {
         const cv = firestore.doc(`users/${currentUser.id}/cvs/${currentUser.cvs.id}`)
+        console.log(currentUser.cvs.id, `currentUsercurrentUsercurrentUsercurrentUser.cvs`)
 
-
-        await cv.set({
-            education: {
-                CollageName: value.collage,
-                StartGraduationYear: value.startyear,
-                EndGraduationYear: value.endyear
+        await cv.update({
+            data: {
+                education: {
+                    CollageName: value.collage,
+                    StartGraduationYear: value.startyear,
+                    EndGraduationYear: value.endyear
+                }
             }
         })
 

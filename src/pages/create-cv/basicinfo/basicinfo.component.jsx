@@ -22,21 +22,40 @@ const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
 
 
     const onSubmit = async value => {
-
+        console.log(currentUser.cvs.id, `currentUsercurrentUsercurrentUsercurrentUser.cvs`)
         const cv = firestore.doc(`users/${currentUser.id}/cvs/${currentUser.cvs.id}`)
+        const _createdAt = new Date();
         await cv.set({
-            BasicInfo: {
-                FullName: value.fullname,
-                Phone: 20 + value.phone,
-                Email: value.email,
-                Address1: value.address1,
-                Address2: value.address2,
-                Address3: value.address3,
-                WebSites: value.websites
+            _createdAt,
+            _id: uuidv4(),
+            data: {
+
+                basicinfo: {
+                    FullName: value.fullname,
+                    Phone: 20 + value.phone,
+                    Email: value.email,
+                    Address1: value.address1,
+                    Address2: value.address2,
+                    Address3: value.address3,
+                    WebSites: value.websites
+                },
+                education: {
+                    collagename: '',
+                    startyear: '',
+                    endyear: ''
+                },
+                workexperiene: {
+                    companyname: '',
+                    startyear: '',
+                    endyear: '',
+                }
+
+
             }
         })
             .then(function () {
                 console.log("Document successfully written!");
+
             })
             .catch(function (error) {
                 console.error("Error writing document: ", error);

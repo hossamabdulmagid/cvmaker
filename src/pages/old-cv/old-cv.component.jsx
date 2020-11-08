@@ -32,27 +32,6 @@ const OldCv = ({ currentUser }) => {
         const _createdAt = new Date();
         const docRef = await firestore.doc(`users/${currentUser.id}`).collection('cvs').add({
             _createdAt,
-            data: {
-                basicinfo: {
-                    FullName: "",
-                    Phone: "",
-                    Email: "",
-                    Address2: "",
-                    Address1: "",
-                    Address3: "",
-                    WebSites: ""
-                },
-                education: {
-                    collagename: '',
-                    startyear: '',
-                    endyear: ''
-                },
-                workexperiene: {
-                    companyname: '',
-                    startyear: '',
-                    endyear: '',
-                }
-            }
         });
         if (docRef.id) {
             console.log("done  adding a cv");
@@ -91,8 +70,8 @@ const OldCv = ({ currentUser }) => {
 
                 let allcv = doc.data();
                 let GG = Object.values(doc);
-                
-                console.log(GG,`GGGGGGGGGGGG`)
+
+                console.log(GG, `GGGGGGGGGGGG`)
                 console.log(doc, `doc only`)
             });
         });

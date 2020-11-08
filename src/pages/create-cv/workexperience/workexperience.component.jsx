@@ -18,8 +18,11 @@ import {
 } from "@chakra-ui/core";
 import { ButtonForWork, Rapperd, P, Strong } from './workexperience.styles';
 import { firestore } from '../../../firebase/firebase.utils'
+import { useParams } from "react-router-dom";
+
 const Workexperience = ({ AddToList, currentUser, cvs }) => {
 
+    const { id } = useParams();
 
 
 
@@ -37,31 +40,20 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
 
     const onSubmit = async value => {
 
-        const cv = firestore.doc(`users/${currentUser.id}/cvs/${currentUser.cvs.id}`)
-
-
-        await cv.set({
+        const cvRef = firestore.doc(`users/${currentUser.id}/cvs/${id}/data/workexperience`);
+        await cvRef.set({
             workexperience: {
                 Company: value.companyname,
                 StartWork: value.startwork,
                 EndWork: value.endwork
             }
-        })
-            .then(function () {
-                console.log("Document successfully written!");
-            })
-            .catch(function (error) {
-                console.error("Error writing document: ", error);
-            });
-        setTimeout(() => {
-            onClose()
-        }, 500);
+        });
+        onClose();
         console.log(value, `value is here`);
     }
 
     useEffect(() => {
-
-        console.log(currentUser.cvs._id, `bla bla bla`)
+        //  console.log(currentUser.cvs._id, `bla bla bla`)
     }, [])
 
     return (

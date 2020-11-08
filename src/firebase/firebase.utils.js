@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify';
 
 const config = {
   apiKey: "AIzaSyAUmsbpy_RnDfwsBoX3FjHu7I9ZdNU7DH4",
@@ -38,12 +39,13 @@ export const createUserProfileDocument = async (userAuth, additionalData, cvs) =
         ...additionalData
       });
 
-
     } catch (error) {
       console.log('error creating user', error.message);
     }
   }
   return userRef;
+  toast.success(`You Are Welcome`);
+
 };
 
 

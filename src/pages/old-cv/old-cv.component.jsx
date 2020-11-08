@@ -98,24 +98,6 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
     let { id } = match.params;
     const history = useHistory();
 
-
-
-    const editcv = async () => {
-        const _editAt = new Date();
-        const docRef = await firestore.doc(`users/${currentUser.id}`).collection('cvs').add({
-            _editAt,
-        });
-        if (docRef.id) {
-            console.log("done  adding a cv");
-            const newCvPath = `create-cv/${docRef.id}`;
-            history.push(newCvPath);
-            return;
-        } else {
-            console.log(`SomeThing Worng here`)
-        }
-
-    }
-
     return (
         <>
             <RapperdColor className="container-fluid">
@@ -144,7 +126,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
 
                                     <td>{x}<Span>Englsih <Icon /></Span></td>
                                     <td>{allcv[0]}</td>
-                                    <Td onClick={editcv}>Edit now</Td>
+                                    <Link to={"create-cv/" + `${x}`} >Edit now</Link>
 
                                 </tr>
 

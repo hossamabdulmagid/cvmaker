@@ -19,6 +19,7 @@ import {
 import { ButtonForWork, Rapperd, P, Strong } from './workexperience.styles';
 import { firestore } from '../../../firebase/firebase.utils'
 import { useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const Workexperience = ({ AddToList, currentUser, cvs }) => {
 
@@ -49,7 +50,7 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
             }
         });
         onClose();
-        console.log(value, `value is here`);
+        toast.success(`your cvs details has been updated`)
     }
 
     useEffect(() => {

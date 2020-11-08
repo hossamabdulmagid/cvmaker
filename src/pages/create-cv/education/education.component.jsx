@@ -18,6 +18,7 @@ import {ButtonForEducation} from './education.styles';
 import {connect} from 'react-redux';
 import {firestore} from '../../../firebase/firebase.utils'
 import {useParams} from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const Education = ({AddToList, currentUser, education}) => {
     const { id } = useParams();
@@ -51,6 +52,7 @@ const Education = ({AddToList, currentUser, education}) => {
             EndGraduationYear: value.endyear
         });
         onClose();
+        toast.success(`your cvs details has been updated`)
     }
 
 

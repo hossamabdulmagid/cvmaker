@@ -7,10 +7,11 @@ import { Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { firestore } from '../../../firebase/firebase.utils'
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify';
 
-const BasicInfo = ({  currentUser, fetchCollectionsStartAsync, New }) => {
+const BasicInfo = ({ currentUser, fetchCollectionsStartAsync, New }) => {
     const { id } = useParams();
-    console.log("current cv id is ",id);
+    console.log("current cv id is ", id);
     const { handleSubmit, register, errors, getValues, userAuth, cvs, cid } = useForm();
 
 
@@ -24,16 +25,17 @@ const BasicInfo = ({  currentUser, fetchCollectionsStartAsync, New }) => {
     }, [currentUser])
 
     const onSubmit = async value => {
-    const cvRef = firestore.doc(`users/${currentUser.id}/cvs/${id}/data/basicinfo`);
-    await cvRef.set({
+        const cvRef = firestore.doc(`users/${currentUser.id}/cvs/${id}/data/basicinfo`);
+        await cvRef.set({
             FullName: value.fullname,
-                Phone: 20 + value.phone,
-                Email: value.email,
-                Address1: value.address1,
-                Address2: value.address2,
-                Address3: value.address3,
-                WebSites: value.websites
+            Phone: 20 + value.phone,
+            Email: value.email,
+            Address1: value.address1,
+            Address2: value.address2,
+            Address3: value.address3,
+            WebSites: value.websites
         });
+        toast.success(`your cvs details has been updated`)
     }
 
     // Add a new document in collection "cities"

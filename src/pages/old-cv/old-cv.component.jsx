@@ -7,8 +7,8 @@ import Table from 'react-bootstrap/Table'
 import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-
-const OldCv = ({ currentUser }) => {
+import { AddToList } from '../../redux/addtolist/addtolistAction'
+const OldCv = ({ currentUser, doc, AddToList, NOW }) => {
     const history = useHistory();
 
     var tempDate = new Date();
@@ -41,10 +41,7 @@ const OldCv = ({ currentUser }) => {
         } else {
             console.log(`SomeThing Worng here`)
         }
-
     }
-
-
 
     const [show, setShow] = useState(false);
 
@@ -52,124 +49,145 @@ const OldCv = ({ currentUser }) => {
     const handleShow = () => setShow(true);
 
     const [allcv, setAllcv] = useState([]);
+    const [data, setData] = useState([])
+
 
 
     useEffect(() => {
         firestore.doc(`users/${currentUser.id}`).collection('cvs').get().then(function (querySnapshot) {
+
             querySnapshot.forEach(function (doc) {
+                let timer = doc.data();
+
+                console.log(timer, `here is timer`)
+
+
+                data.push(doc.id)
+                setData(data, timer)
+                console.log(data,`data is here`)
+
+
+                // console.log(doc.id, " => ", doc.data(), `here should show data`);
 
 
 
 
-                // doc.data() is never undefined for query doc snapshots
 
 
-
-                console.log(doc.id, " => ", doc.data(), `here should show data`);
-
-
-                let allcv = doc.data();
-                let GG = Object.values(doc);
-
-                console.log(GG, `GGGGGGGGGGGG`)
-                console.log(doc, `doc only`)
             });
         });
 
-    }, [])
+
+
+
+    }, [data])
+
+    useEffect(() => { }, [data, setData])
 
 
 
     return (
-        <RapperdColor className="container-fluid">
-            <Content className="container">
-                <Title>Your CVs</Title>
-                <ButtonforcreateCv onClick={createAnewCv}>Create a new CV</ButtonforcreateCv>
-            </Content>
-            <div className='container'>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th> Name</th>
-                            <th>Last modified</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <>
+            <RapperdColor className="container-fluid">
+                <Content className="container">
+                    <Title>Your CVs</Title>
+                    <ButtonforcreateCv onClick={createAnewCv}>Create a new CV</ButtonforcreateCv>
+                </Content>
+                <div className='container'>
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th> Name</th>
+                                <th>Last modified</th>
+                                <th>Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>My CV <Span>Englsih <Icon /></Span></td>
+                                <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
+                                <td>Edit now</td>
+                            </tr>
 
-                        <tr>
-                            <td>My CV <Span>Englsih <Icon /></Span></td>
-                            <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
-                            <td>Edit now</td>
-                        </tr>
-                        <tr>
-                            <td>Maado CV <Span>Englsih <Icon /></Span></td>
-                            <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
-                            <td>Edit now</td>
-                        </tr>
+                            {data.map((x, i) => (
+                                <tr key={i}>
 
-                        <tr>
-                            <td>Zaki CV <Span>Englsih <Icon /></Span></td>
-                            <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
-                            <td>Edit now</td>
+                                    <td>{x}<Span>Englsih <Icon /></Span></td>
+                                    <td>{x._createdAt}</td>
 
-                        </tr>
-                    </tbody>
-                </Table>
-                <div className="container">
-                    <Accordion defaultIndex={[0]} allowToggle show={show} handleClose={handleClose}>
-                        <AccordionItem>
-                            <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
-                                <Box flex="1" textAlign="left">
-                                    <h1> Go <Strong>Premium </Strong> ❤ </h1>
-                                    <Span> Show details ★ </Span>
+                                </tr>
 
-                                </Box>
-                            </AccordionHeader>
-                            <AccordionPanel pb={4}>
-                                CV Maker is absolutely FREE with no restrictions,
-                                but you can get a lot more out of it and support its continued development by going
-                                premium for a nominal annual subscription fee.
+                            ))}
+
+                            {/*  
+                                {NOW.map((time,u) => (
+                                <tr key={u}>
+                                    <td>{time}</td>
+                                    <td>Edit now</td>
+                                </tr>
+
+                            ))}
+*/}
+
+                        </tbody>
+                    </Table>
+                    <div className="container">
+                        <Accordion defaultIndex={[0]} allowToggle show={show} handleClose={handleClose}>
+                            <AccordionItem>
+                                <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
+                                    <Box flex="1" textAlign="left">
+                                        <h1> Go <Strong>Premium </Strong> ❤ </h1>
+                                        <Span> Show details ★ </Span>
+
+                                    </Box>
+                                </AccordionHeader>
+                                <AccordionPanel pb={4}>
+                                    CV Maker is absolutely FREE with no restrictions,
+                                    but you can get a lot more out of it and support its continued development by going
+                                    premium for a nominal annual subscription fee.
                                 <div className="container">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <H2> Free</H2>
+                                        <div className="row">
+                                            <div className="col-6">
+                                                <H2> Free</H2>
 
-                                            <Small>Basic templates</Small>
+                                                <Small>Basic templates</Small>
 
-                                            <Small>Add custom plain sections to your CV</Small>
-                                            <Small>Basic rich text editor</Small>
-                                            <Small>$0</Small>
+                                                <Small>Add custom plain sections to your CV</Small>
+                                                <Small>Basic rich text editor</Small>
+                                                <Small>$0</Small>
 
 
-                                        </div>
-                                        <div className="col-6">
-                                            <H2> Premium</H2>
-                                            <Small> <Green>★</Green> Premium templates in addition to the free
+                                            </div>
+                                            <div className="col-6">
+                                                <H2> Premium</H2>
+                                                <Small> <Green>★</Green> Premium templates in addition to the free
                                                 ones</Small>
-                                            <Small> <Green>★</Green> Add custom plain and special sections (similar to
+                                                <Small> <Green>★</Green> Add custom plain and special sections (similar to
                                                 education and work) to your CV</Small>
-                                            <Small> <Green>★</Green> Advanced rich text editor. Choose fonts, text
+                                                <Small> <Green>★</Green> Advanced rich text editor. Choose fonts, text
                                                 colors and more</Small>
-                                            <Small> <Green>★</Green> One-click e-mail. Send your resume directly to your
+                                                <Small> <Green>★</Green> One-click e-mail. Send your resume directly to your
                                                 e-mail easily from your mobile or tablet that doesn't allow file
                                                 downloads</Small>
-                                            <Small> <Green>★</Green> Continued access to upcoming premium features and
+                                                <Small> <Green>★</Green> Continued access to upcoming premium features and
                                                 templates</Small>
-                                            <Small>$16 / year</Small>
-                                            <ButtonForPremium>Upgrade to Premium ♥</ButtonForPremium>
-                                            <img src='paypal.png' alt="" />
+                                                <Small>$16 / year</Small>
+                                                <ButtonForPremium>Upgrade to Premium ♥</ButtonForPremium>
+                                                <img src='paypal.png' alt="" />
+                                            </div>
+
                                         </div>
-
                                     </div>
-                                </div>
-                            </AccordionPanel>
-                        </AccordionItem>
-                    </Accordion>
+                                </AccordionPanel>
+                            </AccordionItem>
+                        </Accordion>
+                    </div>
                 </div>
-            </div>
 
-        </RapperdColor>
+            </RapperdColor>
+
+        </>
+
     )
 }
 
@@ -194,7 +212,13 @@ const PrivateRoute = ({
 
 const mapStateToProps = (state) => ({
     currentUser: state.user.currentUser,
+    NOW: state.add.singleroutes
 });
 
-export default connect(mapStateToProps, null)(OldCv);
+
+const mapDispatchToProps = dispatch => ({
+    AddToList: () => dispatch(AddToList())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(OldCv);
 

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { ButtonForPremium, Content, Green, H2, Icon, RapperdColor, Small, Span, Strong, Title, ButtonforcreateCv } from './old-cv.styles'
+import { ButtonForPremium, Content, Green, H2, Icon, RapperdColor, Small, Span, Strong, Title, ButtonforcreateCv, Td } from './old-cv.styles'
 import { Accordion, AccordionHeader, AccordionItem, AccordionPanel, Box } from "@chakra-ui/core";
 import { firestore } from '../../firebase/firebase.utils';
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table'
 import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { AddToList } from '../../redux/addtolist/addtolistAction'
-const OldCv = ({ currentUser, doc, AddToList, NOW }) => {
-    const history = useHistory();
+const OldCv = ({ currentUser, doc, AddToList, match }) => {
 
     var tempDate = new Date();
     var date = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate();
@@ -28,6 +27,7 @@ const OldCv = ({ currentUser, doc, AddToList, NOW }) => {
         setDatee(new Date());
     }
 
+
     const createAnewCv = async () => {
         const _createdAt = new Date();
         const docRef = await firestore.doc(`users/${currentUser.id}`).collection('cvs').add({
@@ -43,6 +43,11 @@ const OldCv = ({ currentUser, doc, AddToList, NOW }) => {
         }
     }
 
+
+
+
+
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -57,17 +62,26 @@ const OldCv = ({ currentUser, doc, AddToList, NOW }) => {
         firestore.doc(`users/${currentUser.id}`).collection('cvs').get().then(function (querySnapshot) {
 
             querySnapshot.forEach(function (doc) {
-                let timer = doc.data();
 
-                console.log(timer, `here is timer`)
+
 
 
                 data.push(doc.id)
-                setData(data, timer)
-                console.log(data,`data is here`)
+
 
 
                 // console.log(doc.id, " => ", doc.data(), `here should show data`);
+
+                let obj = doc.data()
+
+
+
+                Object.getOwnPropertyNames(obj).forEach(key => {
+                    allcv.push(`${key}:${obj[key]}`, `heeeeeeeeeeeeero`);
+                })
+                console.log(allcv, `here is array `)
+
+
 
 
 
@@ -79,12 +93,28 @@ const OldCv = ({ currentUser, doc, AddToList, NOW }) => {
 
 
 
+    }, [firestore, data])
 
-    }, [data])
+    let { id } = match.params;
+    const history = useHistory();
 
-    useEffect(() => { }, [data, setData])
 
 
+    const editcv = async () => {
+        const _editAt = new Date();
+        const docRef = await firestore.doc(`users/${currentUser.id}`).collection('cvs').add({
+            _editAt,
+        });
+        if (docRef.id) {
+            console.log("done  adding a cv");
+            const newCvPath = `create-cv/${docRef.id}`;
+            history.push(newCvPath);
+            return;
+        } else {
+            console.log(`SomeThing Worng here`)
+        }
+
+    }
 
     return (
         <>
@@ -105,7 +135,7 @@ const OldCv = ({ currentUser, doc, AddToList, NOW }) => {
                         <tbody>
                             <tr>
                                 <td>My CV <Span>Englsih <Icon /></Span></td>
-                                <td>{datee.toLocaleTimeString()}{" " + currDate}</td>
+                                <td>{" " + currDate}</td>
                                 <td>Edit now</td>
                             </tr>
 
@@ -113,7 +143,8 @@ const OldCv = ({ currentUser, doc, AddToList, NOW }) => {
                                 <tr key={i}>
 
                                     <td>{x}<Span>Englsih <Icon /></Span></td>
-                                    <td>{x._createdAt}</td>
+                                    <td>{allcv[0]}</td>
+                                    <Td onClick={editcv}>Edit now</Td>
 
                                 </tr>
 

@@ -101,3 +101,14 @@ margin-top:20px;
     color:white;
 }
 `;
+
+
+
+
+export const Td = styled(Link)`
+
+color:orange;
+&:hover{
+    font-size:20px;
+}
+    `;

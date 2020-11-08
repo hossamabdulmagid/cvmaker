@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {useForm} from "react-hook-form";
-import {AddToList} from '../../../redux/addtolist/addtolistAction'
+import React, { useEffect, useState } from 'react';
+import { useForm } from "react-hook-form";
+import { AddToList } from '../../../redux/addtolist/addtolistAction'
 import {
     Button,
     FormLabel,
@@ -14,13 +14,13 @@ import {
     ModalOverlay,
     useDisclosure
 } from "@chakra-ui/core";
-import {ButtonForEducation} from './education.styles';
-import {connect} from 'react-redux';
-import {firestore} from '../../../firebase/firebase.utils'
-import {useParams} from "react-router-dom";
+import { ButtonForEducation } from './education.styles';
+import { connect } from 'react-redux';
+import { firestore } from '../../../firebase/firebase.utils'
+import { useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 
-const Education = ({AddToList, currentUser, education}) => {
+const Education = ({ AddToList, currentUser, education }) => {
     const { id } = useParams();
 
     const [eduo, setEduo] = useState({
@@ -30,12 +30,12 @@ const Education = ({AddToList, currentUser, education}) => {
     });
 
 
-    const {isOpen, onOpen, onClose} = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const initialRef = React.useRef();
     const finalRef = React.useRef();
 
-    const {handleSubmit, register, getValues, errors} = useForm();
+    const { handleSubmit, register, getValues, errors } = useForm();
 
     const value = getValues();
 
@@ -60,7 +60,7 @@ const Education = ({AddToList, currentUser, education}) => {
         <div className="container">
             <div className="row">
                 <div className="col-5">
-                    <ButtonForEducation className="buttonforpremium" variant='success' onClick={onOpen}>.
+                    <ButtonForEducation className="buttonforpremium" variant='success' onClick={onOpen}>
                         + Education
                     </ButtonForEducation>
                 </div>
@@ -91,27 +91,27 @@ const Education = ({AddToList, currentUser, education}) => {
                     isOpen={isOpen}
                     onClose={onClose}
                 >
-                    <ModalOverlay/>
+                    <ModalOverlay />
                     <ModalContent>
                         <ModalHeader>Add your Eduction</ModalHeader>
-                        <ModalCloseButton/>
+                        <ModalCloseButton />
                         <form onSubmit={handleSubmit(onSubmit)}>
 
                             <ModalBody pb={6}>
                                 <FormLabel>Collage name</FormLabel>
-                                <Input name="collage" ref={register({required: "this Content is Required"})}
-                                       placeholder="collage name"/>
+                                <Input name="collage" ref={register({ required: "this Content is Required" })}
+                                    placeholder="collage name" />
                                 {errors.collage && errors.collage.message}
-                                <br/>
+                                <br />
                                 <FormLabel>Start Year </FormLabel>
                                 <Input name='startyear' type="date"
-                                       ref={register({required: "this Content is Required"})}/>
+                                    ref={register({ required: "this Content is Required" })} />
                                 {errors.startyear && errors.startyear.message}
-                                <br/>
+                                <br />
                                 <FormLabel> End Year </FormLabel>
 
                                 <Input name='endyear' type="date"
-                                       ref={register({required: "this Content is Required"})}/>
+                                    ref={register({ required: "this Content is Required" })} />
 
                                 {errors.endyear && errors.endyear.message}
 

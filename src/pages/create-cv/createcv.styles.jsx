@@ -1,211 +1,203 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 import { Button } from "@chakra-ui/core";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 export const RapperColor = styled.div`
-background-color:#F7F7F7;
-height:800px;
-width:auto;
-margin:0 auto;
+  background-color: #f7f7f7;
+  height: 800px;
+  width: auto;
+  margin: 0 auto;
 `;
 
 export const Alert = styled.p`
-background-color:#FFF8B0;
-color:black;
-height:50px;
-width:auto;
-margin:14px 0px 20px 20px;
-padding:2px 0  20px 20px; 
-font-size:13px;
+  background-color: #fff8b0;
+  color: black;
+  height: 50px;
+  width: auto;
+  margin: 14px 0px 20px 20px;
+  padding: 2px 0 20px 20px;
+  font-size: 13px;
 `;
 
 export const Container = styled.div`
-padding-top:30px;
+  padding-top: 30px;
 `;
 export const Buttons = styled(Button)`
-height:33px;
-font-size: 11px;
-color: #666;
-cursor: pointer;
-border: 1px solid #ccc;
-overflow: hidden;
-display: inline-block;
-margin:1px;
-height: 1.5rem;
-border-radius: 15px;
-&:hover{
-    background: #18C7E1;
+  height: 33px;
+  font-size: 11px;
+  color: #666;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  display: inline-block;
+  margin: 1px;
+  height: 1.5rem;
+  border-radius: 15px;
+  &:hover {
+    background: #18c7e1;
     color: #fff;
-}
+  }
 `;
 export const IMG = styled.img`
-padding-left:210px;
+  padding-left: 210px;
 `;
 
 export const Col = styled.div`
-display:flex;
+  display: flex;
 `;
 
 export const RapperSidebar = styled.div`
-float: left;
-font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial;
-font-size: 13px;
-line-height: 24px;
-padding: 0;
-margin: 0;
-color: #444;
+  float: left;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial;
+  font-size: 13px;
+  line-height: 24px;
+  padding: 0;
+  margin: 0;
+  color: #444;
 `;
 
 export const Ul = styled.ul`
-overflow: hidden;
-padding: 0;
-list-style-type: none;
-margin: 0;
-font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial;
-font-size: 13px;
-line-height: 44px;
-padding: 0px;
-margin: 0;
-color: #444;
-&:hover{
-    color:#04b2cc;
-}
+  overflow: hidden;
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial;
+  font-size: 13px;
+  line-height: 44px;
+  padding: 0px;
+  margin: 0;
+  color: #444;
+  &:hover {
+    color: #04b2cc;
+  }
 `;
 
 export const Li = styled.li`
-font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial;
-font-size: 13px;
-line-height: 18px;
-padding: 0px;
-margin:2px;
-color: #04b2cc;
-border-top: 1px solid #d7d7d7;
-&:hover{
-    color:#04b2cc;
-}
-
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial;
+  font-size: 13px;
+  line-height: 18px;
+  padding: 0px;
+  margin: 2px;
+  color: #04b2cc;
+  border-top: 1px solid #d7d7d7;
+  &:hover {
+    color: #04b2cc;
+  }
 `;
 
 export const LinkForPremium = styled(Link)`
-border-radius: 15px;
-background-color: #37c871;
-font-size:13px;
-padding:6px;   
-margin:0px; 
-height: 28px;
-text-decoration:none;
-&:hover{
+  border-radius: 15px;
+  background-color: #37c871;
+  font-size: 13px;
+  padding: 6px;
+  margin: 0px;
+  height: 28px;
+  text-decoration: none;
+  &:hover {
     background-color: black;
-    color:white;
-    text-decoration:none;
-
-}
+    color: white;
+    text-decoration: none;
+  }
 `;
 
 export const ButtonSidebar = styled.button`
-font-size: 11px;
-height:;
-font-weight: bold;
-margin-top:25px;
-color: #666;
-padding-bottom:12px;
-text-shadow: 1px 1px #ddd;
-cursor: pointer;
-border: 1px solid #ccc;
-border-radius: 10px;
-overflow: hidden;
-display: inline-block;
-height:33px;
-font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial;
-line-height: 24px;
-padding: 5px;
-&:hover{
+  font-size: 11px;
+  height: ;
+  font-weight: bold;
+  margin-top: 25px;
+  color: #666;
+  padding-bottom: 12px;
+  text-shadow: 1px 1px #ddd;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  display: inline-block;
+  height: 33px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial;
+  line-height: 24px;
+  padding: 5px;
+  &:hover {
     background: #04b2cc;
     color: #fff;
-}
+  }
 `;
 
 export const P = styled.p`
-display:block;
-padding:2px;
-font-size:13px;
-margin:3px;
-
-`
+  display: block;
+  padding: 2px;
+  font-size: 13px;
+  margin: 3px;
+`;
 
 export const LINK = styled(Link)`
-display: block;
-padding: 6px 0 6px 8px;
-overflow: hidden;
-font-weight: bold;
-font-size: 14px;
-color: #666;
-border-width: 0 0 1px 1px;
-border-style: solid;
-border-color: #d7d7d7;
-line-height:24px;
-cursor: move;
-text-decoration:none;
-    &:hover{
-        color:white;
-        background-color:#04b2cc;
-        text-decoration:none;
-    }
+  display: block;
+  padding: 6px 0 6px 8px;
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 14px;
+  color: #666;
+  border-width: 0 0 1px 1px;
+  border-style: solid;
+  border-color: #d7d7d7;
+  line-height: 24px;
+  cursor: move;
+  text-decoration: none;
+  &:hover {
+    color: white;
+    background-color: #04b2cc;
+    text-decoration: none;
+  }
 `;
-
 
 export const Buttonss = styled.button`
-font-size: 13px;
-font-weight: bold;
-color: #666;
-/* text-shadow: 1px 1px #ddd; */
-cursor: pointer;
-border: 1px solid #ccc;
-border-radius: 15px;
-overflow: hidden;
-display: inline-block;
-width: 200px;
-height: 35px;
-line-height: 24px;
-&:hover{
-    background-color:#BBBAB5;
-}
+  font-size: 13px;
+  font-weight: bold;
+  color: #666;
+  /* text-shadow: 1px 1px #ddd; */
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  overflow: hidden;
+  display: inline-block;
+  width: 200px;
+  height: 35px;
+  line-height: 24px;
+  &:hover {
+    background-color: #bbbab5;
+  }
 `;
-
 
 export const LinkOption = styled(Link)`
-color:block;
-text-decoration:none;
-&:hover{
-    color:black;
-    text-decoration:none;
-}
+  color: block;
+  text-decoration: none;
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
-
 export const ButtonForAddNewSection = styled.button`
-border-radius: 15px;
-background-color: #ddd;
-color:black;
-font-size:13px;
-padding:8px;
-line-height: revert;
-height: 28px;
-width: 150px;
-margin-top:1px;
-&:hover{
-    background-color: #18C7E1;
-    color:white;
-}`
-    ;
-
+  border-radius: 15px;
+  background-color: #ddd;
+  color: black;
+  font-size: 13px;
+  padding: 8px;
+  line-height: revert;
+  height: 28px;
+  width: 150px;
+  margin-top: 1px;
+  &:hover {
+    background-color: #18c7e1;
+    color: white;
+  }
+`;
 
 export const Span = styled.span`
-color:red;
+  color: red;
 
-padding: 8px;
-margin: 5px;
-&:hover{
-    color:red;
-}
-
+  padding: 8px;
+  margin: 5px;
+  &:hover {
+    color: red;
+  }
 `;

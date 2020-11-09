@@ -1,18 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom'
-import { ThemeProvider, theme, ColorModeProvider, CSSReset } from '@chakra-ui/core';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import {
+  ThemeProvider,
+  theme,
+  ColorModeProvider,
+  CSSReset,
+} from "@chakra-ui/core";
 
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import { Provider } from "react-redux";
+import * as serviceWorker from "./serviceWorker";
 
-
-import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './redux/store'
-
-
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./redux/store";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -26,9 +28,8 @@ ReactDOM.render(
         </ColorModeProvider>
       </ThemeProvider>
     </BrowserRouter>
-  </Provider>
-  ,
-  document.getElementById('root')
+  </Provider>,
+  document.getElementById("root")
 );
 
-serviceWorker.unregister(); 
+serviceWorker.unregister();

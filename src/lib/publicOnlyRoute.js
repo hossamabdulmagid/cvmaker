@@ -8,17 +8,13 @@ const PublicOnlyRoute = ({
   currentUser,
   ...rest
 }) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        !currentUser ? (
-          <Component {...props} />
-        ) : (
-            <Redirect to={redirectPath} />
-          )
-      }
-    />
-  );
+  <Route
+    {...rest}
+    render={(props) =>
+      !currentUser ? <Component {...props} /> : <Redirect to={redirectPath} />
+    }
+  />
+);
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,

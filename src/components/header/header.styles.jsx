@@ -1,134 +1,110 @@
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Button } from "@chakra-ui/core";
 export const RapperColor = styled.div`
-height:659px;
-width:auto;
-background-color:#18C7E1;
-color:white;
-
-
+  height: 659px;
+  width: auto;
+  background-color: #18c7e1;
+  color: white;
 `;
-
 
 export const RapperContent = styled.div`
+  padding: 25px;
 
-padding:25px;
-
-font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial;
-font-size: 28px;
-line-height: 24px;
-
-
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial;
+  font-size: 28px;
+  line-height: 24px;
 `;
-
 
 export const H1 = styled.h1`
-display:inline-flex;
-padding:5px;
+  display: inline-flex;
+  padding: 5px;
 `;
-
 
 export const SPan = styled.span`
-font-weight:bold;
-
-
+  font-weight: bold;
 `;
-
 
 export const P = styled.p`
-font-size:33px;
-font-weight:100;
-padding-top:80px;
-margin: 0 0 300px 0;
-font-size: 32px;
-font-weight: 300;
-line-height: 38px;
+  font-size: 33px;
+  font-weight: 100;
+  padding-top: 80px;
+  margin: 0 0 300px 0;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 38px;
 `;
-
 
 export const LINK = styled(Link)`
-margin-top:25px;     
-padding-top:20px;
-`
-
+  margin-top: 25px;
+  padding-top: 20px;
+`;
 
 export const BUTTON = styled(Button)`
-background-img:url(cvmaker.png);
-background-repeat: no-repeat;
-margin-top:80px;
-padding:2px;
-background-position: 0px 0px 0px 0px;
-height:40px;
-width:250px;
-background-color: #009fb5;
-border-radius:10px;
-&:hover{
-    background-color:black;
-}
-
+  background-img: url(cvmaker.png);
+  background-repeat: no-repeat;
+  margin-top: 80px;
+  padding: 2px;
+  background-position: 0px 0px 0px 0px;
+  height: 40px;
+  width: 250px;
+  background-color: #009fb5;
+  border-radius: 10px;
+  &:hover {
+    background-color: black;
+  }
 `;
-
 
 export const IMG = styled.img`
-width:50px;
-
+  width: 50px;
 `;
-
 
 export const Div = styled.div`
-padding:15px;
-border-bottom:1px solid gray;
-
+  padding: 15px;
+  border-bottom: 1px solid gray;
 `;
 export const BUTTONFORLIKE = styled(Button)`
-height:30px;
-width:110px;
-
+  height: 30px;
+  width: 110px;
 `;
 export const BUTTONFORTWITTER = styled(Button)`
-height:30px;
-width:100px;
-background-color:#1A91DA;
-&:hover{
-    background-color:#1A91DA;
-
-}
-
+  height: 30px;
+  width: 100px;
+  background-color: #1a91da;
+  &:hover {
+    background-color: #1a91da;
+  }
 `;
 export const BUTTONFORSHARE = styled(Button)`
-width:100px;
-height:30px;    
-padding:2px;
+  width: 100px;
+  height: 30px;
+  padding: 2px;
 `;
 
 export const BUTTONFORLOGIN = styled(Button)`
-height:30px;
-background-color:#6BC9D5;
-padding:2px;
-&:hover{
-    background-color:black;
-}
-text-shadow: 1px 1px #17bdd3;
-    color: #fff;
-    padding:2px;
-    width:100px;
+  height: 30px;
+  background-color: #6bc9d5;
+  padding: 2px;
+  &:hover {
+    background-color: black;
+  }
+  text-shadow: 1px 1px #17bdd3;
+  color: #fff;
+  padding: 2px;
+  width: 100px;
 `;
-
 
 export const Small = styled.span`
-float:left;
-background-color:blue;
-width:25px;
-padding:1px;
+  float: left;
+  background-color: blue;
+  width: 25px;
+  padding: 1px;
 `;
 
-
 export const Links = styled(Link)`
-color:white;
-&:hover{
-    color:white;
-    text-decoration:none;
-}
-
+  color: white;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
 `;

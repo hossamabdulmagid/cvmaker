@@ -32,6 +32,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
         const _createdAt = new Date();
         const docRef = await firestore.doc(`users/${currentUser.id}`).collection('cvs').add({
             _createdAt,
+            data: {}
         });
         if (docRef.id) {
             console.log("done  adding a cv");

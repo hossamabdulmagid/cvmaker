@@ -56,30 +56,31 @@ const BasicInfo = ({ currentUser, match, doc, info, basicinfo }) => {
 
     // here was an useEffect
 
+    const [details, setDeatil] = useState({});
+
+    useEffect(() => {
+
+        firestore.doc(`users/${currentUser.id}`).collection(`cvs/${id}/data`).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                let data = doc.data();
+                console.log(doc.id, " => ", doc.data(), `here should show data`);
 
 
 
 
+            });
+            setLoading(true)
 
+        }).catch(error => {
+            console.log(`there is was an error`)
+            setLoading(false)
 
-    firestore.doc(`users/${currentUser.id}`).collection(`cvs/${id}/data`).get().then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-            let data = doc.data();
-
-            console.log(doc.id, " => ", doc.data(), `here should show data`);
-
-            //  setBasicInfo(data)
-            setTimeout(() => {
-                setLoading(true);
-            }, 5000);
-
-
-        });
-    });
+        })
 
 
 
 
+    }, [data.basicinfo])
 
 
 
@@ -98,7 +99,6 @@ const BasicInfo = ({ currentUser, match, doc, info, basicinfo }) => {
 
                                     <Input
                                         name="fullname"
-                                       // defaultValue={fullname}
                                         ref={register()}
                                     />
                                     {errors.fullname && errors.fullname.message}

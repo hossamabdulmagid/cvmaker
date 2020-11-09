@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ButtonForPremium, Content, Green, H2, Icon, RapperdColor, Small, Span, Strong, Title, ButtonforcreateCv, Td } from './old-cv.styles'
+import { ButtonForPremium, Content, Green, H2, Icon, RapperdColor, Small, Span, Strong, Title, ButtonforcreateCv, Linkcv } from './old-cv.styles'
 import { Accordion, AccordionHeader, AccordionItem, AccordionPanel, Box } from "@chakra-ui/core";
 import { firestore } from '../../firebase/firebase.utils';
 import { Link, useHistory, useParams } from "react-router-dom";
@@ -63,37 +63,22 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
 
             querySnapshot.forEach(function (doc) {
 
-
-
-
                 data.push(doc.id)
-
-
 
                 // console.log(doc.id, " => ", doc.data(), `here should show data`);
 
                 let obj = doc.data()
 
-
-
                 Object.getOwnPropertyNames(obj).forEach(key => {
                     allcv.push(`${key}:${obj[key]}`, `heeeeeeeeeeeeero`);
                 })
-                console.log(allcv, `here is array `)
-
-
-
-
-
-
-
-
+                console.log(allcv, `here is array `);
             });
         });
 
 
 
-    }, [firestore, data])
+    }, [firestore, data, doc])
 
     let { id } = match.params;
     const history = useHistory();
@@ -124,23 +109,13 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
                             {data.map((x, i) => (
                                 <tr key={i}>
 
-                                    <td>{x}<Span>Englsih <Icon /></Span></td>
+                                    <td >{x}<Span>Englsih <Icon /></Span></td>
                                     <td>{allcv[0]}</td>
-                                    <Link to={"create-cv/" + `${x}`} >Edit now</Link>
+                                    <td> <Linkcv to={"create-cv/" + `${x}`} >Edit now</Linkcv></td>
 
                                 </tr>
 
                             ))}
-
-                            {/*  
-                                {NOW.map((time,u) => (
-                                <tr key={u}>
-                                    <td>{time}</td>
-                                    <td>Edit now</td>
-                                </tr>
-
-                            ))}
-*/}
 
                         </tbody>
                     </Table>

@@ -105,10 +105,8 @@ margin-top:20px;
 
 
 
-export const Td = styled(Link)`
+export const Linkcv = styled(Link)`
 
 color:orange;
-&:hover{
-    font-size:20px;
-}
+text-align:center;
     `;

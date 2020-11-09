@@ -14,16 +14,16 @@ import {
     ModalOverlay,
     useDisclosure
 } from "@chakra-ui/core";
-import { ButtonForEducation } from './education.styles';
+import { ButtonForEducation, P, Rapperd, Strong } from './education.styles';
 import { connect } from 'react-redux';
 import { firestore } from '../../../firebase/firebase.utils'
 import { useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 
-const Education = ({ AddToList, currentUser, education }) => {
+const Education = ({ AddToList, currentUser }) => {
     const { id } = useParams();
 
-    const [eduo, setEduo] = useState({
+    const [education, setEducation] = useState({
         collage: '',
         stateyear: '',
         endyear: ''
@@ -38,6 +38,7 @@ const Education = ({ AddToList, currentUser, education }) => {
     const { handleSubmit, register, getValues, errors } = useForm();
 
     const value = getValues();
+    const [loading, setLoading] = useState(false);
 
 
     useEffect(() => {
@@ -47,13 +48,23 @@ const Education = ({ AddToList, currentUser, education }) => {
     const onSubmit = async value => {
         const cvRef = firestore.doc(`users/${currentUser.id}/cvs/${id}/data/education`);
         await cvRef.set({
-            CollageName: value.collage,
-            StartGraduationYear: value.startyear,
-            EndGraduationYear: value.endyear
+            education: {
+                CollageName: value.collage,
+                StartGraduationYear: value.startyear,
+                EndGraduationYear: value.endyear
+            }
         });
         onClose();
         toast.success(`your cvs details has been updated`)
     }
+
+
+
+
+
+
+    console.log(education.CollageName, `education.CollageName`)
+
 
 
     return (
@@ -65,23 +76,23 @@ const Education = ({ AddToList, currentUser, education }) => {
                     </ButtonForEducation>
                 </div>
             </div>
-            {/*
-                        <Rapperd>
-                    <Rapperd>
-                        <P>
-                            collageName:  <Strong>{eduo.collageName}</Strong>
-                        </P>
-                        <P>
-                            Start Year:  <Strong>{singleEducation.startGraduationYear}</Strong>
-                        </P>
-                        <P>
-                            End Year:  <Strong>{singleEducation.endGraduationYear}</Strong>
 
-                        </P>
-                    </Rapperd>
+            <Rapperd>
+                <Rapperd>
+                    <P>
+                        collageName:  <Strong>{education.CollageName}</Strong>
+                    </P>
+                    <P>
+                        Start Year:  <Strong>{education.StartGraduationYear}</Strong>
+                    </P>
+                    <P>
+                        End Year:  <Strong>{education.EndGraduationYear}</Strong>
+
+                    </P>
+                </Rapperd>
             </Rapperd>
 
-*/}
+
 
             <>
 

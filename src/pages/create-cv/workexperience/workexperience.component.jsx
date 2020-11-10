@@ -15,6 +15,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Spinner
 } from "@chakra-ui/core";
 import { ButtonForWork, Rapperd, P, Strong } from "./workexperience.styles";
 import { firestore } from "../../../firebase/firebase.utils";
@@ -62,10 +63,34 @@ const Workexperience = (props) => {
     setWorkexperinceform({ ...workexperinceform, [name]: value });
   };
 
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
-    setWorkexperinceform(workexperinceform)
-  }, [workexperinceform])
+    firestore
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          console.log(doc.id, " => ", doc.data(), `here should show data`);
+          let obj = doc.data();
+          setWorkexperinceform({
+            companyname: obj.companyname,
+            startwork: obj.startwork,
+            endwork: obj.endwork,
+          });
+          setLoading(true);
+
+
+        });
+
+      })
+      .catch((error) => {
+        console.log(`there is was an error`);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="container">
@@ -81,17 +106,19 @@ const Workexperience = (props) => {
         </div>
       </div>
       <Rapperd>
-        <Rapperd>
-          <P>
-            CompanyName: <Strong>{companyname}</Strong>
-          </P>
-          <P>
-            Start Work: <Strong>{startwork}</Strong>
-          </P>
-          <P>
-            End Work: <Strong>{endwork}</Strong>
-          </P>
-        </Rapperd>
+        {loading ? (
+          <Rapperd>
+            <P>
+              CompanyName: <Strong>{companyname}</Strong>
+            </P>
+            <P>
+              Start Work: <Strong>{startwork}</Strong>
+            </P>
+            <P>
+              End Work: <Strong>{endwork}</Strong>
+            </P>
+          </Rapperd>) : (<Spinner />)}
+
       </Rapperd>
 
       <Modal
@@ -163,7 +190,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  AddToList: (value) => dispatch(AddToList(value)),
+  AddToList: () => dispatch(AddToList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workexperience);

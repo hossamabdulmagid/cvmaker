@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  Spinner
 } from "@chakra-ui/core";
 import { ButtonForEducation, P, Rapperd, Strong } from "./education.styles";
 import { connect } from "react-redux";
@@ -23,17 +24,6 @@ import { toast } from "react-toastify";
 const Education = (props) => {
   const { AddToList, currentUser } = props;
   const { id } = useParams();
-
-  const [education, setEducation] = useState({
-    CollageName: "",
-    StartGraduationYear: "",
-    EndGraduationYear: "",
-  });
-  const { EndGraduationYear, StartGraduationYear, CollageName } = education;
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setEducation({ ...education, [name]: value });
-  };
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = React.useRef();
@@ -42,23 +32,66 @@ const Education = (props) => {
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const value = getValues();
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {}, [currentUser]);
+
+  const [education, setEducation] = useState({
+    collagename: "",
+    startgraduationyear: "",
+    endgraduationyear: "",
+  });
+
+  const { collagename, startgraduationyear, endgraduationyear } = education;
+  useEffect(() => { }, [currentUser, id]);
+
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/education`
     );
     await cvRef.set({
-      CollageName: education.CollageName,
-      StartGraduationYear: education.StartGraduationYear,
-      EndGraduationYear: education.EndGraduationYear,
+      collagename: education.collagename,
+      startgraduationyear: education.startgraduationyear,
+      endgraduationyear: education.endgraduationyear,
     });
     onClose();
     toast.success(`your cvs details has been updated`);
   };
 
-  console.log(education.CollageName, `education.CollageName`);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setEducation({ ...education, [name]: value });
+  };
+
+
+
+
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    firestore
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          console.log(doc.id, " => ", doc.data(), `here should show data`);
+          let objoo = doc.data();
+          setLoading(true);
+
+          setEducation({
+            collagename: doc.data().collagename,
+            startgraduationyear: doc.data().startgraduationyear,
+            endgraduationyear: doc.data().endgraduationyear,
+          });
+
+
+        });
+
+      })
+      .catch((error) => {
+        console.log(`there is was an error`);
+        setLoading(false);
+      });
+  }, []);
+
 
   return (
     <div className="container">
@@ -73,20 +106,20 @@ const Education = (props) => {
           </ButtonForEducation>
         </div>
       </div>
-
       <Rapperd>
-        <Rapperd>
+        {loading ? (<Rapperd>
           <P>
-            collageName: <Strong>{CollageName}</Strong>
+            CollageName: <Strong>{collagename}</Strong>
           </P>
           <P>
-            Start Year: <Strong>{StartGraduationYear}</Strong>
+            StartGraduationYear: <Strong>{startgraduationyear}</Strong>
           </P>
           <P>
-            End Year: <Strong>{EndGraduationYear}</Strong>
+            EndGraduationYear: <Strong>{endgraduationyear}</Strong>
           </P>
-        </Rapperd>
+        </Rapperd>) : (<Spinner />)}
       </Rapperd>
+
 
       <>
         <Modal
@@ -103,36 +136,35 @@ const Education = (props) => {
               <ModalBody pb={6}>
                 <FormLabel>Collage name</FormLabel>
                 <Input
-                  name="CollageName"
-                  value={education.CollageName}
+                  name="collagename"
+                  value={collagename}
                   onChange={handleChange}
                   ref={register({ required: "this Content is Required" })}
                   placeholder="collage name"
                 />
-                {errors.CollageName && errors.CollageName.message}
+                {errors.collagename && errors.collagename.message}
                 <br />
                 <FormLabel>Start Year </FormLabel>
                 <Input
-                  name="StartGraduationYear"
-                  value={education.StartGraduationYear}
+                  name="startgraduationyear"
+                  value={startgraduationyear}
                   onChange={handleChange}
                   type="date"
                   ref={register({ required: "this Content is Required" })}
                 />
-                {errors.StartGraduationYear &&
-                  errors.StartGraduationYear.message}
+                {errors.startgraduationyear &&
+                  errors.startgraduationyear.message}
                 <br />
                 <FormLabel> End Year </FormLabel>
-
                 <Input
-                  name="EndGraduationYear"
-                  value={education.EndGraduationYear}
-                  type="date"
+                  name="endgraduationyear"
+                  value={endgraduationyear}
                   onChange={handleChange}
+                  type="date"
                   ref={register({ required: "this Content is Required" })}
                 />
 
-                {errors.EndGraduationYear && errors.EndGraduationYear.message}
+                {errors.endgraduationyear && errors.endgraduationyear.message}
               </ModalBody>
 
               <ModalFooter>

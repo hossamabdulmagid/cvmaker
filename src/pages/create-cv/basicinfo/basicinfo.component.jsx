@@ -100,20 +100,18 @@ const BasicInfo = (props) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           console.log(doc.id, " => ", doc.data(), `here should show data`);
-          let obj = doc.data();
+          let objz = doc.data();
           setDataform({
-            fullname: obj.fullname,
-            phone: obj.phone,
-            email: obj.email,
-            address1: obj.address1,
-            address2: obj.address2,
-            address3: obj.address3,
-            webSites: obj.webSites,
+            fullname: objz.fullname,
+            phone: objz.phone,
+            email: objz.email,
+            address1: objz.address1,
+            address2: objz.address2,
+            address3: objz.address3,
+            webSites: objz.webSites,
           })
+
           setLoading(true);
-
-          console.log(dataform, `dataform is heeeeeeeeer`)
-
         });
 
       })
@@ -127,7 +125,7 @@ const BasicInfo = (props) => {
   return (
     <Fragment>
       <Container className="container-fluid">
-        {loading ? (
+        {loading  ? (
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="container">
               <Title> </Title>

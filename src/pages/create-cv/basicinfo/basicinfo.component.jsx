@@ -97,7 +97,7 @@ const BasicInfo = (props) => {
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .get()
-      .then(function (querySnapshot, obj) {
+      .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           console.log(doc.id, " => ", doc.data(), `here should show data`);
           let obj = doc.data();
@@ -110,11 +110,12 @@ const BasicInfo = (props) => {
             address3: obj.address3,
             webSites: obj.webSites,
           })
+          setLoading(true);
+
           console.log(dataform, `dataform is heeeeeeeeer`)
 
         });
 
-        setLoading(true);
       })
       .catch((error) => {
         console.log(`there is was an error`);

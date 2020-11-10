@@ -121,7 +121,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
             <tbody>
               <tr>
                 <td>
-                  My CV{" "}
+                  My CV
                   <Span>
                     Englsih <Icon />
                   </Span>
@@ -232,10 +232,10 @@ const PrivateRoute = ({ component: Component, currentUser, ...rest }) => (
       currentUser != null ? (
         <Component {...props} />
       ) : (
-        <Redirect
-          to={{ pathname: "/login", state: { from: props.location } }}
-        />
-      )
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        )
     }
   />
 );

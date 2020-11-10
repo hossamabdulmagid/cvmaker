@@ -87,6 +87,8 @@ const BasicInfo = (props) => {
       toast.success(`your cvs details has been updated`);
     } catch (error) {
       console.log(error, 'erorororoororrR')
+      toast.error(`You Must First Change  Your Feild information`);
+
     }
 
   };
@@ -144,7 +146,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="fullname"
                     value={fullname}
-                    ref={register({ required: " feild is Required" })}
+                    ref={register()}
                     onChange={handleChange}
                   />
                   {errors.fullname && errors.fullname.message}
@@ -164,7 +166,7 @@ const BasicInfo = (props) => {
                   <Label>Address Line 1</Label>
                   <Input
                     name="address1"
-                    ref={register({ required: " feild is Required" })}
+                    ref={register()}
                     value={address1}
                     onChange={handleChange}
                   />
@@ -173,7 +175,7 @@ const BasicInfo = (props) => {
                   <Label>Address Line 3</Label>
                   <Input
                     name="address3"
-                    ref={register({ required: " feild is Required" })}
+                    ref={register()}
                     value={address3}
                     onChange={handleChange}
                   />
@@ -184,7 +186,7 @@ const BasicInfo = (props) => {
                   <Label>E-mail address</Label>
                   <Input
                     name="email"
-                    value={dataform.email}
+                    value={email}
                     onChange={handleChange}
                     ref={register({ required: " feild is Required" })}
                   />
@@ -193,7 +195,7 @@ const BasicInfo = (props) => {
                   <Label>Websites</Label>
                   <Input
                     name="webSites"
-                    ref={register({ required: " feild is Required" })}
+                    ref={register()}
                     value={webSites}
                     onChange={handleChange}
                   />
@@ -203,7 +205,7 @@ const BasicInfo = (props) => {
                   <Label>Address Line 2</Label>
                   <Input
                     name="address2"
-                    ref={register({ required: " feild is Required" })}
+                    ref={register()}
                     value={dataform.address2}
                     onChange={handleChange}
                   />

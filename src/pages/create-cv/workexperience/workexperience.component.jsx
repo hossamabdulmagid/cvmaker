@@ -33,6 +33,19 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
 
   const value = getValues();
 
+  const [workexperince, setWorkexperince] = useState({
+    companyname: "",
+    startwork: "",
+    endwork: "",
+  });
+
+  const { companyname, startwork, endwork } = workexperince;
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setWorkexperince({ ...workexperince, [name]: value });
+  };
+
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/workexperience`
@@ -45,10 +58,6 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
     onClose();
     toast.success(`your cvs details has been updated`);
   };
-
-  useEffect(() => {
-    //  console.log(currentUser.cvs._id, `bla bla bla`)
-  }, []);
 
   return (
     <div className="container">
@@ -64,23 +73,20 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
           </ButtonForWork>
         </div>
       </div>
-      {/*   <Rapperd>
-                {work.filter((singlework, idx) => idx < 2).map((singlework, i) => (
-                    <Rapperd key={i}>
-                        <P>
-                            CompanyName:  <Strong>{singlework.companyName}</Strong>
-                        </P>
-                        <P>
-                            Start Work:  <Strong>{singlework.startWork}</Strong>
-                        </P>
-                        <P>
-                            End Work:  <Strong>{singlework.endWork}</Strong>
+      <Rapperd>
+        <Rapperd>
+          <P>
+            CompanyName: <Strong>{companyname}</Strong>
+          </P>
+          <P>
+            Start Work: <Strong>{startwork}</Strong>
+          </P>
+          <P>
+            End Work: <Strong>{endwork}</Strong>
+          </P>
+        </Rapperd>
+      </Rapperd>
 
-                        </P>
-                    </Rapperd>
-                ))}
-            </Rapperd>
-            */}
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -97,6 +103,8 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
               <Input
                 ref={register({ required: "this Feild is Required" })}
                 name="companyname"
+                value={companyname}
+                onChange={handleChange}
                 placeholder="CompanyName"
               />
               {errors.companyname && errors.companyname.message}
@@ -105,6 +113,8 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
               <Input
                 ref={register({ required: "this Feild is Required" })}
                 name="startwork"
+                onChange={handleChange}
+                value={startwork}
                 placeholder="Graduation Year"
                 type="date"
               />
@@ -115,6 +125,8 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
                 ref={register({ required: "this Feild is Required" })}
                 name="endwork"
                 placeholder="Graduation Year"
+                onChange={handleChange}
+                valye={endwork}
                 type="date"
               />
               {errors.endwork && errors.endwork.message}

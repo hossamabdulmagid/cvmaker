@@ -20,15 +20,20 @@ import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Education = ({ AddToList, currentUser }) => {
+const Education = (props) => {
+  const { AddToList, currentUser } = props;
   const { id } = useParams();
 
   const [education, setEducation] = useState({
-    collage: "",
-    stateyear: "",
-    endyear: "",
+    CollageName: "",
+    StartGraduationYear: "",
+    EndGraduationYear: "",
   });
-
+  const { EndGraduationYear, StartGraduationYear, CollageName } = education;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setEducation({ ...education, [name]: value });
+  };
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = React.useRef();
@@ -45,9 +50,9 @@ const Education = ({ AddToList, currentUser }) => {
       `users/${currentUser.id}/cvs/${id}/data/education`
     );
     await cvRef.set({
-      CollageName: value.collage,
-      StartGraduationYear: value.startyear,
-      EndGraduationYear: value.endyear,
+      CollageName: education.CollageName,
+      StartGraduationYear: education.StartGraduationYear,
+      EndGraduationYear: education.EndGraduationYear,
     });
     onClose();
     toast.success(`your cvs details has been updated`);
@@ -72,13 +77,13 @@ const Education = ({ AddToList, currentUser }) => {
       <Rapperd>
         <Rapperd>
           <P>
-            collageName: <Strong>{education.CollageName}</Strong>
+            collageName: <Strong>{CollageName}</Strong>
           </P>
           <P>
-            Start Year: <Strong>{education.StartGraduationYear}</Strong>
+            Start Year: <Strong>{StartGraduationYear}</Strong>
           </P>
           <P>
-            End Year: <Strong>{education.EndGraduationYear}</Strong>
+            End Year: <Strong>{EndGraduationYear}</Strong>
           </P>
         </Rapperd>
       </Rapperd>
@@ -98,29 +103,36 @@ const Education = ({ AddToList, currentUser }) => {
               <ModalBody pb={6}>
                 <FormLabel>Collage name</FormLabel>
                 <Input
-                  name="collage"
+                  name="CollageName"
+                  value={education.CollageName}
+                  onChange={handleChange}
                   ref={register({ required: "this Content is Required" })}
                   placeholder="collage name"
                 />
-                {errors.collage && errors.collage.message}
+                {errors.CollageName && errors.CollageName.message}
                 <br />
                 <FormLabel>Start Year </FormLabel>
                 <Input
-                  name="startyear"
+                  name="StartGraduationYear"
+                  value={education.StartGraduationYear}
+                  onChange={handleChange}
                   type="date"
                   ref={register({ required: "this Content is Required" })}
                 />
-                {errors.startyear && errors.startyear.message}
+                {errors.StartGraduationYear &&
+                  errors.StartGraduationYear.message}
                 <br />
                 <FormLabel> End Year </FormLabel>
 
                 <Input
-                  name="endyear"
+                  name="EndGraduationYear"
+                  value={education.EndGraduationYear}
                   type="date"
+                  onChange={handleChange}
                   ref={register({ required: "this Content is Required" })}
                 />
 
-                {errors.endyear && errors.endyear.message}
+                {errors.EndGraduationYear && errors.EndGraduationYear.message}
               </ModalBody>
 
               <ModalFooter>

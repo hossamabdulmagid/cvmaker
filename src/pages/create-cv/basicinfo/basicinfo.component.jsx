@@ -26,7 +26,7 @@ const BasicInfo = (props) => {
 
   console.log("current cv id is ", id);
 
-  useEffect(() => {}, [currentUser, id]);
+  useEffect(() => { }, [currentUser, id]);
 
   const [allcv, setAllcv] = useState([]);
   const [data, setData] = useState({});
@@ -102,12 +102,13 @@ const BasicInfo = (props) => {
           console.log(doc.id, " => ", doc.data(), `here should show data`);
         });
         setLoading(true);
+        setDataform(data)
       })
       .catch((error) => {
         console.log(`there is was an error`);
         setLoading(false);
       });
-  }, [data.basicinfo]);
+  }, []);
 
   return (
     <Fragment>
@@ -220,8 +221,8 @@ const BasicInfo = (props) => {
             </div>
           </form>
         ) : (
-          <Spinner />
-        )}
+            <Spinner />
+          )}
       </Container>
     </Fragment>
   );

@@ -21,7 +21,8 @@ import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Workexperience = ({ AddToList, currentUser, cvs }) => {
+const Workexperience = (props) => {
+  const { AddToList, currentUser, cvs } = props;
   const { id } = useParams();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -32,32 +33,39 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const value = getValues();
-
-  const [workexperince, setWorkexperince] = useState({
+  const [workexperinceform, setWorkexperinceform] = useState({
     companyname: "",
     startwork: "",
     endwork: "",
   });
 
-  const { companyname, startwork, endwork } = workexperince;
+  const { companyname, startwork, endwork } = workexperinceform;
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setWorkexperince({ ...workexperince, [name]: value });
-  };
 
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/workexperience`
     );
     await cvRef.set({
-      Company: value.companyname,
-      StartWork: value.startwork,
-      EndWork: value.endwork,
+      companyname: workexperinceform.companyname,
+      startwork: workexperinceform.startwork,
+      endwork: workexperinceform.endwork,
     });
     onClose();
     toast.success(`your cvs details has been updated`);
   };
+
+
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setWorkexperinceform({ ...workexperinceform, [name]: value });
+  };
+
+
+  useEffect(() => {
+    setWorkexperinceform(workexperinceform)
+  }, [workexperinceform])
 
   return (
     <div className="container">
@@ -68,8 +76,7 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
             variant="success"
             onClick={onOpen}
           >
-            {" "}
-            +WorkExpernice
+            + WorkExpernice
           </ButtonForWork>
         </div>
       </div>

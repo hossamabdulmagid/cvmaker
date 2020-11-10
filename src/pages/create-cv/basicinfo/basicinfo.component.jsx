@@ -19,9 +19,13 @@ import { firestore } from "../../../firebase/firebase.utils";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
-const BasicInfo = ({ currentUser, match, doc, info, basicinfo }) => {
+const BasicInfo = (props) => {
+  const { currentUser, match, doc, info, basicinfo } = props;
+
   const { id } = useParams();
+
   console.log("current cv id is ", id);
+
   useEffect(() => {}, [currentUser, id]);
 
   const [allcv, setAllcv] = useState([]);
@@ -40,32 +44,44 @@ const BasicInfo = ({ currentUser, match, doc, info, basicinfo }) => {
 
   const value = getValues();
 
+  const [dataform, setDataform] = useState({
+    FullName: "",
+    Phone: "",
+    Email: "",
+    Address1: "",
+    Address2: "",
+    Address3: "",
+    WebSites: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setDataform({ ...dataform, [name]: value });
+  };
+
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/basicinfo`
     );
     await cvRef.set({
       basicinfo: {
-        FullName: value.fullname,
-        Phone: 20 + value.phone,
-        Email: value.email,
-        Address1: value.address1,
-        Address2: value.address2,
-        Address3: value.address3,
-        WebSites: value.websites,
+        FullName: dataform.FullName,
+        Phone: dataform.Phone,
+        Email: dataform.Email,
+        Address1: dataform.Address1,
+        Address2: dataform.Address2,
+        Address3: dataform.Address3,
+        WebSites: dataform.WebSites,
       },
     });
     toast.success(`your cvs details has been updated`);
   };
 
-  console.log(basicinfo, `basicinfo`);
   // Add a new document in collection "cities"
 
   const [loading, setLoading] = useState(false);
 
   // here was an useEffect
-
-  const [details, setDeatil] = useState({});
 
   useEffect(() => {
     firestore
@@ -96,12 +112,19 @@ const BasicInfo = ({ currentUser, match, doc, info, basicinfo }) => {
                 <div className="col-6">
                   <Label>Full name</Label>
 
-                  <Input name="fullname" ref={register()} />
+                  <Input
+                    name="fullname"
+                    defaultValue={dataform.fullname}
+                    ref={register()}
+                    onChange={handleChange}
+                  />
                   {errors.fullname && errors.fullname.message}
 
                   <Label>Phone numbers</Label>
                   <Input
                     name="phone"
+                    value={dataform.phone}
+                    onChange={handleChange}
                     ref={register({ required: " feild is Required" })}
                   />
                   <br />
@@ -110,11 +133,21 @@ const BasicInfo = ({ currentUser, match, doc, info, basicinfo }) => {
 
                   <hr />
                   <Label>Address Line 1</Label>
-                  <Input name="address1" ref={register()} />
+                  <Input
+                    name="address1"
+                    ref={register()}
+                    value={dataform.address1}
+                    onChange={handleChange}
+                  />
                   {errors.address1 && errors.address1.message}
 
                   <Label>Address Line 3</Label>
-                  <Input name="address3" ref={register()} />
+                  <Input
+                    name="address3"
+                    ref={register()}
+                    value={dataform.address3}
+                    onChange={handleChange}
+                  />
                   {errors.address3 && errors.address3.message}
                 </div>
                 <hr />
@@ -122,17 +155,29 @@ const BasicInfo = ({ currentUser, match, doc, info, basicinfo }) => {
                   <Label>E-mail address</Label>
                   <Input
                     name="email"
+                    value={dataform.email}
+                    onChange={handleChange}
                     ref={register({ required: " feild is Required" })}
                   />
                   {errors.email && errors.email.message}
 
                   <Label>Websites</Label>
-                  <Input name="websites" ref={register()} />
+                  <Input
+                    name="websites"
+                    ref={register()}
+                    value={dataform.websites}
+                    onChange={handleChange}
+                  />
                   {errors.websites && errors.websites.message}
 
                   <hr />
                   <Label>Address Line 2</Label>
-                  <Input name="address2" ref={register()} />
+                  <Input
+                    name="address2"
+                    ref={register()}
+                    value={dataform.address2}
+                    onChange={handleChange}
+                  />
                   {errors.address2 && errors.address2.message}
 
                   <br />

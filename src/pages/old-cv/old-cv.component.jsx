@@ -57,7 +57,6 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
       .collection("cvs")
       .add({
         _createdAt,
-        data: {},
       });
     if (docRef.id) {
       console.log("done  adding a cv");

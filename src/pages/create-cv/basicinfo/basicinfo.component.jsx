@@ -71,19 +71,24 @@ const BasicInfo = (props) => {
   };
 
   const onSubmit = async (value) => {
-    const cvRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/basicinfo`
-    );
-    await cvRef.set({
-      fullname: dataform.fullname,
-      phone: dataform.phone,
-      email: dataform.email,
-      address1: dataform.address1,
-      address2: dataform.address2,
-      address3: dataform.address3,
-      webSites: dataform.webSites,
-    });
-    toast.success(`your cvs details has been updated`);
+    try {
+      const cvRef = firestore.doc(
+        `users/${currentUser.id}/cvs/${id}/data/basicinfo`
+      );
+      await cvRef.set({
+        fullname: fullname,
+        phone: phone,
+        email: email,
+        address1: address1,
+        address2: address2,
+        address3: address3,
+        webSites: webSites,
+      });
+      toast.success(`your cvs details has been updated`);
+    } catch (error) {
+      console.log(error, 'erorororoororrR')
+    }
+
   };
 
   // Add a new document in collection "cities"
@@ -112,6 +117,9 @@ const BasicInfo = (props) => {
           })
 
           setLoading(true);
+          if (setDataform === null) {
+            setLoading(false)
+          }
         });
 
       })
@@ -125,7 +133,7 @@ const BasicInfo = (props) => {
   return (
     <Fragment>
       <Container className="container-fluid">
-        {loading  ? (
+        {loading ? (
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="container">
               <Title> </Title>
@@ -136,7 +144,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="fullname"
                     value={fullname}
-                    ref={register()}
+                    ref={register({ required: " feild is Required" })}
                     onChange={handleChange}
                   />
                   {errors.fullname && errors.fullname.message}
@@ -156,7 +164,7 @@ const BasicInfo = (props) => {
                   <Label>Address Line 1</Label>
                   <Input
                     name="address1"
-                    ref={register()}
+                    ref={register({ required: " feild is Required" })}
                     value={address1}
                     onChange={handleChange}
                   />
@@ -165,7 +173,7 @@ const BasicInfo = (props) => {
                   <Label>Address Line 3</Label>
                   <Input
                     name="address3"
-                    ref={register()}
+                    ref={register({ required: " feild is Required" })}
                     value={address3}
                     onChange={handleChange}
                   />
@@ -185,7 +193,7 @@ const BasicInfo = (props) => {
                   <Label>Websites</Label>
                   <Input
                     name="webSites"
-                    ref={register()}
+                    ref={register({ required: " feild is Required" })}
                     value={webSites}
                     onChange={handleChange}
                   />
@@ -195,7 +203,7 @@ const BasicInfo = (props) => {
                   <Label>Address Line 2</Label>
                   <Input
                     name="address2"
-                    ref={register()}
+                    ref={register({ required: " feild is Required" })}
                     value={dataform.address2}
                     onChange={handleChange}
                   />

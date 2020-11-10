@@ -74,15 +74,13 @@ const Education = (props) => {
         querySnapshot.forEach(function (doc) {
           console.log(doc.id, " => ", doc.data(), `here should show data`);
           let objoo = doc.data();
-          setLoading(true);
 
           setEducation({
-            collagename: doc.data().collagename,
-            startgraduationyear: doc.data().startgraduationyear,
-            endgraduationyear: doc.data().endgraduationyear,
+            collagename: objoo.collagename,
+            startgraduationyear: objoo.startgraduationyear,
+            endgraduationyear: objoo.endgraduationyear,
           });
-
-
+          setLoading(true);
         });
 
       })

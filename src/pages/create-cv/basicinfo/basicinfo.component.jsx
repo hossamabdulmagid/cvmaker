@@ -45,14 +45,24 @@ const BasicInfo = (props) => {
   const value = getValues();
 
   const [dataform, setDataform] = useState({
-    FullName: "",
-    Phone: "",
-    Email: "",
-    Address1: "",
-    Address2: "",
-    Address3: "",
-    WebSites: "",
+    fullname: "",
+    phone: "",
+    email: "",
+    address1: "",
+    address2: "",
+    address3: "",
+    webSites: "",
   });
+
+  const {
+    fullname,
+    phone,
+    email,
+    address1,
+    address2,
+    address3,
+    webSites,
+  } = dataform;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -64,15 +74,13 @@ const BasicInfo = (props) => {
       `users/${currentUser.id}/cvs/${id}/data/basicinfo`
     );
     await cvRef.set({
-      basicinfo: {
-        FullName: dataform.FullName,
-        Phone: dataform.Phone,
-        Email: dataform.Email,
-        Address1: dataform.Address1,
-        Address2: dataform.Address2,
-        Address3: dataform.Address3,
-        WebSites: dataform.WebSites,
-      },
+      fullname: dataform.fullname,
+      phone: dataform.phone,
+      email: dataform.email,
+      address1: dataform.address1,
+      address2: dataform.address2,
+      address3: dataform.address3,
+      webSites: dataform.webSites,
     });
     toast.success(`your cvs details has been updated`);
   };
@@ -114,7 +122,7 @@ const BasicInfo = (props) => {
 
                   <Input
                     name="fullname"
-                    defaultValue={dataform.fullname}
+                    value={fullname}
                     ref={register()}
                     onChange={handleChange}
                   />
@@ -123,7 +131,7 @@ const BasicInfo = (props) => {
                   <Label>Phone numbers</Label>
                   <Input
                     name="phone"
-                    value={dataform.phone}
+                    value={phone}
                     onChange={handleChange}
                     ref={register({ required: " feild is Required" })}
                   />
@@ -136,7 +144,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="address1"
                     ref={register()}
-                    value={dataform.address1}
+                    value={address1}
                     onChange={handleChange}
                   />
                   {errors.address1 && errors.address1.message}
@@ -145,7 +153,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="address3"
                     ref={register()}
-                    value={dataform.address3}
+                    value={address3}
                     onChange={handleChange}
                   />
                   {errors.address3 && errors.address3.message}
@@ -163,9 +171,9 @@ const BasicInfo = (props) => {
 
                   <Label>Websites</Label>
                   <Input
-                    name="websites"
+                    name="webSites"
                     ref={register()}
-                    value={dataform.websites}
+                    value={webSites}
                     onChange={handleChange}
                   />
                   {errors.websites && errors.websites.message}

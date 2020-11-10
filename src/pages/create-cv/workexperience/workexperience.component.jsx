@@ -38,11 +38,9 @@ const Workexperience = ({ AddToList, currentUser, cvs }) => {
       `users/${currentUser.id}/cvs/${id}/data/workexperience`
     );
     await cvRef.set({
-      workexperience: {
-        Company: value.companyname,
-        StartWork: value.startwork,
-        EndWork: value.endwork,
-      },
+      Company: value.companyname,
+      StartWork: value.startwork,
+      EndWork: value.endwork,
     });
     onClose();
     toast.success(`your cvs details has been updated`);

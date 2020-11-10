@@ -45,11 +45,9 @@ const Education = ({ AddToList, currentUser }) => {
       `users/${currentUser.id}/cvs/${id}/data/education`
     );
     await cvRef.set({
-      education: {
-        CollageName: value.collage,
-        StartGraduationYear: value.startyear,
-        EndGraduationYear: value.endyear,
-      },
+      CollageName: value.collage,
+      StartGraduationYear: value.startyear,
+      EndGraduationYear: value.endyear,
     });
     onClose();
     toast.success(`your cvs details has been updated`);

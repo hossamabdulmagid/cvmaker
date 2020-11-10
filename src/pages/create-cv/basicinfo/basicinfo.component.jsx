@@ -62,6 +62,7 @@ const BasicInfo = (props) => {
     address2,
     address3,
     webSites,
+
   } = dataform;
 
   const handleChange = (event) => {
@@ -96,19 +97,31 @@ const BasicInfo = (props) => {
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .get()
-      .then(function (querySnapshot) {
+      .then(function (querySnapshot, obj) {
         querySnapshot.forEach(function (doc) {
-          let data = doc.data();
           console.log(doc.id, " => ", doc.data(), `here should show data`);
+          let obj = doc.data();
+          setDataform({
+            fullname: obj.fullname,
+            phone: obj.phone,
+            email: obj.email,
+            address1: obj.address1,
+            address2: obj.address2,
+            address3: obj.address3,
+            webSites: obj.webSites,
+          })
+          console.log(dataform, `dataform is heeeeeeeeer`)
+
         });
+
         setLoading(true);
-        setDataform(data)
       })
       .catch((error) => {
         console.log(`there is was an error`);
         setLoading(false);
       });
   }, []);
+
 
   return (
     <Fragment>

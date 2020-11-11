@@ -24,10 +24,9 @@ const BasicInfo = (props) => {
 
   const { id } = useParams();
 
-  console.log("current cv id is ", id);
 
   useEffect(() => {
-    console.log(UniqeIdForUser, `UniqeIdForUser`)
+    //    console.log(UniqeIdForUser, `UniqeIdForUser`)
   }, [currentUser, id]);
 
   const [allcv, setAllcv] = useState([]);
@@ -67,62 +66,40 @@ const BasicInfo = (props) => {
 
   } = dataform;
 
+  const [loading, setLoading] = useState(false);
 
-
-
-  /*
-  
-  
-  const onSubmit = async (value) => {
-    const cvRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/workexperience`
-    );
-    await cvRef.set({
-      companyname: workexperinceform.companyname,
-      startwork: workexperinceform.startwork,
-      endwork: workexperinceform.endwork,
-    });
-    onClose();
-    toast.success(`your cvs details has been updated`);
+  const handleChange = (event) => {
+    const { name, value } = event.target.value;
+    setDataform({ ...dataform, [name]: value });
   };
 
-  */
-
-
-  const onSubmit = async (data) => {
+  const onSubmit = async (value) => {
     try {
-      const cvRef = firestore.doc(
+      const cvRef = await firestore.doc(
         `users/${currentUser.id}/cvs/${id}/data/basicinfo`
       );
+
       await cvRef.set({
-        fullname: dataform.fullname,
-        phone: dataform.phone,
-        email: dataform.email,
-        address1: dataform.address1,
-        address2: dataform.address2,
-        address3: dataform.address3,
-        webSites: dataform.webSites,
+        fullname: fullname,
+        phone: phone,
+        email: email,
+        address1: address1,
+        address2: address2,
+        address3: address3,
+        webSites: webSites,
       });
 
       toast.success(`your cvs details has been updated`);
 
     } catch (error) {
       console.log(error, `error`)
-      toast.error(`You Must Edit In Your Feild`);
+      toast.error(`${error}You Must Edit In Your Feild`);
     }
 
   }
 
-
-
-
   // Add a new document in collection "cities"
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setDataform({ ...dataform, [name]: value });
-  };
 
-  const [loading, setLoading] = useState(false);
 
   // here was an useEffect
 
@@ -145,14 +122,6 @@ const BasicInfo = (props) => {
             webSites: objz.webSites,
           })
           setLoading(true);
-
-
-          setTimeout(() => {
-
-
-          }, 5000)
-
-
         });
 
       })
@@ -177,7 +146,8 @@ const BasicInfo = (props) => {
                   <Input
                     name="fullname"
                     value={fullname}
-                    ref={register()}
+                    type="text"
+                    ref={register({ required: " feild is Required" })}
                     onChange={handleChange}
                   />
                   {errors.fullname && errors.fullname.message}
@@ -186,6 +156,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="phone"
                     value={phone}
+                    type='number'
                     onChange={handleChange}
                     ref={register({ required: " feild is Required" })}
                   />
@@ -197,8 +168,9 @@ const BasicInfo = (props) => {
                   <Label>Address Line 1</Label>
                   <Input
                     name="address1"
-                    ref={register()}
+                    ref={register({ required: " feild is Required" })}
                     value={address1}
+                    type="text"
                     onChange={handleChange}
                   />
                   {errors.address1 && errors.address1.message}
@@ -206,8 +178,9 @@ const BasicInfo = (props) => {
                   <Label>Address Line 3</Label>
                   <Input
                     name="address3"
-                    ref={register()}
+                    ref={register({ required: " feild is Required" })}
                     value={address3}
+                    type="text"
                     onChange={handleChange}
                   />
                   {errors.address3 && errors.address3.message}
@@ -218,6 +191,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="email"
                     value={email}
+                    type="email"
                     onChange={handleChange}
                     ref={register({ required: " feild is Required" })}
                   />
@@ -226,8 +200,10 @@ const BasicInfo = (props) => {
                   <Label>Websites</Label>
                   <Input
                     name="webSites"
-                    ref={register()}
+                    ref={register({ required: " feild is Required" })}
                     value={webSites}
+                    type="text"
+
                     onChange={handleChange}
                   />
                   {errors.websites && errors.websites.message}
@@ -236,9 +212,11 @@ const BasicInfo = (props) => {
                   <Label>Address Line 2</Label>
                   <Input
                     name="address2"
-                    ref={register()}
-                    value={dataform.address2}
+                    ref={register({ required: " feild is Required" })}
+                    value={address2}
                     onChange={handleChange}
+                    type="text"
+
                   />
                   {errors.address2 && errors.address2.message}
 

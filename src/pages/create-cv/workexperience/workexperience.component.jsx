@@ -48,9 +48,9 @@ const Workexperience = (props) => {
       `users/${currentUser.id}/cvs/${id}/data/workexperience`
     );
     await cvRef.set({
-      companyname: workexperinceform.companyname,
-      startwork: workexperinceform.startwork,
-      endwork: workexperinceform.endwork,
+      companyname: companyname,
+      startwork: startwork,
+      endwork: endwork,
     });
     onClose();
     toast.success(`your cvs details has been updated`);
@@ -81,10 +81,7 @@ const Workexperience = (props) => {
             endwork: obj.endwork,
           });
           setLoading(true);
-
-
         });
-
       })
       .catch((error) => {
         console.log(`there is was an error`);
@@ -171,7 +168,6 @@ const Workexperience = (props) => {
               <Button
                 variantColor="blue"
                 mr={3}
-                onClick={AddToList}
                 type="submit"
               >
                 Save

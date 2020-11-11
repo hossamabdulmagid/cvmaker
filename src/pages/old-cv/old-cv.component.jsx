@@ -27,6 +27,7 @@ import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { AddToList } from "../../redux/addtolist/addtolistAction";
+import { toast } from "react-toastify";
 const OldCv = ({ currentUser, doc, AddToList, match }) => {
   var tempDate = new Date();
   var date =
@@ -41,7 +42,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
   useEffect(() => {
     var timerID = setInterval(() => tick(), 1000);
 
-    return function cleanup () {
+    return function cleanup() {
       clearInterval(timerID);
     };
   });
@@ -59,7 +60,8 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
         _createdAt,
       });
     if (docRef.id) {
-      console.log("done  adding a cv");
+      toast.success("done  adding a cv")
+      console.log();
       const newCvPath = `create-cv/${docRef.id}`;
       history.push(newCvPath);
       return;
@@ -69,10 +71,8 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
   };
 
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [allcv, setAllcv] = useState([]);
   const [data, setData] = useState([]);
 

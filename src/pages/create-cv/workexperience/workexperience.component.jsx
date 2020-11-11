@@ -160,7 +160,7 @@ const Workexperience = (props) => {
                 name="endwork"
                 placeholder="Graduation Year"
                 onChange={handleChange}
-                valye={endwork}
+                value={endwork}
                 type="date"
               />
               {errors.endwork && errors.endwork.message}

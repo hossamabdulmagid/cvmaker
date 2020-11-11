@@ -20,13 +20,15 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
 const BasicInfo = (props) => {
-  const { currentUser, match, doc, info, basicinfo } = props;
+  const { currentUser, match, doc, info, basicinfo, UniqeIdForUser } = props;
 
   const { id } = useParams();
 
   console.log("current cv id is ", id);
 
-  useEffect(() => { }, [currentUser, id]);
+  useEffect(() => {
+    console.log(UniqeIdForUser, `UniqeIdForUser`)
+  }, [currentUser, id]);
 
   const [allcv, setAllcv] = useState([]);
   const [data, setData] = useState({});
@@ -65,35 +67,60 @@ const BasicInfo = (props) => {
 
   } = dataform;
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setDataform({ ...dataform, [name]: value });
+
+
+
+  /*
+  
+  
+  const onSubmit = async (value) => {
+    const cvRef = firestore.doc(
+      `users/${currentUser.id}/cvs/${id}/data/workexperience`
+    );
+    await cvRef.set({
+      companyname: workexperinceform.companyname,
+      startwork: workexperinceform.startwork,
+      endwork: workexperinceform.endwork,
+    });
+    onClose();
+    toast.success(`your cvs details has been updated`);
   };
 
-  const onSubmit = async (value) => {
+  */
+
+
+  const onSubmit = async (data) => {
     try {
       const cvRef = firestore.doc(
         `users/${currentUser.id}/cvs/${id}/data/basicinfo`
       );
       await cvRef.set({
-        fullname: fullname,
-        phone: phone,
-        email: email,
-        address1: address1,
-        address2: address2,
-        address3: address3,
-        webSites: webSites,
+        fullname: dataform.fullname,
+        phone: dataform.phone,
+        email: dataform.email,
+        address1: dataform.address1,
+        address2: dataform.address2,
+        address3: dataform.address3,
+        webSites: dataform.webSites,
       });
-      toast.success(`your cvs details has been updated`);
-    } catch (error) {
-      console.log(error, 'erorororoororrR')
-      toast.error(`You Must First Change  Your Feild information`);
 
+      toast.success(`your cvs details has been updated`);
+
+    } catch (error) {
+      console.log(error, `error`)
+      toast.error(`You Must Edit In Your Feild`);
     }
 
-  };
+  }
+
+
+
 
   // Add a new document in collection "cities"
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setDataform({ ...dataform, [name]: value });
+  };
 
   const [loading, setLoading] = useState(false);
 
@@ -117,11 +144,15 @@ const BasicInfo = (props) => {
             address3: objz.address3,
             webSites: objz.webSites,
           })
-
           setLoading(true);
-          if (setDataform === null) {
-            setLoading(false)
-          }
+
+
+          setTimeout(() => {
+
+
+          }, 5000)
+
+
         });
 
       })
@@ -251,6 +282,7 @@ const BasicInfo = (props) => {
 };
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  UniqeIdForUser: state.user.currentUser.id
 });
 
 export default connect(mapStateToProps, null)(BasicInfo);

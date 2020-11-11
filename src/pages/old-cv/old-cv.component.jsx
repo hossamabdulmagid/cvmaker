@@ -41,7 +41,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
   useEffect(() => {
     var timerID = setInterval(() => tick(), 1000);
 
-    return function cleanup() {
+    return function cleanup () {
       clearInterval(timerID);
     };
   });

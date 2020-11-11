@@ -29,13 +29,15 @@ import { v4 as uuidv4 } from "uuid";
 import { AddToList } from "../../redux/addtolist/addtolistAction";
 import { toast } from "react-toastify";
 const OldCv = ({ currentUser, doc, AddToList, match }) => {
+  let { id } = match.params;
+
   var tempDate = new Date();
   var date =
     tempDate.getFullYear() +
     "-" +
-    (tempDate.getMonth() + 1) +
-    "-" +
-    tempDate.getDate();
+    (tempDate.getMonth() + 1 +
+      "-" +
+      tempDate.getDate())
   const currDate = "" + date;
 
   const [datee, setDatee] = useState(new Date());
@@ -52,7 +54,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
   };
 
   const createAnewCv = async () => {
-    const _createdAt = new Date();
+    const _createdAt = " " + new Date();
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
@@ -74,8 +76,8 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [allcv, setAllcv] = useState([]);
-  const [data, setData] = useState([]);
-
+  const [data, setData] = useState({});
+  const [array, setArray] = useState([])
   useEffect(() => {
     firestore
       .doc(`users/${currentUser.id}`)
@@ -83,21 +85,23 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          data.push(doc.id);
+
+          data.id = doc.id
+
+
 
           // console.log(doc.id, " => ", doc.data(), `here should show data`);
 
-          let obj = doc.data();
+          data._createdAt = doc.data();
 
-          Object.getOwnPropertyNames(obj).forEach((key) => {
-            allcv.push(`${key}:${obj[key]}`, `heeeeeeeeeeeeero`);
-          });
-          console.log(allcv, `here is array `);
+          array.push(data);
+
+          console.log(array, `array here`)
+          console.log(data, `here is obj =doc.data `);
         });
       });
-  }, [firestore, data, doc]);
+  }, [firestore, data, doc, array]);
 
-  let { id } = match.params;
   const history = useHistory();
 
   return (
@@ -130,18 +134,18 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
                 <td>Edit now</td>
               </tr>
 
-              {data.map((x, i) => (
+              {array.map((SingleCvInfo, i) => (
                 <tr key={i}>
                   <td>
-                    {x}
+                    {SingleCvInfo.id}
                     <Span>
                       Englsih <Icon />
                     </Span>
                   </td>
-                  <td>{allcv[0]}</td>
+                  <td>{new Date().toDateString()}</td>
                   <td>
                     {" "}
-                    <Linkcv to={"create-cv/" + `${x}`}>Edit now</Linkcv>
+                    <Linkcv to={"create-cv/" + `${SingleCvInfo.id}`}>Edit now</Linkcv>
                   </td>
                 </tr>
               ))}

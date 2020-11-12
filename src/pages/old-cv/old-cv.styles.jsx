@@ -9,6 +9,7 @@ export const RapperdColor = styled.div`
   background-color: #f9f9f9;
   color: black;
   height: auto;
+  padding-bottom:25px;
 `;
 
 export const Content = styled.div`

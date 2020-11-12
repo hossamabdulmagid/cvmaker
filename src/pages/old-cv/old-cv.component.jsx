@@ -28,18 +28,22 @@ import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { AddToList } from "../../redux/addtolist/addtolistAction";
 const OldCv = ({ currentUser, doc, AddToList, match }) => {
-  var tempDate = new Date();
-  var date =
-    tempDate.getFullYear() +
-    "-" +
-    (tempDate.getMonth() + 1) +
-    "-" +
-    tempDate.getDate();
-  const currDate = "" + date;
+
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [allcv, setAllcv] = useState([]);
+  const [data, setData] = useState([]);
+  let { id } = match.params;
+
 
   const [datee, setDatee] = useState(new Date());
+
   useEffect(() => {
-    var timerID = setInterval(() => tick(), 1000);
+    var timerID = setInterval(() => { tick() }, 1000);
 
     return function cleanup() {
       clearInterval(timerID);
@@ -68,15 +72,10 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
     }
   };
 
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const [allcv, setAllcv] = useState([]);
-  const [data, setData] = useState([]);
-
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
     firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
@@ -88,16 +87,15 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
           // console.log(doc.id, " => ", doc.data(), `here should show data`);
 
           let obj = doc.data();
-          
+
           Object.getOwnPropertyNames(obj).forEach((key) => {
             allcv.push(`${key}:${obj[key]}`);
           });
           console.log(allcv, `here is array `);
         });
       });
-  }, [firestore, data, doc]);
+  }, [firestore, data, doc, currentUser, id, currentUser.id]);
 
-  let { id } = match.params;
   const history = useHistory();
 
   return (
@@ -119,7 +117,6 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
               </tr>
             </thead>
             <tbody>
-        
 
               {data.map((x, i) => (
                 <tr key={i}>
@@ -129,13 +126,14 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
                       Englsih <Icon />
                     </Span>
                   </td>
-                  <td>{allcv[0]}</td>
+                  <td></td>
                   <td>
                     {" "}
                     <Linkcv to={"create-cv/" + `${x}`}>Edit now</Linkcv>
                   </td>
                 </tr>
               ))}
+
             </tbody>
           </Table>
           <div className="container">
@@ -149,8 +147,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
                 <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
                   <Box flex="1" textAlign="left">
                     <h1>
-                      {" "}
-                      Go <Strong>Premium </Strong> ❤{" "}
+                      Go <Strong>Premium </Strong> ❤
                     </h1>
                     <Span> Show details ★ </Span>
                   </Box>
@@ -173,28 +170,23 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
                       <div className="col-6">
                         <H2> Premium</H2>
                         <Small>
-                          {" "}
                           <Green>★</Green> Premium templates in addition to the
                           free ones
                         </Small>
                         <Small>
-                          {" "}
                           <Green>★</Green> Add custom plain and special sections
                           (similar to education and work) to your CV
                         </Small>
                         <Small>
-                          {" "}
                           <Green>★</Green> Advanced rich text editor. Choose
                           fonts, text colors and more
                         </Small>
                         <Small>
-                          {" "}
                           <Green>★</Green> One-click e-mail. Send your resume
                           directly to your e-mail easily from your mobile or
                           tablet that doesn't allow file downloads
                         </Small>
                         <Small>
-                          {" "}
                           <Green>★</Green> Continued access to upcoming premium
                           features and templates
                         </Small>
@@ -215,7 +207,6 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
     </>
   );
 };
-
 const PrivateRoute = ({ component: Component, currentUser, ...rest }) => (
   <Route
     {...rest}
@@ -230,14 +221,8 @@ const PrivateRoute = ({ component: Component, currentUser, ...rest }) => (
     }
   />
 );
-
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
-  NOW: state.add.singleroutes,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  AddToList: () => dispatch(AddToList()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(OldCv);
+export default connect(mapStateToProps, null)(OldCv);

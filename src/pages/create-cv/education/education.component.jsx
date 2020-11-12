@@ -50,9 +50,9 @@ const Education = (props) => {
       `users/${currentUser.id}/cvs/${id}/data/education`
     );
     let dataToBeSaved = {
-      collagename: collagename,
-      startgraduationyear: startgraduationyear,
-      endgraduationyear: endgraduationyear,
+      collagename: collagename || "",
+      startgraduationyear: startgraduationyear || "",
+      endgraduationyear: endgraduationyear || "",
     }
     await cvRef.set(dataToBeSaved);
     onClose();

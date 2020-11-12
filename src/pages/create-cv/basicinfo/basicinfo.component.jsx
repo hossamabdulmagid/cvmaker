@@ -72,12 +72,10 @@ const BasicInfo = (props) => {
       address3: dataform.address3 || "",
       webSites: dataform.webSites || "",
     };
-    console.log(dataToBeSaved, `dataToBeSaved`)
     await cvRef.set(dataToBeSaved);
 
     toast.success(`your cvs details has been updated`);
 
-    console.log(dataform, `lololoooooooooooos`);
 
   }
 
@@ -100,10 +98,6 @@ const BasicInfo = (props) => {
 
         const newData = querySnapshot.data();
 
-        console.log(newData, `new Dataaa`)
-
-        console.log(newData.fullname, `newData.basicinfo.fullname`)
-
         if (newData) {
 
           setDataform({
@@ -117,15 +111,12 @@ const BasicInfo = (props) => {
 
           })
 
-        } else {
-
         }
-
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
-
+        toast.error(error, `there is was an error`)
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);

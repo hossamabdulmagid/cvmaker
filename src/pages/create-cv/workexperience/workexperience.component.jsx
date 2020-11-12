@@ -49,9 +49,9 @@ const Workexperience = (props) => {
     );
 
     let dataToBeSave = {
-      companyname: companyname,
-      startwork: startwork,
-      endwork: endwork,
+      companyname: companyname || "",
+      startwork: startwork || "",
+      endwork: endwork || "",
     }
 
     await cvRef.set(dataToBeSave);

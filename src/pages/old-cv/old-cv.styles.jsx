@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { BiCog } from "react-icons/bi";
 import { Button } from "react-bootstrap";
+import { BsFillBucketFill } from "react-icons/bs";
 
 export const RapperdColor = styled.div`
   text-align: ;
@@ -42,15 +43,40 @@ export const Strong = styled.strong`
   color: green;
 `;
 
-export const Icon = styled(BiCog)`
+export const Icon = styled(BsFillBucketFill)`
   margin: 3px;
   width: 13px;
+  color:whie;
+
 `;
 
 export const Span = styled.small`
   float: right;
   display: flex;
+  color: black;
+  text-align: center;
+  background-color: sunrose;
 `;
+
+
+export const SpanforDelete = styled.small`
+float: right;
+display: flex;
+color: white;
+background-color: gray;
+display:flex-inline;
+padding:2px;
+border-radius: 3px;
+
+&:hover{
+  color:white;
+}
+
+
+`
+
+
+
 
 export const H2 = styled.h2`
   margin-bottom: 30px;
@@ -93,4 +119,17 @@ export const ButtonForPremium = styled.button`
 export const Linkcv = styled(Link)`
   color: orange;
   text-align: center;
+  display:flex;
+  `;
+export const Iconedit = styled(BiCog)`
+  margin: 3px;
+  width: 13px;
+  float: right;
+  color:orange;
+
+`;
+
+export const Td = styled.td`
+
+text-align:right;
 `;

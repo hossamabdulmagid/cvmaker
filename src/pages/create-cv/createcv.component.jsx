@@ -105,11 +105,11 @@ const CreateCv = ({ AddToList, currentUser }) => {
             </Alert>
           )}
           <div className="row">
-            <div className="col-4"></div>
+            <div className="col-5"></div>
             <div className="col-2">
-              <LinkForPremium to="/cv">Upgrade to Premium ♥</LinkForPremium>
+              <LinkForPremium to="/cv">Show All Cv ♥</LinkForPremium>
             </div>
-            <Col className="col-6">
+            <Col className="col-5">
               <Buttons size="xs" variant="success">
                 {" "}
                 <AiOutlineExclamation /> Help
@@ -170,8 +170,8 @@ const CreateCv = ({ AddToList, currentUser }) => {
                     + New Section
                   </ButtonForAddNewSection>
                 ) : (
-                  <Span>*You must login to add newSection</Span>
-                )}
+                    <Span>*You must login to add newSection</Span>
+                  )}
 
                 <Modal
                   initialFocusRef={initialRef}

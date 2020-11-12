@@ -12,6 +12,9 @@ import {
   Title,
   ButtonforcreateCv,
   Linkcv,
+  Iconedit,
+  Td,
+  SpanforDelete
 } from "./old-cv.styles";
 import {
   Accordion,
@@ -24,7 +27,7 @@ import { firestore } from "../../firebase/firebase.utils";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
-import {toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { connect } from "react-redux";
 const OldCv = ({ currentUser, match }) => {
 
@@ -93,6 +96,27 @@ const OldCv = ({ currentUser, match }) => {
 
   const history = useHistory();
 
+  console.log(id, `IDDDDDDDDDDDDDDDDDDDDDDDDDD`)
+
+  const deletecv = async (id) => {
+
+    const DeleteRef = await firestore.doc(`users/${currentUser.id}`).collection(`cvs`).doc(`${id}`)
+      .delete()
+
+      .then(function () {
+        console.log("Document successfully deleted!");
+      })
+
+      .catch(function (error) {
+        console.error("Error removing document: ", error);
+      });
+
+    if (DeleteRef.id) {
+      toast.error(`your Cv ${id} has been deleted`)
+    }
+
+  }
+
   return (
     <>
       <RapperdColor className="container-fluid">
@@ -117,15 +141,14 @@ const OldCv = ({ currentUser, match }) => {
                 <tr key={i}>
                   <td>
                     {x}
-                    <Span>
-                      Englsih <Icon />
-                    </Span>
+                    <SpanforDelete onClick={() => deletecv()}>
+                      Delete <Icon />
+                    </SpanforDelete>
                   </td>
                   <td> {new Date().toDateString()}</td>
-                  <td>
-                    {" "}
-                    <Linkcv to={"create-cv/" + `${x}`}>Edit now</Linkcv>
-                  </td>
+                  <Td>
+                    <Linkcv to={"create-cv/" + `${x}`}> Edit now <Iconedit /></Linkcv>
+                  </Td>
                 </tr>
               ))}
 

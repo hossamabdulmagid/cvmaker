@@ -86,12 +86,15 @@ export const Li = styled.li`
 
 export const LinkForPremium = styled(Link)`
   border-radius: 15px;
-  background-color: #37c871;
-  font-size: 10px;
-  padding: 4px;
-  margin: 0px;
-  height: 28px;
+  background-color: #18c7e1;
+  color: black;
+  font-size: 13px;
+  padding: 8px;
+
+  margin-top: 10px;
   text-decoration: none;
+  margin: 13px;
+
   &:hover {
     background-color: black;
     color: white;

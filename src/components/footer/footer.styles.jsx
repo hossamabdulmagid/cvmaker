@@ -8,6 +8,7 @@ export const RapperColor = styled.div`
   padding: 2px;
   width: auto;
   margin-top: 20px;
+  display:block;
 `;
 
 export const Content = styled.div`

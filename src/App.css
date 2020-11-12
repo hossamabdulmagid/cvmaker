@@ -37,3 +37,6 @@ img {
 span {
   margin: 12px;
 }
+.AccordionItem{
+  display: block;
+}

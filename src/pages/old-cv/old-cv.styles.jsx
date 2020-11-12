@@ -8,7 +8,7 @@ export const RapperdColor = styled.div`
   text-align: ;
   background-color: #f9f9f9;
   color: black;
-  height: 950px;
+  height: auto;
 `;
 
 export const Content = styled.div`
@@ -133,3 +133,4 @@ export const Td = styled.td`
 
 text-align:right;
 `;
+

@@ -49,8 +49,9 @@ export const H6 = styled.h6`
 //line for comment;
 
 export const Container = styled.div`
-  height: 220px;
+  height: auto;
   margin-top: 20px;
+  display:block;
   text-align: center;
 `;
 

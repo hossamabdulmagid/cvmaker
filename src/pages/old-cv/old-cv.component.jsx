@@ -22,6 +22,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  hh
 } from "@chakra-ui/core";
 import { firestore } from "../../firebase/firebase.utils";
 import { Link, useHistory, useParams } from "react-router-dom";
@@ -161,7 +162,7 @@ const OldCv = ({ currentUser, match }) => {
               show={show}
               handleClose={handleClose}
             >
-              <AccordionItem>
+              <AccordionItem className="AccordionItem">
                 <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
                   <Box flex="1" textAlign="left">
                     <h1>

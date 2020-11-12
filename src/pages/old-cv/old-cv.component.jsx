@@ -25,9 +25,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
-import { AddToList } from "../../redux/addtolist/addtolistAction";
-const OldCv = ({ currentUser, doc, AddToList, match }) => {
+const OldCv = ({ currentUser, doc, match }) => {
 
 
   const [show, setShow] = useState(false);
@@ -43,16 +41,15 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
   const [datee, setDatee] = useState(new Date());
 
   useEffect(() => {
-    var timerID = setInterval(() => { tick() }, 1000);
+    var timerID = setInterval(() => {
+      setDatee(new Date());
+    }, 1000);
 
     return function cleanup() {
       clearInterval(timerID);
     };
   });
 
-  const tick = () => {
-    setDatee(new Date());
-  };
 
   const createAnewCv = async () => {
     const _createdAt = new Date();
@@ -126,7 +123,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
                       Englsih <Icon />
                     </Span>
                   </td>
-                  <td></td>
+              <td> {new Date().toDateString()}</td>
                   <td>
                     {" "}
                     <Linkcv to={"create-cv/" + `${x}`}>Edit now</Linkcv>

@@ -83,7 +83,9 @@ const Education = (props) => {
             startgraduationyear: obj.startgraduationyear,
             endgraduationyear: obj.endgraduationyear,
           });
+          
           console.log(doc.data(), `here is Doc.data()`);
+
           setLoading(true);
         });
       })

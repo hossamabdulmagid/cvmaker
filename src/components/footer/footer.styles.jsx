@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const RapperColor = styled.div`
   background-color: #2f2f2f;
   color: white;
-  height: 45px;
+  height: auto;
   padding: 2px;
   width: auto;
   margin-top: 20px;

@@ -20,17 +20,12 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
 const BasicInfo = (props) => {
-  const { currentUser, match, doc, info, basicinfo, UniqeIdForUser } = props;
+  const { currentUser, match, doc, info, basicinfo } = props;
 
   const { id } = useParams();
 
 
-  useEffect(() => {
-    //    console.log(UniqeIdForUser, `UniqeIdForUser`)
-  }, [currentUser, id]);
 
-  const [allcv, setAllcv] = useState([]);
-  const [data, setData] = useState({});
   const history = useHistory();
 
   const {
@@ -38,9 +33,6 @@ const BasicInfo = (props) => {
     register,
     errors,
     getValues,
-    userAuth,
-    cvs,
-    cid,
   } = useForm();
 
   const value = getValues();
@@ -55,46 +47,37 @@ const BasicInfo = (props) => {
     webSites: "",
   });
 
-  const {
-    fullname,
-    phone,
-    email,
-    address1,
-    address2,
-    address3,
-    webSites,
 
-  } = dataform;
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleChange = (event) => {
-    const { name, value } = event.target.value;
+    const { name, value } = event.target;
     setDataform({ ...dataform, [name]: value });
   };
 
+
+
+
   const onSubmit = async (value) => {
-    try {
-      const cvRef = await firestore.doc(
-        `users/${currentUser.id}/cvs/${id}/data/basicinfo`
-      );
+    const cvRef = firestore.doc(
+      `users/${currentUser.id}/cvs/${id}/data/basicinfo`
+    );
+    let dataToBeSaved = {
+      fullname: dataform.fullname || "",
+      phone: dataform.phone || "",
+      email: dataform.email || "",
+      address1: dataform.address1 || "",
+      address2: dataform.address2 || "",
+      address3: dataform.address3 || "",
+      webSites: dataform.webSites || "",
+    };
+    console.log(dataToBeSaved, `dataToBeSaved`)
+    await cvRef.set(dataToBeSaved);
 
-      await cvRef.set({
-        fullname: fullname,
-        phone: phone,
-        email: email,
-        address1: address1,
-        address2: address2,
-        address3: address3,
-        webSites: webSites,
-      });
+    toast.success(`your cvs details has been updated`);
 
-      toast.success(`your cvs details has been updated`);
-
-    } catch (error) {
-      console.log(error, `error`)
-      toast.error(`${error}You Must Edit In Your Feild`);
-    }
+    console.log(dataform, `lololoooooooooooos`);
 
   }
 
@@ -104,38 +87,54 @@ const BasicInfo = (props) => {
   // here was an useEffect
 
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
     firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
+      .doc(`users/${currentUser.id}`).collection(`cvs/${id}/data`)
+      .doc(`basicinfo`)
       .get()
       .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          console.log(doc.id, " => ", doc.data(), `here should show data`);
-          let objz = doc.data();
-          setDataform({
-            fullname: objz.fullname,
-            phone: objz.phone,
-            email: objz.email,
-            address1: objz.address1,
-            address2: objz.address2,
-            address3: objz.address3,
-            webSites: objz.webSites,
-          })
-          setLoading(true);
-        });
 
+        const newData = querySnapshot.data();
+
+        console.log(newData, `new Dataaa`)
+
+        console.log(newData.fullname, `newData.basicinfo.fullname`)
+
+        if (newData) {
+
+          setDataform({
+            fullname: newData.fullname,
+            phone: newData.phone,
+            address1: newData.address1,
+            address2: newData.address2,
+            address3: newData.address3,
+            webSites: newData.webSites,
+            email: newData.email,
+
+          })
+
+
+        } else {
+
+        }
+
+        setLoading(false);
       })
       .catch((error) => {
-        console.log(`there is was an error`);
         setLoading(false);
+
+        console.log(error, `there is was an error`);
       });
-  }, []);
+  }, [currentUser, id]);
 
 
   return (
     <Fragment>
       <Container className="container-fluid">
-        {loading ? (
+        {!loading ? (
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="container">
               <Title> </Title>
@@ -145,9 +144,8 @@ const BasicInfo = (props) => {
 
                   <Input
                     name="fullname"
-                    value={fullname}
-                    type="text"
-                    ref={register({ required: " feild is Required" })}
+                    value={dataform.fullname}
+                    ref={register()}
                     onChange={handleChange}
                   />
                   {errors.fullname && errors.fullname.message}
@@ -155,10 +153,9 @@ const BasicInfo = (props) => {
                   <Label>Phone numbers</Label>
                   <Input
                     name="phone"
-                    value={phone}
-                    type='number'
+                    value={dataform.phone}
                     onChange={handleChange}
-                    ref={register({ required: " feild is Required" })}
+                    ref={register()}
                   />
                   <br />
 
@@ -168,9 +165,8 @@ const BasicInfo = (props) => {
                   <Label>Address Line 1</Label>
                   <Input
                     name="address1"
-                    ref={register({ required: " feild is Required" })}
-                    value={address1}
-                    type="text"
+                    ref={register()}
+                    value={dataform.address1}
                     onChange={handleChange}
                   />
                   {errors.address1 && errors.address1.message}
@@ -178,9 +174,8 @@ const BasicInfo = (props) => {
                   <Label>Address Line 3</Label>
                   <Input
                     name="address3"
-                    ref={register({ required: " feild is Required" })}
-                    value={address3}
-                    type="text"
+                    ref={register()}
+                    value={dataform.address3}
                     onChange={handleChange}
                   />
                   {errors.address3 && errors.address3.message}
@@ -190,19 +185,17 @@ const BasicInfo = (props) => {
                   <Label>E-mail address</Label>
                   <Input
                     name="email"
-                    value={email}
-                    type="email"
+                    value={dataform.email}
                     onChange={handleChange}
-                    ref={register({ required: " feild is Required" })}
+                    ref={register()}
                   />
                   {errors.email && errors.email.message}
 
                   <Label>Websites</Label>
                   <Input
                     name="webSites"
-                    ref={register({ required: " feild is Required" })}
-                    value={webSites}
-                    type="text"
+                    ref={register()}
+                    value={dataform.webSites}
 
                     onChange={handleChange}
                   />
@@ -212,10 +205,9 @@ const BasicInfo = (props) => {
                   <Label>Address Line 2</Label>
                   <Input
                     name="address2"
-                    ref={register({ required: " feild is Required" })}
-                    value={address2}
+                    ref={register()}
+                    value={dataform.address2}
                     onChange={handleChange}
-                    type="text"
 
                   />
                   {errors.address2 && errors.address2.message}
@@ -260,7 +252,7 @@ const BasicInfo = (props) => {
 };
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
-  UniqeIdForUser: state.user.currentUser.id
+  // UniqeIdForUser: state.user.currentUser.id
 });
 
 export default connect(mapStateToProps, null)(BasicInfo);

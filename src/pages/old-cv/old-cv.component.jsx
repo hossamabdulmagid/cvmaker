@@ -90,7 +90,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
           let obj = doc.data();
 
           Object.getOwnPropertyNames(obj).forEach((key) => {
-            allcv.push(`${key}:${obj[key]}`, `heeeeeeeeeeeeero`);
+            allcv.push(`${key}:${obj[key]}`);
           });
           console.log(allcv, `here is array `);
         });
@@ -119,16 +119,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  My CV
-                  <Span>
-                    Englsih <Icon />
-                  </Span>
-                </td>
-                <td>{" " + currDate}</td>
-                <td>Edit now</td>
-              </tr>
+        
 
               {data.map((x, i) => (
                 <tr key={i}>

@@ -8,6 +8,8 @@ export const COL = styled.div`
   padding-left: 50px;
   padding-right: 20px;
   padding-top: 45px;
+  width:auto;
+  height:auto;
 `;
 
 export const LINK = styled(Link)`

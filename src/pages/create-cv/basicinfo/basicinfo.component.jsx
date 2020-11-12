@@ -138,7 +138,7 @@ const BasicInfo = (props) => {
                     value={dataform.fullname}
                     ref={register()}
                     onChange={handleChange}
-                  />
+                  /><br />
                   {errors.fullname && errors.fullname.message}
 
                   <Label>Phone numbers</Label>
@@ -146,7 +146,8 @@ const BasicInfo = (props) => {
                     name="phone"
                     value={dataform.phone}
                     onChange={handleChange}
-                    ref={register()}
+                    ref={register({ required: "this input is required" })}
+                    required
                   />
                   <br />
 
@@ -178,8 +179,9 @@ const BasicInfo = (props) => {
                     name="email"
                     value={dataform.email}
                     onChange={handleChange}
-                    ref={register()}
-                  />
+                    ref={register({ required: "this input is required" })}
+                    required
+                  /> <br />
                   {errors.email && errors.email.message}
 
                   <Label>Websites</Label>

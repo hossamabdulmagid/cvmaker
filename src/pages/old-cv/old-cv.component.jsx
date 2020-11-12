@@ -24,32 +24,24 @@ import { firestore } from "../../firebase/firebase.utils";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
+import {toast } from 'react-toastify'
 import { connect } from "react-redux";
-const OldCv = ({ currentUser, doc, match }) => {
+const OldCv = ({ currentUser, match }) => {
 
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
+
   const handleShow = () => setShow(true);
 
   const [allcv, setAllcv] = useState([]);
+
   const [data, setData] = useState([]);
+
   let { id } = match.params;
 
-
   const [datee, setDatee] = useState(new Date());
-
-  useEffect(() => {
-    var timerID = setInterval(() => {
-      setDatee(new Date());
-    }, 1000);
-
-    return function cleanup() {
-      clearInterval(timerID);
-    };
-  });
-
 
   const createAnewCv = async () => {
     const _createdAt = new Date();
@@ -60,7 +52,7 @@ const OldCv = ({ currentUser, doc, match }) => {
         _createdAt,
       });
     if (docRef.id) {
-      console.log("done  adding a cv");
+      toast.success("done  adding a cv");
       const newCvPath = `create-cv/${docRef.id}`;
       history.push(newCvPath);
       return;
@@ -88,10 +80,16 @@ const OldCv = ({ currentUser, doc, match }) => {
           Object.getOwnPropertyNames(obj).forEach((key) => {
             allcv.push(`${key}:${obj[key]}`);
           });
-          console.log(allcv, `here is array `);
         });
       });
-  }, [firestore, data, doc, currentUser, id, currentUser.id]);
+    var timerID = setInterval(() => {
+      setDatee(new Date());
+    }, 1000);
+
+    return function cleanup() {
+      clearInterval(timerID);
+    };
+  }, [data, currentUser, id]);
 
   const history = useHistory();
 
@@ -123,7 +121,7 @@ const OldCv = ({ currentUser, doc, match }) => {
                       Englsih <Icon />
                     </Span>
                   </td>
-              <td> {new Date().toDateString()}</td>
+                  <td> {new Date().toDateString()}</td>
                   <td>
                     {" "}
                     <Linkcv to={"create-cv/" + `${x}`}>Edit now</Linkcv>

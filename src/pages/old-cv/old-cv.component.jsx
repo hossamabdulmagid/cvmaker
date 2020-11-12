@@ -88,7 +88,7 @@ const OldCv = ({ currentUser, doc, AddToList, match }) => {
           // console.log(doc.id, " => ", doc.data(), `here should show data`);
 
           let obj = doc.data();
-
+          
           Object.getOwnPropertyNames(obj).forEach((key) => {
             allcv.push(`${key}:${obj[key]}`);
           });

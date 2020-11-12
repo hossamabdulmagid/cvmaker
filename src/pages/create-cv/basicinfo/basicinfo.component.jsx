@@ -86,6 +86,7 @@ const BasicInfo = (props) => {
 
   // here was an useEffect
 
+
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -115,7 +116,6 @@ const BasicInfo = (props) => {
             email: newData.email,
 
           })
-
 
         } else {
 
@@ -244,7 +244,12 @@ const BasicInfo = (props) => {
             </div>
           </form>
         ) : (
-            <Spinner />
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="lg" />
           )}
       </Container>
     </Fragment>

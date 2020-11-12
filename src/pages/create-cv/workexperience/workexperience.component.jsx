@@ -47,11 +47,14 @@ const Workexperience = (props) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/workexperience`
     );
-    await cvRef.set({
+
+    let dataToBeSave = {
       companyname: companyname,
       startwork: startwork,
       endwork: endwork,
-    });
+    }
+
+    await cvRef.set(dataToBeSave);
     onClose();
     toast.success(`your cvs details has been updated`);
   };
@@ -63,31 +66,38 @@ const Workexperience = (props) => {
     setWorkexperinceform({ ...workexperinceform, [name]: value });
   };
 
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
     firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
+      .doc(`users/${currentUser.id}`).collection(`cvs/${id}/data`)
+      .doc(`workexperience`)
       .get()
       .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          console.log(doc.id, " => ", doc.data(), `here should show data`);
-          let obj = doc.data();
+
+        const workexpData = querySnapshot.data();
+
+        if (workexpData) {
           setWorkexperinceform({
-            companyname: obj.companyname,
-            startwork: obj.startwork,
-            endwork: obj.endwork,
-          });
-          setLoading(true);
-        });
+            companyname: workexpData.companyname,
+            startwork: workexpData.startwork,
+            endwork: workexpData.endwork,
+          })
+        }
+
+        setLoading(false);
       })
       .catch((error) => {
-        console.log(`there is was an error`);
         setLoading(false);
+
+        console.log(error, `there is was an error`);
       });
-  }, []);
+  }, [currentUser, id]);
+
 
   return (
     <div className="container">
@@ -103,7 +113,7 @@ const Workexperience = (props) => {
         </div>
       </div>
       <Rapperd>
-        {loading ? (
+        {!loading ? (
           <Rapperd>
             <P>
               CompanyName: <Strong>{companyname}</Strong>
@@ -114,7 +124,12 @@ const Workexperience = (props) => {
             <P>
               End Work: <Strong>{endwork}</Strong>
             </P>
-          </Rapperd>) : (<Spinner />)}
+          </Rapperd>) : (<Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="lg" />)}
 
       </Rapperd>
 

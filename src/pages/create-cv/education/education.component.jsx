@@ -49,11 +49,12 @@ const Education = (props) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/education`
     );
-    await cvRef.set({
+    let dataToBeSaved = {
       collagename: collagename,
       startgraduationyear: startgraduationyear,
       endgraduationyear: endgraduationyear,
-    });
+    }
+    await cvRef.set(dataToBeSaved);
     onClose();
     toast.success(`your cvs details has been updated`);
   };
@@ -67,33 +68,38 @@ const Education = (props) => {
 
 
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
     firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
+      .doc(`users/${currentUser.id}`).collection(`cvs/${id}/data`)
+      .doc(`education`)
       .get()
       .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          console.log(doc.id, " => ", doc.data(), `here should show data`);
-          let obj = doc.data();
-          setEducation({
-            collagename: obj.collagename,
-            startgraduationyear: obj.startgraduationyear,
-            endgraduationyear: obj.endgraduationyear,
-          });
-          
-          console.log(doc.data(), `here is Doc.data()`);
 
-          setLoading(true);
-        });
+        const eduactionData = querySnapshot.data();
+
+        if (eduactionData) {
+          setEducation({
+            collagename: eduactionData.collagename,
+            startgraduationyear: eduactionData.startgraduationyear,
+            endgraduationyear: eduactionData.endgraduationyear,
+          })
+        }
+
+        setLoading(false);
       })
       .catch((error) => {
-        console.log(`there is was an error`);
         setLoading(false);
+
+        console.log(error, `there is was an error`);
       });
-  }, []);
+  }, [currentUser, id]);
+
 
 
 
@@ -111,7 +117,7 @@ const Education = (props) => {
         </div>
       </div>
       <Rapperd>
-        {loading ? (<Rapperd>
+        {!loading ? (<Rapperd>
           <P>
             CollageName: <Strong>{collagename}</Strong>
           </P>
@@ -121,7 +127,12 @@ const Education = (props) => {
           <P>
             EndGraduationYear: <Strong>{endgraduationyear}</Strong>
           </P>
-        </Rapperd>) : (<Spinner />)}
+        </Rapperd>) : (<Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="lg" />)}
       </Rapperd>
 
 

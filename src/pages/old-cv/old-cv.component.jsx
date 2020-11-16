@@ -71,10 +71,11 @@ const OldCv = ({ currentUser, match }) => {
     }
     firestore
       .doc(`users/${currentUser.id}`)
-      .collection("cvs")
+      .collection(`cvs`)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
+          console.log(doc._label, `here is a Doc`);
           data.push(doc.id);
 
           // console.log(doc.id, " => ", doc.data(), `here should show data`);

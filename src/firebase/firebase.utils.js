@@ -1,8 +1,6 @@
-import firebase from "firebase/app";
+import * as firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
-import { v4 as uuidv4 } from "uuid";
-import { toast } from "react-toastify";
 
 const config = {
   apiKey: "AIzaSyAUmsbpy_RnDfwsBoX3FjHu7I9ZdNU7DH4",
@@ -16,11 +14,7 @@ const config = {
 
 firebase.initializeApp(config);
 
-export const createUserProfileDocument = async (
-  userAuth,
-  additionalData,
-  cvs
-) => {
+export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
@@ -47,7 +41,6 @@ export const createUserProfileDocument = async (
     }
   }
   return userRef;
-  toast.success(`You Are Welcome`);
 };
 
 export const getCurrentUser = () => {
@@ -60,6 +53,7 @@ export const getCurrentUser = () => {
 };
 
 export const auth = firebase.auth();
+
 export const firestore = firebase.firestore();
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();

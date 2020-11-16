@@ -14,7 +14,7 @@ import {
   Linkcv,
   Iconedit,
   Td,
-  SpanforDelete
+  SpanforDelete,
 } from "./old-cv.styles";
 import {
   Accordion,
@@ -22,17 +22,15 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  hh
+  hh,
 } from "@chakra-ui/core";
 import { firestore } from "../../firebase/firebase.utils";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 import { connect } from "react-redux";
 const OldCv = ({ currentUser, match }) => {
-
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -49,11 +47,13 @@ const OldCv = ({ currentUser, match }) => {
 
   const createAnewCv = async () => {
     const _createdAt = new Date();
+    const _label = "";
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
       .add({
         _createdAt,
+        _label,
       });
     if (docRef.id) {
       toast.success("done  adding a cv");
@@ -97,27 +97,27 @@ const OldCv = ({ currentUser, match }) => {
 
   const history = useHistory();
 
-  console.log(id, `IDDDDDDDDDDDDDDDDDDDDDDDDDD`)
-
-  const deletecv = async (id) => {
-
-    const DeleteRef = await firestore.doc(`users/${currentUser.id}`).collection(`cvs`).doc(`${id}`)
-      .delete()
-
-      .then(function () {
-        console.log("Document successfully deleted!");
-      })
-
-      .catch(function (error) {
-        console.error("Error removing document: ", error);
-      });
-
-    if (DeleteRef.id) {
-      toast.error(`your Cv ${id} has been deleted`)
+  //console.log(id, `IDDDDDDDDDDDDDDDDDDDDDDDDDD`)
+  /*
+    const deletecv = async (id) => {
+  
+      const DeleteRef = await firestore.doc(`users/${currentUser.id}`).collection(`cvs`).doc(`${id}`)
+        .delete()
+  
+        .then(function () {
+          console.log("Document successfully deleted!");
+        })
+  
+        .catch(function (error) {
+          console.error("Error removing document: ", error);
+        });
+  
+      if (DeleteRef.id) {
+        toast.error(`your Cv ${id} has been deleted`)
+      }
+  
     }
-
-  }
-
+  */
   return (
     <>
       <RapperdColor className="container-fluid">
@@ -137,22 +137,23 @@ const OldCv = ({ currentUser, match }) => {
               </tr>
             </thead>
             <tbody>
-
               {data.map((x, i) => (
                 <tr key={i}>
                   <td>
                     {x}
-                    <SpanforDelete onClick={() => deletecv()}>
+                    <SpanforDelete>
                       Delete <Icon />
                     </SpanforDelete>
                   </td>
                   <td> {new Date().toDateString()}</td>
                   <Td>
-                    <Linkcv to={"create-cv/" + `${x}`}> Edit now <Iconedit /></Linkcv>
+                    <Linkcv to={"create-cv/" + `${x}`}>
+                      {" "}
+                      Edit now <Iconedit />
+                    </Linkcv>
                   </Td>
                 </tr>
               ))}
-
             </tbody>
           </Table>
           <div className="container">
@@ -233,10 +234,10 @@ const PrivateRoute = ({ component: Component, currentUser, ...rest }) => (
       currentUser != null ? (
         <Component {...props} />
       ) : (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        )
+        <Redirect
+          to={{ pathname: "/login", state: { from: props.location } }}
+        />
+      )
     }
   />
 );

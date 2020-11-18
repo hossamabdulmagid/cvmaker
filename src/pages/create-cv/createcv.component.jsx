@@ -16,6 +16,7 @@ import {
   ButtonForAddNewSection,
   Span,
   ButtonforLabel,
+  Strong,
 } from "./createcv.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
@@ -95,7 +96,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
 
   /* new label name Section*/
   const [cvName, setCvName] = useState({
-    _label: "",
+    _label: "your CvName",
   });
 
   const [loading, setLoading] = useState(true);
@@ -111,7 +112,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
       .doc(`${id}`)
       .update("_label", cvName._label);
 
-    toast.success(`your cvs details has been updated`);
+    toast.info(`your cvs details has been updated`);
   };
 
   useEffect(() => {
@@ -124,7 +125,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
 
       .get()
       .then(function (querySnapshot) {
-        console.log(querySnapshot.data(), `querySnapshot.data()`);
         const newData = querySnapshot.data();
         if (newData) {
           setCvName({
@@ -178,7 +178,8 @@ const CreateCv = ({ AddToList, currentUser }) => {
                     Confirm
                   </Button>
                   <br />
-                  Your Cv Name is : {cvName._label}
+                  Your Cv Name is :{" "}
+                  <strong className="labelcv"> {cvName._label}</strong>
                 </Editable>
               </form>
             ) : (

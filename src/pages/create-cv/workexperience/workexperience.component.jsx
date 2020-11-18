@@ -15,7 +15,7 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Spinner
+  Spinner,
 } from "@chakra-ui/core";
 import { ButtonForWork, Rapperd, P, Strong } from "./workexperience.styles";
 import { firestore } from "../../../firebase/firebase.utils";
@@ -42,7 +42,6 @@ const Workexperience = (props) => {
 
   const { companyname, startwork, endwork } = workexperinceform;
 
-
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/workexperience`
@@ -52,14 +51,12 @@ const Workexperience = (props) => {
       companyname: companyname || "",
       startwork: startwork || "",
       endwork: endwork || "",
-    }
+    };
 
     await cvRef.set(dataToBeSave);
     onClose();
-    toast.success(`your cvs details has been updated`);
+    toast.info(`your cvs section workexperince has been updated`);
   };
-
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -74,11 +71,11 @@ const Workexperience = (props) => {
     }
 
     firestore
-      .doc(`users/${currentUser.id}`).collection(`cvs/${id}/data`)
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
       .doc(`workexperience`)
       .get()
       .then(function (querySnapshot) {
-
         const workexpData = querySnapshot.data();
 
         if (workexpData) {
@@ -86,7 +83,7 @@ const Workexperience = (props) => {
             companyname: workexpData.companyname,
             startwork: workexpData.startwork,
             endwork: workexpData.endwork,
-          })
+          });
         }
 
         setLoading(false);
@@ -97,7 +94,6 @@ const Workexperience = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
 
   return (
     <div className="container">
@@ -124,13 +120,16 @@ const Workexperience = (props) => {
             <P>
               End Work: <Strong>{endwork}</Strong>
             </P>
-          </Rapperd>) : (<Spinner
+          </Rapperd>
+        ) : (
+          <Spinner
             thickness="4px"
             speed="0.65s"
             emptyColor="gray.200"
             color="blue.500"
-            size="lg" />)}
-
+            size="lg"
+          />
+        )}
       </Rapperd>
 
       <Modal
@@ -180,11 +179,7 @@ const Workexperience = (props) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button
-                variantColor="blue"
-                mr={3}
-                type="submit"
-              >
+              <Button variantColor="blue" mr={3} type="submit">
                 Save
               </Button>
               <Button onClick={onClose}>Cancel</Button>

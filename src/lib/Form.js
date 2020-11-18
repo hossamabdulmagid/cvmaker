@@ -8,7 +8,7 @@ const From = () => {
     toolbar: true,
   });
 
-  const [textAreaValue, setTextAreaValue] = useState("Write here");
+  const [textAreaValue, setTextAreaValue] = useState("Write  Sawsaw");
 
   const [inputValue, setInputValue] = useState("");
 

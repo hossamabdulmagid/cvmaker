@@ -42,3 +42,10 @@ span {
   margin: 20px;
   border-radius: 8px;
 }
+
+button {
+  margin: 5px;
+}
+.labelcv {
+  color: #18c7e1;
+}

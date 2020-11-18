@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  Spinner
+  Spinner,
 } from "@chakra-ui/core";
 import { ButtonForEducation, P, Rapperd, Strong } from "./education.styles";
 import { connect } from "react-redux";
@@ -32,7 +32,6 @@ const Education = (props) => {
 
   const value = getValues();
 
-
   const [education, setEducation] = useState({
     collagename: "",
     startgraduationyear: "",
@@ -41,9 +40,7 @@ const Education = (props) => {
 
   const { collagename, startgraduationyear, endgraduationyear } = education;
 
-  useEffect(() => {
-
-  }, [currentUser.id, id]);
+  useEffect(() => {}, [currentUser.id, id]);
 
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
@@ -53,20 +50,16 @@ const Education = (props) => {
       collagename: collagename || "",
       startgraduationyear: startgraduationyear || "",
       endgraduationyear: endgraduationyear || "",
-    }
+    };
     await cvRef.set(dataToBeSaved);
     onClose();
-    toast.success(`your cvs details has been updated`);
+    toast.info(`your cvs section education has been updated`);
   };
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setEducation({ ...education, [name]: value });
   };
-
-
-
 
   const [loading, setLoading] = useState(true);
 
@@ -76,11 +69,11 @@ const Education = (props) => {
     }
 
     firestore
-      .doc(`users/${currentUser.id}`).collection(`cvs/${id}/data`)
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
       .doc(`education`)
       .get()
       .then(function (querySnapshot) {
-
         const eduactionData = querySnapshot.data();
 
         if (eduactionData) {
@@ -88,7 +81,7 @@ const Education = (props) => {
             collagename: eduactionData.collagename,
             startgraduationyear: eduactionData.startgraduationyear,
             endgraduationyear: eduactionData.endgraduationyear,
-          })
+          });
         }
 
         setLoading(false);
@@ -99,9 +92,6 @@ const Education = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
-
-
 
   return (
     <div className="container">
@@ -117,24 +107,28 @@ const Education = (props) => {
         </div>
       </div>
       <Rapperd>
-        {!loading ? (<Rapperd>
-          <P>
-            CollageName: <Strong>{collagename}</Strong>
-          </P>
-          <P>
-            StartGraduationYear: <Strong>{startgraduationyear}</Strong>
-          </P>
-          <P>
-            EndGraduationYear: <Strong>{endgraduationyear}</Strong>
-          </P>
-        </Rapperd>) : (<Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="lg" />)}
+        {!loading ? (
+          <Rapperd>
+            <P>
+              CollageName: <Strong>{collagename}</Strong>
+            </P>
+            <P>
+              StartGraduationYear: <Strong>{startgraduationyear}</Strong>
+            </P>
+            <P>
+              EndGraduationYear: <Strong>{endgraduationyear}</Strong>
+            </P>
+          </Rapperd>
+        ) : (
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="lg"
+          />
+        )}
       </Rapperd>
-
 
       <Modal
         initialFocusRef={initialRef}
@@ -166,8 +160,7 @@ const Education = (props) => {
                 type="date"
                 ref={register({ required: "this Content is Required" })}
               />
-              {errors.startgraduationyear &&
-                errors.startgraduationyear.message}
+              {errors.startgraduationyear && errors.startgraduationyear.message}
               <br />
               <FormLabel> End Year </FormLabel>
               <Input
@@ -184,7 +177,7 @@ const Education = (props) => {
             <ModalFooter>
               <Button variantColor="blue" mr={3} type="submit">
                 Save
-                </Button>
+              </Button>
               <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
           </form>
@@ -197,7 +190,5 @@ const Education = (props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
-
-
 
 export default connect(mapStateToProps, null)(Education);

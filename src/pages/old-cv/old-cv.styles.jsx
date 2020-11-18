@@ -9,7 +9,7 @@ export const RapperdColor = styled.div`
   background-color: #f9f9f9;
   color: black;
   height: auto;
-  padding-bottom:25px;
+  padding-bottom: 25px;
 `;
 
 export const Content = styled.div`
@@ -45,10 +45,9 @@ export const Strong = styled.strong`
 `;
 
 export const Icon = styled(BsFillBucketFill)`
-  margin: 3px;
+  margin: 4.5px;
   width: 13px;
-  color:whie;
-
+  color: whie;
 `;
 
 export const Span = styled.small`
@@ -59,25 +58,20 @@ export const Span = styled.small`
   background-color: sunrose;
 `;
 
+export const ButtonForDeleteCv = styled.button`
+  float: right;
+  display: flex;
+  color: white;
+  background-color: gray;
+  display: flex-inline;
+  padding: 3px;
+  border-radius: 3px;
 
-export const SpanforDelete = styled.small`
-float: right;
-display: flex;
-color: white;
-background-color: gray;
-display:flex-inline;
-padding:2px;
-border-radius: 3px;
-
-&:hover{
-  color:white;
-}
-
-
-`
-
-
-
+  &:hover {
+    color: white;
+    background-color: darkred;
+  }
+`;
 
 export const H2 = styled.h2`
   margin-bottom: 30px;
@@ -120,18 +114,15 @@ export const ButtonForPremium = styled.button`
 export const Linkcv = styled(Link)`
   color: orange;
   text-align: center;
-  display:flex;
-  `;
+  display: flex;
+`;
 export const Iconedit = styled(BiCog)`
   margin: 3px;
   width: 13px;
   float: right;
-  color:orange;
-
+  color: orange;
 `;
 
 export const Td = styled.td`
-
-text-align:right;
+  text-align: right;
 `;
-

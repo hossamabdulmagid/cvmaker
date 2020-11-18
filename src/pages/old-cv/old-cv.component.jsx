@@ -14,7 +14,7 @@ import {
   Linkcv,
   Iconedit,
   Td,
-  SpanforDelete,
+  ButtonForDeleteCv,
 } from "./old-cv.styles";
 import {
   Accordion,
@@ -48,7 +48,7 @@ const OldCv = ({ currentUser, match }) => {
   const [datee, setDatee] = useState(new Date());
 
   const createAnewCv = async () => {
-    const _label = "";
+    const _label = "cv Name";
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
@@ -57,7 +57,7 @@ const OldCv = ({ currentUser, match }) => {
         _label,
       });
     if (docRef.id) {
-      toast.success("done  adding a cv");
+      toast.success("Done  Adding A new  cv");
       const newCvPath = `create-cv/${docRef.id}`;
       history.push(newCvPath);
       return;
@@ -80,9 +80,7 @@ const OldCv = ({ currentUser, match }) => {
 
           let obj = doc.data();
           obj.id = doc.id;
-          console.log(obj, `asdasd`);
           allcv.push(obj);
-          console.log(allcv, `allcv after pushing Data with id `);
         });
       });
     var timerID = setInterval(() => {
@@ -92,34 +90,35 @@ const OldCv = ({ currentUser, match }) => {
     return function cleanup() {
       clearInterval(timerID);
     };
-  }, [data, currentUser, id]);
+  }, [data, currentUser, id, allcv]);
 
   const history = useHistory();
 
   //console.log(id, `IDDDDDDDDDDDDDDDDDDDDDDDDDD`)
-  /*
-    const deletecv = async (id) => {
-  
-      const DeleteRef = await firestore.doc(`users/${currentUser.id}`).collection(`cvs`).doc(`${id}`)
-        .delete()
-  
-        .then(function () {
-          console.log("Document successfully deleted!");
-        })
-  
-        .catch(function (error) {
-          console.error("Error removing document: ", error);
-        });
-  
-      if (DeleteRef.id) {
-        toast.error(`your Cv ${id} has been deleted`)
-      }
-      import Moment from 'react-moment';
 
-
-  
+  const deleteCv = async (id) => {
+    if (!id) {
+      return;
     }
-  */
+    console.log(id, `here is id Gona Deleted`);
+    await firestore
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs`)
+      .doc(`${id}`)
+      .delete()
+
+      .then(function () {
+        allcv.shift();
+        toast.success(`Document successfully deleted!`);
+      })
+
+      .catch(function (error) {
+        toast.info("Error removing document: ", error);
+      });
+  };
+
+  useEffect(() => {}, [allcv]);
+
   return (
     <>
       <RapperdColor className="container-fluid">
@@ -143,9 +142,9 @@ const OldCv = ({ currentUser, match }) => {
                 <tr key={i}>
                   <td>
                     {x._label}
-                    <SpanforDelete>
-                      Delete <Icon />
-                    </SpanforDelete>
+                    <ButtonForDeleteCv onClick={() => deleteCv(`${x.id}`)}>
+                      delete <Icon />
+                    </ButtonForDeleteCv>
                   </td>
                   <td>
                     <Moment format="MMMM Do YYYY, h:mm:ss a">

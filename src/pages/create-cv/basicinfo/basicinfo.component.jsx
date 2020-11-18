@@ -24,16 +24,9 @@ const BasicInfo = (props) => {
 
   const { id } = useParams();
 
-
-
   const history = useHistory();
 
-  const {
-    handleSubmit,
-    register,
-    errors,
-    getValues,
-  } = useForm();
+  const { handleSubmit, register, errors, getValues } = useForm();
 
   const value = getValues();
 
@@ -47,17 +40,12 @@ const BasicInfo = (props) => {
     webSites: "",
   });
 
-
-
   const [loading, setLoading] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setDataform({ ...dataform, [name]: value });
   };
-
-
-
 
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
@@ -74,16 +62,12 @@ const BasicInfo = (props) => {
     };
     await cvRef.set(dataToBeSaved);
 
-    toast.success(`your cvs details has been updated`);
-
-
-  }
+    toast.info(`your section Basicinfo has been updated`);
+  };
 
   // Add a new document in collection "cities"
 
-
   // here was an useEffect
-
 
   useEffect(() => {
     if (!currentUser) {
@@ -91,15 +75,14 @@ const BasicInfo = (props) => {
     }
 
     firestore
-      .doc(`users/${currentUser.id}`).collection(`cvs/${id}/data`)
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
       .doc(`basicinfo`)
       .get()
       .then(function (querySnapshot) {
-
         const newData = querySnapshot.data();
 
         if (newData) {
-
           setDataform({
             fullname: newData.fullname,
             phone: newData.phone,
@@ -108,19 +91,16 @@ const BasicInfo = (props) => {
             address3: newData.address3,
             webSites: newData.webSites,
             email: newData.email,
-
-          })
-
+          });
         }
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
-        toast.error(error, `there is was an error`)
+        toast.error(error, `there is was an error`);
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
 
   return (
     <Fragment>
@@ -138,7 +118,8 @@ const BasicInfo = (props) => {
                     value={dataform.fullname}
                     ref={register()}
                     onChange={handleChange}
-                  /><br />
+                  />
+                  <br />
                   {errors.fullname && errors.fullname.message}
 
                   <Label>Phone numbers</Label>
@@ -181,19 +162,17 @@ const BasicInfo = (props) => {
                     onChange={handleChange}
                     ref={register({ required: "this input is required" })}
                     required
-                  /> <br />
+                  />{" "}
+                  <br />
                   {errors.email && errors.email.message}
-
                   <Label>Websites</Label>
                   <Input
                     name="webSites"
                     ref={register()}
                     value={dataform.webSites}
-
                     onChange={handleChange}
                   />
                   {errors.websites && errors.websites.message}
-
                   <hr />
                   <Label>Address Line 2</Label>
                   <Input
@@ -201,10 +180,8 @@ const BasicInfo = (props) => {
                     ref={register()}
                     value={dataform.address2}
                     onChange={handleChange}
-
                   />
                   {errors.address2 && errors.address2.message}
-
                   <br />
                   <br />
                   <Button type="submit" variantColor="teal" variant="ghost">
@@ -237,13 +214,14 @@ const BasicInfo = (props) => {
             </div>
           </form>
         ) : (
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="lg" />
-          )}
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="lg"
+          />
+        )}
       </Container>
     </Fragment>
   );

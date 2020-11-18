@@ -66,6 +66,8 @@ const OldCv = ({ currentUser, match }) => {
     }
   };
 
+  const getDataForFb = () => {};
+
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -100,7 +102,7 @@ const OldCv = ({ currentUser, match }) => {
     if (!id) {
       return;
     }
-    console.log(id, `here is id Gona Deleted`);
+    console.log(id, `here is id gona deleted`);
     await firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs`)
@@ -117,7 +119,7 @@ const OldCv = ({ currentUser, match }) => {
       });
   };
 
-  useEffect(() => {}, [allcv]);
+  useEffect(() => {}, [allcv, allcv, allcv, allcv]);
 
   return (
     <>
@@ -138,23 +140,25 @@ const OldCv = ({ currentUser, match }) => {
               </tr>
             </thead>
             <tbody>
-              {allcv.map((x, i) => (
+              {allcv.map((singleCv, i) => (
                 <tr key={i}>
                   <td>
-                    {x._label}
-                    <ButtonForDeleteCv onClick={() => deleteCv(`${x.id}`)}>
+                    {singleCv._label}
+                    <ButtonForDeleteCv
+                      onClick={() => deleteCv(`${singleCv.id}`)}
+                    >
                       delete <Icon />
                     </ButtonForDeleteCv>
                   </td>
                   <td>
                     <Moment format="MMMM Do YYYY, h:mm:ss a">
-                      {x._createdAt}
+                      {singleCv._createdAt}
                     </Moment>
                   </td>
                   <Td>
-                    <Linkcv to={"create-cv/" + `${x.id}`}>
-                      {" "}
-                      Edit now <Iconedit />
+                    <Linkcv to={"create-cv/" + `${singleCv.id}`}>
+                      Edit now
+                      <Iconedit />
                     </Linkcv>
                   </Td>
                 </tr>

@@ -30,6 +30,8 @@ import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
+import Moment from "react-moment";
+
 const OldCv = ({ currentUser, match }) => {
   const [show, setShow] = useState(false);
 
@@ -46,13 +48,12 @@ const OldCv = ({ currentUser, match }) => {
   const [datee, setDatee] = useState(new Date());
 
   const createAnewCv = async () => {
-    const _createdAt = new Date();
     const _label = "";
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
       .add({
-        _createdAt,
+        _createdAt: new Date().toString(),
         _label,
       });
     if (docRef.id) {
@@ -75,16 +76,13 @@ const OldCv = ({ currentUser, match }) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          console.log(doc._label, `here is a Doc`);
-          data.push(doc.id);
-
           // console.log(doc.id, " => ", doc.data(), `here should show data`);
 
           let obj = doc.data();
-
-          Object.getOwnPropertyNames(obj).forEach((key) => {
-            allcv.push(`${key}:${obj[key]}`);
-          });
+          obj.id = doc.id;
+          console.log(obj, `asdasd`);
+          allcv.push(obj);
+          console.log(allcv, `allcv after pushing Data with id `);
         });
       });
     var timerID = setInterval(() => {
@@ -116,6 +114,9 @@ const OldCv = ({ currentUser, match }) => {
       if (DeleteRef.id) {
         toast.error(`your Cv ${id} has been deleted`)
       }
+      import Moment from 'react-moment';
+
+
   
     }
   */
@@ -133,22 +134,26 @@ const OldCv = ({ currentUser, match }) => {
             <thead>
               <tr>
                 <th> Name</th>
-                <th>Last modified</th>
+                <th>Created At</th>
                 <th>Options</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((x, i) => (
+              {allcv.map((x, i) => (
                 <tr key={i}>
                   <td>
-                    {x}
+                    {x._label}
                     <SpanforDelete>
                       Delete <Icon />
                     </SpanforDelete>
                   </td>
-                  <td> {new Date().toDateString()}</td>
+                  <td>
+                    <Moment format="MMMM Do YYYY, h:mm:ss a">
+                      {x._createdAt}
+                    </Moment>
+                  </td>
                   <Td>
-                    <Linkcv to={"create-cv/" + `${x}`}>
+                    <Linkcv to={"create-cv/" + `${x.id}`}>
                       {" "}
                       Edit now <Iconedit />
                     </Linkcv>

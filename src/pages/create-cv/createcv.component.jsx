@@ -15,6 +15,7 @@ import {
   LINK,
   ButtonForAddNewSection,
   Span,
+  ButtonforLabel,
 } from "./createcv.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
@@ -42,11 +43,10 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Button,
-  FormControl,
   FormLabel,
   Input,
 } from "@chakra-ui/core";
+import { Button } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
@@ -106,7 +106,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
   };
 
   const onSubmitLabel = async (value) => {
-    console.log(cvName._label, ` cvName._label`);
     await firestore
       .collection(`users/${currentUser.id}/cvs`)
       .doc(`${id}`)
@@ -127,7 +126,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
       .then(function (querySnapshot) {
         console.log(querySnapshot.data(), `querySnapshot.data()`);
         const newData = querySnapshot.data();
-
         if (newData) {
           setCvName({
             _label: newData._label,
@@ -163,7 +161,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
                 <Editable defaultValue={cvName.labelName}>
                   <EditablePreview />
                   <EditableInput
-                    width="120px"
+                    width="110px"
                     placeholder="cvName here"
                     type="text"
                     name="_label"
@@ -171,8 +169,12 @@ const CreateCv = ({ AddToList, currentUser }) => {
                     ref={register()}
                     onChange={handleChange}
                   />
-                  |{" "}
-                  <Button className="btn btn-info" size="xs" type="submit">
+                  <Button
+                    variant="outline-info"
+                    size="sm"
+                    className="buttonforlabelcv"
+                    type="submit"
+                  >
                     Confirm
                   </Button>
                   <br />

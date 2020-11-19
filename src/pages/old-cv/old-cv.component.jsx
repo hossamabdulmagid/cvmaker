@@ -45,11 +45,12 @@ const OldCv = ({ currentUser, match }) => {
   const [data, setData] = useState([]);
 
   let { id } = match.params;
+  const history = useHistory();
 
   const [datee, setDatee] = useState(new Date());
 
   const createAnewCv = async () => {
-    const _label = "cv name";
+    const _label = "basic cv";
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
@@ -92,10 +93,7 @@ const OldCv = ({ currentUser, match }) => {
     return function cleanup() {
       clearInterval(timerID);
     };
-    return deleteCv();
   }, [data, currentUser, id, allcv]);
-
-  const history = useHistory();
 
   const deleteCv = async (id) => {
     if (!id) {

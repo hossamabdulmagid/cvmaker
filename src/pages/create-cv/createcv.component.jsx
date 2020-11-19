@@ -54,11 +54,11 @@ import { AddToList } from "../../redux/addtolist/addtolistAction";
 
 const CreateCv = ({ AddToList, currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
-    { section: "Work experience" },
-    { section: "Qualifications" },
-    { section: "Education" },
-    { section: "Interests" },
-    { section: "References" },
+    { section: "Work experience", type: "text" },
+    { section: "Qualifications", type: "text" },
+    { section: "Education", type: "text" },
+    { section: "Interests", type: "text" },
+    { section: "References", type: "text" },
   ]);
 
   const [activeSection, setActiveSection] = useState("Basic information");
@@ -180,7 +180,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
                     Confirm
                   </Button>
                   <br />
-                  Your Cv Name is :{" "}
+                  Your Cv Name is :
                   <strong className="labelcv"> {cvName._label}</strong>
                 </Editable>
               </form>
@@ -193,14 +193,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
                 size="lg"
               />
             )}
-            {/*
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="lg" />
-          */}
           </div>
           <div className="row">
             <div className="col-5"></div>
@@ -212,28 +204,23 @@ const CreateCv = ({ AddToList, currentUser }) => {
             </div>
             <Col className="col-5">
               <Buttons size="xs" variant="success">
-                {" "}
-                <AiOutlineExclamation /> Help
+                <AiOutlineExclamation />
+                Help
               </Buttons>
               <Buttons size="xs" variant="success">
-                {" "}
-                <AiTwotoneFileExcel /> Quick preview
+                <AiTwotoneFileExcel />
+                Quick preview
               </Buttons>
-              {currentUser ? (
-                <Fragment>
-                  <Buttons size="xs" variant="success">
-                    <AiTwotonePlaySquare />
-                    Save
-                  </Buttons>
-                  <Buttons size="xs" variant="success">
-                    <AiTwotoneFolderOpen />
-                    Save & Download
-                  </Buttons>
-                </Fragment>
-              ) : null}
+              <Buttons size="xs" variant="success">
+                <AiTwotonePlaySquare />
+                Save
+              </Buttons>
+              <Buttons size="xs" variant="success">
+                <AiTwotoneFolderOpen />
+                Save & Download
+              </Buttons>
             </Col>
-            <br />
-            <br />
+
             <RapperSidebar className="col-3">
               <Ul>
                 <Li
@@ -257,23 +244,9 @@ const CreateCv = ({ AddToList, currentUser }) => {
                     <LINK>{singleRouteforSidebar.section}</LINK>
                   </Li>
                 ))}
-                {/* {value.section === '' ?
-                                    null :
-                                    <Li>
-                                        <LINK>
-                                            {value.section}
-                                        </LINK>
-                                    </Li>
-                                }
-                                */}
-                {currentUser ? (
-                  <ButtonForAddNewSection onClick={onOpen} variant="success">
-                    + New Section
-                  </ButtonForAddNewSection>
-                ) : (
-                  <Span>*You must login to add newSection</Span>
-                )}
-
+                <ButtonForAddNewSection onClick={onOpen} variant="success">
+                  + New Section
+                </ButtonForAddNewSection>
                 <Modal
                   initialFocusRef={initialRef}
                   finalFocusRef={finalRef}
@@ -303,11 +276,17 @@ const CreateCv = ({ AddToList, currentUser }) => {
                           mr={3}
                           type="submit"
                           onClick={AddToList}
+                          className="buttonForSaveNewSection"
                           onOpen
                         >
                           Save
                         </Button>
-                        <Button onClick={onClose}>Cancel</Button>
+                        <Button
+                          onClick={onClose}
+                          className="buttonForCancleNewSection"
+                        >
+                          Cancel
+                        </Button>
                       </ModalFooter>
                     </form>
                   </ModalContent>
@@ -316,7 +295,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
               <small>
                 * Click and drag section names in the above list to reorder
                 sections in your CV.
-              </small>{" "}
+              </small>
               <br />
               <small>
                 * If you leave the fields in a section empty, the section will
@@ -330,6 +309,12 @@ const CreateCv = ({ AddToList, currentUser }) => {
               {activeSection === sidebarRoutes[2] ? <Education /> : null}
               {activeSection === sidebarRoutes[3] ? <Interests /> : null}
               {activeSection === sidebarRoutes[4] ? <References /> : null}
+              {/*
+              {activeSection === sidebarRoutes[5] ? <References /> : null}
+              {activeSection === sidebarRoutes[6] ? <References /> : null}
+              {activeSection === sidebarRoutes[7] ? <References /> : null}
+              {activeSection === sidebarRoutes[8] ? <References /> : null}
+              */}
             </div>
           </div>
         </Container>

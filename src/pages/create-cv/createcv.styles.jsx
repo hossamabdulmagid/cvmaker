@@ -44,6 +44,7 @@ export const IMG = styled.img`
 
 export const Col = styled.div`
   display: flex;
+  padding-bottom: 35px;
 `;
 
 export const RapperSidebar = styled.div`

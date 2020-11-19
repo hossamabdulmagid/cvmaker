@@ -65,10 +65,6 @@ const BasicInfo = (props) => {
     toast.info(`your section basicinfo has been updated`);
   };
 
-  // Add a new document in collection "cities"
-
-  // here was an useEffect
-
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -189,30 +185,22 @@ const BasicInfo = (props) => {
                   <Button type="submit" variantColor="teal" variant="ghost">
                     Save
                   </Button>
-                  {/*
-                                <Button variantColor="green" type="submit" className="Buttonforgreen">Save</Button>
-                            */}
                 </div>
                 <hr />
               </div>
               <br />
               <hr />
-              {currentUser ? (
-                <>
-                  <P>You have to be logged in to upload your photo</P>
-                  <hr />
+              <hr />
 
-                  <div className="row">
-                    <div className="col-6">
-                      <Upload id="" type="file" />
-                    </div>
-                    <div className="col-6">
-                      <Buttons>upload</Buttons>
-                      <Buttons>save</Buttons>
-                    </div>
-                  </div>
-                </>
-              ) : null}
+              <div className="row">
+                <div className="col-6">
+                  <Upload id="" type="file" />
+                </div>
+                <div className="col-6">
+                  <Buttons>upload</Buttons>
+                  <Buttons>save</Buttons>
+                </div>
+              </div>
             </div>
           </form>
         ) : (
@@ -230,7 +218,6 @@ const BasicInfo = (props) => {
 };
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
-  // UniqeIdForUser: state.user.currentUser.id
 });
 
 export default connect(mapStateToProps, null)(BasicInfo);

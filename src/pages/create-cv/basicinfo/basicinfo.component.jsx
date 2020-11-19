@@ -53,7 +53,7 @@ const BasicInfo = (props) => {
     );
     let dataToBeSaved = {
       fullname: dataform.fullname || "",
-      phone: +20 + dataform.phone || "",
+      phone: dataform.phone || "",
       email: dataform.email || "",
       address1: dataform.address1 || "",
       address2: dataform.address2 || "",

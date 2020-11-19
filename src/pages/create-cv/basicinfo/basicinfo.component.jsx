@@ -73,7 +73,6 @@ const BasicInfo = (props) => {
     if (!currentUser) {
       return;
     }
-
     firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
@@ -81,7 +80,6 @@ const BasicInfo = (props) => {
       .get()
       .then(function (querySnapshot) {
         const newData = querySnapshot.data();
-
         if (newData) {
           setDataform({
             fullname: newData.fullname,
@@ -101,7 +99,6 @@ const BasicInfo = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
   return (
     <Fragment>
       <Container className="container-fluid">
@@ -112,7 +109,6 @@ const BasicInfo = (props) => {
               <div className="row">
                 <div className="col-6">
                   <Label>Full name</Label>
-
                   <Input
                     name="fullname"
                     value={dataform.fullname}
@@ -122,12 +118,11 @@ const BasicInfo = (props) => {
                   />
                   <br />
                   {errors.fullname && errors.fullname.message}
-
                   <Label>Phone numbers</Label>
                   <Input
                     name="phone"
                     value={dataform.phone}
-                    placeholder="+2010 364 8099"
+                    placeholder="+2010 000 0000"
                     onChange={handleChange}
                     ref={register({ required: "this input is required" })}
                     required

@@ -49,7 +49,7 @@ const OldCv = ({ currentUser, match }) => {
   const [datee, setDatee] = useState(new Date());
 
   const createAnewCv = async () => {
-    const _label = "cv Name";
+    const _label = "cv name";
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
@@ -58,7 +58,7 @@ const OldCv = ({ currentUser, match }) => {
         _label,
       });
     if (docRef.id) {
-      toast.success("Done  Adding A new  cv");
+      toast.success(`Done  Adding A new  cv: ${_label}`);
       const newCvPath = `create-cv/${docRef.id}`;
       history.push(newCvPath);
       return;
@@ -66,6 +66,7 @@ const OldCv = ({ currentUser, match }) => {
       console.log(`SomeThing Worng here`);
     }
   };
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -78,8 +79,6 @@ const OldCv = ({ currentUser, match }) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          // console.log(doc.id, " => ", doc.data(), `here should show data`);
-
           let obj = doc.data();
           obj.id = doc.id;
           allcv.push(obj);
@@ -97,6 +96,7 @@ const OldCv = ({ currentUser, match }) => {
   }, [data, currentUser, id, allcv]);
 
   const history = useHistory();
+
   const deleteCv = async (id) => {
     if (!id) {
       return;
@@ -110,7 +110,7 @@ const OldCv = ({ currentUser, match }) => {
 
       .then(function () {
         allcv.shift();
-        toast.success(`Document successfully deleted!`);
+        toast.error(`Document successfully deleted!`);
       })
 
       .catch(function (error) {
@@ -202,9 +202,7 @@ const OldCv = ({ currentUser, match }) => {
                     <div className="row">
                       <div className="col-6">
                         <H2> Free</H2>
-
                         <Small>Basic templates</Small>
-
                         <Small>Add custom plain sections to your CV</Small>
                         <Small>Basic rich text editor</Small>
                         <Small>$0</Small>
@@ -212,25 +210,29 @@ const OldCv = ({ currentUser, match }) => {
                       <div className="col-6">
                         <H2> Premium</H2>
                         <Small>
-                          <Green>★</Green> Premium templates in addition to the
-                          free ones
+                          <Green>★</Green>
+                          Premium templates in addition to the free ones
                         </Small>
                         <Small>
-                          <Green>★</Green> Add custom plain and special sections
-                          (similar to education and work) to your CV
+                          <Green>★</Green>
+                          Add custom plain and special sections (similar to
+                          education and work) to your CV
                         </Small>
                         <Small>
-                          <Green>★</Green> Advanced rich text editor. Choose
-                          fonts, text colors and more
+                          <Green>★</Green>
+                          Advanced rich text editor. Choose fonts, text colors
+                          and more
                         </Small>
                         <Small>
-                          <Green>★</Green> One-click e-mail. Send your resume
-                          directly to your e-mail easily from your mobile or
-                          tablet that doesn't allow file downloads
+                          <Green>★</Green>
+                          One-click e-mail. Send your resume directly to your
+                          e-mail easily from your mobile or tablet that doesn't
+                          allow file downloads
                         </Small>
                         <Small>
-                          <Green>★</Green> Continued access to upcoming premium
-                          features and templates
+                          <Green>★</Green>
+                          Continued access to upcoming premium features and
+                          templates
                         </Small>
                         <Small>$16 / year</Small>
                         <ButtonForPremium>

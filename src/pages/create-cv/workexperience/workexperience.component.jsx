@@ -38,9 +38,10 @@ const Workexperience = (props) => {
     companyname: "",
     startwork: "",
     endwork: "",
+    position: "",
   });
 
-  const { companyname, startwork, endwork } = workexperinceform;
+  const { companyname, startwork, endwork, position } = workexperinceform;
 
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
@@ -51,6 +52,7 @@ const Workexperience = (props) => {
       companyname: companyname || "",
       startwork: startwork || "",
       endwork: endwork || "",
+      position: position || "",
     };
 
     await cvRef.set(dataToBeSave);
@@ -83,6 +85,7 @@ const Workexperience = (props) => {
             companyname: workexpData.companyname,
             startwork: workexpData.startwork,
             endwork: workexpData.endwork,
+            position: workexpData.position,
           });
         }
 
@@ -119,6 +122,9 @@ const Workexperience = (props) => {
             </P>
             <P>
               End Work: <Strong>{endwork}</Strong>
+            </P>
+            <P>
+              Position: <Strong>{position}</Strong>
             </P>
           </Rapperd>
         ) : (
@@ -175,6 +181,17 @@ const Workexperience = (props) => {
                 type="date"
               />
               {errors.endwork && errors.endwork.message}
+              <br />
+              <FormLabel> Postion</FormLabel>
+              <Input
+                ref={register()}
+                name="position"
+                placeholder="Position"
+                onChange={handleChange}
+                value={position}
+                type="text"
+              />
+              {errors.position && errors.position.message}
               <br />
             </ModalBody>
 

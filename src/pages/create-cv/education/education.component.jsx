@@ -36,14 +36,14 @@ const Education = (props) => {
     collagename: "",
     startgraduationyear: "",
     endgraduationyear: "",
-    collegemajor: "",
+    eduactionmajor: "",
   });
 
   const {
     collagename,
     startgraduationyear,
     endgraduationyear,
-    collegemajor,
+    eduactionmajor,
   } = education;
 
   useEffect(() => {}, [currentUser.id, id]);
@@ -56,7 +56,7 @@ const Education = (props) => {
       collagename: collagename || "",
       startgraduationyear: startgraduationyear || "",
       endgraduationyear: endgraduationyear || "",
-      collegemajor: collegemajor || "",
+      eduactionmajor: eduactionmajor || "",
     };
     await cvRef.set(dataToBeSaved);
     onClose();
@@ -88,7 +88,7 @@ const Education = (props) => {
             collagename: eduactionData.collagename,
             startgraduationyear: eduactionData.startgraduationyear,
             endgraduationyear: eduactionData.endgraduationyear,
-            collegemajor: eduactionData.collegemajor,
+            eduactionmajor: eduactionData.eduactionmajor,
           });
         }
 
@@ -127,7 +127,7 @@ const Education = (props) => {
               EndGraduationYear: <Strong>{endgraduationyear}</Strong>
             </P>
             <P>
-              CollegeMajor: <Strong>{collegemajor}</Strong>
+              Education Majoring : <Strong>{eduactionmajor}</Strong>
             </P>
           </Rapperd>
         ) : (
@@ -183,17 +183,17 @@ const Education = (props) => {
               />
 
               {errors.endgraduationyear && errors.endgraduationyear.message}
-              <FormLabel> College Major </FormLabel>
+              <FormLabel> Education Majoring </FormLabel>
 
               <Input
-                name="collegemajor"
-                value={collegemajor}
+                name="eduactionmajor"
+                value={eduactionmajor}
                 onChange={handleChange}
                 type="text"
                 ref={register()}
               />
 
-              {errors.collegemajor && errors.collegemajor.message}
+              {errors.eduactionmajor && errors.eduactionmajor.message}
             </ModalBody>
 
             <ModalFooter>

@@ -53,7 +53,7 @@ const BasicInfo = (props) => {
     );
     let dataToBeSaved = {
       fullname: dataform.fullname || "",
-      phone: dataform.phone || "",
+      phone: +20 + dataform.phone || "",
       email: dataform.email || "",
       address1: dataform.address1 || "",
       address2: dataform.address2 || "",
@@ -118,7 +118,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="phone"
                     value={dataform.phone}
-                    placeholder="+2010 000 0000"
+                    placeholder="010 000 0000"
                     onChange={handleChange}
                     ref={register({ required: "this input is required" })}
                     required

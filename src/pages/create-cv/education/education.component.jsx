@@ -36,9 +36,15 @@ const Education = (props) => {
     collagename: "",
     startgraduationyear: "",
     endgraduationyear: "",
+    collegemajor: "",
   });
 
-  const { collagename, startgraduationyear, endgraduationyear } = education;
+  const {
+    collagename,
+    startgraduationyear,
+    endgraduationyear,
+    collegemajor,
+  } = education;
 
   useEffect(() => {}, [currentUser.id, id]);
 
@@ -50,6 +56,7 @@ const Education = (props) => {
       collagename: collagename || "",
       startgraduationyear: startgraduationyear || "",
       endgraduationyear: endgraduationyear || "",
+      collegemajor: collegemajor || "",
     };
     await cvRef.set(dataToBeSaved);
     onClose();
@@ -81,6 +88,7 @@ const Education = (props) => {
             collagename: eduactionData.collagename,
             startgraduationyear: eduactionData.startgraduationyear,
             endgraduationyear: eduactionData.endgraduationyear,
+            collegemajor: eduactionData.collegemajor,
           });
         }
 
@@ -117,6 +125,9 @@ const Education = (props) => {
             </P>
             <P>
               EndGraduationYear: <Strong>{endgraduationyear}</Strong>
+            </P>
+            <P>
+              CollegeMajor: <Strong>{collegemajor}</Strong>
             </P>
           </Rapperd>
         ) : (
@@ -172,6 +183,17 @@ const Education = (props) => {
               />
 
               {errors.endgraduationyear && errors.endgraduationyear.message}
+              <FormLabel> College Major </FormLabel>
+
+              <Input
+                name="collegemajor"
+                value={collegemajor}
+                onChange={handleChange}
+                type="text"
+                ref={register()}
+              />
+
+              {errors.collegemajor && errors.collegemajor.message}
             </ModalBody>
 
             <ModalFooter>

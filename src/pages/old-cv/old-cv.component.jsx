@@ -50,7 +50,7 @@ const OldCv = ({ currentUser, match }) => {
   const [datee, setDatee] = useState(new Date());
 
   const createAnewCv = async () => {
-    const _label = "basic cv";
+    const _label = "Simple Cv";
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")

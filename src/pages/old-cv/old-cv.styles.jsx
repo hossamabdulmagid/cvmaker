@@ -126,3 +126,4 @@ export const Iconedit = styled(BiCog)`
 export const Td = styled.td`
   text-align: right;
 `;
+export const RapperTable = styled.div``;

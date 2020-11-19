@@ -10,13 +10,12 @@ import {
   Li,
   P,
   RapperSidebar,
-  LinkForPremium,
+  AllCvLinks,
   LinkOption,
   LINK,
   ButtonForAddNewSection,
   Span,
-  ButtonforLabel,
-  Strong,
+  Aroow,
 } from "./createcv.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
@@ -34,7 +33,7 @@ import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
 import { firestore } from "../../firebase/firebase.utils";
 import { toast } from "react-toastify";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import {
   Modal,
   ModalOverlay,
@@ -69,6 +68,8 @@ const CreateCv = ({ AddToList, currentUser }) => {
   const styles = {
     backgroundColor: color,
   };
+
+  const history = useHistory();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -139,6 +140,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
+
   return (
     <>
       <NavGuest />
@@ -203,7 +205,10 @@ const CreateCv = ({ AddToList, currentUser }) => {
           <div className="row">
             <div className="col-5"></div>
             <div className="col-2">
-              <LinkForPremium to="/cv">Show All Cv ♥</LinkForPremium>
+              <AllCvLinks to="/cv">
+                Show All Cv
+                <Aroow />
+              </AllCvLinks>
             </div>
             <Col className="col-5">
               <Buttons size="xs" variant="success">

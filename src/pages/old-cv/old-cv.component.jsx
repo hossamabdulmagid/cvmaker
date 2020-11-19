@@ -31,6 +31,7 @@ import { Redirect, Route } from "react-router-dom";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import Moment from "react-moment";
+import { Spinner } from "@chakra-ui/core";
 
 const OldCv = ({ currentUser, match }) => {
   const [show, setShow] = useState(false);
@@ -65,8 +66,7 @@ const OldCv = ({ currentUser, match }) => {
       console.log(`SomeThing Worng here`);
     }
   };
-
-  const getDataForFb = () => {};
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!currentUser) {
@@ -83,6 +83,7 @@ const OldCv = ({ currentUser, match }) => {
           let obj = doc.data();
           obj.id = doc.id;
           allcv.push(obj);
+          setLoading(false);
         });
       });
     var timerID = setInterval(() => {
@@ -92,12 +93,10 @@ const OldCv = ({ currentUser, match }) => {
     return function cleanup() {
       clearInterval(timerID);
     };
+    return deleteCv();
   }, [data, currentUser, id, allcv]);
 
   const history = useHistory();
-
-  //console.log(id, `IDDDDDDDDDDDDDDDDDDDDDDDDDD`)
-
   const deleteCv = async (id) => {
     if (!id) {
       return;
@@ -119,7 +118,9 @@ const OldCv = ({ currentUser, match }) => {
       });
   };
 
-  useEffect(() => {}, [allcv, allcv, allcv, allcv]);
+  useEffect(() => {
+    deleteCv();
+  }, [allcv, deleteCv]);
 
   return (
     <>
@@ -131,40 +132,52 @@ const OldCv = ({ currentUser, match }) => {
           </ButtonforcreateCv>
         </Content>
         <div className="container">
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th> Name</th>
-                <th>Created At</th>
-                <th>Options</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allcv.map((singleCv, i) => (
-                <tr key={i}>
-                  <td>
-                    {singleCv._label}
-                    <ButtonForDeleteCv
-                      onClick={() => deleteCv(`${singleCv.id}`)}
-                    >
-                      delete <Icon />
-                    </ButtonForDeleteCv>
-                  </td>
-                  <td>
-                    <Moment format="MMMM Do YYYY, h:mm:ss a">
-                      {singleCv._createdAt}
-                    </Moment>
-                  </td>
-                  <Td>
-                    <Linkcv to={"create-cv/" + `${singleCv.id}`}>
-                      Edit now
-                      <Iconedit />
-                    </Linkcv>
-                  </Td>
+          {!loading ? (
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th> Name</th>
+                  <th>Created At</th>
+                  <th>Options</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {allcv.map((singleCv, i) => (
+                  <tr key={i}>
+                    <td>
+                      {singleCv._label}
+                      <ButtonForDeleteCv
+                        onClick={() => deleteCv(`${singleCv.id}`)}
+                      >
+                        delete
+                        <Icon />
+                      </ButtonForDeleteCv>
+                    </td>
+                    <td>
+                      <Moment format="MMMM Do YYYY, h:mm:ss a">
+                        {singleCv._createdAt}
+                      </Moment>
+                    </td>
+                    <Td>
+                      <Linkcv to={"create-cv/" + `${singleCv.id}`}>
+                        Edit now
+                        <Iconedit />
+                      </Linkcv>
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <Spinner
+              thickness="30px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          )}
+
           <div className="container">
             <Accordion
               defaultIndex={[0]}

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Button } from "@chakra-ui/core";
 import { Link } from "react-router-dom";
+import { BsArrowRightShort } from "react-icons/bs";
 export const RapperColor = styled.div`
   background-color: #f7f7f7;
   height: 800px;
@@ -84,21 +85,22 @@ export const Li = styled.li`
   }
 `;
 
-export const LinkForPremium = styled(Link)`
-  border-radius: 15px;
-  background-color: #18c7e1;
-  color: black;
-  font-size: 13px;
-  padding: 8px;
+export const AllCvLinks = styled(Link)`
+  font-size: 11px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: inline-block;
+  width: auto;
+  height: auto;
 
-  margin-top: 10px;
-  text-decoration: none;
-  margin: 13px;
-
+  padding: 5px;
   &:hover {
-    background-color: black;
     color: white;
     text-decoration: none;
+    background-color: #18c7e1;
   }
 `;
 
@@ -120,7 +122,7 @@ export const ButtonSidebar = styled.button`
   line-height: 24px;
   padding: 5px;
   &:hover {
-    background: #04b2cc;
+    background: darked;
     color: #fff;
   }
 `;
@@ -166,7 +168,7 @@ export const Buttonss = styled.button`
   height: 35px;
   line-height: 24px;
   &:hover {
-    background-color: #bbbab5;
+    background-color: #18c7e1;
   }
 `;
 
@@ -199,8 +201,19 @@ export const Span = styled.span`
   color: red;
 
   padding: 8px;
-  margin: 5px;
-  &:hover {
+  margin: 5px 1px 1px 1px;
+  padding: 1px 1px 1px 1px;
+  w &:hover {
     color: red;
+  }
+`;
+
+export const Aroow = styled(BsArrowRightShort)`
+  display: inline;
+  font-size: 16px;
+  font-wight: blod;
+  color: black;
+  &:hover {
+    color: black;
   }
 `;

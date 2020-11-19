@@ -62,7 +62,7 @@ const BasicInfo = (props) => {
     };
     await cvRef.set(dataToBeSaved);
 
-    toast.info(`your section Basicinfo has been updated`);
+    toast.info(`your section basicinfo has been updated`);
   };
 
   // Add a new document in collection "cities"
@@ -117,6 +117,7 @@ const BasicInfo = (props) => {
                     name="fullname"
                     value={dataform.fullname}
                     ref={register()}
+                    placeholder="Full Name"
                     onChange={handleChange}
                   />
                   <br />
@@ -126,6 +127,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="phone"
                     value={dataform.phone}
+                    placeholder="+2010 364 8099"
                     onChange={handleChange}
                     ref={register({ required: "this input is required" })}
                     required
@@ -139,6 +141,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="address1"
                     ref={register()}
+                    placeholder="Country"
                     value={dataform.address1}
                     onChange={handleChange}
                   />
@@ -147,6 +150,7 @@ const BasicInfo = (props) => {
                   <Label>Address Line 3</Label>
                   <Input
                     name="address3"
+                    placeholder="Street"
                     ref={register()}
                     value={dataform.address3}
                     onChange={handleChange}
@@ -160,6 +164,7 @@ const BasicInfo = (props) => {
                     name="email"
                     value={dataform.email}
                     onChange={handleChange}
+                    placeholder="Email"
                     ref={register({ required: "this input is required" })}
                     required
                   />{" "}
@@ -168,6 +173,7 @@ const BasicInfo = (props) => {
                   <Label>Websites</Label>
                   <Input
                     name="webSites"
+                    placeholder="https://www."
                     ref={register()}
                     value={dataform.webSites}
                     onChange={handleChange}
@@ -178,6 +184,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="address2"
                     ref={register()}
+                    placeholder="City"
                     value={dataform.address2}
                     onChange={handleChange}
                   />

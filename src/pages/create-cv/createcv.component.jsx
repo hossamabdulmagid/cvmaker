@@ -54,7 +54,6 @@ import { AddToList } from "../../redux/addtolist/addtolistAction";
 
 const CreateCv = ({ AddToList, currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
-    { section: "Basic information", type: "text" },
     { section: "Work experience", type: "text" },
     { section: "Qualifications", type: "text" },
     { section: "Education", type: "text" },
@@ -90,30 +89,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
     console.log(data, `value is here`);
   };
   const [sec, setSec] = useState([{ section: "", type: "" }]);
-
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          let section = doc.data();
-          sidebarRoutes.push({ section, type: "" });
-          console.log(sidebarRoutes, `sidebarRoutes`);
-          setLoading(false);
-        });
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast.error(error, `there is was an error`);
-        console.log(error, `there is was an error`);
-      });
-  }, [currentUser, id]);
 
   useEffect(() => {
     AddToList(value);
@@ -247,6 +222,16 @@ const CreateCv = ({ AddToList, currentUser }) => {
 
             <RapperSidebar className="col-3">
               <Ul>
+                <Li
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveSection("Basic information");
+                  }}
+                >
+                  <LINK>Basic information</LINK>
+                </Li>
+
                 {sidebarRoutes.map((singleRouteforSidebar, x) => (
                   <Li
                     href="#"
@@ -318,12 +303,12 @@ const CreateCv = ({ AddToList, currentUser }) => {
               </small>
             </RapperSidebar>
             <div className="col-9">
-              {activeSection === sidebarRoutes[0] ? <BasicInfo /> : null}
-              {activeSection === sidebarRoutes[1] ? <Workexperience /> : null}
-              {activeSection === sidebarRoutes[2] ? <Qualifications /> : null}
-              {activeSection === sidebarRoutes[3] ? <Education /> : null}
-              {activeSection === sidebarRoutes[4] ? <Interests /> : null}
-              {activeSection === sidebarRoutes[5] ? <References /> : null}
+              {activeSection === "Basic information" ? <BasicInfo /> : null}
+              {activeSection === sidebarRoutes[0] ? <Workexperience /> : null}
+              {activeSection === sidebarRoutes[1] ? <Qualifications /> : null}
+              {activeSection === sidebarRoutes[2] ? <Education /> : null}
+              {activeSection === sidebarRoutes[3] ? <Interests /> : null}
+              {activeSection === sidebarRoutes[4] ? <References /> : null}
               {/*
               {activeSection === sidebarRoutes[5] ? <References /> : null}
               {activeSection === sidebarRoutes[6] ? <References /> : null}

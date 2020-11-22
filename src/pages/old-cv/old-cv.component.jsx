@@ -59,7 +59,7 @@ const OldCv = ({ currentUser, match }) => {
         _label,
       });
     if (docRef.id) {
-      toast.success(`Done  Adding A new  cv: ${_label}`);
+      toast.success(`Done  Adding A new  : ${_label}`);
       const newCvPath = `create-cv/${docRef.id}`;
       history.push(newCvPath);
       return;

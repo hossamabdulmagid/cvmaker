@@ -35,10 +35,12 @@ const Workexperience = (props) => {
 
   const value = getValues();
   const [workexperinceform, setWorkexperinceform] = useState({
-    companyname: "",
-    startwork: "",
-    endwork: "",
-    position: "",
+    workexperience: {
+      companyname: "",
+      startwork: "",
+      endwork: "",
+      position: "",
+    },
   });
 
   const { companyname, startwork, endwork, position } = workexperinceform;
@@ -49,10 +51,12 @@ const Workexperience = (props) => {
     );
 
     let dataToBeSave = {
-      companyname: companyname || "",
-      startwork: startwork || "",
-      endwork: endwork || "",
-      position: position || "",
+      workexperience: {
+        companyname: companyname || "",
+        startwork: startwork || "",
+        endwork: endwork || "",
+        position: position || "",
+      },
     };
 
     await cvRef.set(dataToBeSave);
@@ -82,10 +86,10 @@ const Workexperience = (props) => {
 
         if (workexpData) {
           setWorkexperinceform({
-            companyname: workexpData.companyname,
-            startwork: workexpData.startwork,
-            endwork: workexpData.endwork,
-            position: workexpData.position,
+            companyname: workexpData.workexperience.companyname,
+            startwork: workexpData.workexperience.startwork,
+            endwork: workexpData.workexperience.endwork,
+            position: workexpData.workexperience.position,
           });
         }
 

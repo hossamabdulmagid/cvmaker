@@ -31,13 +31,15 @@ const BasicInfo = (props) => {
   const value = getValues();
 
   const [dataform, setDataform] = useState({
-    fullname: "",
-    phone: "",
-    email: "",
-    address1: "",
-    address2: "",
-    address3: "",
-    webSites: "",
+    basicinfo: {
+      fullname: "",
+      phone: "",
+      email: "",
+      address1: "",
+      address2: "",
+      address3: "",
+      webSites: "",
+    },
   });
 
   const [loading, setLoading] = useState(true);
@@ -52,13 +54,15 @@ const BasicInfo = (props) => {
       `users/${currentUser.id}/cvs/${id}/data/basicinfo`
     );
     let dataToBeSaved = {
-      fullname: dataform.fullname || "",
-      phone: dataform.phone || "",
-      email: dataform.email || "",
-      address1: dataform.address1 || "",
-      address2: dataform.address2 || "",
-      address3: dataform.address3 || "",
-      webSites: dataform.webSites || "",
+      basicinfo: {
+        fullname: dataform.fullname || "",
+        phone: dataform.phone || "",
+        email: dataform.email || "",
+        address1: dataform.address1 || "",
+        address2: dataform.address2 || "",
+        address3: dataform.address3 || "",
+        webSites: dataform.webSites || "",
+      },
     };
     await cvRef.set(dataToBeSaved);
 
@@ -78,13 +82,13 @@ const BasicInfo = (props) => {
         const newData = querySnapshot.data();
         if (newData) {
           setDataform({
-            fullname: newData.fullname,
-            phone: newData.phone,
-            address1: newData.address1,
-            address2: newData.address2,
-            address3: newData.address3,
-            webSites: newData.webSites,
-            email: newData.email,
+            fullname: newData.basicinfo.fullname,
+            phone: newData.basicinfo.phone,
+            address1: newData.basicinfo.address1,
+            address2: newData.basicinfo.address2,
+            address3: newData.basicinfo.address3,
+            webSites: newData.basicinfo.webSites,
+            email: newData.basicinfo.email,
           });
         }
         setLoading(false);

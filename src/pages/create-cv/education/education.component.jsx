@@ -33,10 +33,12 @@ const Education = (props) => {
   const value = getValues();
 
   const [education, setEducation] = useState({
-    collagename: "",
-    startgraduationyear: "",
-    endgraduationyear: "",
-    eduactionmajor: "",
+    education: {
+      collagename: "",
+      startgraduationyear: "",
+      endgraduationyear: "",
+      eduactionmajor: "",
+    },
   });
 
   const {
@@ -53,10 +55,12 @@ const Education = (props) => {
       `users/${currentUser.id}/cvs/${id}/data/education`
     );
     let dataToBeSaved = {
-      collagename: collagename || "",
-      startgraduationyear: startgraduationyear || "",
-      endgraduationyear: endgraduationyear || "",
-      eduactionmajor: eduactionmajor || "",
+      education: {
+        collagename: collagename || "",
+        startgraduationyear: startgraduationyear || "",
+        endgraduationyear: endgraduationyear || "",
+        eduactionmajor: eduactionmajor || "",
+      },
     };
     await cvRef.set(dataToBeSaved);
     onClose();
@@ -85,10 +89,10 @@ const Education = (props) => {
 
         if (eduactionData) {
           setEducation({
-            collagename: eduactionData.collagename,
-            startgraduationyear: eduactionData.startgraduationyear,
-            endgraduationyear: eduactionData.endgraduationyear,
-            eduactionmajor: eduactionData.eduactionmajor,
+            collagename: eduactionData.education.collagename,
+            startgraduationyear: eduactionData.education.startgraduationyear,
+            endgraduationyear: eduactionData.education.endgraduationyear,
+            eduactionmajor: eduactionData.education.eduactionmajor,
           });
         }
 

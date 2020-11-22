@@ -140,6 +140,30 @@ const CreateCv = ({ AddToList, currentUser }) => {
       });
   }, [currentUser, id]);
 
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    firestore
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          let section = doc.data();
+          sidebarRoutes.push({ section, type: "" });
+          console.log(sidebarRoutes, `sidebarRoutes`);
+          setLoading(false);
+        });
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        toast.error(error, `there is was an error`);
+        console.log(error, `there is was an error`);
+      });
+  }, [currentUser, id]);
+
   return (
     <>
       <NavGuest />

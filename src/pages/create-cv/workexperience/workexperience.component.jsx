@@ -45,6 +45,11 @@ const Workexperience = (props) => {
 
   const { companyname, startwork, endwork, position } = workexperinceform;
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setWorkexperinceform({ ...workexperinceform, [name]: value });
+  };
+
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/workexperience`
@@ -62,11 +67,6 @@ const Workexperience = (props) => {
     await cvRef.set(dataToBeSave);
     onClose();
     toast.info(`your cvs section workexperince has been updated`);
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setWorkexperinceform({ ...workexperinceform, [name]: value });
   };
 
   const [loading, setLoading] = useState(true);

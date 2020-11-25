@@ -2,8 +2,8 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import AddToListReducer from "./addtolist/addtolistReducer";
-import collectionReducer from "./collection/collectionReducer";
 import userReducer from "./user/userReducer";
+import dataReducer from "./data/dataReducer";
 
 //blacklist
 const persistConfig = {
@@ -15,7 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   add: AddToListReducer,
   user: userReducer,
-  collection: collectionReducer,
+  data: dataReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

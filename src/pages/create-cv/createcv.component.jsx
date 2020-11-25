@@ -51,7 +51,6 @@ import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import { AddToList } from "../../redux/addtolist/addtolistAction";
-
 const CreateCv = ({ AddToList, currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     { section: "basicinfo", type: "text" },
@@ -117,7 +116,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
       onClose();
     }, 500);
 
-    toast.info(`your section basicinfo has been updated`);
+    toast.info(`your section  has been Added`);
   };
 
   const [cvName, setCvName] = useState({
@@ -191,16 +190,16 @@ const CreateCv = ({ AddToList, currentUser }) => {
           );
 
           console.log(sidebarRoutes, `sidebarRoutes if condtion`);
-
-          array.unshift({ section: newData.toString(), type: "" });
-          console.log(array, `array come from firebase`);
-          // console.log(sidebarRoutes, `sidebarRoutes before set to new Data with condtion`)
-          console.log(sidebarRoutes, `come from initailState => useState`);
-          console.log(`beforesetting FLag`);
-          setTimeout(() => {
-            setFlag(false);
-          }, 500);
-
+          if (newData) {
+            array.unshift({ section: newData.toString(), type: "" });
+            console.log(array, `array come from firebase`);
+            // console.log(sidebarRoutes, `sidebarRoutes before set to new Data with condtion`)
+            console.log(sidebarRoutes, `come from initailState => useState`);
+            console.log(`beforesetting FLag`);
+            setTimeout(() => {
+              setFlag(false);
+            }, 500);
+          }
           //setSidebarRouter(sidebarRoutes => [...array])
           //  sidebarRoutes = [...array]
         });
@@ -211,7 +210,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id, array]);
-
+  useEffect(() => {}, [array]);
   return (
     <>
       <NavGuest />

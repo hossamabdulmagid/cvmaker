@@ -48,8 +48,6 @@ const Education = (props) => {
     eduactionmajor,
   } = education;
 
-  useEffect(() => {}, [currentUser.id, id]);
-
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/education`
@@ -187,6 +185,7 @@ const Education = (props) => {
               />
 
               {errors.endgraduationyear && errors.endgraduationyear.message}
+              <br />
               <FormLabel> Education Majoring </FormLabel>
 
               <Input

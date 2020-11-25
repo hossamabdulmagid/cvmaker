@@ -54,14 +54,14 @@ import { AddToList } from "../../redux/addtolist/addtolistAction";
 
 const CreateCv = ({ AddToList, currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
-    { section: "Work experience", type: "text" },
-    { section: "Qualifications", type: "text" },
-    { section: "Education", type: "text" },
-    { section: "Interests", type: "text" },
-    { section: "References", type: "text" },
+    { section: "basicinfo", type: "text" },
+    { section: "workexperience", type: "text" },
+    { section: "qualifications", type: "text" },
+    { section: "education", type: "text" },
+    { section: "interests", type: "text" },
+    { section: "references", type: "text" },
   ]);
-
-  const [activeSection, setActiveSection] = useState("Basic information");
+  const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
 
   const [color, setColor] = React.useState("");
 
@@ -82,7 +82,8 @@ const CreateCv = ({ AddToList, currentUser }) => {
   const value = getValues();
 
   const onSubmit = (data) => {
-    sidebarRoutes.push(data);
+    sidebarRoutes.push({ section: data.section, type: "" });
+    console.log(sidebarRoutes, `sidebarRoutes after on submit`);
     setTimeout(() => {
       onClose();
     }, 500);
@@ -139,7 +140,8 @@ const CreateCv = ({ AddToList, currentUser }) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
+  const [array, setArray] = useState([]);
+  const [flag, setFlag] = useState(true);
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -150,19 +152,31 @@ const CreateCv = ({ AddToList, currentUser }) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          let section = doc.data();
-          sidebarRoutes.push({ section, type: "" });
-          console.log(sidebarRoutes, `sidebarRoutes`);
-          setLoading(false);
+          const newData = Object.keys(doc.data()).toLocaleString();
+          console.log(newData, `newData before condition`);
+          console.log(sidebarRoutes, `sidebarRoutes if condtion`);
+
+          if (newData) {
+            array.unshift({ section: newData.toString(), type: "" });
+            console.log(array, `array come from firebase`);
+            // console.log(sidebarRoutes, `sidebarRoutes before set to new Data with condtion`)
+            console.log(sidebarRoutes, `come from initailState => useState`);
+            console.log(`beforesetting FLag`);
+            setTimeout(() => {
+              setFlag(false);
+            }, 500);
+          }
+
+          //setSidebarRouter(sidebarRoutes => [...array])
+          //  sidebarRoutes = [...array]
         });
-        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
+        setFlag(false);
         toast.error(error, `there is was an error`);
         console.log(error, `there is was an error`);
       });
-  }, [currentUser, id]);
+  }, [currentUser, id, array]);
 
   return (
     <>
@@ -246,28 +260,31 @@ const CreateCv = ({ AddToList, currentUser }) => {
 
             <RapperSidebar className="col-3">
               <Ul>
-                <Li
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveSection("Basic information");
-                  }}
-                >
-                  <LINK>Basic information</LINK>
-                </Li>
-
-                {sidebarRoutes.map((singleRouteforSidebar, x) => (
-                  <Li
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveSection(singleRouteforSidebar);
-                    }}
-                    key={x}
-                  >
-                    <LINK>{singleRouteforSidebar.section.toString()}</LINK>
-                  </Li>
-                ))}
+                {!flag
+                  ? array.map((singleRouteforSidebar, x) => (
+                      <Li
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setActiveSection(singleRouteforSidebar.section);
+                        }}
+                        key={x}
+                      >
+                        <LINK>{singleRouteforSidebar.section}</LINK>
+                      </Li>
+                    ))
+                  : sidebarRoutes.map((singleRouteforSidebar, x) => (
+                      <Li
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setActiveSection(singleRouteforSidebar.section);
+                        }}
+                        key={x}
+                      >
+                        <LINK>{singleRouteforSidebar.section}</LINK>
+                      </Li>
+                    ))}
                 <ButtonForAddNewSection onClick={onOpen} variant="success">
                   + New Section
                 </ButtonForAddNewSection>
@@ -327,12 +344,25 @@ const CreateCv = ({ AddToList, currentUser }) => {
               </small>
             </RapperSidebar>
             <div className="col-9">
-              {activeSection === "Basic information" ? <BasicInfo /> : null}
-              {activeSection === sidebarRoutes[0] ? <Workexperience /> : null}
-              {activeSection === sidebarRoutes[1] ? <Qualifications /> : null}
-              {activeSection === sidebarRoutes[2] ? <Education /> : null}
-              {activeSection === sidebarRoutes[3] ? <Interests /> : null}
-              {activeSection === sidebarRoutes[4] ? <References /> : null}
+              {activeSection === sidebarRoutes[0].section ? (
+                <BasicInfo />
+              ) : null}
+              {activeSection === sidebarRoutes[1].section ? (
+                <Workexperience />
+              ) : null}
+              {activeSection === sidebarRoutes[2].section ? (
+                <Qualifications />
+              ) : null}
+              {activeSection === sidebarRoutes[3].section ? (
+                <Education />
+              ) : null}
+              {activeSection === sidebarRoutes[4].section ? (
+                <Interests />
+              ) : null}
+              {activeSection === sidebarRoutes[5].section ? (
+                <References />
+              ) : null}
+
               {/*
               {activeSection === sidebarRoutes[5] ? <References /> : null}
               {activeSection === sidebarRoutes[6] ? <References /> : null}

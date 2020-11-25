@@ -116,7 +116,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
       onClose();
     }, 500);
 
-    toast.info(`your section  has been Added`);
+    toast.info(`Your New Section  Has Been Added`);
   };
 
   const [cvName, setCvName] = useState({
@@ -183,10 +183,12 @@ const CreateCv = ({ AddToList, currentUser }) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
+          console.log(doc.data(), `############`);
           const newData = Object.keys(doc.data()).toLocaleString();
+
           console.log(
             newData,
-            `newData before condition@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`
+            `newData @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`
           );
 
           console.log(sidebarRoutes, `sidebarRoutes if condtion`);
@@ -318,6 +320,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
                         <LINK>{singleRouteforSidebar.section}</LINK>
                       </Li>
                     ))}
+
                 <ButtonForAddNewSection onClick={onOpen} variant="success">
                   + New Section
                 </ButtonForAddNewSection>
@@ -416,10 +419,9 @@ const CreateCv = ({ AddToList, currentUser }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  Routes: state.add.singleroutes,
   currentUser: state.user.currentUser,
 });
 const mapDispatchToProps = (dispatch) => ({
-  AddToList: (value) => dispatch(AddToList(value)),
+  //AddToList: (value) => dispatch(AddToList(value)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCv);

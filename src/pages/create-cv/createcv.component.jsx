@@ -81,21 +81,45 @@ const CreateCv = ({ AddToList, currentUser }) => {
   const { handleSubmit, register, getValues, errors } = useForm();
   const value = getValues();
 
-  const onSubmit = (data) => {
-    sidebarRoutes.push({ section: data.section, type: "" });
-    console.log(sidebarRoutes, `sidebarRoutes after on submit`);
+  /*
+    const onSubmit = (data) => {
+      sidebarRoutes.push({ section: data.section, type: "" });
+      console.log(sidebarRoutes, `sidebarRoutes after on submit`);
+      setTimeout(() => {
+        onClose();
+      }, 500);
+      console.log(data, `value is here`);
+    };
+    
+  */
+  const [sectionData, setSectionData] = useState({
+    sectionName: {
+      section: "",
+      type: "",
+    },
+  });
+
+  const { section, type } = sectionData;
+
+  const onSubmit = async (value) => {
+    const SecRef = firestore.doc(
+      `users/${currentUser.id}/cvs/${id}/data/${section}`
+    );
+    let dataToBeSaved = {
+      sectionName: {
+        section: sectionData.section || "",
+        type: sectionData.type || "",
+      },
+    };
+    await SecRef.set(dataToBeSaved);
+
     setTimeout(() => {
       onClose();
     }, 500);
-    console.log(data, `value is here`);
+
+    toast.info(`your section basicinfo has been updated`);
   };
-  const [sec, setSec] = useState([{ section: "", type: "" }]);
 
-  useEffect(() => {
-    AddToList(value);
-  }, [AddToList, sidebarRoutes, currentUser]);
-
-  /* new label name Section*/
   const [cvName, setCvName] = useState({
     _label: "your CvName",
   });
@@ -105,6 +129,11 @@ const CreateCv = ({ AddToList, currentUser }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setCvName({ ...cvName, [name]: value });
+  };
+
+  const handleChangeSection = (event) => {
+    const { name, value } = event.target;
+    setSectionData({ ...sectionData, [name]: value });
   };
 
   const onSubmitLabel = async (value) => {
@@ -140,8 +169,11 @@ const CreateCv = ({ AddToList, currentUser }) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
+
   const [array, setArray] = useState([]);
+
   const [flag, setFlag] = useState(true);
+
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -153,19 +185,21 @@ const CreateCv = ({ AddToList, currentUser }) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           const newData = Object.keys(doc.data()).toLocaleString();
-          console.log(newData, `newData before condition`);
+          console.log(
+            newData,
+            `newData before condition@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`
+          );
+
           console.log(sidebarRoutes, `sidebarRoutes if condtion`);
 
-          if (newData) {
-            array.unshift({ section: newData.toString(), type: "" });
-            console.log(array, `array come from firebase`);
-            // console.log(sidebarRoutes, `sidebarRoutes before set to new Data with condtion`)
-            console.log(sidebarRoutes, `come from initailState => useState`);
-            console.log(`beforesetting FLag`);
-            setTimeout(() => {
-              setFlag(false);
-            }, 500);
-          }
+          array.unshift({ section: newData.toString(), type: "" });
+          console.log(array, `array come from firebase`);
+          // console.log(sidebarRoutes, `sidebarRoutes before set to new Data with condtion`)
+          console.log(sidebarRoutes, `come from initailState => useState`);
+          console.log(`beforesetting FLag`);
+          setTimeout(() => {
+            setFlag(false);
+          }, 500);
 
           //setSidebarRouter(sidebarRoutes => [...array])
           //  sidebarRoutes = [...array]
@@ -305,6 +339,8 @@ const CreateCv = ({ AddToList, currentUser }) => {
                           placeholder="SectionName"
                           type="text"
                           name="section"
+                          value={sectionData.section}
+                          onChange={handleChangeSection}
                           ref={register({
                             required: "this content is required",
                           })}
@@ -316,7 +352,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
                           variantColor="blue"
                           mr={3}
                           type="submit"
-                          onClick={AddToList}
                           className="buttonForSaveNewSection"
                           onOpen
                         >

@@ -111,7 +111,11 @@ const CreateCv = ({ AddToList, currentUser }) => {
       },
     };
     await SecRef.set(dataToBeSaved);
-
+    sidebarRoutes.push({
+      section: sectionData.section,
+      type: sectionData.type,
+    });
+    array.push({ section: sectionData.section, type: sectionData.type });
     setTimeout(() => {
       onClose();
     }, 500);
@@ -203,24 +207,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
       return;
     }
     FetchData();
-
-    // If you want to implement componentWillUnmount,
-    // return a function from here, and React will call
-    // it prior to unmounting.
-    return () => FetchData();
   }, [array, currentUser]);
-
-  useEffect(() => {
-    // This gets called after every render, by default
-    // (the first one, and every one after that)
-    console.log("render!");
-
-    // If you want to implement componentWillUnmount,
-    // return a function from here, and React will call
-    // it prior to unmounting.
-    return () => console.log("unmounting...");
-  });
-
   return (
     <>
       <NavGuest />

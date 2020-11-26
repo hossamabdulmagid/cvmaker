@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, Input, H6, BUTTON, Small, SmalL } from "./sign-up.styles";
 import { useForm } from "react-hook-form";
-import { VisuallyHidden, ControlBox, Icon } from "@chakra-ui/core";
-
+import { toast } from "react-toastify";
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 const Signup = () => {
   const { handleSubmit, register, errors } = useForm();
@@ -11,6 +10,9 @@ const Signup = () => {
     const { displayName, email, password, confirmPassword } = data;
     if (password !== confirmPassword) {
       alert("passwords don't match");
+      return;
+    }
+    if (data.error) {
       return;
     }
 
@@ -22,6 +24,7 @@ const Signup = () => {
       await createUserProfileDocument(user, { displayName });
     } catch (error) {
       console.log(error, `this an error`);
+      toast.error(`${error}`);
     }
   };
 
@@ -44,18 +47,29 @@ const Signup = () => {
             },
           })}
         />
-        {errors.email && errors.email.message}
+        <br />
+
+        <small className="error">{errors.email && errors.email.message}</small>
+        <br />
         <Small>No verification e-mail will be sent</Small>
 
         <label className="Label">Password</label>
 
         <Input name="password" type="password" ref={register()} />
-        {errors.password && errors.password.message}
+        <br />
+
+        <small className="error">
+          {errors.password && errors.password.message}
+        </small>
 
         <label className="Label"> Confirm Password</label>
 
         <Input name="confirmPassword" type="password" ref={register()} />
-        {errors.confirmPassword && errors.confirmPassword.message}
+        <br />
+        <small className="error">
+          {errors.confirmPassword && errors.confirmPassword.message}
+        </small>
+
         <br />
 
         <BUTTON type="submit" size="xs">

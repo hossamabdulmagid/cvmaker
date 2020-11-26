@@ -61,3 +61,8 @@ button {
   min-width: 55px;
   justify-content: space-between;
 }
+
+.error {
+  color: red;
+  float: right;
+}

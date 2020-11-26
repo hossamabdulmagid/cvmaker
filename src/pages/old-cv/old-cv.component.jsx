@@ -45,6 +45,7 @@ const OldCv = ({ currentUser, match }) => {
   const [data, setData] = useState([]);
 
   let { id } = match.params;
+
   const history = useHistory();
 
   const [datee, setDatee] = useState(new Date());
@@ -70,11 +71,8 @@ const OldCv = ({ currentUser, match }) => {
 
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    firestore
+  const GetData = async () => {
+    await firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs`)
       .get()
@@ -83,6 +81,7 @@ const OldCv = ({ currentUser, match }) => {
           let obj = doc.data();
           obj.id = doc.id;
           allcv.push(obj);
+          console.log(obj, `object Data`);
           setLoading(false);
         });
       });
@@ -93,6 +92,13 @@ const OldCv = ({ currentUser, match }) => {
     return function cleanup() {
       clearInterval(timerID);
     };
+  };
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    GetData();
   }, [data, currentUser, id, allcv]);
 
   const deleteCv = async (id) => {
@@ -105,20 +111,17 @@ const OldCv = ({ currentUser, match }) => {
       .collection(`cvs`)
       .doc(`${id}`)
       .delete()
-
       .then(function () {
-        allcv.shift();
-        toast.error(`Document successfully deleted!`);
+        setAllcv([]);
+        setTimeout(() => {
+          GetData();
+        }, 500);
+        toast.error(`Your Cv Successfully Deleted!`);
       })
-
       .catch(function (error) {
         toast.info("Error removing document: ", error);
       });
   };
-
-  useEffect(() => {
-    deleteCv();
-  }, [allcv, deleteCv]);
 
   return (
     <>

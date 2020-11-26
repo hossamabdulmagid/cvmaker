@@ -6,16 +6,21 @@ import {
   signInWithGoogle,
   signInWithFacebook,
 } from "../../firebase/firebase.utils";
-
+import { toast } from "react-toastify";
 const Signin = () => {
   const { handleSubmit, register, errors } = useForm();
   const onSubmit = async (data) => {
     const { email, password } = data;
+    if (password.length < 6) {
+      toast.error("The password must be 6 to 32 characters long.");
 
+      return;
+    }
     try {
       await auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
       console.log(error, `this an error`);
+      toast.error(`${error}`);
     }
   };
   return (
@@ -35,7 +40,8 @@ const Signin = () => {
             },
           })}
         />
-        {errors.email && errors.email.message}
+        <br />
+        <small className="error">{errors.email && errors.email.message}</small>
         <br />
         <label className="Label">Password</label>
 
@@ -47,8 +53,10 @@ const Signin = () => {
             validate: (value) => value !== "admin" || "Nice try!",
           })}
         />
-        {errors.password && errors.password.message}
-
+        <br />
+        <small className="error">
+          {errors.password && errors.password.message}
+        </small>
         <BUTTON type="submit" size="xs">
           Login
         </BUTTON>

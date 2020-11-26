@@ -183,6 +183,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
           const newData = doc.id;
           if (newData) {
             array.unshift({ section: newData.toString(), type: "" });
+
             setTimeout(() => {
               setFlag(false);
             }, 50);

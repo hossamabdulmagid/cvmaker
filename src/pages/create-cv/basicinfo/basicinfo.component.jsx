@@ -15,10 +15,10 @@ import { useParams, useHistory } from "react-router-dom";
 import { Spinner } from "@chakra-ui/core";
 import { Button } from "@chakra-ui/core";
 import { connect } from "react-redux";
-import { firestore } from "../../../firebase/firebase.utils";
+import { firestore, storage } from "../../../firebase/firebase.utils";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
-
+import { Progress } from "@chakra-ui/core";
 const BasicInfo = (props) => {
   const { currentUser, match, doc, info, basicinfo } = props;
 
@@ -100,6 +100,42 @@ const BasicInfo = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
+
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const handleChangeImage = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then((url) => {
+            setUrl(url);
+          });
+      }
+    );
+  };
+  console.log("image :", image);
+
   return (
     <Fragment>
       <Container className="container-fluid">
@@ -107,7 +143,7 @@ const BasicInfo = (props) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="container">
               <Title> </Title>
-              <div className="row">
+              <div className="row basicinfo">
                 <div className="col-6">
                   <Label>Full name</Label>
                   <Input
@@ -193,17 +229,25 @@ const BasicInfo = (props) => {
                 </div>
                 <hr />
               </div>
-              <br />
-              <hr />
-              <hr />
 
               <div className="row">
                 <div className="col-6">
-                  <Upload id="" type="file" />
+                  <Upload id="" type="file" onChange={handleChangeImage} />
+                  <br />
+                  <img
+                    src={url || "http://via.placeholder.com/100"}
+                    alt="firebase-image"
+                  />
                 </div>
                 <div className="col-6">
-                  <Buttons>upload</Buttons>
-                  <Buttons>save</Buttons>
+                  <Buttons onClick={handleUpload}>Upload</Buttons>
+                  <br />
+                  <br />
+                  {url.length > 5 ? (
+                    <a href={url} target="_blank" rel="noopener noreferrer">
+                      Show you image
+                    </a>
+                  ) : null}
                 </div>
               </div>
             </div>

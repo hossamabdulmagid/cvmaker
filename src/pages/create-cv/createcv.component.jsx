@@ -125,12 +125,15 @@ const CreateCv = ({ AddToList, currentUser }) => {
       section: sectionData.section,
       type: sectionData.type,
     });
-    array.push({ section: sectionData.section, type: sectionData.type });
+    array.push({
+      section: sectionData.section,
+      type: sectionData.type,
+    });
     setTimeout(() => {
       onClose();
     }, 500);
 
-    toast.info(`Your New Section  Has Been Added`);
+    toast.info(`Your new Section  name is : ${sectionData.section}`);
   };
 
   const [cvName, setCvName] = useState({

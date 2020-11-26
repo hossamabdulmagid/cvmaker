@@ -148,7 +148,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
       .doc(`${id}`)
       .update("_label", cvName._label);
 
-    toast.info(`your cvs details has been updated`);
+    toast.info(`your cvname updated  to : ${cvName._label} `);
   };
 
   useEffect(() => {

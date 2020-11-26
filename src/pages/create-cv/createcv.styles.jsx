@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
 export const RapperColor = styled.div`
   background-color: #f7f7f7;
-  height: 800px;
+  height: auto;
   width: auto;
   margin: 0 auto;
 `;

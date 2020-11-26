@@ -79,6 +79,7 @@ const BasicInfo = (props) => {
       .doc(`basicinfo`)
       .get()
       .then(function (querySnapshot) {
+        console.log(querySnapshot, `querySnapshot from basic info`);
         const newData = querySnapshot.data();
         if (newData) {
           setDataform({

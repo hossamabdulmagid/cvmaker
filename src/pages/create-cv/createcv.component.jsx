@@ -171,39 +171,22 @@ const CreateCv = ({ AddToList, currentUser }) => {
 
   const [array, setArray] = useState([]);
 
-  const [flag, setFlag] = useState(true);
-
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    firestore
+  const FetchData = async () => {
+    await firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          console.log(doc.data(), `############`);
-          const newData = Object.keys(doc.data()).toLocaleString();
-
-          console.log(
-            newData,
-            `newData @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`
-          );
-
-          console.log(sidebarRoutes, `sidebarRoutes if condtion`);
+          console.log(doc.data(), `############Data`);
+          console.log(doc.id, "@@@@@@@@@@@@@id");
+          const newData = doc.id;
           if (newData) {
             array.unshift({ section: newData.toString(), type: "" });
-            console.log(array, `array come from firebase`);
-            // console.log(sidebarRoutes, `sidebarRoutes before set to new Data with condtion`)
-            console.log(sidebarRoutes, `come from initailState => useState`);
-            console.log(`beforesetting FLag`);
             setTimeout(() => {
               setFlag(false);
-            }, 500);
+            }, 50);
           }
-          //setSidebarRouter(sidebarRoutes => [...array])
-          //  sidebarRoutes = [...array]
         });
       })
       .catch((error) => {
@@ -211,8 +194,32 @@ const CreateCv = ({ AddToList, currentUser }) => {
         toast.error(error, `there is was an error`);
         console.log(error, `there is was an error`);
       });
-  }, [currentUser, id, array]);
-  useEffect(() => {}, [array]);
+  };
+  const [flag, setFlag] = useState(true);
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    FetchData();
+
+    // If you want to implement componentWillUnmount,
+    // return a function from here, and React will call
+    // it prior to unmounting.
+    return () => FetchData();
+  }, [array, currentUser]);
+
+  useEffect(() => {
+    // This gets called after every render, by default
+    // (the first one, and every one after that)
+    console.log("render!");
+
+    // If you want to implement componentWillUnmount,
+    // return a function from here, and React will call
+    // it prior to unmounting.
+    return () => console.log("unmounting...");
+  });
+
   return (
     <>
       <NavGuest />

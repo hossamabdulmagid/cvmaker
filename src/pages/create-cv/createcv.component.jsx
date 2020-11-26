@@ -100,6 +100,16 @@ const CreateCv = ({ AddToList, currentUser }) => {
 
   const { section, type } = sectionData;
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCvName({ ...cvName, [name]: value });
+  };
+
+  const handleChangeSection = (event) => {
+    const { name, value } = event.target;
+    setSectionData({ ...sectionData, [name]: value });
+  };
+
   const onSubmit = async (value) => {
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${section}`
@@ -128,16 +138,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
   });
 
   const [loading, setLoading] = useState(true);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setCvName({ ...cvName, [name]: value });
-  };
-
-  const handleChangeSection = (event) => {
-    const { name, value } = event.target;
-    setSectionData({ ...sectionData, [name]: value });
-  };
 
   const onSubmitLabel = async (value) => {
     await firestore
@@ -349,10 +349,12 @@ const CreateCv = ({ AddToList, currentUser }) => {
                           variantColor="blue"
                           mr={3}
                           type="submit"
-                          className="buttonForSaveNewSection"
+                          className={`buttonForSaveNewSection ${
+                            loading ? "disabled" : ""
+                          }`}
                           onOpen
                         >
-                          Save
+                          {loading ? <Spinner /> : "Save"}
                         </Button>
                         <Button
                           onClick={onClose}

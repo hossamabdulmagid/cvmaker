@@ -399,13 +399,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
               {activeSection === sidebarRoutes[5].section ? (
                 <References />
               ) : null}
-
-              {/*
-              {activeSection === sidebarRoutes[5] ? <References /> : null}
-              {activeSection === sidebarRoutes[6] ? <References /> : null}
-              {activeSection === sidebarRoutes[7] ? <References /> : null}
-              {activeSection === sidebarRoutes[8] ? <References /> : null}
-              */}
             </div>
           </div>
         </Container>
@@ -421,7 +414,5 @@ const CreateCv = ({ AddToList, currentUser }) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
-const mapDispatchToProps = (dispatch) => ({
-  //AddToList: (value) => dispatch(AddToList(value)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(CreateCv);
+
+export default connect(mapStateToProps, null)(CreateCv);

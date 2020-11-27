@@ -17,9 +17,7 @@ import setCurrentUser from "./redux/user/user.action";
 import { connect } from "react-redux";
 import PublicOnlyRoute from "./lib/publicOnlyRoute";
 import PrivateRoute from "./lib/privateRoute";
-import "react-toastify/dist/ReactToastify.css";
 import OldCv from "./pages/old-cv/old-cv.component";
-import { ToastContainer, toast } from "react-toastify";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
 
@@ -55,7 +53,6 @@ class App extends React.Component {
 
         <div className="Container">
           <Nav />
-          <ToastContainer />
           <Switch>
             <Route path="/" exact component={Head} />
             <Route

@@ -1,15 +1,22 @@
 import React from "react";
 import { Box, Input, H6, BUTTON, Small, SmalL } from "./sign-up.styles";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { useToast } from "@chakra-ui/core";
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 const Signup = () => {
   const { handleSubmit, register, errors } = useForm();
-
+  const toast = useToast();
   const onSubmit = async (data) => {
     const { displayName, email, password, confirmPassword } = data;
     if (password !== confirmPassword) {
-      alert("passwords don't match");
+      toast({
+        title: "Check your password",
+        description: "passwords don't match",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
       return;
     }
     if (data.error) {
@@ -24,10 +31,16 @@ const Signup = () => {
       await createUserProfileDocument(user, { displayName });
     } catch (error) {
       console.log(error, `this an error`);
-      toast.error(`${error}`);
+      toast({
+        title: "Error",
+        description: `${error}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
     }
   };
-
   return (
     <Box>
       <H6> Not a member yet? Join now </H6>

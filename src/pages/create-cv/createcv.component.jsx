@@ -32,7 +32,6 @@ import References from "./references/references.component";
 import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
 import { firestore } from "../../firebase/firebase.utils";
-import { toast } from "react-toastify";
 import { Link, useParams, useHistory } from "react-router-dom";
 import {
   Modal,
@@ -45,6 +44,7 @@ import {
   useDisclosure,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/core";
 import { Button } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
@@ -61,7 +61,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
     { section: "references", type: "text" },
   ]);
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
-
+  const toast = useToast();
   const [color, setColor] = React.useState("");
 
   const styles = {
@@ -80,17 +80,6 @@ const CreateCv = ({ AddToList, currentUser }) => {
   const { handleSubmit, register, getValues, errors } = useForm();
   const value = getValues();
 
-  /*
-    const onSubmit = (data) => {
-      sidebarRoutes.push({ section: data.section, type: "" });
-      console.log(sidebarRoutes, `sidebarRoutes after on submit`);
-      setTimeout(() => {
-        onClose();
-      }, 500);
-      console.log(data, `value is here`);
-    };
-    
-  */
   const [sectionData, setSectionData] = useState({
     sectionName: {
       section: "",
@@ -132,8 +121,14 @@ const CreateCv = ({ AddToList, currentUser }) => {
     setTimeout(() => {
       onClose();
     }, 500);
-
-    toast.info(`Your new Section  name is : ${sectionData.section}`);
+    toast({
+      title: "Section created.",
+      description: `Your new Section  name is : ${sectionData.section}`,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom-left",
+    });
   };
 
   const [cvName, setCvName] = useState({
@@ -147,8 +142,14 @@ const CreateCv = ({ AddToList, currentUser }) => {
       .collection(`users/${currentUser.id}/cvs`)
       .doc(`${id}`)
       .update("_label", cvName._label);
-
-    toast.info(`your cvname updated  to : ${cvName._label} `);
+    toast({
+      title: "cv name updated.",
+      description: `your cvname updated  to : ${cvName._label} `,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "top-right",
+    });
   };
 
   useEffect(() => {
@@ -171,7 +172,13 @@ const CreateCv = ({ AddToList, currentUser }) => {
       })
       .catch((error) => {
         setLoading(false);
-        toast.error(error, `there is was an error`);
+        toast({
+          title: `there is was an error`,
+          description: `${error} `,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
@@ -199,7 +206,13 @@ const CreateCv = ({ AddToList, currentUser }) => {
       })
       .catch((error) => {
         setFlag(false);
-        toast.error(error, `there is was an error`);
+        toast({
+          title: `there is was an error`,
+          description: `${error} `,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
         console.log(error, `there is was an error`);
       });
   };

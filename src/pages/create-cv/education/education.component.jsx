@@ -13,12 +13,12 @@ import {
   ModalOverlay,
   useDisclosure,
   Spinner,
+  useToast,
 } from "@chakra-ui/core";
 import { ButtonForEducation, P, Rapperd, Strong } from "./education.styles";
 import { connect } from "react-redux";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const Education = (props) => {
   const { currentUser } = props;
@@ -31,7 +31,7 @@ const Education = (props) => {
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const value = getValues();
-
+  const toast = useToast();
   const [education, setEducation] = useState({
     education: {
       collagename: "",
@@ -62,7 +62,14 @@ const Education = (props) => {
     };
     await cvRef.set(dataToBeSaved);
     onClose();
-    toast.info(`your cvs section education has been updated`);
+    toast({
+      title: "Section updated.",
+      description: `your cvs section education has been updated`,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom-right",
+    });
   };
 
   const handleChange = (event) => {

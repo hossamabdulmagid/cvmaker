@@ -12,28 +12,32 @@ import {
   ModalCloseButton,
   useDisclosure,
   Button,
-  FormControl,
   FormLabel,
   Input,
   Spinner,
+  useToast,
 } from "@chakra-ui/core";
 import { ButtonForWork, Rapperd, P, Strong } from "./workexperience.styles";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const Workexperience = (props) => {
   const { AddToList, currentUser, cvs } = props;
+
   const { id } = useParams();
+
+  const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = React.useRef();
+
   const finalRef = React.useRef();
 
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const value = getValues();
+
   const [workexperinceform, setWorkexperinceform] = useState({
     workexperience: {
       companyname: "",
@@ -66,7 +70,14 @@ const Workexperience = (props) => {
 
     await cvRef.set(dataToBeSave);
     onClose();
-    toast.info(`your cvs section workexperince has been updated`);
+    toast({
+      title: "Section updated.",
+      description: `your cvs section workexperince has been updated`,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom-right",
+    });
   };
 
   const [loading, setLoading] = useState(true);

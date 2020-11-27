@@ -28,16 +28,15 @@ import { firestore } from "../../firebase/firebase.utils";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
-import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { Spinner } from "@chakra-ui/core";
+import { Spinner, useToast } from "@chakra-ui/core";
 
 const OldCv = ({ currentUser, match }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-
+  const toast = useToast();
   const handleShow = () => setShow(true);
 
   const [allcv, setAllcv] = useState([]);
@@ -60,7 +59,15 @@ const OldCv = ({ currentUser, match }) => {
         _label,
       });
     if (docRef.id) {
-      toast.success(`Done  Adding A new  : ${_label}`);
+      toast({
+        title: `Your cv created : ${_label}`,
+        description: "We've created  cv for you.",
+        status: "success",
+        duration: 5000,
+        position: "bottom-right",
+        isClosable: true,
+      });
+
       const newCvPath = `create-cv/${docRef.id}`;
       history.push(newCvPath);
       return;
@@ -116,10 +123,24 @@ const OldCv = ({ currentUser, match }) => {
         setTimeout(() => {
           GetData();
         }, 500);
-        toast.error(`Your Cv Successfully Deleted!`);
+        toast({
+          title: "Your Cv Successfully Deleted!",
+          description: "cv deleted you can Create new one.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          position: "bottom-right",
+        });
       })
       .catch(function (error) {
-        toast.info("Error removing document: ", error);
+        toast({
+          title: "Error removing document",
+          description: `${error}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          position: "bottom-right",
+        });
       });
   };
 

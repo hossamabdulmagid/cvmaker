@@ -11,19 +11,15 @@ import {
   Upload,
 } from "./basicinfo.styles";
 import { useForm } from "react-hook-form";
-import { useParams, useHistory } from "react-router-dom";
-import { Spinner } from "@chakra-ui/core";
-import { Button } from "@chakra-ui/core";
+import { useParams, useHistory, Progress } from "react-router-dom";
+import { Spinner, useToast, Button } from "@chakra-ui/core";
 import { connect } from "react-redux";
 import { firestore, storage } from "../../../firebase/firebase.utils";
-import { v4 as uuidv4 } from "uuid";
-import { toast } from "react-toastify";
-import { Progress } from "@chakra-ui/core";
 const BasicInfo = (props) => {
   const { currentUser, match, doc, info, basicinfo } = props;
 
   const { id } = useParams();
-
+  const toast = useToast();
   const history = useHistory();
 
   const { handleSubmit, register, errors, getValues } = useForm();
@@ -65,8 +61,14 @@ const BasicInfo = (props) => {
       },
     };
     await cvRef.set(dataToBeSaved);
-
-    toast.info(`your section basicinfo has been updated`);
+    toast({
+      title: "Section updated.",
+      description: `your section basicinfo has been updated`,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom-right",
+    });
   };
 
   useEffect(() => {
@@ -100,42 +102,42 @@ const BasicInfo = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
-  const [image, setImage] = useState(null);
-  const [url, setUrl] = useState("");
-  const [progress, setProgress] = useState(0);
-
-  const handleChangeImage = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
-  const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("images")
-          .child(image.name)
-          .getDownloadURL()
-          .then((url) => {
-            setUrl(url);
-          });
+  /*
+    const [image, setImage] = useState(null);
+    const [url, setUrl] = useState("");
+    const [progress, setProgress] = useState(0);
+  
+    const handleChangeImage = (e) => {
+      if (e.target.files[0]) {
+        setImage(e.target.files[0]);
       }
-    );
-  };
-  console.log("image :", image);
-
+    };
+    const handleUpload = () => {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+            });
+        }
+      );
+    };
+    console.log("image :", image);
+   */
   return (
     <Fragment>
       <Container className="container-fluid">
@@ -165,9 +167,7 @@ const BasicInfo = (props) => {
                     required
                   />
                   <br />
-
                   {errors.phone && errors.phone.message}
-
                   <hr />
                   <Label>Address Line 1</Label>
                   <Input
@@ -230,7 +230,7 @@ const BasicInfo = (props) => {
                 <hr />
               </div>
 
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-6">
                   <Upload id="" type="file" onChange={handleChangeImage} />
                   <br />
@@ -250,6 +250,7 @@ const BasicInfo = (props) => {
                   ) : null}
                 </div>
               </div>
+              */}
             </div>
           </form>
         ) : (

@@ -6,21 +6,36 @@ import {
   signInWithGoogle,
   signInWithFacebook,
 } from "../../firebase/firebase.utils";
-import { toast } from "react-toastify";
+import { useToast } from "@chakra-ui/core";
 const Signin = () => {
+  const toast = useToast();
+
   const { handleSubmit, register, errors } = useForm();
   const onSubmit = async (data) => {
     const { email, password } = data;
     if (password.length < 6) {
-      toast.error("The password must be 6 to 32 characters long.");
-
+      toast({
+        title: "Check your password",
+        description: "The password must be 6 to 32 characters long.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
       return;
     }
     try {
       await auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
       console.log(error, `this an error`);
-      toast.error(`${error}`);
+      toast({
+        title: "Error",
+        description: `${error}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
     }
   };
   return (

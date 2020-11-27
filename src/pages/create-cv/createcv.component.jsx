@@ -26,13 +26,12 @@ import {
 } from "react-icons/ai";
 import BasicInfo from "./basicinfo/basicinfo.component";
 import Education from "./education/education.component";
-import { Spinner } from "@chakra-ui/core";
 import Workexperience from "./workexperience/workexperience.component";
 import References from "./references/references.component";
 import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
 import { firestore } from "../../firebase/firebase.utils";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import {
   Modal,
   ModalOverlay,
@@ -45,13 +44,14 @@ import {
   FormLabel,
   Input,
   useToast,
+  Spinner,
+  Progress,
 } from "@chakra-ui/core";
 import { Button } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
-import { AddToList } from "../../redux/addtolist/addtolistAction";
-const CreateCv = ({ AddToList, currentUser }) => {
+const CreateCv = ({ currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     { section: "basicinfo", type: "text" },
     { section: "workexperience", type: "text" },
@@ -61,7 +61,9 @@ const CreateCv = ({ AddToList, currentUser }) => {
     { section: "references", type: "text" },
   ]);
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
+
   const toast = useToast();
+
   const [color, setColor] = React.useState("");
 
   const styles = {
@@ -75,9 +77,11 @@ const CreateCv = ({ AddToList, currentUser }) => {
   const initialRef = React.useRef();
 
   const finalRef = React.useRef();
+
   const { id } = useParams();
 
   const { handleSubmit, register, getValues, errors } = useForm();
+
   const value = getValues();
 
   const [sectionData, setSectionData] = useState({
@@ -103,24 +107,29 @@ const CreateCv = ({ AddToList, currentUser }) => {
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${section}`
     );
+
     let dataToBeSaved = {
       sectionName: {
         section: sectionData.section || "",
         type: sectionData.type || "",
       },
     };
+
     await SecRef.set(dataToBeSaved);
     sidebarRoutes.push({
       section: sectionData.section,
       type: sectionData.type,
     });
+
     array.push({
       section: sectionData.section,
       type: sectionData.type,
     });
+
     setTimeout(() => {
       onClose();
     }, 500);
+
     toast({
       title: "Section created.",
       description: `Your new Section  name is : ${sectionData.section}`,
@@ -142,6 +151,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
       .collection(`users/${currentUser.id}/cvs`)
       .doc(`${id}`)
       .update("_label", cvName._label);
+
     toast({
       title: "cv name updated.",
       description: `your cvname updated  to : ${cvName._label} `,
@@ -195,6 +205,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
           console.log(doc.data(), `############Data`);
           console.log(doc.id, "@@@@@@@@@@@@@id");
           const newData = doc.id;
+
           if (newData) {
             array.unshift({ section: newData.toString(), type: "" });
 
@@ -225,7 +236,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
     FetchData();
   }, [array, currentUser]);
   return (
-    <>
+    <Fragment>
       <NavGuest />
       <RapperColor>
         <Container className="container">
@@ -421,7 +432,7 @@ const CreateCv = ({ AddToList, currentUser }) => {
           <IMG src="premum.png" alt="" />
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 const mapStateToProps = (state) => ({

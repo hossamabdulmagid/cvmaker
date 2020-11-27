@@ -30,13 +30,15 @@ import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { Spinner, useToast } from "@chakra-ui/core";
+import { Spinner, useToast, Progress } from "@chakra-ui/core";
 
 const OldCv = ({ currentUser, match }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
+
   const toast = useToast();
+
   const handleShow = () => setShow(true);
 
   const [allcv, setAllcv] = useState([]);
@@ -60,11 +62,11 @@ const OldCv = ({ currentUser, match }) => {
       });
     if (docRef.id) {
       toast({
-        title: `Your cv created : ${_label}`,
-        description: "We've created  cv for you.",
+        title: `Successfuly created new cv `,
+        description: `Your cv name is : ${_label}`,
         status: "success",
         duration: 5000,
-        position: "bottom-right",
+        position: "top",
         isClosable: true,
       });
 

@@ -4,13 +4,13 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const Qualifications = () => {
-  const [state, setState] = useState({ content: "" });
+  const [state, setState] = useState({ content_qualifications: "" });
 
   const { content } = state;
 
   const HandleCkEditorState = (event, editor) => {
     const data = editor.getData();
-    setState({ content: data });
+    setState({ content_qualifications: data });
   };
 
   console.log(state, `here is State =>>>>>>>>>`);

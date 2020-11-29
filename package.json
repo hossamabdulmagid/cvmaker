@@ -15,7 +15,6 @@
     "firebase": "^7.23.0",
     "font-awesome": "^4.7.0",
     "i18next": "^19.8.2",
-    "jodit-react": "^1.0.66",
     "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-big-calendar": "^0.28.0",

@@ -6,13 +6,17 @@ import {
   signInWithGoogle,
   signInWithFacebook,
 } from "../../firebase/firebase.utils";
+
 import { useToast } from "@chakra-ui/core";
+
 const Signin = () => {
   const toast = useToast();
 
   const { handleSubmit, register, errors } = useForm();
+
   const onSubmit = async (data) => {
     const { email, password } = data;
+
     if (password.length < 6) {
       toast({
         title: "Check your password",
@@ -22,6 +26,7 @@ const Signin = () => {
         isClosable: true,
         position: "bottom-right",
       });
+
       return;
     }
     try {
@@ -43,7 +48,6 @@ const Signin = () => {
       <H6> Member login </H6>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label className="Label">Email</label>
-
         <Input
           name="email"
           placeholder="email"
@@ -76,9 +80,7 @@ const Signin = () => {
           Login
         </BUTTON>
       </form>
-
       {/*     <H7>  Forgot your password? </H7> */}
-
       <IMG src="facebook.png" alt="" onClick={signInWithFacebook} />
       <IMG src="google.png" alt="" onClick={signInWithGoogle} />
     </Box>

@@ -363,7 +363,7 @@ const CreateCv = ({ currentUser }) => {
                           placeholder="SectionName"
                           type="text"
                           name="section"
-                          value={sectionData.section}
+                          // value={sectionData.section}
                           onChange={handleChangeSection}
                           ref={register({
                             required: "this content is required",

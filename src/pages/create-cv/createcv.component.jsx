@@ -87,7 +87,7 @@ const CreateCv = ({ currentUser }) => {
   const [sectionData, setSectionData] = useState({
     sectionName: {
       section: "",
-      type: "",
+      type: "text",
       lastModified: new Date(),
     },
   });
@@ -112,7 +112,7 @@ const CreateCv = ({ currentUser }) => {
     let dataToBeSaved = {
       sectionName: {
         section: sectionData.section || "",
-        type: sectionData.type || "",
+        type: type || "text",
         lastModified: new Date(),
       },
     };
@@ -213,7 +213,7 @@ const CreateCv = ({ currentUser }) => {
           if (newData) {
             array.unshift({
               section: newData.toString(),
-              type: "",
+              type: "text",
               lastModified,
             });
             console.log(array, `array comming from fb`);

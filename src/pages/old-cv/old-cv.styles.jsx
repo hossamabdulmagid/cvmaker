@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import { BiCog } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import { BsFillBucketFill } from "react-icons/bs";
+import { BsCalendar } from "react-icons/bs";
+import { FcAlarmClock } from "react-icons/fc";
+
+export const IconCalendar = styled(FcAlarmClock)`
+  margin: 10px;
+  display: inline;
+`;
 
 export const RapperdColor = styled.div`
   text-align: ;
@@ -114,7 +121,6 @@ export const ButtonForPremium = styled.button`
 export const Linkcv = styled(Link)`
   color: orange;
   text-align: center;
-  display: flex;
 `;
 export const Iconedit = styled(BiCog)`
   margin: 3px;
@@ -124,7 +130,7 @@ export const Iconedit = styled(BiCog)`
 `;
 
 export const Td = styled.td`
-  text-align: right;
+  text-align: center;
 `;
 export const RapperTable = styled.div``;
 
@@ -135,5 +141,6 @@ export const SectionforLastModified = styled.span`
 
 export const SectionforCreatedAt = styled.span`
   float: left;
+  text-align: center;
   margin: 0 auto;
 `;

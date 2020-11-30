@@ -184,7 +184,7 @@ const CreateCv = ({ currentUser }) => {
         setLoading(false);
         toast({
           title: `there is was an error`,
-          description: `${error} `,
+          description: `${error}`,
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -205,9 +205,10 @@ const CreateCv = ({ currentUser }) => {
           console.log(doc.data(), `############Data`);
           console.log(doc.id, "@@@@@@@@@@@@@id");
           const newData = doc.id;
-
+          const nweDate = new Date();
           if (newData) {
-            array.unshift({ section: newData.toString(), type: "" });
+            array.unshift({ section: newData.toString(), type: "", nweDate });
+            console.log(array, `array comming from fb`);
 
             setTimeout(() => {
               setFlag(false);
@@ -250,7 +251,6 @@ const CreateCv = ({ currentUser }) => {
               </LinkOption>
             </Alert>
           )}
-
           <div className="cvName">
             {!loading ? (
               <form onSubmit={handleSubmit(onSubmitLabel)}>

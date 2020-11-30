@@ -15,8 +15,7 @@ import {
   Iconedit,
   Td,
   ButtonForDeleteCv,
-  SectionforLastModified,
-  SectionforCreatedAt,
+  IconCalendar,
 } from "./old-cv.styles";
 import {
   Accordion,
@@ -61,6 +60,7 @@ const OldCv = ({ currentUser, match }) => {
       .add({
         _createdAt: new Date().toString(),
         _label,
+        _lastModified: new Date().toString(),
       });
     if (docRef.id) {
       toast({
@@ -92,7 +92,7 @@ const OldCv = ({ currentUser, match }) => {
           let obj = doc.data();
           obj.id = doc.id;
           allcv.push(obj);
-          console.log(obj, `object Data`);
+          console.log(obj, `object Dataaaaaaa`);
           setLoading(false);
         });
       });
@@ -163,13 +163,8 @@ const OldCv = ({ currentUser, match }) => {
               <thead>
                 <tr>
                   <th> Name</th>
-                  <th>
-                    <SectionforCreatedAt>Created At </SectionforCreatedAt>
-                    <SectionforLastModified>
-                      {" "}
-                      Last Modified{" "}
-                    </SectionforLastModified>
-                  </th>
+                  <th>Created At</th>
+                  <th>Last Modified</th>
                   <th>Options</th>
                 </tr>
               </thead>
@@ -186,19 +181,24 @@ const OldCv = ({ currentUser, match }) => {
                       </ButtonForDeleteCv>
                     </td>
                     <td>
-                      <Moment
-                        format="MMMM Do YYYY, h:mm:ss a"
-                        className="timer"
-                      >
+                      <Moment format="MMMM Do YYYY, h:mm:ss a">
                         {singleCv._createdAt}
                       </Moment>
+                      <IconCalendar />
                     </td>
-                    <Td>
+                    <td>
+                      <Moment format="MMMM Do YYYY, h:mm:ss a">
+                        {singleCv._lastModified}
+                      </Moment>
+                      <IconCalendar />
+                    </td>
+
+                    <td>
                       <Linkcv to={"create-cv/" + `${singleCv.id}`}>
                         Edit now
                         <Iconedit />
                       </Linkcv>
-                    </Td>
+                    </td>
                   </tr>
                 ))}
               </tbody>

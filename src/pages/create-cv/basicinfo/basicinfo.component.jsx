@@ -35,6 +35,7 @@ const BasicInfo = (props) => {
       address2: "",
       address3: "",
       webSites: "",
+      lastModified: new Date(),
     },
   });
 
@@ -58,6 +59,7 @@ const BasicInfo = (props) => {
         address2: dataform.address2 || "",
         address3: dataform.address3 || "",
         webSites: dataform.webSites || "",
+        lastModified: new Date(),
       },
     };
     await cvRef.set(dataToBeSaved);
@@ -92,6 +94,7 @@ const BasicInfo = (props) => {
             address3: newData.basicinfo.address3,
             webSites: newData.basicinfo.webSites,
             email: newData.basicinfo.email,
+            lastModified: newData.basicinfo.lastModified,
           });
         }
         setLoading(false);

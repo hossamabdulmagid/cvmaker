@@ -44,10 +44,17 @@ const Workexperience = (props) => {
       startwork: "",
       endwork: "",
       position: "",
+      lastModified: new Date(),
     },
   });
 
-  const { companyname, startwork, endwork, position } = workexperinceform;
+  const {
+    companyname,
+    startwork,
+    endwork,
+    position,
+    lastModified,
+  } = workexperinceform;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -65,6 +72,7 @@ const Workexperience = (props) => {
         startwork: startwork || "",
         endwork: endwork || "",
         position: position || "",
+        lastModified: new Date(),
       },
     };
 
@@ -101,6 +109,7 @@ const Workexperience = (props) => {
             startwork: workexpData.workexperience.startwork,
             endwork: workexpData.workexperience.endwork,
             position: workexpData.workexperience.position,
+            lastModified: workexpData.workexperience.lastModified,
           });
         }
 

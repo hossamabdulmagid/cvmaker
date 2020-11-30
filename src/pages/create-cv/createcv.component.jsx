@@ -53,15 +53,15 @@ import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 const CreateCv = ({ currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
-    { section: "basicinfo", type: "text" },
-    { section: "workexperience", type: "text" },
-    { section: "qualifications", type: "text" },
-    { section: "education", type: "text" },
-    { section: "interests", type: "text" },
-    { section: "references", type: "text" },
+    { section: "basicinfo", type: "text", lastModified: new Date() },
+    { section: "workexperience", type: "text", lastModified: new Date() },
+    { section: "qualifications", type: "text", lastModified: new Date() },
+    { section: "education", type: "text", lastModified: new Date() },
+    { section: "interests", type: "text", lastModified: new Date() },
+    { section: "references", type: "text", lastModified: new Date() },
   ]);
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
-
+  console.log(sidebarRoutes, `lastModified`);
   const toast = useToast();
 
   const [color, setColor] = React.useState("");
@@ -88,6 +88,7 @@ const CreateCv = ({ currentUser }) => {
     sectionName: {
       section: "",
       type: "",
+      lastModified: new Date(),
     },
   });
 
@@ -112,6 +113,7 @@ const CreateCv = ({ currentUser }) => {
       sectionName: {
         section: sectionData.section || "",
         type: sectionData.type || "",
+        lastModified: new Date(),
       },
     };
 
@@ -119,11 +121,13 @@ const CreateCv = ({ currentUser }) => {
     sidebarRoutes.push({
       section: sectionData.section,
       type: sectionData.type,
+      lastModified: new Date(),
     });
 
     array.push({
       section: sectionData.section,
       type: sectionData.type,
+      lastModified: new Date(),
     });
 
     setTimeout(() => {
@@ -194,7 +198,7 @@ const CreateCv = ({ currentUser }) => {
   }, [currentUser, id]);
 
   const [array, setArray] = useState([]);
-
+  const [lastModified, setLastModified] = useState(new Date());
   const FetchData = async () => {
     await firestore
       .doc(`users/${currentUser.id}`)
@@ -205,9 +209,13 @@ const CreateCv = ({ currentUser }) => {
           console.log(doc.data(), `############Data`);
           console.log(doc.id, "@@@@@@@@@@@@@id");
           const newData = doc.id;
-          const nweDate = new Date();
+          setLastModified(lastModified);
           if (newData) {
-            array.unshift({ section: newData.toString(), type: "", nweDate });
+            array.unshift({
+              section: newData.toString(),
+              type: "",
+              lastModified,
+            });
             console.log(array, `array comming from fb`);
 
             setTimeout(() => {

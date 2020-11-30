@@ -38,6 +38,7 @@ const Education = (props) => {
       startgraduationyear: "",
       endgraduationyear: "",
       eduactionmajor: "",
+      lastModified: new Date(),
     },
   });
 
@@ -46,6 +47,7 @@ const Education = (props) => {
     startgraduationyear,
     endgraduationyear,
     eduactionmajor,
+    lastModified,
   } = education;
 
   const onSubmit = async (value) => {
@@ -58,6 +60,7 @@ const Education = (props) => {
         startgraduationyear: startgraduationyear || "",
         endgraduationyear: endgraduationyear || "",
         eduactionmajor: eduactionmajor || "",
+        lastModified: new Date(),
       },
     };
     await cvRef.set(dataToBeSaved);
@@ -98,6 +101,7 @@ const Education = (props) => {
             startgraduationyear: eduactionData.education.startgraduationyear,
             endgraduationyear: eduactionData.education.endgraduationyear,
             eduactionmajor: eduactionData.education.eduactionmajor,
+            lastModified: eduactionData.education.lastModified,
           });
         }
 

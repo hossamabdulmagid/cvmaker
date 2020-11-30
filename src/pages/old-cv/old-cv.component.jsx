@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   ButtonForPremium,
   Content,
@@ -147,7 +147,7 @@ const OldCv = ({ currentUser, match }) => {
   };
 
   return (
-    <>
+    <Fragment>
       <RapperdColor className="container-fluid">
         <Content className="container">
           <Title>Your CVs</Title>
@@ -272,7 +272,7 @@ const OldCv = ({ currentUser, match }) => {
           </div>
         </div>
       </RapperdColor>
-    </>
+    </Fragment>
   );
 };
 const PrivateRoute = ({ component: Component, currentUser, ...rest }) => (

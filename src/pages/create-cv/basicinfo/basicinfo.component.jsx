@@ -151,7 +151,7 @@ const BasicInfo = (props) => {
                   <Input
                     name="fullname"
                     value={dataform.fullname}
-                    ref={register()}
+                    ref={register({ required: "this input is required" })}
                     placeholder="Full Name"
                     onChange={handleChange}
                   />

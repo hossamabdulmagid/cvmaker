@@ -16,6 +16,3 @@ export const Small = styled.small`
   display: block;
   font-size: 18px;
 `;
-export const Img = styled.img`
-  color: black;
-`;

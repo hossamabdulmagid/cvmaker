@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { RapperColor, COL, Small, Img } from "./navGuest.styles";
+import { RapperColor, COL, Small, Img, Links } from "./navGuest.styles";
 import { Link } from "react-router-dom";
 
 const NavGuest = () => {
@@ -12,7 +12,7 @@ const NavGuest = () => {
         <div className="row">
           <COL className="col-8">
             <Link to="/">
-              <Img src="./logo.png" alt="" />
+              <img src="https://cvmkr.com/images/logo.png" alt="" />
             </Link>
           </COL>
           <COL className="col-2">

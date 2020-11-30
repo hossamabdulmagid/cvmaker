@@ -6,6 +6,19 @@ export const RapperColor = styled.div`
   width: auto;
   background-color: #18c7e1;
   color: white;
+  @media screen and (max-width: 800px) {
+    width: 40vw;
+
+    &:hover {
+      .image {
+        opacity: unset;
+      }
+
+      button {
+        opacity: unset;
+      }
+    }
+  }
 `;
 
 export const RapperContent = styled.div`

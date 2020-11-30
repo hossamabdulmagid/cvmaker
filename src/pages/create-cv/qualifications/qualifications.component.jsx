@@ -22,6 +22,7 @@ const Qualifications = () => {
         editor={ClassicEditor}
         onInit={(editor) => {}}
         onChange={HandleCkEditorState}
+        data="<p>Qualifications Section</p>"
       />
     </div>
   );

@@ -15,6 +15,8 @@ import {
   Iconedit,
   Td,
   ButtonForDeleteCv,
+  SectionforLastModified,
+  SectionforCreatedAt,
 } from "./old-cv.styles";
 import {
   Accordion,
@@ -161,7 +163,13 @@ const OldCv = ({ currentUser, match }) => {
               <thead>
                 <tr>
                   <th> Name</th>
-                  <th>Created At</th>
+                  <th>
+                    <SectionforCreatedAt>Created At </SectionforCreatedAt>
+                    <SectionforLastModified>
+                      {" "}
+                      Last Modified{" "}
+                    </SectionforLastModified>
+                  </th>
                   <th>Options</th>
                 </tr>
               </thead>
@@ -178,7 +186,10 @@ const OldCv = ({ currentUser, match }) => {
                       </ButtonForDeleteCv>
                     </td>
                     <td>
-                      <Moment format="MMMM Do YYYY, h:mm:ss a">
+                      <Moment
+                        format="MMMM Do YYYY, h:mm:ss a"
+                        className="timer"
+                      >
                         {singleCv._createdAt}
                       </Moment>
                     </td>

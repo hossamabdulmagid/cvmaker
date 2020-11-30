@@ -22,7 +22,7 @@ const References = () => {
         editor={ClassicEditor}
         onInit={(editor) => {}}
         onChange={HandleCkEditorState}
-        data="<p>Hello from the CKEDITOR working with the Firebase!</p>"
+        data="<p> References Section</p>"
       />
     </div>
   );

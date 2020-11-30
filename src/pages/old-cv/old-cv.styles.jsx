@@ -127,3 +127,13 @@ export const Td = styled.td`
   text-align: right;
 `;
 export const RapperTable = styled.div``;
+
+export const SectionforLastModified = styled.span`
+  float: right;
+  margin: 0 auto;
+`;
+
+export const SectionforCreatedAt = styled.span`
+  float: left;
+  margin: 0 auto;
+`;

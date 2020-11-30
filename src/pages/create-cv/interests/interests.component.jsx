@@ -22,6 +22,7 @@ const Interests = () => {
         editor={ClassicEditor}
         onInit={(editor) => {}}
         onChange={HandleCkEditorState}
+        data="<p> Interests Section</p>"
       />
     </div>
   );

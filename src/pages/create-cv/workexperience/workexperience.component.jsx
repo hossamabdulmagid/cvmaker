@@ -199,7 +199,7 @@ const Workexperience = (props) => {
               <br />
               <FormLabel> Postion</FormLabel>
               <Input
-                ref={register()}
+                ref={register({ required: "this Content is Required" })}
                 name="position"
                 placeholder="Position"
                 onChange={handleChange}

@@ -200,7 +200,7 @@ const Education = (props) => {
                 value={eduactionmajor}
                 onChange={handleChange}
                 type="text"
-                ref={register()}
+                ref={register({ required: "this Content is Required" })}
               />
 
               {errors.eduactionmajor && errors.eduactionmajor.message}

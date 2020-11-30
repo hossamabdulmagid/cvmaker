@@ -5,7 +5,7 @@ import { BsFillLockFill } from "react-icons/bs";
 
 export const Rapper = styled.div`
   width: auto;
-  height: 40px;
+  height: auto;
   background-color: black;
   color: white;
   padding: 8px;
@@ -32,6 +32,7 @@ export const I = styled.i`
   background-color: white;
   @fa-font-path: "../font";
 `;
+
 export const LINK = styled(Link)`
   color: white;
   font-size: 15px;
@@ -46,7 +47,7 @@ export const LINK = styled(Link)`
 `;
 
 export const SELECT = styled(CountryDropdown)`
-  width: 105px;
+  min-width: 105px;
   background-color: black;
   color: white;
   padding: 2px;

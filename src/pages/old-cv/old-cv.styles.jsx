@@ -123,9 +123,8 @@ export const Linkcv = styled(Link)`
   text-align: center;
 `;
 export const Iconedit = styled(BiCog)`
-  margin: 3px;
-  width: 13px;
-  float: right;
+  display: inline;
+  margin: 2px;
   color: orange;
 `;
 

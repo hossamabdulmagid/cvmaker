@@ -51,21 +51,27 @@ const OldCv = ({ currentUser, match }) => {
   const history = useHistory();
 
   const [datee, setDatee] = useState(new Date());
+  const [lastModified, setLastModified] = useState(new Date().toString());
+
+  const refreshlastModified = () => {
+    setLastModified(new Date().toString());
+    console.log(`herrllllloooooooo`, lastModified);
+  };
 
   const createAnewCv = async () => {
-    const _label = "Simple Cv";
+    const label = "Simple Cv";
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
       .add({
         _createdAt: new Date().toString(),
-        _label,
-        _lastModified: new Date().toString(),
+        label,
+        lastModified,
       });
     if (docRef.id) {
       toast({
         title: `Successfuly created new cv `,
-        description: `Your cv name is : ${_label}`,
+        description: `Your cv name is : ${label}`,
         status: "success",
         duration: 5000,
         position: "top",
@@ -91,6 +97,7 @@ const OldCv = ({ currentUser, match }) => {
         querySnapshot.forEach(function (doc) {
           let obj = doc.data();
           obj.id = doc.id;
+          obj.lastModified = new Date().toString();
           allcv.push(obj);
           console.log(obj, `object Dataaaaaaa`);
           setLoading(false);
@@ -172,7 +179,7 @@ const OldCv = ({ currentUser, match }) => {
                 {allcv.map((singleCv, i) => (
                   <tr key={i}>
                     <td>
-                      {singleCv._label}
+                      {singleCv.label}
                       <ButtonForDeleteCv
                         onClick={() => deleteCv(`${singleCv.id}`)}
                       >
@@ -181,20 +188,23 @@ const OldCv = ({ currentUser, match }) => {
                       </ButtonForDeleteCv>
                     </td>
                     <td>
-                      <Moment format="MMMM Do YYYY, h:mm:ss a">
+                      <Moment format="MMMM Do YYYY, h:mm a">
                         {singleCv._createdAt}
                       </Moment>
                       <IconCalendar />
                     </td>
                     <td>
-                      <Moment format="MMMM Do YYYY, h:mm:ss a">
-                        {singleCv._lastModified}
+                      <Moment format="MMMM Do YYYY, h:mm a">
+                        {singleCv.lastModified}
                       </Moment>
                       <IconCalendar />
                     </td>
 
                     <td>
-                      <Linkcv to={"create-cv/" + `${singleCv.id}`}>
+                      <Linkcv
+                        to={"create-cv/" + `${singleCv.id}`}
+                        onClick={() => refreshlastModified()}
+                      >
                         Edit now
                         <Iconedit />
                       </Linkcv>

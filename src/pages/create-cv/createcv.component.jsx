@@ -145,7 +145,7 @@ const CreateCv = ({ currentUser }) => {
   };
 
   const [cvName, setCvName] = useState({
-    _label: "your CvName",
+    label: "your CvName",
   });
 
   const [loading, setLoading] = useState(true);
@@ -154,11 +154,10 @@ const CreateCv = ({ currentUser }) => {
     await firestore
       .collection(`users/${currentUser.id}/cvs`)
       .doc(`${id}`)
-      .update("_label", cvName._label);
-
+      .update("label", cvName.label);
     toast({
       title: "cv name updated.",
-      description: `your cvname updated  to : ${cvName._label} `,
+      description: `your cvname updated  to : ${cvName.label} `,
       status: "success",
       duration: 5000,
       isClosable: true,
@@ -170,16 +169,15 @@ const CreateCv = ({ currentUser }) => {
     if (!currentUser) {
       return;
     }
-
     firestore
       .doc(`users/${currentUser.id}/cvs/${id}`)
-
       .get()
       .then(function (querySnapshot) {
         const newData = querySnapshot.data();
+        console.log(newData, `weewewewewewe@@@@`);
         if (newData) {
           setCvName({
-            _label: newData._label,
+            label: newData.label,
           });
         }
         setLoading(false);
@@ -268,8 +266,8 @@ const CreateCv = ({ currentUser }) => {
                     width="110px"
                     placeholder="cvName here"
                     type="text"
-                    name="_label"
-                    value={cvName._label}
+                    name="label"
+                    value={cvName.label}
                     ref={register()}
                     onChange={handleChange}
                   />
@@ -283,7 +281,7 @@ const CreateCv = ({ currentUser }) => {
                   </Button>
                   <br />
                   Your Cv Name is :
-                  <strong className="labelcv"> {cvName._label}</strong>
+                  <strong className="labelcv"> {cvName.label}</strong>
                 </Editable>
               </form>
             ) : (

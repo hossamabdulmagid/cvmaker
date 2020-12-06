@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { Button } from "@chakra-ui/core";
+import { AiTwotoneEdit } from "react-icons/ai";
+
 export const Title = styled.h4`
-  padding: 11px;
+  margin: 5px;
   font-weight: 200px;
 `;
 
@@ -59,4 +61,8 @@ export const Buttons = styled.button`
 
 export const Upload = styled.input`
   padding: 8px;
+`;
+
+export const IconEditNameOfSection = styled(AiTwotoneEdit)`
+  display: inline-flex;
 `;

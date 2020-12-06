@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import { BsFillBucketFill } from "react-icons/bs";
 import { BsCalendar } from "react-icons/bs";
 import { FcAlarmClock } from "react-icons/fc";
-
+import { AiTwotoneEdit } from "react-icons/ai";
 export const IconCalendar = styled(FcAlarmClock)`
   margin: 10px;
   display: inline;
@@ -143,3 +143,5 @@ export const SectionforCreatedAt = styled.span`
   text-align: center;
   margin: 0 auto;
 `;
+
+export const IconEditNameOfSection = styled(AiTwotoneEdit)``;

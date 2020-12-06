@@ -164,7 +164,6 @@ const CreateCv = ({ currentUser }) => {
       position: "top-right",
     });
   };
-
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -215,7 +214,6 @@ const CreateCv = ({ currentUser }) => {
               lastModified,
             });
             console.log(array, `array comming from fb`);
-
             setTimeout(() => {
               setFlag(false);
             }, 50);
@@ -320,7 +318,6 @@ const CreateCv = ({ currentUser }) => {
                 Save & Download
               </Buttons>
             </Col>
-
             <RapperSidebar className="col-3">
               <Ul>
                 {!flag
@@ -348,7 +345,6 @@ const CreateCv = ({ currentUser }) => {
                         <LINK>{singleRouteforSidebar.section}</LINK>
                       </Li>
                     ))}
-
                 <ButtonForAddNewSection onClick={onOpen} variant="success">
                   + New Section
                 </ButtonForAddNewSection>
@@ -444,5 +440,4 @@ const CreateCv = ({ currentUser }) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
-
 export default connect(mapStateToProps, null)(CreateCv);

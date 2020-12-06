@@ -16,6 +16,7 @@ import {
   Td,
   ButtonForDeleteCv,
   IconCalendar,
+  IconEditNameOfSection,
 } from "./old-cv.styles";
 import {
   Accordion,
@@ -55,6 +56,7 @@ const OldCv = ({ currentUser, match }) => {
 
   const refreshlastModified = () => {
     setLastModified(new Date().toString());
+
     console.log(`herrllllloooooooo`, lastModified);
   };
 
@@ -64,7 +66,7 @@ const OldCv = ({ currentUser, match }) => {
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
       .add({
-        _createdAt: new Date().toString(),
+        createdAt: new Date().toString(),
         label,
         lastModified,
       });
@@ -189,7 +191,7 @@ const OldCv = ({ currentUser, match }) => {
                     </td>
                     <td>
                       <Moment format="MMMM Do YYYY, h:mm a">
-                        {singleCv._createdAt}
+                        {singleCv.createdAt}
                       </Moment>
                       <IconCalendar />
                     </td>

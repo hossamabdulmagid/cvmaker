@@ -79,3 +79,10 @@ td {
 th {
   text-align: center;
 }
+.pull-right {
+  float: right;
+}
+.errorSectionName {
+  display: block;
+  color: red;
+}

@@ -9,12 +9,24 @@ import {
   IMG,
   Buttons,
   Upload,
+  IconEditNameOfSection,
 } from "./basicinfo.styles";
 import { useForm } from "react-hook-form";
 import { useParams, useHistory, Progress } from "react-router-dom";
 import { Spinner, useToast, Button } from "@chakra-ui/core";
 import { connect } from "react-redux";
 import { firestore, storage } from "../../../firebase/firebase.utils";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormLabel,
+} from "@chakra-ui/core";
 const BasicInfo = (props) => {
   const { currentUser, match, doc, info, basicinfo } = props;
 
@@ -87,14 +99,16 @@ const BasicInfo = (props) => {
         const newData = querySnapshot.data();
         if (newData) {
           setDataform({
-            fullname: newData.basicinfo.fullname,
-            phone: newData.basicinfo.phone,
-            address1: newData.basicinfo.address1,
-            address2: newData.basicinfo.address2,
-            address3: newData.basicinfo.address3,
-            webSites: newData.basicinfo.webSites,
-            email: newData.basicinfo.email,
-            lastModified: newData.basicinfo.lastModified,
+            basicinfo: {
+              fullname: newData.basicinfo.fullname,
+              phone: newData.basicinfo.phone,
+              address1: newData.basicinfo.address1,
+              address2: newData.basicinfo.address2,
+              address3: newData.basicinfo.address3,
+              webSites: newData.basicinfo.webSites,
+              email: newData.basicinfo.email,
+              lastModified: newData.basicinfo.lastModified,
+            },
           });
         }
         setLoading(false);
@@ -139,101 +153,149 @@ const BasicInfo = (props) => {
         }
       );
     };
+        z 
     console.log("image :", image);
    */
+
+  const [color, setColor] = React.useState("");
+
+  const styles = {
+    backgroundColor: color,
+  };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef = React.useRef();
+
+  const finalRef = React.useRef();
+  const [sectionName, setSectionName] = useState({
+    sectionlabel: "",
+  });
+
+  const onSubmitSectionLabel = async (value) => {
+    await firestore
+      .collection(`users/${currentUser.id}/cvs`)
+      .doc(`${id}`)
+      .update("label", sectionName.sectionlabel);
+    toast({
+      title: "cv name updated.",
+      description: `your cvname updated  to : ${sectionName.sectionlabel} `,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "top-right",
+    });
+  };
+
   return (
     <Fragment>
       <Container className="container-fluid">
         {!loading ? (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="container">
-              <Title> </Title>
-              <div className="row basicinfo">
-                <div className="col-6">
-                  <Label>Full name</Label>
-                  <Input
-                    name="fullname"
-                    value={dataform.fullname}
-                    ref={register({ required: "this input is required" })}
-                    placeholder="Full Name"
-                    onChange={handleChange}
-                  />
-                  <br />
-                  {errors.fullname && errors.fullname.message}
-                  <Label>Phone numbers</Label>
-                  <Input
-                    name="phone"
-                    value={dataform.phone}
-                    placeholder="010 000 0000"
-                    onChange={handleChange}
-                    ref={register({ required: "this input is required" })}
-                    required
-                  />
-                  <br />
-                  {errors.phone && errors.phone.message}
-                  <hr />
-                  <Label>Address Line 1</Label>
-                  <Input
-                    name="address1"
-                    ref={register()}
-                    placeholder="Country"
-                    value={dataform.address1}
-                    onChange={handleChange}
-                  />
-                  {errors.address1 && errors.address1.message}
+          <>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="container">
+                <button
+                  onClick={onOpen}
+                  variant="success"
+                  className="pull-right"
+                >
+                  <IconEditNameOfSection />
+                </button>
 
-                  <Label>Address Line 3</Label>
-                  <Input
-                    name="address3"
-                    placeholder="Street"
-                    ref={register()}
-                    value={dataform.address3}
-                    onChange={handleChange}
-                  />
-                  {errors.address3 && errors.address3.message}
-                </div>
-                <hr />
-                <div className="col-6">
-                  <Label>E-mail address</Label>
-                  <Input
-                    name="email"
-                    value={dataform.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    ref={register({ required: "this input is required" })}
-                    required
-                  />{" "}
-                  <br />
-                  {errors.email && errors.email.message}
-                  <Label>Websites</Label>
-                  <Input
-                    name="webSites"
-                    placeholder="https://www."
-                    ref={register()}
-                    value={dataform.webSites}
-                    onChange={handleChange}
-                  />
-                  {errors.websites && errors.websites.message}
-                  <hr />
-                  <Label>Address Line 2</Label>
-                  <Input
-                    name="address2"
-                    ref={register()}
-                    placeholder="City"
-                    value={dataform.address2}
-                    onChange={handleChange}
-                  />
-                  {errors.address2 && errors.address2.message}
-                  <br />
-                  <br />
-                  <Button type="submit" variantColor="teal" variant="ghost">
-                    Save
-                  </Button>
-                </div>
-                <hr />
-              </div>
+                <div className="row basicinfo">
+                  <div className="col-6">
+                    <Label>Full name</Label>
+                    <Input
+                      name="fullname"
+                      value={dataform.fullname}
+                      ref={register({ required: "this input is required" })}
+                      placeholder="Full Name"
+                      onChange={handleChange}
+                    />
+                    <small className="errorSectionName">
+                      {errors.fullname && errors.fullname.message}
+                    </small>
+                    <Label>Phone numbers</Label>
+                    <Input
+                      name="phone"
+                      value={dataform.phone}
+                      placeholder="010 000 0000"
+                      onChange={handleChange}
+                      ref={register({ required: "this input is required" })}
+                      required
+                    />
+                    <span className="errorSectionName">
+                      {errors.phone && errors.phone.message}
+                    </span>
+                    <hr />
+                    <Label>Address Line 1</Label>
+                    <Input
+                      name="address1"
+                      ref={register()}
+                      placeholder="Country"
+                      value={dataform.address1}
+                      onChange={handleChange}
+                    />
+                    {errors.address1 && errors.address1.message}
 
-              {/* <div className="row">
+                    <Label>Address Line 3</Label>
+                    <Input
+                      name="address3"
+                      placeholder="Street"
+                      ref={register()}
+                      value={dataform.address3}
+                      onChange={handleChange}
+                    />
+                    {errors.address3 && errors.address3.message}
+                  </div>
+                  <hr />
+                  <div className="col-6">
+                    <Label>E-mail address</Label>
+                    <Input
+                      name="email"
+                      value={dataform.email}
+                      onChange={handleChange}
+                      placeholder="Email"
+                      ref={register({ required: "this input is required" })}
+                      required
+                    />
+
+                    <small className="errorSectionName">
+                      {errors.email && errors.email.message}
+                    </small>
+
+                    <Label>Websites</Label>
+
+                    <Input
+                      name="webSites"
+                      placeholder="https://www."
+                      ref={register()}
+                      value={dataform.webSites}
+                      onChange={handleChange}
+                    />
+
+                    {errors.websites && errors.websites.message}
+
+                    <hr />
+                    <Label>Address Line 2</Label>
+                    <Input
+                      name="address2"
+                      ref={register()}
+                      placeholder="City"
+                      value={dataform.address2}
+                      onChange={handleChange}
+                    />
+                    <span className="errorSectionName">
+                      {errors.address2 && errors.address2.message}
+                    </span>
+                    <Button type="submit" variantColor="teal" variant="ghost">
+                      Save
+                    </Button>
+                  </div>
+                  <hr />
+                </div>
+
+                {/* <div className="row">
                 <div className="col-6">
                   <Upload id="" type="file" onChange={handleChangeImage} />
                   <br />
@@ -254,8 +316,9 @@ const BasicInfo = (props) => {
                 </div>
               </div>
               */}
-            </div>
-          </form>
+              </div>
+            </form>
+          </>
         ) : (
           <Spinner
             thickness="4px"
@@ -266,6 +329,50 @@ const BasicInfo = (props) => {
           />
         )}
       </Container>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add your section</ModalHeader>
+          <ModalCloseButton />
+          <form onSubmit={handleSubmit(onSubmitSectionLabel)}>
+            <ModalBody pb={6}>
+              <FormLabel>Section name</FormLabel>
+              <Input
+                placeholder="SectionName"
+                type="text"
+                name="section"
+                // value={sectionData.section}
+                //onChange={handleChangeSection}
+                ref={register({
+                  required: "content is required",
+                })}
+              />
+              <small className="errorSectionName">
+                {errors.section && errors.section.message}
+              </small>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                variantColor="blue"
+                mr={3}
+                type="submit"
+                className={`buttonForSaveNewSection`}
+                onOpen
+              >
+                Save
+              </Button>
+              <Button onClick={onClose} className="buttonForCancleNewSection">
+                Cancel
+              </Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
     </Fragment>
   );
 };

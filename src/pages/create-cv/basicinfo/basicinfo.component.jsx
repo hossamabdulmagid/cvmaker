@@ -208,7 +208,7 @@ const BasicInfo = (props) => {
                     <Input
                       name="fullname"
                       value={dataform.fullname}
-                      ref={register({ required: "this input is required" })}
+                      ref={register({ required: "*input is required" })}
                       placeholder="Full Name"
                       onChange={handleChange}
                     />
@@ -221,23 +221,24 @@ const BasicInfo = (props) => {
                       value={dataform.phone}
                       placeholder="010 000 0000"
                       onChange={handleChange}
-                      ref={register({ required: "this input is required" })}
+                      ref={register({ required: "*input is required" })}
                       required
                     />
-                    <span className="errorSectionName">
+                    <small className="errorSectionName">
                       {errors.phone && errors.phone.message}
-                    </span>
+                    </small>
                     <hr />
                     <Label>Address Line 1</Label>
                     <Input
                       name="address1"
-                      ref={register()}
+                      ref={register({ required: "*input is required" })}
                       placeholder="Country"
                       value={dataform.address1}
                       onChange={handleChange}
                     />
-                    {errors.address1 && errors.address1.message}
-
+                    <small className="errorSectionName">
+                      {errors.address1 && errors.address1.message}
+                    </small>
                     <Label>Address Line 3</Label>
                     <Input
                       name="address3"
@@ -256,7 +257,7 @@ const BasicInfo = (props) => {
                       value={dataform.email}
                       onChange={handleChange}
                       placeholder="Email"
-                      ref={register({ required: "this input is required" })}
+                      ref={register({ required: "*input is required" })}
                       required
                     />
 
@@ -280,14 +281,14 @@ const BasicInfo = (props) => {
                     <Label>Address Line 2</Label>
                     <Input
                       name="address2"
-                      ref={register()}
+                      ref={register({ required: "*input is required" })}
                       placeholder="City"
                       value={dataform.address2}
                       onChange={handleChange}
                     />
-                    <span className="errorSectionName">
+                    <small className="errorSectionName">
                       {errors.address2 && errors.address2.message}
-                    </span>
+                    </small>
                     <Button type="submit" variantColor="teal" variant="ghost">
                       Save
                     </Button>
@@ -349,7 +350,7 @@ const BasicInfo = (props) => {
                 // value={sectionData.section}
                 //onChange={handleChangeSection}
                 ref={register({
-                  required: "content is required",
+                  required: "*input is required",
                 })}
               />
               <small className="errorSectionName">

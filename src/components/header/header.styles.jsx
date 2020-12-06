@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Button } from "@chakra-ui/core";
 export const RapperColor = styled.div`
-  height: 659px;
+  min-height: 720px;
   width: auto;
   background-color: #18c7e1;
   color: white;

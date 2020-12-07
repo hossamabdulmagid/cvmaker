@@ -97,19 +97,20 @@ const BasicInfo = (props) => {
       .then(function (querySnapshot) {
         console.log(querySnapshot, `querySnapshot from basic info`);
         const newData = querySnapshot.data();
+        console.log(newData, `new Data`);
         if (newData) {
           setDataform({
-            basicinfo: {
-              fullname: newData.basicinfo.fullname,
-              phone: newData.basicinfo.phone,
-              address1: newData.basicinfo.address1,
-              address2: newData.basicinfo.address2,
-              address3: newData.basicinfo.address3,
-              webSites: newData.basicinfo.webSites,
-              email: newData.basicinfo.email,
-              lastModified: newData.basicinfo.lastModified,
-            },
+            fullname: newData.basicinfo.fullname,
+            phone: newData.basicinfo.phone,
+            address1: newData.basicinfo.address1,
+            address2: newData.basicinfo.address2,
+            address3: newData.basicinfo.address3,
+            webSites: newData.basicinfo.webSites,
+            email: newData.basicinfo.email,
+            lastModified: newData.basicinfo.lastModified,
           });
+          console.log(newData.basicinfo.fullname, `newData.basicinfo.fullname`);
+          console.log(dataform, `dataform`);
         }
         setLoading(false);
       })
@@ -118,44 +119,44 @@ const BasicInfo = (props) => {
         toast.error(error, `there is was an error`);
         console.log(error, `there is was an error`);
       });
-  }, [currentUser, id]);
-
-  const [image, setImage] = useState(null);
-  const [url, setUrl] = useState("");
-  const [progress, setProgress] = useState(0);
-
-  const handleChangeImage = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
-  const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("images")
-          .child(image.name)
-          .getDownloadURL()
-          .then((url) => {
-            setUrl(url);
-          });
+  }, [currentUser, id, setDataform]);
+  /*
+    const [image, setImage] = useState(null);
+    const [url, setUrl] = useState("");
+    const [progress, setProgress] = useState(0);
+  
+    const handleChangeImage = (e) => {
+      if (e.target.files[0]) {
+        setImage(e.target.files[0]);
       }
-    );
-  };
-
-  console.log("image :", image);
-
+    };
+    const handleUpload = () => {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+            });
+        }
+      );
+    };
+  
+    console.log("image :", image);
+  */
   const [color, setColor] = React.useState("");
 
   const styles = {
@@ -167,10 +168,13 @@ const BasicInfo = (props) => {
   const initialRef = React.useRef();
 
   const finalRef = React.useRef();
+
   const [sectionName, setSectionName] = useState({
     sectionlabel: "",
   });
-  let { sectionlabel } = sectionName;
+
+  const { sectionlabel } = sectionName;
+
   const handleChangeSectionName = (event) => {
     const { name, value } = event.target;
     setSectionName({ ...sectionName, [name]: value });
@@ -306,7 +310,7 @@ const BasicInfo = (props) => {
                   <hr />
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-6">
                     <Upload id="" type="file" onChange={handleChangeImage} />
                     <br />
@@ -322,6 +326,7 @@ const BasicInfo = (props) => {
                     {url.length > 5 ? null : null}
                   </div>
                 </div>
+                */}
               </div>
             </form>
           </>
@@ -385,5 +390,4 @@ const BasicInfo = (props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
-
 export default connect(mapStateToProps, null)(BasicInfo);

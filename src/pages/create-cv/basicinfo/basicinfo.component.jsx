@@ -31,7 +31,9 @@ const BasicInfo = (props) => {
   const { currentUser, match, doc, info, basicinfo } = props;
 
   const { id } = useParams();
+
   const toast = useToast();
+
   const history = useHistory();
 
   const { handleSubmit, register, errors, getValues } = useForm();
@@ -181,22 +183,19 @@ const BasicInfo = (props) => {
   };
 
   const onSubmitSectionLabel = async (value) => {
-    try {
-      await firestore
-        .collection(`users/${currentUser.id}/cvs`)
-        .doc(`${id}/data`)
-        .update("sectionName", sectionName.sectionlabel);
-      toast({
-        title: "section name updated.",
-        description: `your SectionName updated  to : ${sectionName.sectionlabel} `,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top-right",
-      });
-    } catch (error) {
-      console.log(error, `errror`);
-    }
+    await firestore
+      .doc(`users/${currentUser.id}/cvs/${id}/data/${sectionlabel}`)
+      .set({ sectionlabel: `${sectionlabel}` });
+    //.update("sectionlabel", sectionName.sectionlabel);
+    toast({
+      title: "section name updated.",
+      description: `your SectionName updated  to : ${sectionName.sectionlabel} `,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "top-right",
+    });
+    onClose();
   };
   return (
     <Fragment>
@@ -239,7 +238,9 @@ const BasicInfo = (props) => {
                       {errors.phone && errors.phone.message}
                     </small>
                     <hr />
+
                     <Label>Address Line 1</Label>
+
                     <Input
                       name="address1"
                       ref={register({ required: "*input is required" })}
@@ -247,6 +248,7 @@ const BasicInfo = (props) => {
                       value={dataform.address1}
                       onChange={handleChange}
                     />
+
                     <small className="errorSectionName">
                       {errors.address1 && errors.address1.message}
                     </small>

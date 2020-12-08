@@ -27,6 +27,7 @@ import {
   useDisclosure,
   FormLabel,
 } from "@chakra-ui/core";
+
 const BasicInfo = (props) => {
   const { currentUser, match, doc, info, basicinfo } = props;
 
@@ -359,7 +360,7 @@ const BasicInfo = (props) => {
                 placeholder="SectionName"
                 type="text"
                 name="sectionlabel"
-                value={sectionlabel}
+                //value={sectionlabel}
                 onChange={handleChangeSectionName}
                 ref={register({
                   required: "*input is required",

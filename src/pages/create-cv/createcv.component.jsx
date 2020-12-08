@@ -24,6 +24,8 @@ import {
   AiTwotoneFileExcel,
   AiTwotonePlaySquare,
 } from "react-icons/ai";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import BasicInfo from "./basicinfo/basicinfo.component";
 import Education from "./education/education.component";
 import Workexperience from "./workexperience/workexperience.component";
@@ -51,6 +53,8 @@ import { Button } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
+
+import { Radio, RadioGroup, Stack } from "@chakra-ui/core";
 const CreateCv = ({ currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     { section: "basicinfo", type: "text", lastModified: new Date() },
@@ -60,8 +64,58 @@ const CreateCv = ({ currentUser }) => {
     { section: "interests", type: "text", lastModified: new Date() },
     { section: "references", type: "text", lastModified: new Date() },
   ]);
+
+  /*
+     const Contacts = React.createClass({
+      render() {
+        console.log(`iam runing`);
+        return (
+          <div></div>
+        );
+      }
+    });
+  
+  */
+  const Input = () => {
+    return <input placeholder="Your input here" />;
+  };
+
+  const Editor = () => {
+    return (
+      <CKEditor
+        editor={ClassicEditor}
+        onInit={(Editor) => {}}
+        onChange={HandleCkEditorState}
+        data="<p> References Section</p>"
+      />
+    );
+  };
+  const [state, setState] = useState({ content_references: "" });
+
+  const { content } = state;
+
+  const HandleCkEditorState = (event, editor) => {
+    const data = editor.getData();
+    setState({ content_references: data });
+  };
+
+  console.log(state, `here is State =>>>>>>>>>`);
+
+  const [inputList, setInputList] = useState([]);
+  const [editorList, setEditorList] = useState([]);
+
+  const onAddBtnClickk = (event) => {
+    setEditorList(editorList.concat(<Editor key={editorList.length} />));
+  };
+
+  const onAddBtnClick = (event) => {
+    setInputList(inputList.concat(<Input key={inputList.length} />));
+  };
+
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
+
   console.log(sidebarRoutes, `lastModified`);
+
   const toast = useToast();
 
   const [color, setColor] = React.useState("");
@@ -255,6 +309,14 @@ const CreateCv = ({ currentUser }) => {
               </LinkOption>
             </Alert>
           )}
+          <div>
+            <button onClick={onAddBtnClick}>Add input</button>
+            {inputList}
+          </div>
+          <div>
+            <button onClick={onAddBtnClickk}>Add editor</button>
+            {editorList}
+          </div>
           <div className="cvName">
             {!loading ? (
               <form onSubmit={handleSubmit(onSubmitLabel)}>
@@ -372,6 +434,16 @@ const CreateCv = ({ currentUser }) => {
                           })}
                         />
                         {errors.section && errors.section.message}
+                        <RadioGroup defaultValue="2">
+                          <Stack spacing={5} direction="row">
+                            <Radio colorScheme="red" value="1">
+                              Radio
+                            </Radio>
+                            <Radio colorScheme="green" value="2">
+                              Radio
+                            </Radio>
+                          </Stack>
+                        </RadioGroup>
                       </ModalBody>
                       <ModalFooter>
                         <Button
@@ -401,6 +473,9 @@ const CreateCv = ({ currentUser }) => {
                 sections in your CV.
               </small>
               <br />
+              {/*    <button onClick={() => Contacts()}>
+                tested
+              </button>*/}
               <small>
                 * If you leave the fields in a section empty, the section will
                 not appear in your CV.

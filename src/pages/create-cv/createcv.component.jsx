@@ -54,7 +54,7 @@ import { Button } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
-
+import CheckBox from "./checkbox";
 import { Radio, RadioGroup, Stack } from "@chakra-ui/core";
 const CreateCv = ({ currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
@@ -77,10 +77,9 @@ const CreateCv = ({ currentUser }) => {
     });
   
   */
-  const IInput = () => {
+  const InpuT = () => {
     return (
       <div>
-        {" "}
         <input placeholder="Your input here" />
       </div>
     );
@@ -96,7 +95,8 @@ const CreateCv = ({ currentUser }) => {
       />
     );
   };
-  const [state, setState] = useState({ content_references: "" });
+
+  const [state, setState] = useState({ content_new: "" });
 
   const { content } = state;
 
@@ -108,6 +108,7 @@ const CreateCv = ({ currentUser }) => {
   console.log(state, `here is State =>>>>>>>>>`);
 
   const [inputList, setInputList] = useState([]);
+
   const [editorList, setEditorList] = useState([]);
 
   const onAddBtnClickk = (event) => {
@@ -115,7 +116,7 @@ const CreateCv = ({ currentUser }) => {
   };
 
   const onAddBtnClick = (event) => {
-    setInputList(inputList.concat(<IInput key={inputList.length} />));
+    setInputList(inputList.concat(<InpuT key={inputList.length} />));
   };
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
@@ -140,7 +141,7 @@ const CreateCv = ({ currentUser }) => {
 
   const { id } = useParams();
 
-  const { handleSubmit, register, getValues, errors } = useForm();
+  const { handleSubmit, register, getValues, errors, data } = useForm();
 
   const value = getValues();
 
@@ -164,11 +165,11 @@ const CreateCv = ({ currentUser }) => {
     setSectionData({ ...sectionData, [name]: value });
   };
 
-  const onSubmit = async (value) => {
+  const onSubmit = async (value, data) => {
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${section}`
     );
-
+    console.log(data, `value is here .......x`);
     let dataToBeSaved = {
       sectionName: {
         section: sectionData.section || "",
@@ -300,6 +301,12 @@ const CreateCv = ({ currentUser }) => {
     }
     FetchData();
   }, [array, currentUser]);
+
+  const [turnOf, setTurnOf] = useState("disabled='disabled'");
+
+  const handleChangeCheckBox = async (isChecked) => {
+    setTurnOf(isChecked);
+  };
   return (
     <Fragment>
       <NavGuest />
@@ -441,32 +448,44 @@ const CreateCv = ({ currentUser }) => {
                         />
 
                         {errors.section && errors.section.message}
-                        <div>
+                        <CheckBox
+                          refVal={register({ required: true })}
+                          name="role"
+                          labelText=""
+                          id="checkbox-1"
+                          value={true}
+                          onChange={handleChangeCheckBox}
+                          options={{
+                            value: "agree condition",
+                            label: " Agree and understand",
+                          }}
+                        />
+                        <div className="inputradiobox">
                           <InputCheckBox
-                            refVal={register({ required: true })}
+                            ref={register({ required: true })}
                             name="entry"
                             id="checkbox-1"
                             labelText=""
                             value={true}
-                            hint=""
+                            hint="You Will Be Added BasicForm Details"
                             options={{
-                              value: "form",
+                              value: "text",
                               label: "Added Form",
                             }}
-                            //  disabled={turnOf}
+                            disabled={turnOf}
                           />
                           <InputCheckBox
-                            refVal={register({ required: true })}
+                            ref={register({ required: true })}
                             name="entry"
                             id="checkbox-2"
                             labelText=""
                             value={true}
-                            hint=""
+                            hint="You Will Be Added Editor Details"
                             options={{
                               value: "entry",
                               label: "Added Entry",
                             }}
-                            //  disabled={turnOf}
+                            disabled={turnOf}
                           />
                         </div>
                       </ModalBody>

@@ -86,3 +86,11 @@ th {
   display: block;
   color: red;
 }
+.inputradiobox {
+  margin: 10px;
+  padding-top: 10px;
+}
+.m-l-lg {
+  color: plum;
+  padding: 5px;
+}

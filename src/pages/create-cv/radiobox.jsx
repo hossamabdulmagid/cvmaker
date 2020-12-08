@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import generateRandom from "../../lib/random";
 import "./styles.scss";
 const InputCheckBox = ({
-  refVal,
+  ref,
   name,
   labelText = null,
   errors = {},
@@ -31,7 +31,7 @@ const InputCheckBox = ({
               value={options.value}
               checked={isChecked}
               onChange={handleChange}
-              ref={refVal}
+              ref={ref}
               id={`${htmlId}checkbox-1`}
             />
             <div className="state p-info-o">

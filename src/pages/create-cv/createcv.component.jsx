@@ -164,8 +164,13 @@ const CreateCv = ({ currentUser }) => {
     const { name, value } = event.target;
     setSectionData({ ...sectionData, [name]: value });
   };
+  const [turnOf, setTurnOf] = useState("disabled='disabled'");
 
-  const onSubmit = async (value, data) => {
+  const handleChangeCheckBox = async (isChecked) => {
+    setTurnOf(isChecked);
+  };
+
+  const onSubmit = async (value, isChecked) => {
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${section}`
     );
@@ -193,6 +198,7 @@ const CreateCv = ({ currentUser }) => {
 
     setTimeout(() => {
       onClose();
+      setTurnOf(isChecked);
     }, 500);
 
     toast({
@@ -302,11 +308,6 @@ const CreateCv = ({ currentUser }) => {
     FetchData();
   }, [array, currentUser]);
 
-  const [turnOf, setTurnOf] = useState("disabled='disabled'");
-
-  const handleChangeCheckBox = async (isChecked) => {
-    setTurnOf(isChecked);
-  };
   return (
     <Fragment>
       <NavGuest />
@@ -452,14 +453,22 @@ const CreateCv = ({ currentUser }) => {
                           refVal={register({ required: true })}
                           name="role"
                           labelText=""
-                          id="checkbox-1"
+                          id="checkbox-0"
                           value={true}
                           onChange={handleChangeCheckBox}
                           options={{
                             value: "agree condition",
                             label: " Agree and understand",
                           }}
+                          required
                         />
+                        <div className="col-12">
+                          {errors && errors.role && (
+                            <label className="error">
+                              {errors.role.message || "role is required"}
+                            </label>
+                          )}
+                        </div>
                         <div className="inputradiobox">
                           <InputCheckBox
                             ref={register({ required: true })}
@@ -479,7 +488,7 @@ const CreateCv = ({ currentUser }) => {
                             name="entry"
                             id="checkbox-2"
                             labelText=""
-                            value={true}
+                            value={false}
                             hint="You Will Be Added Editor Details"
                             options={{
                               value: "entry",
@@ -494,12 +503,10 @@ const CreateCv = ({ currentUser }) => {
                           variantColor="blue"
                           mr={3}
                           type="submit"
-                          className={`buttonForSaveNewSection ${
-                            loading ? "disabled" : ""
-                          }`}
+                          className="buttonForSaveNewSection"
                           onOpen
                         >
-                          {loading ? <Spinner /> : "Save"}
+                          Save
                         </Button>
                         <Button
                           onClick={onClose}

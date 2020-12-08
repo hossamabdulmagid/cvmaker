@@ -33,6 +33,7 @@ import References from "./references/references.component";
 import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
 import { firestore } from "../../firebase/firebase.utils";
+import InputCheckBox from "./radiobox";
 import { useParams, useHistory } from "react-router-dom";
 import {
   Modal,
@@ -76,8 +77,13 @@ const CreateCv = ({ currentUser }) => {
     });
   
   */
-  const Input = () => {
-    return <input placeholder="Your input here" />;
+  const IInput = () => {
+    return (
+      <div>
+        {" "}
+        <input placeholder="Your input here" />
+      </div>
+    );
   };
 
   const Editor = () => {
@@ -86,7 +92,7 @@ const CreateCv = ({ currentUser }) => {
         editor={ClassicEditor}
         onInit={(Editor) => {}}
         onChange={HandleCkEditorState}
-        data="<p> References Section</p>"
+        data="<p> new Section</p>"
       />
     );
   };
@@ -96,7 +102,7 @@ const CreateCv = ({ currentUser }) => {
 
   const HandleCkEditorState = (event, editor) => {
     const data = editor.getData();
-    setState({ content_references: data });
+    setState({ content_new: data });
   };
 
   console.log(state, `here is State =>>>>>>>>>`);
@@ -109,7 +115,7 @@ const CreateCv = ({ currentUser }) => {
   };
 
   const onAddBtnClick = (event) => {
-    setInputList(inputList.concat(<Input key={inputList.length} />));
+    setInputList(inputList.concat(<IInput key={inputList.length} />));
   };
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
@@ -423,27 +429,46 @@ const CreateCv = ({ currentUser }) => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <ModalBody pb={6}>
                         <FormLabel>Section name</FormLabel>
+
                         <Input
                           placeholder="SectionName"
                           type="text"
                           name="section"
-                          // value={sectionData.section}
                           onChange={handleChangeSection}
                           ref={register({
                             required: "this content is required",
                           })}
                         />
+
                         {errors.section && errors.section.message}
-                        <RadioGroup defaultValue="2">
-                          <Stack spacing={5} direction="row">
-                            <Radio colorScheme="red" value="1">
-                              Radio
-                            </Radio>
-                            <Radio colorScheme="green" value="2">
-                              Radio
-                            </Radio>
-                          </Stack>
-                        </RadioGroup>
+                        <div>
+                          <InputCheckBox
+                            refVal={register({ required: true })}
+                            name="entry"
+                            id="checkbox-1"
+                            labelText=""
+                            value={true}
+                            hint=""
+                            options={{
+                              value: "form",
+                              label: "Added Form",
+                            }}
+                            //  disabled={turnOf}
+                          />
+                          <InputCheckBox
+                            refVal={register({ required: true })}
+                            name="entry"
+                            id="checkbox-2"
+                            labelText=""
+                            value={true}
+                            hint=""
+                            options={{
+                              value: "entry",
+                              label: "Added Entry",
+                            }}
+                            //  disabled={turnOf}
+                          />
+                        </div>
                       </ModalBody>
                       <ModalFooter>
                         <Button

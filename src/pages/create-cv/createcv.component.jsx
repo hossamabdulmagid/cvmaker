@@ -86,7 +86,30 @@ const CreateCv = ({ currentUser }) => {
       setState({ ...state, [name]: value });
     };
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+      const SecRef = firestore.doc(
+        `users/${currentUser.id}/cvs/${id}/data/${title}`
+      );
+      let dataToBeSaved = {
+        title: state.title || "",
+        name: state.name || "",
+        start: state.start || "",
+        end: state.end || "",
+        description: state.description || "",
+      };
+
+      await SecRef.set(dataToBeSaved);
+
+      sidebarRoutes.push({
+        section: sectionData.section,
+        type: sectionData.type,
+        lastModified: new Date(),
+      });
+      array.push({
+        section: sectionData.section,
+        type: sectionData.type,
+        lastModified: new Date(),
+      });
       console.log(data);
       toast({
         title: "Section Updated.",
@@ -251,14 +274,11 @@ const CreateCv = ({ currentUser }) => {
   const [sectionData, setSectionData] = useState({
     sectionName: {
       section: "",
-      type: null,
+      type: "",
       lastModified: new Date(),
     },
   });
-  console.log(
-    sectionData.sectionName.type,
-    `sectionDatasectionDatasectionData`
-  );
+
   const { section, type } = sectionData;
 
   const handleChange = (event) => {
@@ -397,6 +417,8 @@ const CreateCv = ({ currentUser }) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           console.log(doc.data(), `############Data`);
+          const data = doc.data();
+          console.log(data.sectionName, `ZZZXXXCCC`);
           console.log(doc.id, "@@@@@@@@@@@@@id");
           const newData = doc.id;
           console.log(doc.data(), `doc .data(*is here)`);
@@ -404,7 +426,7 @@ const CreateCv = ({ currentUser }) => {
           if (newData) {
             array.unshift({
               section: newData.toString(),
-              type: type,
+              type: sectionData.sectionName.type,
               lastModified,
             });
             console.log(array, `array comming from fb`);
@@ -593,7 +615,7 @@ const CreateCv = ({ currentUser }) => {
                           value={true}
                           onChange={handleChangeCheckBox}
                           options={{
-                            value: "agree condition",
+                            value: "agree Rules",
                             label: " Agree and understand",
                           }}
                         />

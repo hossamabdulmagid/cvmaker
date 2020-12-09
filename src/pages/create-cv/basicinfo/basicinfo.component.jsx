@@ -351,7 +351,7 @@ const BasicInfo = (props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add your section</ModalHeader>
+          <ModalHeader>Edit Section Name</ModalHeader>
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmitSectionLabel)}>
             <ModalBody pb={6}>

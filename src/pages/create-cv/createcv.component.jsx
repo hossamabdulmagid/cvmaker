@@ -14,7 +14,6 @@ import {
   LinkOption,
   LINK,
   ButtonForAddNewSection,
-  Span,
   Aroow,
 } from "./createcv.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";
@@ -33,7 +32,7 @@ import References from "./references/references.component";
 import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
 import { firestore } from "../../firebase/firebase.utils";
-import InputCheckBox from "./radiobox";
+import InputRadioBox from "./radiobox";
 import { useParams, useHistory } from "react-router-dom";
 import {
   Modal,
@@ -54,8 +53,9 @@ import { Button } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
-import CheckBox from "./checkbox";
+import InputCheckBox from "./checkbox";
 import { Radio, RadioGroup, Stack } from "@chakra-ui/core";
+
 const CreateCv = ({ currentUser }) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     { section: "basicinfo", type: "text", lastModified: new Date() },
@@ -66,26 +66,26 @@ const CreateCv = ({ currentUser }) => {
     { section: "references", type: "text", lastModified: new Date() },
   ]);
 
-  /*
-     const Contacts = React.createClass({
-      render() {
-        console.log(`iam runing`);
-        return (
-          <div></div>
-        );
-      }
-    });
-  
-  */
   const InpuT = () => {
     return (
       <div>
-        <input placeholder="Your input here" />
+        <form>
+          <input placeholder="Your input here" />
+          <input placeholder="Your input here" />
+          <input placeholder="Your input here" />
+          <input placeholder="Your input here" />
+        </form>
       </div>
     );
   };
 
   const Editor = () => {
+    const [state, setState] = useState({ content_new: "" });
+    const { content } = state;
+    const HandleCkEditorState = (event, editor) => {
+      const data = editor.getData();
+      setState({ content_new: data });
+    };
     return (
       <CKEditor
         editor={ClassicEditor}
@@ -96,26 +96,15 @@ const CreateCv = ({ currentUser }) => {
     );
   };
 
-  const [state, setState] = useState({ content_new: "" });
-
-  const { content } = state;
-
-  const HandleCkEditorState = (event, editor) => {
-    const data = editor.getData();
-    setState({ content_new: data });
-  };
-
-  console.log(state, `here is State =>>>>>>>>>`);
-
   const [inputList, setInputList] = useState([]);
 
   const [editorList, setEditorList] = useState([]);
 
-  const onAddBtnClickk = (event) => {
+  const onClickaddEditor = (event) => {
     setEditorList(editorList.concat(<Editor key={editorList.length} />));
   };
 
-  const onAddBtnClick = (event) => {
+  const onClickaddText = (event) => {
     setInputList(inputList.concat(<InpuT key={inputList.length} />));
   };
 
@@ -148,7 +137,7 @@ const CreateCv = ({ currentUser }) => {
   const [sectionData, setSectionData] = useState({
     sectionName: {
       section: "",
-      type: "text",
+      type: ["text", "entry"],
       lastModified: new Date(),
     },
   });
@@ -164,6 +153,7 @@ const CreateCv = ({ currentUser }) => {
     const { name, value } = event.target;
     setSectionData({ ...sectionData, [name]: value });
   };
+
   const [turnOf, setTurnOf] = useState("disabled='disabled'");
 
   const handleChangeCheckBox = async (isChecked) => {
@@ -174,11 +164,18 @@ const CreateCv = ({ currentUser }) => {
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${section}`
     );
-    console.log(data, `value is here .......x`);
+    console.log(value, `value is here x.x.x.x.x.x.x.x`);
+
+    if (type === "text") {
+      return <InpuT />;
+    } else if (type === "entry") {
+      return <Editor />;
+    }
+
     let dataToBeSaved = {
       sectionName: {
         section: sectionData.section || "",
-        type: type || "text",
+        type: sectionData.type || "",
         lastModified: new Date(),
       },
     };
@@ -262,7 +259,9 @@ const CreateCv = ({ currentUser }) => {
   }, [currentUser, id]);
 
   const [array, setArray] = useState([]);
+
   const [lastModified, setLastModified] = useState(new Date());
+
   const FetchData = async () => {
     await firestore
       .doc(`users/${currentUser.id}`)
@@ -277,7 +276,7 @@ const CreateCv = ({ currentUser }) => {
           if (newData) {
             array.unshift({
               section: newData.toString(),
-              type: "text",
+              type: ["text", "entry"],
               lastModified,
             });
             console.log(array, `array comming from fb`);
@@ -324,11 +323,11 @@ const CreateCv = ({ currentUser }) => {
             </Alert>
           )}
           <div>
-            <button onClick={onAddBtnClick}>Add input</button>
+            <button onClick={onClickaddText}>Add input</button>
             {inputList}
           </div>
           <div>
-            <button onClick={onAddBtnClickk}>Add editor</button>
+            <button onClick={onClickaddEditor}>Add editor</button>
             {editorList}
           </div>
           <div className="cvName">
@@ -429,6 +428,9 @@ const CreateCv = ({ currentUser }) => {
                   finalFocusRef={finalRef}
                   isOpen={isOpen}
                   onClose={onClose}
+                  blockScrollOnMount={false}
+                  closeOnEsc={true}
+                  allowPinchZoom={false}
                 >
                   <ModalOverlay />
                   <ModalContent>
@@ -437,30 +439,34 @@ const CreateCv = ({ currentUser }) => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <ModalBody pb={6}>
                         <FormLabel>Section name</FormLabel>
-
                         <Input
                           placeholder="SectionName"
                           type="text"
                           name="section"
                           onChange={handleChangeSection}
                           ref={register({
-                            required: "this content is required",
+                            required: true,
                           })}
                         />
-
+                        <div className="col-12">
+                          {errors && errors.section && (
+                            <label className="error">
+                              {errors.section.message || "section is required"}
+                            </label>
+                          )}
+                        </div>
                         {errors.section && errors.section.message}
-                        <CheckBox
+                        <InputCheckBox
                           refVal={register({ required: true })}
                           name="role"
                           labelText=""
-                          id="checkbox-0"
+                          id="checkbox-1"
                           value={true}
                           onChange={handleChangeCheckBox}
                           options={{
                             value: "agree condition",
                             label: " Agree and understand",
                           }}
-                          required
                         />
                         <div className="col-12">
                           {errors && errors.role && (
@@ -470,22 +476,24 @@ const CreateCv = ({ currentUser }) => {
                           )}
                         </div>
                         <div className="inputradiobox">
-                          <InputCheckBox
-                            ref={register({ required: true })}
-                            name="entry"
+                          <InputRadioBox
+                            refVal={register({ required: true })}
+                            name="type"
                             id="checkbox-1"
                             labelText=""
                             value={true}
-                            hint="You Will Be Added BasicForm Details"
+                            hint="You Will Be Added Basicform Details"
                             options={{
                               value: "text",
                               label: "Added Form",
                             }}
                             disabled={turnOf}
+                            required
                           />
-                          <InputCheckBox
-                            ref={register({ required: true })}
-                            name="entry"
+
+                          <InputRadioBox
+                            refVal={register({ required: true })}
+                            name="type"
                             id="checkbox-2"
                             labelText=""
                             value={false}
@@ -495,12 +503,13 @@ const CreateCv = ({ currentUser }) => {
                               label: "Added Entry",
                             }}
                             disabled={turnOf}
+                            required
                           />
                         </div>
                       </ModalBody>
                       <ModalFooter>
                         <Button
-                          variantColor="blue"
+                          variantcolor="blue"
                           mr={3}
                           type="submit"
                           className="buttonForSaveNewSection"
@@ -524,9 +533,6 @@ const CreateCv = ({ currentUser }) => {
                 sections in your CV.
               </small>
               <br />
-              {/*    <button onClick={() => Contacts()}>
-                tested
-              </button>*/}
               <small>
                 * If you leave the fields in a section empty, the section will
                 not appear in your CV.
@@ -551,6 +557,8 @@ const CreateCv = ({ currentUser }) => {
               {activeSection === sidebarRoutes[5].section ? (
                 <References />
               ) : null}
+              {activeSection === "text" ? { inputList } : null}
+              {activeSection === "entry" ? { editorList } : null}
             </div>
           </div>
         </Container>

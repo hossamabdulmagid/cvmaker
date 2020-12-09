@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import generateRandom from "../../lib/random";
 import "./App.scss";
-const CheckBox = ({
+const InputCheckBox = ({
   refVal,
   name,
   labelText = null,
@@ -17,6 +17,7 @@ const CheckBox = ({
   const handleChange = () => {
     let val = !isChecked;
     setIsChecked(val);
+    console.log(val, `hello from val`);
     if (onChange) {
       onChange(val);
     }
@@ -54,4 +55,4 @@ const CheckBox = ({
   );
 };
 
-export default CheckBox;
+export default InputCheckBox;

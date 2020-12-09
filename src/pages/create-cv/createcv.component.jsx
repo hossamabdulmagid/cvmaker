@@ -99,91 +99,93 @@ const CreateCv = ({ currentUser }) => {
     };
 
     return (
-      <div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            ref={register({ required: true })}
-            placeholder="title "
-            name="title"
-            type="text"
-            //  value={title}
-            onChange={HandleChangenewData}
-          />
-          <strong className="col-12">
-            {errors && errors.title && (
-              <label className="error">
-                {errors.title.message || "title is required"}
-              </label>
-            )}
-          </strong>
-          <Input
-            ref={register({ required: true })}
-            placeholder="name"
-            name="name"
-            type="text"
-            // value={name}
-            onChange={HandleChangenewData}
-          />
-          <strong className="col-12">
-            {errors && errors.name && (
-              <label className="error">
-                {errors.name.message || "name is required"}
-              </label>
-            )}
-          </strong>
-          <Input
-            ref={register({ required: true })}
-            placeholder="start"
-            name="start"
-            type="text"
-            //  value={start}
-            onChange={HandleChangenewData}
-          />
-          <strong className="col-12">
-            {errors && errors.start && (
-              <label className="error">
-                {errors.start.message || "start is required"}
-              </label>
-            )}
-          </strong>
-          <Input
-            ref={register({ required: true })}
-            placeholder="end"
-            name="end"
-            type="text"
-            //   value={end}
-            onChange={HandleChangenewData}
-          />
-          <strong className="col-12">
-            {errors && errors.end && (
-              <label className="error">
-                {errors.end.message || "end is required"}
-              </label>
-            )}
-          </strong>
-          <Textarea
-            ref={register({ required: true })}
-            placeholder="description  here"
-            type="textarea"
-            name="description"
-            // value={description}
-            onChange={HandleChangenewData}
-          />
-          <strong className="col-12">
-            {errors && errors.description && (
-              <label className="error">
-                {errors.description.message || "description is required"}
-              </label>
-            )}
-          </strong>
-          <div className="someThing">
-            <Button type="submit" className="buttonSavenewFrom">
-              {" "}
-              Save{" "}
-            </Button>
-          </div>
-        </form>
-      </div>
+      <>
+        <div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              ref={register({ required: true })}
+              placeholder="title "
+              name="title"
+              type="text"
+              //  value={title}
+              onChange={HandleChangenewData}
+            />
+            <strong className="col-12">
+              {errors && errors.title && (
+                <label className="error">
+                  {errors.title.message || "title is required"}
+                </label>
+              )}
+            </strong>
+            <Input
+              ref={register({ required: true })}
+              placeholder="name"
+              name="name"
+              type="text"
+              // value={name}
+              onChange={HandleChangenewData}
+            />
+            <strong className="col-12">
+              {errors && errors.name && (
+                <label className="error">
+                  {errors.name.message || "name is required"}
+                </label>
+              )}
+            </strong>
+            <Input
+              ref={register({ required: true })}
+              placeholder="start"
+              name="start"
+              type="text"
+              //  value={start}
+              onChange={HandleChangenewData}
+            />
+            <strong className="col-12">
+              {errors && errors.start && (
+                <label className="error">
+                  {errors.start.message || "start is required"}
+                </label>
+              )}
+            </strong>
+            <Input
+              ref={register({ required: true })}
+              placeholder="end"
+              name="end"
+              type="text"
+              //   value={end}
+              onChange={HandleChangenewData}
+            />
+            <strong className="col-12">
+              {errors && errors.end && (
+                <label className="error">
+                  {errors.end.message || "end is required"}
+                </label>
+              )}
+            </strong>
+            <Textarea
+              ref={register({ required: true })}
+              placeholder="description  here"
+              type="textarea"
+              name="description"
+              // value={description}
+              onChange={HandleChangenewData}
+            />
+            <strong className="col-12">
+              {errors && errors.description && (
+                <label className="error">
+                  {errors.description.message || "description is required"}
+                </label>
+              )}
+            </strong>
+            <div className="someThing">
+              <Button type="submit" className="buttonSavenewFrom">
+                {" "}
+                Save{" "}
+              </Button>
+            </div>
+          </form>
+        </div>
+      </>
     );
   };
 
@@ -197,12 +199,14 @@ const CreateCv = ({ currentUser }) => {
       console.log(state, `here is State =>>>>>>>>>`);
     };
     return (
-      <CKEditor
-        editor={ClassicEditor}
-        onInit={(Editor) => {}}
-        onChange={HandleCkEditorState}
-        data="<p className='zz'> new Section</p>"
-      />
+      <>
+        <CKEditor
+          editor={ClassicEditor}
+          onInit={(Editor) => {}}
+          onChange={HandleCkEditorState}
+          data="<p className='zz'> new Section</p>"
+        />
+      </>
     );
   };
 
@@ -247,7 +251,7 @@ const CreateCv = ({ currentUser }) => {
   const [sectionData, setSectionData] = useState({
     sectionName: {
       section: "",
-      type: ["text", "entry"],
+      type: null,
       lastModified: new Date(),
     },
   });
@@ -279,10 +283,20 @@ const CreateCv = ({ currentUser }) => {
     );
     console.log(value, `value is here x.x.x.x.x.x.x.x`);
 
-    if (sectionData.type === "text") {
-      return <InpuT />;
-    } else if (sectionData.type === "entry") {
-      return <Editor />;
+    if (sectionData.sectionName.type === "text") {
+      console.log(
+        sectionData.section.type,
+        `sectionData.section.type condition`
+      );
+      setActiveSection(sectionData.section.type);
+
+      //  return <InpuT />;
+    } else if (sectionData.sectionName.type === "entry") {
+      setActiveSection("entry");
+
+      // return <Editor />;
+    } else {
+      setActiveSection("text");
     }
 
     let dataToBeSaved = {
@@ -390,7 +404,7 @@ const CreateCv = ({ currentUser }) => {
           if (newData) {
             array.unshift({
               section: newData.toString(),
-              type: doc.data().sectionName.type,
+              type: type,
               lastModified,
             });
             console.log(array, `array comming from fb`);
@@ -412,6 +426,7 @@ const CreateCv = ({ currentUser }) => {
         console.log(error, `there is was an error`);
       });
   };
+
   const [flag, setFlag] = useState(true);
 
   useEffect(() => {
@@ -420,7 +435,6 @@ const CreateCv = ({ currentUser }) => {
     }
     FetchData();
   }, [array, currentUser]);
-
   return (
     <Fragment>
       <NavGuest />
@@ -672,12 +686,11 @@ const CreateCv = ({ currentUser }) => {
               {activeSection === sidebarRoutes[5].section ? (
                 <References />
               ) : null}
-              {activeSection === "text" ||
-              sectionData.sectionName.type === "text" ? (
-                <InpuT />
-              ) : null}{" "}
-              {/* inputList.map((inx,key)=>(<div key={key}>  {idx} </div))*/}
+              {activeSection === "text" ? <InpuT /> : null}
+
               {activeSection === "entry" ? <Editor /> : null}
+
+              {/* inputList.map((inx,key)=>(<div key={key}>  {idx} </div))*/}
             </div>
           </div>
         </Container>

@@ -363,11 +363,15 @@ const BasicInfo = (props) => {
                 //value={sectionlabel}
                 onChange={handleChangeSectionName}
                 ref={register({
-                  required: "*input is required",
+                  required: true,
                 })}
               />
-              <small className="errorSectionName">
-                {errors.section && errors.section.message}
+              <small>
+                {errors && errors.sectionlabel && (
+                  <label className="errors">
+                    {errors.sectionlabel.message || "SectionName is required"}
+                  </label>
+                )}
               </small>
             </ModalBody>
             <ModalFooter>

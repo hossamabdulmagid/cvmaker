@@ -64,6 +64,11 @@ button {
 
 .error {
   color: red;
+  float: right;
+  display: inline-flex;
+}
+.errors {
+  color: red;
   float: left;
   display: inline-flex;
 }
@@ -96,6 +101,17 @@ th {
   padding: 5px;
 }
 .buttonSavenewFrom {
-  margin-top: 15px;
   float: right;
+}
+
+.someThing {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.xzx {
+  height: 500px;
+}
+editor {
+  height: 250px;
 }

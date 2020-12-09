@@ -48,6 +48,7 @@ import {
   useToast,
   Spinner,
   Progress,
+  Textarea,
 } from "@chakra-ui/core";
 import { Button } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
@@ -105,80 +106,82 @@ const CreateCv = ({ currentUser }) => {
             placeholder="title "
             name="title"
             type="text"
-            value={title}
+            //  value={title}
             onChange={HandleChangenewData}
           />
-          <small className="col-12">
+          <strong className="col-12">
             {errors && errors.title && (
               <label className="error">
                 {errors.title.message || "title is required"}
               </label>
             )}
-          </small>
+          </strong>
           <Input
             ref={register({ required: true })}
             placeholder="name"
             name="name"
             type="text"
-            value={name}
+            // value={name}
             onChange={HandleChangenewData}
           />
-          <small className="col-12">
+          <strong className="col-12">
             {errors && errors.name && (
               <label className="error">
                 {errors.name.message || "name is required"}
               </label>
             )}
-          </small>
+          </strong>
           <Input
             ref={register({ required: true })}
             placeholder="start"
             name="start"
             type="text"
-            value={start}
+            //  value={start}
             onChange={HandleChangenewData}
           />
-          <small className="col-12">
+          <strong className="col-12">
             {errors && errors.start && (
               <label className="error">
                 {errors.start.message || "start is required"}
               </label>
             )}
-          </small>
+          </strong>
           <Input
             ref={register({ required: true })}
             placeholder="end"
             name="end"
             type="text"
-            value={end}
+            //   value={end}
             onChange={HandleChangenewData}
           />
-          <small className="col-12">
+          <strong className="col-12">
             {errors && errors.end && (
               <label className="error">
                 {errors.end.message || "end is required"}
               </label>
             )}
-          </small>
-          <Input
+          </strong>
+          <Textarea
             ref={register({ required: true })}
             placeholder="description  here"
             type="textarea"
             name="description"
-            value={description}
+            // value={description}
             onChange={HandleChangenewData}
           />
-          <small className="col-12">
+          <strong className="col-12">
             {errors && errors.description && (
               <label className="error">
                 {errors.description.message || "description is required"}
               </label>
             )}
-          </small>
-          <Button type="submit" className="buttonSavenewFrom">
-            {" "}
-            Save{" "}
-          </Button>
+          </strong>
+          <div className="someThing">
+            <Button type="submit" className="buttonSavenewFrom">
+              {" "}
+              Save{" "}
+            </Button>
+          </div>
         </form>
       </div>
     );
@@ -187,16 +190,18 @@ const CreateCv = ({ currentUser }) => {
   const Editor = () => {
     const [state, setState] = useState({ content_new: "" });
     const { content } = state;
+
     const HandleCkEditorState = (event, editor) => {
       const data = editor.getData();
       setState({ content_new: data });
+      console.log(state, `here is State =>>>>>>>>>`);
     };
     return (
       <CKEditor
         editor={ClassicEditor}
         onInit={(Editor) => {}}
         onChange={HandleCkEditorState}
-        data="<p> new Section</p>"
+        data="<p className='zz'> new Section</p>"
       />
     );
   };
@@ -246,7 +251,10 @@ const CreateCv = ({ currentUser }) => {
       lastModified: new Date(),
     },
   });
-
+  console.log(
+    sectionData.sectionName.type,
+    `sectionDatasectionDatasectionData`
+  );
   const { section, type } = sectionData;
 
   const handleChange = (event) => {
@@ -271,9 +279,9 @@ const CreateCv = ({ currentUser }) => {
     );
     console.log(value, `value is here x.x.x.x.x.x.x.x`);
 
-    if (type === "text") {
+    if (sectionData.type === "text") {
       return <InpuT />;
-    } else if (type === "entry") {
+    } else if (sectionData.type === "entry") {
       return <Editor />;
     }
 
@@ -558,7 +566,7 @@ const CreateCv = ({ currentUser }) => {
                         <div className="col-12">
                           {errors && errors.section && (
                             <label className="error">
-                              {errors.section.message || "section is required"}
+                              {errors.section.message || "Section is required"}
                             </label>
                           )}
                         </div>
@@ -578,7 +586,7 @@ const CreateCv = ({ currentUser }) => {
                         <div className="col-12">
                           {errors && errors.role && (
                             <label className="error">
-                              {errors.role.message || "role is required"}
+                              {errors.role.message || "Role is required"}
                             </label>
                           )}
                         </div>
@@ -664,7 +672,10 @@ const CreateCv = ({ currentUser }) => {
               {activeSection === sidebarRoutes[5].section ? (
                 <References />
               ) : null}
-              {activeSection === "text" ? <InpuT /> : null}{" "}
+              {activeSection === "text" ||
+              sectionData.sectionName.type === "text" ? (
+                <InpuT />
+              ) : null}{" "}
               {/* inputList.map((inx,key)=>(<div key={key}>  {idx} </div))*/}
               {activeSection === "entry" ? <Editor /> : null}
             </div>

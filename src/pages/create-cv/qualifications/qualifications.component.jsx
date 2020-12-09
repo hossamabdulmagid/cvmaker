@@ -18,12 +18,15 @@ const Qualifications = () => {
   return (
     <div className="container">
       <Title> Qualifications </Title>
-      <CKEditor
-        editor={ClassicEditor}
-        onInit={(editor) => {}}
-        onChange={HandleCkEditorState}
-        data="<p>Qualifications Section</p>"
-      />
+      <div className="">
+        <CKEditor
+          className="zz"
+          editor={ClassicEditor}
+          onInit={(editor) => {}}
+          onChange={HandleCkEditorState}
+          data="Qualifications Section"
+        />
+      </div>
     </div>
   );
 };

@@ -8,8 +8,8 @@ export const COL = styled.div`
   padding-left: 50px;
   padding-right: 20px;
   padding-top: 45px;
-  width:auto;
-  height:auto;
+  width: auto;
+  height: auto;
 `;
 
 export const LINK = styled(Link)`
@@ -22,7 +22,7 @@ export const LINK = styled(Link)`
 `;
 
 export const IMG = styled.img`
-  margin: px;
+  margin: 1px;
   padding: px;
   margin-left: 26%;
   width: 28px;
@@ -30,7 +30,8 @@ export const IMG = styled.img`
   display: inline;
 `;
 export const RapperText = styled.div`
-  margin: 1px;
+  margin-top: 10px;
+  padding-top: 45px;
   padding-left: 17px;
   margin-left: 22px;
   margin-top: 0;
@@ -51,7 +52,7 @@ export const H6 = styled.h6`
 export const Container = styled.div`
   height: auto;
   margin-top: 20px;
-  display:block;
+  display: block;
   text-align: center;
 `;
 

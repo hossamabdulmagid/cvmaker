@@ -67,13 +67,118 @@ const CreateCv = ({ currentUser }) => {
   ]);
 
   const InpuT = () => {
+    const { handleSubmit, register, getValues, errors, data } = useForm();
+    const value = getValues();
+
+    const [state, setState] = useState({
+      title: "",
+      name: "",
+      start: "",
+      end: "",
+      description: "",
+    });
+
+    const { title, name, start, end, description } = state;
+
+    const HandleChangenewData = (event) => {
+      const { name, value } = event.target;
+      setState({ ...state, [name]: value });
+    };
+
+    const onSubmit = (data) => {
+      console.log(data);
+      toast({
+        title: "Section Updated.",
+        description: `Your new Section  name is : ${title}`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    };
+
     return (
       <div>
-        <form>
-          <input placeholder="Your input here" />
-          <input placeholder="Your input here" />
-          <input placeholder="Your input here" />
-          <input placeholder="Your input here" />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            ref={register({ required: true })}
+            placeholder="title "
+            name="title"
+            type="text"
+            value={title}
+            onChange={HandleChangenewData}
+          />
+          <small className="col-12">
+            {errors && errors.title && (
+              <label className="error">
+                {errors.title.message || "title is required"}
+              </label>
+            )}
+          </small>
+          <Input
+            ref={register({ required: true })}
+            placeholder="name"
+            name="name"
+            type="text"
+            value={name}
+            onChange={HandleChangenewData}
+          />
+          <small className="col-12">
+            {errors && errors.name && (
+              <label className="error">
+                {errors.name.message || "name is required"}
+              </label>
+            )}
+          </small>
+          <Input
+            ref={register({ required: true })}
+            placeholder="start"
+            name="start"
+            type="text"
+            value={start}
+            onChange={HandleChangenewData}
+          />
+          <small className="col-12">
+            {errors && errors.start && (
+              <label className="error">
+                {errors.start.message || "start is required"}
+              </label>
+            )}
+          </small>
+          <Input
+            ref={register({ required: true })}
+            placeholder="end"
+            name="end"
+            type="text"
+            value={end}
+            onChange={HandleChangenewData}
+          />
+          <small className="col-12">
+            {errors && errors.end && (
+              <label className="error">
+                {errors.end.message || "end is required"}
+              </label>
+            )}
+          </small>
+          <Input
+            ref={register({ required: true })}
+            placeholder="description  here"
+            type="textarea"
+            name="description"
+            value={description}
+            onChange={HandleChangenewData}
+          />
+          <small className="col-12">
+            {errors && errors.description && (
+              <label className="error">
+                {errors.description.message || "description is required"}
+              </label>
+            )}
+          </small>
+          <Button type="submit" className="buttonSavenewFrom">
+            {" "}
+            Save{" "}
+          </Button>
         </form>
       </div>
     );
@@ -272,11 +377,12 @@ const CreateCv = ({ currentUser }) => {
           console.log(doc.data(), `############Data`);
           console.log(doc.id, "@@@@@@@@@@@@@id");
           const newData = doc.id;
+          console.log(doc.data(), `doc .data(*is here)`);
           setLastModified(lastModified);
           if (newData) {
             array.unshift({
               section: newData.toString(),
-              type: ["text", "entry"],
+              type: doc.data().sectionName.type,
               lastModified,
             });
             console.log(array, `array comming from fb`);
@@ -322,14 +428,14 @@ const CreateCv = ({ currentUser }) => {
               </LinkOption>
             </Alert>
           )}
-          <div>
+          {/*<div>
             <button onClick={onClickaddText}>Add input</button>
             {inputList}
           </div>
           <div>
             <button onClick={onClickaddEditor}>Add editor</button>
             {editorList}
-          </div>
+          </div>*/}
           <div className="cvName">
             {!loading ? (
               <form onSubmit={handleSubmit(onSubmitLabel)}>
@@ -430,6 +536,7 @@ const CreateCv = ({ currentUser }) => {
                   onClose={onClose}
                   blockScrollOnMount={false}
                   closeOnEsc={true}
+                  autoFocus={true}
                   allowPinchZoom={false}
                 >
                   <ModalOverlay />
@@ -557,8 +664,9 @@ const CreateCv = ({ currentUser }) => {
               {activeSection === sidebarRoutes[5].section ? (
                 <References />
               ) : null}
-              {activeSection === "text" ? { inputList } : null}
-              {activeSection === "entry" ? { editorList } : null}
+              {activeSection === "text" ? <InpuT /> : null}{" "}
+              {/* inputList.map((inx,key)=>(<div key={key}>  {idx} </div))*/}
+              {activeSection === "entry" ? <Editor /> : null}
             </div>
           </div>
         </Container>

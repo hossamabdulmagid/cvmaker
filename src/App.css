@@ -64,7 +64,8 @@ button {
 
 .error {
   color: red;
-  float: right;
+  float: left;
+  display: inline-flex;
 }
 .basicinfo {
   padding-bottom: 20px;
@@ -93,4 +94,8 @@ th {
 .m-l-lg {
   color: plum;
   padding: 5px;
+}
+.buttonSavenewFrom {
+  margin-top: 15px;
+  float: right;
 }

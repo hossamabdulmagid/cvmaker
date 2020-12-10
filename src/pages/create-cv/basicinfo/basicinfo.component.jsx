@@ -369,9 +369,9 @@ const BasicInfo = (props) => {
                   required: true,
                 })}
               />
-              <small className="errorSectionName">
+              <small className="">
                 {errors && errors.sectionlabel && (
-                  <label className="error">
+                  <label className="errorForEditSectionName">
                     {errors.sectionlabel.message || "SectionName is required"}
                   </label>
                 )}

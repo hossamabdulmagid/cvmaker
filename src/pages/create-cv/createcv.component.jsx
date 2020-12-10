@@ -101,7 +101,6 @@ const CreateCv = ({ currentUser }) => {
       };
 
       await SecRef.set(dataToBeSaved);
-
       sidebarRoutes.push({
         section: sectionData.section,
         type: sectionData.type,
@@ -326,6 +325,8 @@ const CreateCv = ({ currentUser }) => {
       type: value.type,
       lastModified: new Date(),
     });
+    setActiveSection(value.type);
+
     console.log(array, `array after Submitting`);
     setTimeout(() => {
       onClose();

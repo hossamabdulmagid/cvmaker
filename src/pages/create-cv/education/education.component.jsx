@@ -176,7 +176,9 @@ const Education = (props) => {
                 ref={register({ required: "this Content is Required" })}
                 placeholder="collage name"
               />
-              {errors.collagename && errors.collagename.message}
+              <small className="error">
+                {errors.collagename && errors.collagename.message}
+              </small>
               <br />
               <FormLabel>Start Year </FormLabel>
               <Input
@@ -186,8 +188,12 @@ const Education = (props) => {
                 type="date"
                 ref={register({ required: "this Content is Required" })}
               />
-              {errors.startgraduationyear && errors.startgraduationyear.message}
+              <small className="error">
+                {errors.startgraduationyear &&
+                  errors.startgraduationyear.message}
+              </small>
               <br />
+
               <FormLabel> End Year </FormLabel>
               <Input
                 name="endgraduationyear"
@@ -196,11 +202,12 @@ const Education = (props) => {
                 type="date"
                 ref={register({ required: "this Content is Required" })}
               />
-
-              {errors.endgraduationyear && errors.endgraduationyear.message}
+              <small className="error">
+                {errors.endgraduationyear && errors.endgraduationyear.message}
+              </small>
               <br />
-              <FormLabel> Education Majoring </FormLabel>
 
+              <FormLabel> Education Majoring </FormLabel>
               <Input
                 name="eduactionmajor"
                 value={eduactionmajor}
@@ -208,8 +215,10 @@ const Education = (props) => {
                 type="text"
                 ref={register({ required: "this Content is Required" })}
               />
-
-              {errors.eduactionmajor && errors.eduactionmajor.message}
+              <small className="error">
+                {errors.eduactionmajor && errors.eduactionmajor.message}
+              </small>
+              <br />
             </ModalBody>
 
             <ModalFooter>

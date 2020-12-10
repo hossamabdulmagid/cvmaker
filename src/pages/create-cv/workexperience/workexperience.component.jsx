@@ -184,7 +184,9 @@ const Workexperience = (props) => {
                 onChange={handleChange}
                 placeholder="CompanyName"
               />
-              {errors.companyname && errors.companyname.message}
+              <small className="error">
+                {errors.companyname && errors.companyname.message}
+              </small>
               <br />
               <FormLabel> Start Year</FormLabel>
               <Input
@@ -195,7 +197,9 @@ const Workexperience = (props) => {
                 placeholder="Graduation Year"
                 type="date"
               />
-              {errors.startwork && errors.startwork.message}
+              <small className="error">
+                {errors.startwork && errors.startwork.message}
+              </small>
               <br />
               <FormLabel> End Year</FormLabel>
               <Input
@@ -206,7 +210,9 @@ const Workexperience = (props) => {
                 value={endwork}
                 type="date"
               />
-              {errors.endwork && errors.endwork.message}
+              <small className="error">
+                {errors.endwork && errors.endwork.message}
+              </small>
               <br />
               <FormLabel> Postion</FormLabel>
               <Input
@@ -217,7 +223,9 @@ const Workexperience = (props) => {
                 value={position}
                 type="text"
               />
-              {errors.position && errors.position.message}
+              <small className="error">
+                {errors.position && errors.position.message}
+              </small>
               <br />
             </ModalBody>
 

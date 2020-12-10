@@ -123,7 +123,7 @@ const CreateCv = ({ currentUser }) => {
     };
 
     return (
-      <>
+      <Fragment>
         <div className="container">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
@@ -208,7 +208,7 @@ const CreateCv = ({ currentUser }) => {
             </div>
           </form>
         </div>
-      </>
+      </Fragment>
     );
   };
 
@@ -222,28 +222,20 @@ const CreateCv = ({ currentUser }) => {
       console.log(state, `here is State =>>>>>>>>>`);
     };
     return (
-      <>
+      <Fragment>
         <CKEditor
           editor={ClassicEditor}
           onInit={(Editor) => {}}
           onChange={HandleCkEditorState}
           data="<p className='zz'> new Section</p>"
         />
-      </>
+      </Fragment>
     );
   };
 
   const [inputList, setInputList] = useState([]);
 
   const [editorList, setEditorList] = useState([]);
-
-  const onClickaddEditor = (event) => {
-    setEditorList(editorList.concat(<Editor key={editorList.length} />));
-  };
-
-  const onClickaddText = (event) => {
-    setInputList(inputList.concat(<InpuT key={inputList.length} />));
-  };
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
 
@@ -303,8 +295,6 @@ const CreateCv = ({ currentUser }) => {
     );
     console.log(value, `value is here x.x.x.x.x.x.x.x`);
 
-    //setActiveSection(sectionData.section.type);
-
     let dataToBeSaved = {
       sectionName: {
         section: value.section || "",
@@ -331,7 +321,7 @@ const CreateCv = ({ currentUser }) => {
     setTimeout(() => {
       onClose();
       setTurnOf(isChecked);
-    }, 500);
+    }, 300);
 
     toast({
       title: "Section created.",
@@ -406,7 +396,6 @@ const CreateCv = ({ currentUser }) => {
         querySnapshot.forEach(function (doc) {
           console.log(doc.data(), `############Data`);
           const data = doc.data();
-          //  console.log(value, `Value name`)
           console.log(data, `*******`);
           console.log(doc.id, "@@@@@@@@@@@@@id");
           const newData = doc.id;

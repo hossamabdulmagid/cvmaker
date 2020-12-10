@@ -115,9 +115,11 @@ th {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.xzx {
-  height: 500px;
+
+.ck-editor__editable_inline {
+  min-height: 200px;
+  padding-left: 12px;
 }
-editor {
-  height: 250px;
+p {
+  padding: 4px;
 }

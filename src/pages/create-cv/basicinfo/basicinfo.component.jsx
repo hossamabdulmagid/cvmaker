@@ -52,7 +52,7 @@ const BasicInfo = (props) => {
       webSites: "",
       lastModified: new Date(),
     },
-    type: "text",
+    type: "basicinfo",
   });
 
   const [loading, setLoading] = useState(true);
@@ -77,7 +77,7 @@ const BasicInfo = (props) => {
         webSites: dataform.webSites || "",
         lastModified: new Date(),
       },
-      type: dataform.type || "text",
+      type: dataform.type || "basicinfo",
     };
     await cvRef.set(dataToBeSaved);
     toast({

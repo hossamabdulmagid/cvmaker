@@ -123,7 +123,7 @@ const CreateCv = ({ currentUser }) => {
 
     return (
       <>
-        <div>
+        <div className="container">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               ref={register({ required: true })}
@@ -202,8 +202,7 @@ const CreateCv = ({ currentUser }) => {
             </strong>
             <div className="someThing">
               <Button type="submit" className="buttonSavenewFrom">
-                {" "}
-                Save{" "}
+                Save
               </Button>
             </div>
           </form>
@@ -459,14 +458,6 @@ const CreateCv = ({ currentUser }) => {
               </LinkOption>
             </Alert>
           )}
-          {/*<div>
-            <button onClick={onClickaddText}>Add input</button>
-            {inputList}
-          </div>
-          <div>
-            <button onClick={onClickaddEditor}>Add editor</button>
-            {editorList}
-          </div>*/}
           <div className="cvName">
             {!loading ? (
               <form onSubmit={handleSubmit(onSubmitLabel)}>
@@ -535,12 +526,12 @@ const CreateCv = ({ currentUser }) => {
                 {!flag
                   ? array.map((singleRouteforSidebar, x) => (
                       <Li
+                        key={x}
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
-                          setActiveSection(singleRouteforSidebar.section);
+                          setActiveSection(singleRouteforSidebar.type);
                         }}
-                        key={x}
                       >
                         <LINK>{singleRouteforSidebar.section}</LINK>
                       </Li>

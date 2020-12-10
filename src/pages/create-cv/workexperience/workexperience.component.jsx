@@ -46,7 +46,7 @@ const Workexperience = (props) => {
       position: "",
       lastModified: new Date(),
     },
-    type: "text",
+    type: "workexperience",
   });
 
   const {
@@ -75,7 +75,7 @@ const Workexperience = (props) => {
         position: position || "",
         lastModified: new Date(),
       },
-      type: "text",
+      type: "workexperience",
     };
 
     await cvRef.set(dataToBeSave);

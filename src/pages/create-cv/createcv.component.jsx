@@ -77,6 +77,7 @@ const CreateCv = ({ currentUser }) => {
       start: "",
       end: "",
       description: "",
+      type: "text",
     });
 
     const { title, name, start, end, description } = state;
@@ -96,6 +97,7 @@ const CreateCv = ({ currentUser }) => {
         start: state.start || "",
         end: state.end || "",
         description: state.description || "",
+        type: state.type || "text",
       };
 
       await SecRef.set(dataToBeSaved);

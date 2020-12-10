@@ -303,43 +303,29 @@ const CreateCv = ({ currentUser }) => {
     );
     console.log(value, `value is here x.x.x.x.x.x.x.x`);
 
-    if (sectionData.sectionName.type === "text") {
-      console.log(
-        sectionData.section.type,
-        `sectionData.section.type condition`
-      );
-      setActiveSection(sectionData.section.type);
-
-      //  return <InpuT />;
-    } else if (sectionData.sectionName.type === "entry") {
-      setActiveSection("entry");
-
-      // return <Editor />;
-    } else {
-      setActiveSection("text");
-    }
+    //setActiveSection(sectionData.section.type);
 
     let dataToBeSaved = {
       sectionName: {
-        section: sectionData.section || "",
-        type: sectionData.type || "",
+        section: value.section || "",
+        type: value.type || "",
         lastModified: new Date(),
       },
     };
 
     await SecRef.set(dataToBeSaved);
     sidebarRoutes.push({
-      section: sectionData.section,
-      type: sectionData.type,
+      section: value.section,
+      type: value.type,
       lastModified: new Date(),
     });
-
+    console.log(sidebarRoutes, `sidebarRoutes after Submiting`);
     array.push({
-      section: sectionData.section,
-      type: sectionData.type,
+      section: value.section,
+      type: value.type,
       lastModified: new Date(),
     });
-
+    console.log(array, `array after Submitting`);
     setTimeout(() => {
       onClose();
       setTurnOf(isChecked);
@@ -409,7 +395,7 @@ const CreateCv = ({ currentUser }) => {
 
   const [lastModified, setLastModified] = useState(new Date());
 
-  const FetchData = async () => {
+  const FetchData = async (value) => {
     await firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
@@ -418,15 +404,16 @@ const CreateCv = ({ currentUser }) => {
         querySnapshot.forEach(function (doc) {
           console.log(doc.data(), `############Data`);
           const data = doc.data();
-          console.log(data.sectionName, `ZZZXXXCCC`);
+          //  console.log(value, `Value name`)
+          console.log(data, `*******`);
           console.log(doc.id, "@@@@@@@@@@@@@id");
           const newData = doc.id;
-          console.log(doc.data(), `doc .data(*is here)`);
+          console.log(data, `data.sectionName`);
           setLastModified(lastModified);
           if (newData) {
             array.unshift({
               section: newData.toString(),
-              type: sectionData.sectionName.type,
+              type: data.type || data.sectionName.type,
               lastModified,
             });
             console.log(array, `array comming from fb`);
@@ -611,7 +598,7 @@ const CreateCv = ({ currentUser }) => {
                           refVal={register({ required: true })}
                           name="role"
                           labelText=""
-                          id="checkbox-1"
+                          id="checkbox-0"
                           value={true}
                           onChange={handleChangeCheckBox}
                           options={{
@@ -654,7 +641,6 @@ const CreateCv = ({ currentUser }) => {
                               label: "Added Entry",
                             }}
                             disabled={turnOf}
-                            required
                           />
                         </div>
                       </ModalBody>

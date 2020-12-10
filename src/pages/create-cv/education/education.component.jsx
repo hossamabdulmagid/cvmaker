@@ -39,6 +39,7 @@ const Education = (props) => {
       endgraduationyear: "",
       eduactionmajor: "",
       lastModified: new Date(),
+      type: "text",
     },
   });
 
@@ -62,6 +63,7 @@ const Education = (props) => {
         eduactionmajor: eduactionmajor || "",
         lastModified: new Date(),
       },
+      type: "text",
     };
     await cvRef.set(dataToBeSaved);
     onClose();

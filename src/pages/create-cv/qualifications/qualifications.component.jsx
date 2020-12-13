@@ -2,31 +2,110 @@ import React, { useState } from "react";
 import { Title } from "./qualifications.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { useForm } from "react-hook-form";
+
+const editorConfiguration = {
+  toolbar: {
+    items: [
+      "heading",
+      "|",
+      "alignment",
+      "bold",
+      "italic",
+      "link",
+      "bulletedList",
+      "numberedList",
+      "blockQuote",
+      "undo",
+      "redo",
+    ],
+  },
+};
 
 const Qualifications = () => {
-  const [state, setState] = useState({ content_qualifications: "" });
+  const { handleSubmit, register, getValues, errors, data } = useForm();
 
-  const { content } = state;
+  const value = getValues();
+
+  const [state, setState] = useState({
+    title: "",
+    name: "",
+    position: "",
+    address: "",
+    content_qualifications: "",
+  });
+
+  // const { content } = state;
 
   const HandleCkEditorState = (event, editor) => {
-    const data = editor.getData();
-    setState({ content_qualifications: data });
+    const datahere = editor.getData();
+    setState({ content_qualifications: datahere });
   };
 
-  console.log(state, `here is State =>>>>>>>>>`);
+  const [datas, setDatas] = useState({});
+
+  const handleChangeTitle = (event) => {
+    const target = event.target;
+    const { name, value } = target;
+    setState({ [name]: value });
+  };
+
+  console.log("_state", state);
+
+  React.useEffect(() => {
+    console.log("_state", state);
+    return () => {
+      console.log("cleanup");
+    };
+  }, []);
+  const onSubmit = (data) => console.log(data);
 
   return (
     <div className="container">
       <Title> Qualifications </Title>
-      <div className="">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input
+          type="text"
+          placeholder="SomeThing"
+          name="title"
+          onChange={handleChangeTitle}
+          ref={register({ required: true })}
+        />
+        <input
+          type="text"
+          placeholder="SomeThing"
+          name="name"
+          onChange={handleChangeTitle}
+          ref={register({ required: true })}
+        />{" "}
+        <br /> <br /> <hr />
+        <input
+          type="text"
+          placeholder="SomeThing"
+          name="position"
+          onChange={handleChangeTitle}
+          ref={register({ required: true })}
+        />
+        <input
+          type="text"
+          placeholder="SomeThing"
+          name="address"
+          onChange={handleChangeTitle}
+          ref={register({ required: true })}
+        />
+        <br /> <br />
         <CKEditor
-          className="zz"
+          className="cssforeditor"
           editor={ClassicEditor}
+          ref={register({ required: true })}
+          config={editorConfiguration}
+          name="content_qualifications"
           onInit={(editor) => {}}
           onChange={HandleCkEditorState}
           data="Qualifications Section"
         />
-      </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };

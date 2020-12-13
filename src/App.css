@@ -16,7 +16,6 @@ img {
   margin: 8px;
 }
 .edit {
-  margin-bottom: 0%;
   display: inline-flex;
 }
 .Label {
@@ -122,4 +121,7 @@ th {
 }
 p {
   padding: 4px;
+}
+.cssforeditor {
+  margin-bottom: 26px;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 
 import { RapperColor, Content, UL, Li, H5 } from "./lang.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";
@@ -49,7 +49,7 @@ const Lang = () => {
     { lang: "Hrvatski", author: "Marko Knezevic" },
   ]);
   return (
-    <>
+    <Fragment>
       <NavGuest />
       <RapperColor>
         <div className="container">
@@ -57,17 +57,17 @@ const Lang = () => {
             <H5>Language credits</H5>
             <UL>
               {languages.map((Singlelang, i) => (
-                <>
-                  <Li key={i}>{Singlelang.lang}</Li>
+                <Fragment key={i}>
+                  <Li>{Singlelang.lang}</Li>
                   <span>{Singlelang.author}</span>
                   <hr />
-                </>
+                </Fragment>
               ))}
             </UL>
           </Content>
         </div>
       </RapperColor>
-    </>
+    </Fragment>
   );
 };
 

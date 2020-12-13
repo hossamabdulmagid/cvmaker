@@ -548,10 +548,11 @@ const CreateCv = ({ currentUser }) => {
                   finalFocusRef={finalRef}
                   isOpen={isOpen}
                   onClose={onClose}
-                  blockScrollOnMount={false}
                   closeOnEsc={true}
                   autoFocus={true}
-                  allowPinchZoom={false}
+                  blockScrollOnMount={true}
+                  //    allowPinchZoom={false}
+                  // blockScrollOnMount={true}
                 >
                   <ModalOverlay />
                   <ModalContent>

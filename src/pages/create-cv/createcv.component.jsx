@@ -211,7 +211,23 @@ const CreateCv = ({ currentUser }) => {
       </Fragment>
     );
   };
-
+  const editorConfiguration = {
+    toolbar: {
+      items: [
+        "heading",
+        "|",
+        "alignment",
+        "bold",
+        "italic",
+        "link",
+        "bulletedList",
+        "numberedList",
+        "blockQuote",
+        "undo",
+        "redo",
+      ],
+    },
+  };
   const Editor = () => {
     const [state, setState] = useState({ content_new: "" });
     const { content } = state;
@@ -224,6 +240,7 @@ const CreateCv = ({ currentUser }) => {
     return (
       <Fragment>
         <CKEditor
+          config={editorConfiguration}
           editor={ClassicEditor}
           onInit={(Editor) => {}}
           onChange={HandleCkEditorState}

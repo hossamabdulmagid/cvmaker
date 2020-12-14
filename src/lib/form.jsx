@@ -64,7 +64,7 @@ const FormDeatils = (props) => {
       position: "bottom-left",
     });
   };
-
+  useEffect(() => {}, [currentUser, id]);
   return (
     <Fragment>
       <div className="container">

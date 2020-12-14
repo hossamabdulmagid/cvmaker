@@ -64,36 +64,6 @@ const Qualifications = () => {
     <div className="container">
       <Title> Qualifications </Title>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="SomeThing"
-          name="title"
-          onChange={handleChangeTitle}
-          ref={register({ required: true })}
-        />
-        <input
-          type="text"
-          placeholder="SomeThing"
-          name="name"
-          onChange={handleChangeTitle}
-          ref={register({ required: true })}
-        />{" "}
-        <br /> <br /> <hr />
-        <input
-          type="text"
-          placeholder="SomeThing"
-          name="position"
-          onChange={handleChangeTitle}
-          ref={register({ required: true })}
-        />
-        <input
-          type="text"
-          placeholder="SomeThing"
-          name="address"
-          onChange={handleChangeTitle}
-          ref={register({ required: true })}
-        />
-        <br /> <br />
         <CKEditor
           className="cssforeditor"
           editor={ClassicEditor}

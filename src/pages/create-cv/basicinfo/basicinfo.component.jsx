@@ -102,7 +102,6 @@ const BasicInfo = (props) => {
       .then(function (querySnapshot) {
         console.log(querySnapshot, `querySnapshot from basic info`);
         const newData = querySnapshot.data();
-        console.log(newData, `new Data`);
         if (newData) {
           setDataform({
             fullname: newData.basicinfo.fullname,

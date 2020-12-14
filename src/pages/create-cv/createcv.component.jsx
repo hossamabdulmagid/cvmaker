@@ -16,6 +16,7 @@ import {
   ButtonForAddNewSection,
   Aroow,
 } from "./createcv.styles";
+import FormDeatils from "../../lib/form";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
   AiOutlineExclamation,
@@ -67,150 +68,6 @@ const CreateCv = ({ currentUser }) => {
     { section: "references", type: "text", lastModified: new Date() },
   ]);
 
-  const InpuT = () => {
-    const { handleSubmit, register, getValues, errors, data } = useForm();
-    const value = getValues();
-
-    const [state, setState] = useState({
-      title: "",
-      name: "",
-      start: "",
-      end: "",
-      description: "",
-      type: "text",
-    });
-
-    const { title, name, start, end, description } = state;
-
-    const HandleChangenewData = (event) => {
-      const { name, value } = event.target;
-      setState({ ...state, [name]: value });
-    };
-
-    const onSubmit = async (data) => {
-      const SecRef = firestore.doc(
-        `users/${currentUser.id}/cvs/${id}/data/${title}`
-      );
-      let dataToBeSaved = {
-        title: state.title || "",
-        name: state.name || "",
-        start: state.start || "",
-        end: state.end || "",
-        description: state.description || "",
-        type: state.type || "text",
-      };
-
-      await SecRef.set(dataToBeSaved);
-      sidebarRoutes.push({
-        section: sectionData.section,
-        type: sectionData.type,
-        lastModified: new Date(),
-      });
-      array.push({
-        section: sectionData.section,
-        type: sectionData.type,
-        lastModified: new Date(),
-      });
-      console.log(data);
-      toast({
-        title: "Section Updated.",
-        description: `Your new Section  name is : ${title}`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-    };
-
-    return (
-      <Fragment>
-        <div className="container">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              ref={register({ required: true })}
-              placeholder="title "
-              name="title"
-              type="text"
-              //  value={title}
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.title && (
-                <label className="error">
-                  {errors.title.message || "title is required"}
-                </label>
-              )}
-            </strong>
-            <Input
-              ref={register({ required: true })}
-              placeholder="name"
-              name="name"
-              type="text"
-              // value={name}
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.name && (
-                <label className="error">
-                  {errors.name.message || "name is required"}
-                </label>
-              )}
-            </strong>
-            <Input
-              ref={register({ required: true })}
-              placeholder="start"
-              name="start"
-              type="text"
-              //  value={start}
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.start && (
-                <label className="error">
-                  {errors.start.message || "start is required"}
-                </label>
-              )}
-            </strong>
-            <Input
-              ref={register({ required: true })}
-              placeholder="end"
-              name="end"
-              type="text"
-              //   value={end}
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.end && (
-                <label className="error">
-                  {errors.end.message || "end is required"}
-                </label>
-              )}
-            </strong>
-            <Textarea
-              ref={register({ required: true })}
-              placeholder="description  here"
-              type="textarea"
-              name="description"
-              // value={description}
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.description && (
-                <label className="error">
-                  {errors.description.message || "description is required"}
-                </label>
-              )}
-            </strong>
-            <div className="someThing">
-              <Button type="submit" className="buttonSavenewFrom">
-                Save
-              </Button>
-            </div>
-          </form>
-        </div>
-      </Fragment>
-    );
-  };
   const editorConfiguration = {
     toolbar: {
       items: [
@@ -695,7 +552,7 @@ const CreateCv = ({ currentUser }) => {
               {activeSection === sidebarRoutes[5].section ? (
                 <References />
               ) : null}
-              {activeSection === "text" ? <InpuT /> : null}
+              {activeSection === "text" ? <FormDeatils /> : null}
 
               {activeSection === "entry" ? <Editor /> : null}
 

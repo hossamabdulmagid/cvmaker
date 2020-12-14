@@ -35,6 +35,7 @@ import Interests from "./interests/interests.component";
 import { firestore } from "../../firebase/firebase.utils";
 import InputRadioBox from "./radiobox";
 import { useParams, useHistory } from "react-router-dom";
+import Editor from "../../lib/ckeditor";
 import {
   Modal,
   ModalOverlay,
@@ -67,45 +68,6 @@ const CreateCv = ({ currentUser }) => {
     { section: "interests", type: "text", lastModified: new Date() },
     { section: "references", type: "text", lastModified: new Date() },
   ]);
-
-  const editorConfiguration = {
-    toolbar: {
-      items: [
-        "heading",
-        "|",
-        "alignment",
-        "bold",
-        "italic",
-        "link",
-        "bulletedList",
-        "numberedList",
-        "blockQuote",
-        "undo",
-        "redo",
-      ],
-    },
-  };
-  const Editor = () => {
-    const [state, setState] = useState({ content_new: "" });
-    const { content } = state;
-
-    const HandleCkEditorState = (event, editor) => {
-      const data = editor.getData();
-      setState({ content_new: data });
-      console.log(state, `here is State =>>>>>>>>>`);
-    };
-    return (
-      <Fragment>
-        <CKEditor
-          config={editorConfiguration}
-          editor={ClassicEditor}
-          onInit={(Editor) => {}}
-          onChange={HandleCkEditorState}
-          data="<p className='zz'> new Section</p>"
-        />
-      </Fragment>
-    );
-  };
 
   const [inputList, setInputList] = useState([]);
 

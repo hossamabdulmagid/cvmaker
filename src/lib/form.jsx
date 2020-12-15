@@ -11,17 +11,19 @@ const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
   // console.log(currentUser, `from user Selector`);
 
-  const { array = [], sidebarRoutes = [], sectionData = {} } = props;
+  const { array, sidebarRoutes, sectionData } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
   const value = getValues();
   const toast = useToast();
 
   const [state, setState] = useState({
-    title: "",
-    name: "",
-    start: "",
-    end: "",
-    description: "",
+    title: {
+      title: "",
+      name: "",
+      start: "",
+      end: "",
+      description: "",
+    },
     type: "text",
   });
   const { id } = useParams();
@@ -42,11 +44,13 @@ const FormDeatils = (props) => {
       `users/${currentUser.id}/cvs/${id}/data/${title}`
     );
     let dataToBeSaved = {
-      title: state.title || "",
-      name: state.name || "",
-      start: state.start || "",
-      end: state.end || "",
-      description: state.description || "",
+      title: {
+        title: state.title || "",
+        name: state.name || "",
+        start: state.start || "",
+        end: state.end || "",
+        description: state.description || "",
+      },
       type: state.type || "text",
     };
 

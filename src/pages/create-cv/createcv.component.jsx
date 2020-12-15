@@ -131,11 +131,14 @@ const CreateCv = ({ currentUser }) => {
     setTurnOf(isChecked);
   };
 
+  const [flagButton, setFlagButton] = useState(true);
+
+  console.log(flagButton, `flagButton`);
   const onSubmit = async (value, isChecked) => {
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${section}`
     );
-    console.log(value, `value is here x.x.x.x.x.x.x.x`);
+    // console.log(value, `value is here x.x.x.x.x.x.x.x`);
 
     let dataToBeSaved = {
       sectionName: {
@@ -151,6 +154,7 @@ const CreateCv = ({ currentUser }) => {
         lastModified: new Date(),
       },
     };
+    setFlagButton(false);
 
     await SecRef.set(dataToBeSaved);
     sidebarRoutes.push({
@@ -170,6 +174,7 @@ const CreateCv = ({ currentUser }) => {
     setTimeout(() => {
       onClose();
       setTurnOf(isChecked);
+      setFlagButton(flagButton);
     }, 300);
 
     toast({
@@ -485,7 +490,7 @@ const CreateCv = ({ currentUser }) => {
                           className="buttonForSaveNewSection"
                           onOpen
                         >
-                          Save
+                          {!flagButton ? <Spinner /> : "Save"}
                         </Button>
                         <Button
                           onClick={onClose}

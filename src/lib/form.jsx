@@ -1,15 +1,17 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { firestore } from "../firebase/firebase.utils";
 import { useForm } from "react-hook-form";
-import { useToast, Input, Button, Textarea } from "@chakra-ui/core";
+import { Button } from "react-bootstrap";
+import { useToast, Input, Textarea } from "@chakra-ui/core";
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+
 const FormDeatils = (props) => {
-  const {
-    array = [],
-    sidebarRoutes = [],
-    sectionData = {},
-    currentUser,
-  } = props;
+  const currentUser = useSelector((state) => state.user);
+  console.log(currentUser, `from user Selector`);
+
+  const { array = [], sidebarRoutes = [], sectionData = {} } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
   const value = getValues();
   const toast = useToast();
@@ -145,7 +147,7 @@ const FormDeatils = (props) => {
             )}
           </strong>
           <div className="someThing">
-            <Button type="submit" className="buttonSavenewFrom">
+            <Button type="submit" className="btn btn-danger buttonSavenewFrom">
               Save
             </Button>
           </div>
@@ -154,5 +156,9 @@ const FormDeatils = (props) => {
     </Fragment>
   );
 };
-
-export default FormDeatils;
+/*
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+*/
+export default /*connect(mapStateToProps) */ FormDeatils;

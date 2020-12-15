@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import { useSelector } from "react-redux";
 
 const FormDeatils = (props) => {
-  const currentUser = useSelector((state) => state.user);
-  console.log(currentUser, `from user Selector`);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  // console.log(currentUser, `from user Selector`);
 
   const { array = [], sidebarRoutes = [], sectionData = {} } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
@@ -32,7 +32,12 @@ const FormDeatils = (props) => {
     setState({ ...state, [name]: value });
   };
 
+  useEffect(() => {}, [currentUser.id]);
+
   const onSubmit = async (data) => {
+    if (!currentUser.id) {
+      return;
+    }
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${title}`
     );
@@ -73,7 +78,7 @@ const FormDeatils = (props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             ref={register({ required: true })}
-            placeholder="title "
+            placeholder="title"
             name="title"
             type="text"
             //value={title}

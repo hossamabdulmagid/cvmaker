@@ -101,7 +101,13 @@ const CreateCv = ({ currentUser }) => {
 
   const [sectionData, setSectionData] = useState({
     sectionName: {
-      section: "",
+      section: {
+        title: "",
+        name: "",
+        start: "",
+        end: "",
+        description: "",
+      },
       type: "",
       lastModified: new Date(),
     },
@@ -133,7 +139,14 @@ const CreateCv = ({ currentUser }) => {
 
     let dataToBeSaved = {
       sectionName: {
-        section: value.section || "",
+        section:
+          {
+            title: sectionData.sectionName.section.title || "",
+            name: sectionData.sectionName.section.name || "",
+            start: sectionData.sectionName.section.start || "",
+            end: sectionData.sectionName.section.end || "",
+            description: sectionData.sectionName.section.description || "",
+          } || {},
         type: value.type || "",
         lastModified: new Date(),
       },
@@ -141,7 +154,7 @@ const CreateCv = ({ currentUser }) => {
 
     await SecRef.set(dataToBeSaved);
     sidebarRoutes.push({
-      section: value.section,
+      section: section,
       type: value.type,
       lastModified: new Date(),
     });
@@ -514,7 +527,13 @@ const CreateCv = ({ currentUser }) => {
               {activeSection === sidebarRoutes[5].section ? (
                 <References />
               ) : null}
-              {activeSection === "text" ? <FormDeatils /> : null}
+              {activeSection === "text" ? (
+                <FormDeatils
+                  array={array}
+                  sidebarRoutes={sidebarRoutes}
+                  sectionData={sectionData}
+                />
+              ) : null}
 
               {activeSection === "entry" ? <Editor /> : null}
 

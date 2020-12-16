@@ -138,7 +138,6 @@ const CreateCv = ({ currentUser }) => {
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${section}`
     );
-    // console.log(value, `value is here x.x.x.x.x.x.x.x`);
 
     let dataToBeSaved = {
       sectionName: {
@@ -155,7 +154,6 @@ const CreateCv = ({ currentUser }) => {
       },
     };
     setFlagButton(false);
-
     await SecRef.set(dataToBeSaved);
     sidebarRoutes.push({
       section: section,
@@ -168,23 +166,22 @@ const CreateCv = ({ currentUser }) => {
       type: value.type,
       lastModified: new Date(),
     });
-    setActiveSection(value.type);
-
+    setFlagButton(false);
     console.log(array, `array after Submitting`);
     setTimeout(() => {
+      setFlagButton(true);
+      setActiveSection(value.type);
       onClose();
+      toast({
+        title: "Section created.",
+        description: `Your new Section  name is : ${sectionData.section}`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
       setTurnOf(isChecked);
-      setFlagButton(flagButton);
-    }, 300);
-
-    toast({
-      title: "Section created.",
-      description: `Your new Section  name is : ${sectionData.section}`,
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "bottom-left",
-    });
+    }, 2000);
   };
 
   const [cvName, setCvName] = useState({

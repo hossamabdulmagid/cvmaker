@@ -182,7 +182,7 @@ const Education = (props) => {
                 value={collagename}
                 onChange={handleChange}
                 ref={register({ required: "this Content is Required" })}
-                placeholder="collage name"
+                placeholder="Collage Name"
               />
               <small className="error">
                 {errors.collagename && errors.collagename.message}
@@ -221,6 +221,7 @@ const Education = (props) => {
                 value={eduactionmajor}
                 onChange={handleChange}
                 type="text"
+                placeholder="Collage Majoring"
                 ref={register({ required: "this Content is Required" })}
               />
               <small className="error">

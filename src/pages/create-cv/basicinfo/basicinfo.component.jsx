@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { useParams, useHistory, Progress } from "react-router-dom";
 import { Spinner, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button } from "@chakra-ui/core";
 import { firestore, storage } from "../../../firebase/firebase.utils";
 import {
   Modal,
@@ -320,8 +320,9 @@ const BasicInfo = (props) => {
                     </small>
                     <Button
                       type="submit"
-                      className="btn btn-danger Deal"
+                      className="Deal"
                       size="sm"
+                      variantColor="blue"
                     >
                       {!FlagButton ? (
                         <Spinner
@@ -329,7 +330,7 @@ const BasicInfo = (props) => {
                           speed="0.65s"
                           emptyColor="gray.200"
                           color="blue.500"
-                          size="lg"
+                          size="sm"
                         />
                       ) : (
                         "Save"

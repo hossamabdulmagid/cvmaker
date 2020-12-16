@@ -1,8 +1,8 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { firestore } from "../firebase/firebase.utils";
 import { useForm } from "react-hook-form";
-import { Button } from "react-bootstrap";
-import { useToast, Input, Textarea } from "@chakra-ui/core";
+import { Button } from "@chakra-ui/core";
+import { useToast, Input, Textarea, Spinner } from "@chakra-ui/core";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { useSelector } from "react-redux";
@@ -34,7 +34,13 @@ const FormDeatils = (props) => {
     setState({ ...state, [name]: value });
   };
 
+  const [FlagButton, setFlagButton] = useState(true);
+
   useEffect(() => {}, [currentUser.id]);
+
+  useEffect(() => {
+    setFlagButton(true);
+  }, []);
 
   const onSubmit = async (data) => {
     if (!currentUser.id) {
@@ -66,14 +72,18 @@ const FormDeatils = (props) => {
       lastModified: new Date(),
     });
     console.log(data);
-    toast({
-      title: "Section Updated.",
-      description: `Your new Section  name is : ${title}`,
-      status: "info",
-      duration: 5000,
-      isClosable: true,
-      position: "bottom-left",
-    });
+    setFlagButton(false);
+    setTimeout(() => {
+      setFlagButton(true);
+      toast({
+        title: "Section Updated.",
+        description: `Your new Section  name is : ${title}`,
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }, 2000);
   };
   useEffect(() => {}, [currentUser, id]);
   return (
@@ -156,8 +166,23 @@ const FormDeatils = (props) => {
             )}
           </strong>
           <div className="someThing">
-            <Button type="submit" className="btn btn-danger buttonSavenewFrom">
-              Save
+            <Button
+              type="submit"
+              className="buttonSavenewFrom"
+              size="sm"
+              variantColor="blue"
+            >
+              {!FlagButton ? (
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="sm"
+                />
+              ) : (
+                "Save"
+              )}
             </Button>
           </div>
         </form>

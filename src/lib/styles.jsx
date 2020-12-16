@@ -1,11 +1,7 @@
 import styled from "styled-components";
 
-import { Button } from "react-bootstrap";
-
-export const BUTTON = styled(Button)`
-background-color:pink:
-color:black;
-float:right;
-
-
+export const Rapperd = styled.div`
+  margin: 10px;
+  border: 1px dotted darkgray;
+  padding: 15px;
 `;

@@ -22,7 +22,7 @@ const InputCheckBox = ({
       onChange(val);
     }
   };
-  //line for comment/ /
+  //line for comment/ /ssss
   return (
     <>
       {options ? (

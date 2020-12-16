@@ -48,7 +48,7 @@ const FormDeatils = (props) => {
       return;
     }
     const SecRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/${title}`
+      `users/${currentUser.id}/cvs/${id}/data/title`
     );
     let dataToBeSaved = {
       title: {
@@ -89,56 +89,51 @@ const FormDeatils = (props) => {
   useEffect(() => {}, [currentUser, id]);
 
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
-  const FetchData = async (value) => {
-    await firestore
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
+      .doc(`title`)
       .get()
       .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          console.log(doc.data(), `############Data from new Form`);
-          const data = doc.data();
-          console.log(data, `******* from new Form`);
-          console.log(doc.id, "@@@@@@@@@@@@@id from new Form");
-          const newData = doc.id;
-          console.log(data, `data.from new Form`);
-          // setLastModified(lastModified);
-          if (newData) {
-            array.unshift({
-              section: newData.toString(),
-              type: data.type || data.sectionName.type,
-              // lastModified,
-            });
-            console.log(array, `array comming from fb`);
-            setTimeout(() => {
-              // setFlag(false);
-            }, 50);
-          }
-        });
+        console.log(querySnapshot.data(), `querySnapshot from basic info`);
+
+        const newData = querySnapshot.data();
+        console.log(newData, `newData...`);
+        if (newData) {
+          console.log(newData.title, `lololololololoy`);
+          setDisplayDataToUI(false);
+
+          setState({
+            title: {
+              title: newData.title.title || "",
+              name: newData.title.name || "",
+              start: newData.title.start || "",
+              end: newData.title.end || "",
+              description: newData.title.description || "",
+            },
+            type: newData.type || "text",
+          });
+        }
       })
       .catch((error) => {
-        //setFlag(false);
-        toast({
-          title: `there is was an error`,
-          description: `${error} `,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
         console.log(error, `there is was an error`);
       });
-  };
+  }, [currentUser, id]);
   return (
     <Fragment>
       <div className="container">
-        {!displayDataToUI ? (
+        {displayDataToUI ? (
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               ref={register({ required: true })}
               placeholder="title"
               name="title"
               type="text"
-              //value={title}
               onChange={HandleChangenewData}
             />
             <strong className="col-12">
@@ -153,7 +148,6 @@ const FormDeatils = (props) => {
               placeholder="name"
               name="name"
               type="text"
-              // value={name}
               onChange={HandleChangenewData}
             />
             <strong className="col-12">
@@ -168,7 +162,6 @@ const FormDeatils = (props) => {
               placeholder="start"
               name="start"
               type="text"
-              //value={start}
               onChange={HandleChangenewData}
             />
             <strong className="col-12">
@@ -183,7 +176,6 @@ const FormDeatils = (props) => {
               placeholder="end"
               name="end"
               type="text"
-              //value={end}
               onChange={HandleChangenewData}
             />
             <strong className="col-12">
@@ -198,7 +190,6 @@ const FormDeatils = (props) => {
               placeholder="description  here"
               type="textarea"
               name="description"
-              // value={description}
               onChange={HandleChangenewData}
             />
             <strong className="col-12">
@@ -232,21 +223,36 @@ const FormDeatils = (props) => {
         ) : (
           <Rapperd>
             <Rapperd>
-              <p className="pFornewFormSection">
-                Title: <strong>{"companyname"}</strong>
-              </p>
-              <p className="pFornewFormSection">
-                Name: <strong>{"startwork"}</strong>
-              </p>
-              <p className="pFornewFormSection">
-                Start: <strong>{"endwork"}</strong>
-              </p>
-              <p className="pFornewFormSection">
-                End: <strong>{"position"}</strong>
-              </p>
-              <p className="pFornewFormSection">
-                Description: <strong>{"position"}</strong>
-              </p>
+              <Rapperd>
+                <p className="pFornewFormSection">
+                  Title : <strong>{" " + state.title.title || ""}</strong>
+                </p>
+              </Rapperd>
+
+              <Rapperd>
+                <p className="pFornewFormSection">
+                  Name : <strong>{" " + state.title.name || ""}</strong>
+                </p>
+              </Rapperd>
+
+              <Rapperd>
+                <p className="pFornewFormSection">
+                  Start : <strong>{" " + state.title.start || ""}</strong>
+                </p>
+              </Rapperd>
+
+              <Rapperd>
+                <p className="pFornewFormSection">
+                  End : <strong>{" " + state.title.end || ""}</strong>
+                </p>
+              </Rapperd>
+
+              <Rapperd>
+                <p className="pFornewFormSection">
+                  Description :{" "}
+                  <strong>{" " + state.title.description || ""}</strong>
+                </p>
+              </Rapperd>
             </Rapperd>
           </Rapperd>
         )}

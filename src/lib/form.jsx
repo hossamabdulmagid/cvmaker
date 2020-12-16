@@ -7,7 +7,8 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { useSelector } from "react-redux";
 import { Rapperd } from "./styles";
-
+import { BsCheck } from "react-icons/bs";
+import { AiTwotoneEdit } from "react-icons/ai";
 const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
   // console.log(currentUser, `from user Selector`);
@@ -72,7 +73,11 @@ const FormDeatils = (props) => {
       type: sectionData.type,
       lastModified: new Date(),
     });
-    console.log(data);
+    console.log(
+      data.title,
+      data.name,
+      `KKKKKKKKKKKKKKKK~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+    );
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
@@ -84,13 +89,19 @@ const FormDeatils = (props) => {
         isClosable: true,
         position: "bottom-left",
       });
+      setDisplayDataToUI(false);
+      setLoading(false);
     }, 2000);
+    setTimeout(() => {
+      setDisplayDataToUI(false);
+    }, 5000);
   };
   useEffect(() => {}, [currentUser, id]);
 
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    setLoading(true);
     if (!currentUser) {
       return;
     }
@@ -106,24 +117,42 @@ const FormDeatils = (props) => {
         console.log(newData, `newData...`);
         if (newData) {
           console.log(newData.title, `lololololololoy`);
-          setDisplayDataToUI(false);
-
           setState({
             title: {
-              title: newData.title.title || "",
-              name: newData.title.name || "",
-              start: newData.title.start || "",
-              end: newData.title.end || "",
-              description: newData.title.description || "",
+              title: newData.title.title,
+              name: newData.title.name,
+              start: newData.title.start,
+              end: newData.title.end,
+              description: newData.title.description,
             },
             type: newData.type || "text",
           });
+          setLoading(false);
+
+          setTimeout(() => {
+            setDisplayDataToUI(false);
+          }, 2000);
         }
       })
       .catch((error) => {
         console.log(error, `there is was an error`);
       });
-  }, [currentUser, id]);
+  }, [currentUser, id, setState]);
+
+  useEffect(() => {
+    setDisplayDataToUI(true);
+    setLoading(true);
+    console.log(value.title, `value`);
+  }, []);
+  console.log(value.title, `value`);
+
+  useEffect(() => {
+    console.log(`Render`);
+    return () => {
+      console.log(`cleaning`);
+    };
+  });
+
   return (
     <Fragment>
       <div className="container">
@@ -205,6 +234,7 @@ const FormDeatils = (props) => {
                 className="buttonSavenewFrom"
                 size="sm"
                 variantColor="blue"
+                //   onClick={() => setDisplayDataToUI(false)}
               >
                 {!FlagButton ? (
                   <Spinner
@@ -225,35 +255,59 @@ const FormDeatils = (props) => {
             <Rapperd>
               <Rapperd>
                 <p className="pFornewFormSection">
-                  Title : <strong>{" " + state.title.title || ""}</strong>
+                  Title :{" "}
+                  <strong>
+                    {setDisplayDataToUI ? state.title.title : <Spinner />}
+                  </strong>
                 </p>
               </Rapperd>
 
               <Rapperd>
                 <p className="pFornewFormSection">
-                  Name : <strong>{" " + state.title.name || ""}</strong>
+                  Name :{" "}
+                  <strong>
+                    {setDisplayDataToUI ? state.title.name : <Spinner />}
+                  </strong>
                 </p>
               </Rapperd>
 
               <Rapperd>
                 <p className="pFornewFormSection">
-                  Start : <strong>{" " + state.title.start || ""}</strong>
+                  Start :{" "}
+                  <strong>
+                    {setDisplayDataToUI ? state.title.start || "" : <Spinner />}
+                  </strong>
                 </p>
               </Rapperd>
 
               <Rapperd>
                 <p className="pFornewFormSection">
-                  End : <strong>{" " + state.title.end || ""}</strong>
+                  End :{" "}
+                  <strong>
+                    {setDisplayDataToUI ? state.title.end || "" : <Spinner />}
+                  </strong>
                 </p>
               </Rapperd>
 
               <Rapperd>
                 <p className="pFornewFormSection">
                   Description :{" "}
-                  <strong>{" " + state.title.description || ""}</strong>
+                  <strong>
+                    {setDisplayDataToUI ? (
+                      state.title.description || ""
+                    ) : (
+                      <Spinner />
+                    )}
+                  </strong>
                 </p>
               </Rapperd>
             </Rapperd>
+            <button
+              className="btn btn-danger"
+              onClick={() => setDisplayDataToUI(true)}
+            >
+              <AiTwotoneEdit />
+            </button>
           </Rapperd>
         )}
       </div>

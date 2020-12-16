@@ -4,6 +4,7 @@ import {
   Input,
   Label,
   P,
+  DIV,
   Container,
   Span,
   IMG,
@@ -11,10 +12,12 @@ import {
   Upload,
   IconEditNameOfSection,
 } from "./basicinfo.styles";
+import { BsCheck } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useParams, useHistory, Progress } from "react-router-dom";
-import { Spinner, useToast, Button } from "@chakra-ui/core";
+import { Spinner, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
+import { Button } from "react-bootstrap";
 import { firestore, storage } from "../../../firebase/firebase.utils";
 import {
   Modal,
@@ -61,6 +64,7 @@ const BasicInfo = (props) => {
     const { name, value } = event.target;
     setDataform({ ...dataform, [name]: value });
   };
+  const [FlagButton, setFlagButton] = useState(true);
 
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
@@ -80,14 +84,19 @@ const BasicInfo = (props) => {
       type: dataform.type || "basicinfo",
     };
     await cvRef.set(dataToBeSaved);
-    toast({
-      title: "Section updated.",
-      description: `your section basicinfo has been updated`,
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "bottom-right",
-    });
+    setFlagButton(false);
+
+    setTimeout(() => {
+      setFlagButton(true);
+      toast({
+        title: "Section updated.",
+        description: `your section basicinfo has been updated`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }, 2000);
   };
 
   useEffect(() => {
@@ -118,6 +127,7 @@ const BasicInfo = (props) => {
           console.log(dataform, `dataform`);
         }
         setLoading(false);
+        //        setFlagButton(false)
       })
       .catch((error) => {
         setLoading(false);
@@ -308,8 +318,22 @@ const BasicInfo = (props) => {
                     <small className="errorSectionName">
                       {errors.address2 && errors.address2.message}
                     </small>
-                    <Button type="submit" variantColor="teal" variant="ghost">
-                      Save
+                    <Button
+                      type="submit"
+                      className="btn btn-danger Deal"
+                      size="sm"
+                    >
+                      {!FlagButton ? (
+                        <Spinner
+                          thickness="4px"
+                          speed="0.65s"
+                          emptyColor="gray.200"
+                          color="blue.500"
+                          size="lg"
+                        />
+                      ) : (
+                        "Save"
+                      )}
                     </Button>
                   </div>
                   <hr />
@@ -381,7 +405,7 @@ const BasicInfo = (props) => {
                 variantColor="blue"
                 mr={3}
                 type="submit"
-                className="buttonForSaveNewSection"
+                className=""
                 onOpen
               >
                 Save

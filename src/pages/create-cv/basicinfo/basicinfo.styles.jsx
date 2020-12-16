@@ -2,6 +2,10 @@ import styled from "styled-components";
 import { Button } from "@chakra-ui/core";
 import { AiTwotoneEdit } from "react-icons/ai";
 
+export const DIV = styled.div`
+  padding: 20px;
+  margin: 20px;
+`;
 export const Title = styled.h4`
   margin: 5px;
   font-weight: 200px;

@@ -50,6 +50,7 @@ const Education = (props) => {
     eduactionmajor,
     lastModified,
   } = education;
+  const [FlagButton, setFlagButton] = useState(true);
 
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
@@ -66,16 +67,23 @@ const Education = (props) => {
       type: "education",
     };
     await cvRef.set(dataToBeSaved);
-    onClose();
-    toast({
-      title: "Section updated.",
-      description: `your cvs section education has been updated`,
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "bottom-right",
-    });
+    setFlagButton(false);
+    setTimeout(() => {
+      onClose();
+      toast({
+        title: "Section updated.",
+        description: `your cvs section education has been updated`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }, 2000);
   };
+  useEffect(() => {
+    setFlagButton(true);
+    console.log(FlagButton, `consolelog iam runing`);
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -223,7 +231,7 @@ const Education = (props) => {
 
             <ModalFooter>
               <Button variantColor="blue" mr={3} type="submit">
-                Save
+                {!FlagButton ? <Spinner /> : "Save"}
               </Button>
               <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>

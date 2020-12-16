@@ -54,13 +54,20 @@ button {
   justify-content: space-between;
 }
 .buttonForSaveNewSection {
-  padding: 5px;
+  min-width: auto;
   margin: 5px;
-  width: auto;
-  min-width: 55px;
+  padding: 5px;
   justify-content: space-between;
+  min-height: auto;
 }
 
+.Deal {
+  min-width: auto;
+  justify-content: space-between;
+  min-height: auto;
+  margin: 25px;
+  float: right;
+}
 .error {
   color: red;
   float: right;
@@ -107,6 +114,8 @@ th {
 }
 .buttonSavenewFrom {
   float: right;
+  min-width: auto;
+  min-height: auto;
 }
 
 .someThing {

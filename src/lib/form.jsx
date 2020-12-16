@@ -69,7 +69,7 @@ const FormDeatils = (props) => {
     toast({
       title: "Section Updated.",
       description: `Your new Section  name is : ${title}`,
-      status: "success",
+      status: "info",
       duration: 5000,
       isClosable: true,
       position: "bottom-left",

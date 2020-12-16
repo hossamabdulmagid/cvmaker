@@ -79,15 +79,18 @@ const Workexperience = (props) => {
     };
 
     await cvRef.set(dataToBeSave);
-    onClose();
-    toast({
-      title: "Section updated.",
-      description: `your cvs section workexperince has been updated`,
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "bottom-right",
-    });
+    setFlagButton(false);
+    setTimeout(() => {
+      onClose();
+      toast({
+        title: "Section updated.",
+        description: `your cvs section workexperince has been updated`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }, 2000);
   };
 
   const [loading, setLoading] = useState(true);
@@ -114,15 +117,19 @@ const Workexperience = (props) => {
             lastModified: workexpData.workexperience.lastModified,
           });
         }
-
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
-
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
+
+  const [FlagButton, setFlagButton] = useState(true);
+
+  useEffect(() => {
+    setFlagButton(true);
+  }, []);
 
   return (
     <div className="container">
@@ -231,7 +238,7 @@ const Workexperience = (props) => {
 
             <ModalFooter>
               <Button variantColor="blue" mr={3} type="submit">
-                Save
+                {!FlagButton ? <Spinner /> : "Save"}
               </Button>
               <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>

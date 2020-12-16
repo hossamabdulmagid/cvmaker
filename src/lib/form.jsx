@@ -257,7 +257,11 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   Title :{" "}
                   <strong>
-                    {setDisplayDataToUI ? state.title.title : <Spinner />}
+                    {setDisplayDataToUI ? (
+                      state.title.title || title
+                    ) : (
+                      <Spinner />
+                    )}
                   </strong>
                 </p>
               </Rapperd>
@@ -266,7 +270,11 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   Name :{" "}
                   <strong>
-                    {setDisplayDataToUI ? state.title.name : <Spinner />}
+                    {setDisplayDataToUI ? (
+                      state.title.name || name
+                    ) : (
+                      <Spinner />
+                    )}
                   </strong>
                 </p>
               </Rapperd>
@@ -275,7 +283,11 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   Start :{" "}
                   <strong>
-                    {setDisplayDataToUI ? state.title.start || "" : <Spinner />}
+                    {setDisplayDataToUI ? (
+                      state.title.start || start
+                    ) : (
+                      <Spinner />
+                    )}
                   </strong>
                 </p>
               </Rapperd>
@@ -284,7 +296,7 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   End :{" "}
                   <strong>
-                    {setDisplayDataToUI ? state.title.end || "" : <Spinner />}
+                    {setDisplayDataToUI ? state.title.end || end : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
@@ -294,7 +306,7 @@ const FormDeatils = (props) => {
                   Description :{" "}
                   <strong>
                     {setDisplayDataToUI ? (
-                      state.title.description || ""
+                      state.title.description || description
                     ) : (
                       <Spinner />
                     )}
@@ -304,7 +316,11 @@ const FormDeatils = (props) => {
             </Rapperd>
             <button
               className="btn btn-danger"
-              onClick={() => setDisplayDataToUI(true)}
+              onClick={() =>
+                setTimeout(() => {
+                  setDisplayDataToUI(true);
+                }, 3000)
+              }
             >
               <AiTwotoneEdit />
             </button>

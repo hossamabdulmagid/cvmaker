@@ -155,14 +155,15 @@ const CreateCv = ({ currentUser }) => {
     };
     setFlagButton(false);
     await SecRef.set(dataToBeSaved);
+    console.log(value.section, `&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&`);
     sidebarRoutes.push({
-      section: section,
+      section: value.section,
       type: value.type,
       lastModified: new Date(),
     });
     console.log(sidebarRoutes, `sidebarRoutes after Submiting`);
     array.push({
-      section: value.section,
+      section: value.section.title,
       type: value.type,
       lastModified: new Date(),
     });

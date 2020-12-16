@@ -63,13 +63,18 @@ const FormDeatils = (props) => {
     };
 
     await SecRef.set(dataToBeSaved);
+
+    console.log(
+      sectionData.section,
+      `sectionData.sectionsectionData.sectionsectionData.sectionsectionData.section`
+    );
     sidebarRoutes.push({
-      section: sectionData.section,
+      section: state.title,
       type: sectionData.type,
       lastModified: new Date(),
     });
     array.push({
-      section: sectionData.section,
+      section: state.title,
       type: sectionData.type,
       lastModified: new Date(),
     });
@@ -319,7 +324,7 @@ const FormDeatils = (props) => {
               onClick={() =>
                 setTimeout(() => {
                   setDisplayDataToUI(true);
-                }, 3000)
+                }, 2000)
               }
             >
               <AiTwotoneEdit />

@@ -161,9 +161,9 @@ const CreateCv = ({ currentUser }) => {
       type: value.type,
       lastModified: new Date(),
     });
-    console.log(sidebarRoutes, `sidebarRoutes after Submiting`);
+    console.log(value.section, `value.section.title`);
     array.push({
-      section: value.section.title,
+      section: value.section,
       type: value.type,
       lastModified: new Date(),
     });

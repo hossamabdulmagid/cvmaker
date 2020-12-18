@@ -40,7 +40,7 @@ const BasicInfo = (props) => {
 
   const history = useHistory();
 
-  const { handleSubmit, register, errors, getValues } = useForm();
+  const { handleSubmit, register, errors, getValues, data } = useForm();
 
   const value = getValues();
 
@@ -65,8 +65,7 @@ const BasicInfo = (props) => {
     setDataform({ ...dataform, [name]: value });
   };
   const [FlagButton, setFlagButton] = useState(true);
-
-  const onSubmit = async (value) => {
+  const onSubmit = async (value, data) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/basicinfo`
     );
@@ -135,43 +134,43 @@ const BasicInfo = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id, setDataform]);
-  /*
-    const [image, setImage] = useState(null);
-    const [url, setUrl] = useState("");
-    const [progress, setProgress] = useState(0);
-  
-    const handleChangeImage = (e) => {
-      if (e.target.files[0]) {
-        setImage(e.target.files[0]);
+
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const handleChangeImage = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then((url) => {
+            setUrl(url);
+          });
       }
-    };
-    const handleUpload = () => {
-      const uploadTask = storage.ref(`images/${image.name}`).put(image);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setProgress(progress);
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          storage
-            .ref("images")
-            .child(image.name)
-            .getDownloadURL()
-            .then((url) => {
-              setUrl(url);
-            });
-        }
-      );
-    };
-  
-    console.log("image :", image);
-  */
+    );
+  };
+
+  console.log("image :", image);
+
   const [color, setColor] = React.useState("");
 
   const styles = {
@@ -200,6 +199,7 @@ const BasicInfo = (props) => {
       .doc(`users/${currentUser.id}/cvs/${id}/data/${sectionlabel}`)
       .set({ sectionlabel: `${sectionlabel}` });
     //.update("sectionlabel", sectionName.sectionlabel);
+    onClose();
     toast({
       title: "section name updated.",
       description: `your SectionName updated  to : ${sectionName.sectionlabel} `,
@@ -208,7 +208,6 @@ const BasicInfo = (props) => {
       isClosable: true,
       position: "top-right",
     });
-    onClose();
   };
   return (
     <Fragment>
@@ -340,7 +339,7 @@ const BasicInfo = (props) => {
                   <hr />
                 </div>
 
-                {/* <div className="row">
+                <div className="row">
                   <div className="col-6">
                     <Upload id="" type="file" onChange={handleChangeImage} />
                     <br />
@@ -356,7 +355,6 @@ const BasicInfo = (props) => {
                     {url.length > 5 ? null : null}
                   </div>
                 </div>
-                */}
               </div>
             </form>
           </>

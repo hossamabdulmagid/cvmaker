@@ -70,14 +70,16 @@ const FormDeatils = (props) => {
     );
     sidebarRoutes.push({
       section: state.title,
-      type: sectionData.type,
+      type: state.type,
       lastModified: new Date(),
     });
     array.push({
       section: state.title,
-      type: sectionData.type,
+      type: state.type,
       lastModified: new Date(),
     });
+    console.log(sectionData.title, `section Data ...title`);
+
     console.log(
       data.title,
       data.name,

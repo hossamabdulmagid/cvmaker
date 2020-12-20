@@ -37,7 +37,7 @@ const FormDeatils = (props) => {
 
   const [FlagButton, setFlagButton] = useState(true);
 
-  useEffect(() => {}, [currentUser.id, details]);
+  useEffect(() => {}, [currentUser.id]);
 
   useEffect(() => {
     setFlagButton(true);
@@ -48,7 +48,7 @@ const FormDeatils = (props) => {
       return;
     }
     const SecRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/${props.details}`
+      `users/${currentUser.id}/cvs/${id}/data/${value.title}`
     );
     let dataToBeSaved = {
       title: {
@@ -63,11 +63,6 @@ const FormDeatils = (props) => {
 
     await SecRef.set(dataToBeSaved);
 
-    console.log(
-      sectionData.section,
-      `sectionData.sectionsectionData.sectionsectionData.sectionsectionData.section`
-    );
-
     sidebarRoutes.push({
       section: data.title,
       type: state.type,
@@ -80,39 +75,32 @@ const FormDeatils = (props) => {
       lastModified: new Date(),
     });
 
-    console.log(sectionData.title, `section Data ...title`);
-    console.log(props.details, `there are @@@@@@@@`);
-    console.log(
-      data.title,
-      data.name,
-      `KKKKKKKKKKKKKKKK~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
-    );
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
       toast({
         title: "Section Updated.",
-        description: `Your new Section  name is : ${props.details}`,
+        description: `Your new Section  name is : ${value.title}`,
         status: "info",
         duration: 5000,
         isClosable: true,
         position: "bottom-left",
       });
-      //setDisplayDataToUI(false);
+      setDisplayDataToUI(false);
       setLoading(false);
     }, 2000);
     setTimeout(() => {
-      //      setDisplayDataToUI(false);
+      setDisplayDataToUI(false);
     }, 5000);
   };
-  useEffect(() => {}, [currentUser, id]);
+  useEffect(() => {}, [currentUser, id, details]);
 
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
-  let newData;
-  console.log(state.title.title, `state.title.title`);
+  const getData = () => {};
+
   useEffect(() => {
     setLoading(true);
     if (!currentUser) {
@@ -122,25 +110,23 @@ const FormDeatils = (props) => {
     firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
-      .doc(`title`)
       .get()
       .then(function (querySnapshot) {
-        console.log(querySnapshot.data(), `querySnapshot from basic info`);
-
         const newData = querySnapshot.data();
-        console.log(newData, `newData...`);
         if (newData) {
-          console.log(newData, `lololololololoy`);
+          //   console.log(newData, `lololololololoy`);
           setState({
-            title: props.details || "",
-            name: newData.title.name,
-            start: newData.title.start,
-            end: newData.title.end,
-            description: newData.title.description,
+            title: {
+              title: value.title || "",
+              name: newData.title.name,
+              start: newData.title.start,
+              end: newData.title.end,
+              description: newData.title.description,
+            },
             type: newData.type || "text",
           });
-          setLoading(false);
 
+          setLoading(false);
           setTimeout(() => {
             setDisplayDataToUI(false);
           }, 2000);
@@ -154,7 +140,6 @@ const FormDeatils = (props) => {
   useEffect(() => {
     setDisplayDataToUI(true);
     setLoading(true);
-    console.log(value.title, `value`);
   }, []);
   // console.log(data.title, `value`);
 
@@ -164,9 +149,7 @@ const FormDeatils = (props) => {
       console.log(`cleaning`);
     };
   });
-  console.log(sectionData.sectionName, `sectionData FFROM HERE`);
-  console.log(value, `valye from asdasdzxcaqq!!@@@ `);
-  console.log(props.details, `props.details`);
+
   return (
     <Fragment>
       <div className="container">
@@ -306,7 +289,7 @@ const FormDeatils = (props) => {
 
               <Rapperd>
                 <p className="pFornewFormSection">
-                  Description
+                  Description :
                   <strong>
                     {!displayDataToUI ? (
                       state.description || description
@@ -333,9 +316,5 @@ const FormDeatils = (props) => {
     </Fragment>
   );
 };
-/*
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
-*/
-export default /*connect(mapStateToProps) */ FormDeatils;
+
+export default FormDeatils;

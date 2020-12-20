@@ -169,7 +169,7 @@ const BasicInfo = (props) => {
     );
   };
 
-  console.log("image :", image);
+  //  console.log("image :", image);
 
   const [color, setColor] = React.useState("");
 
@@ -341,7 +341,7 @@ const BasicInfo = (props) => {
 
                 <div className="row">
                   <div className="col-6">
-                    <Upload id="" type="file" onChange={handleChangeImage} />
+                    <Upload type="file" onChange={handleChangeImage} />
                     <br />
                     <img
                       src={url || "http://via.placeholder.com/100"}

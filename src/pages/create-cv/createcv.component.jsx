@@ -135,26 +135,26 @@ const CreateCv = ({ currentUser }) => {
 
   console.log(flagButton, `flagButton`);
   const onSubmit = async (value, isChecked) => {
-    const SecRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/${section}`
-    );
-
-    let dataToBeSaved = {
-      sectionName: {
-        section:
-          {
-            title: sectionData.sectionName.section.title || "",
-            name: sectionData.sectionName.section.name || "",
-            start: sectionData.sectionName.section.start || "",
-            end: sectionData.sectionName.section.end || "",
-            description: sectionData.sectionName.section.description || "",
-          } || {},
-        type: value.type || "",
-        lastModified: new Date(),
-      },
-    };
-    setFlagButton(false);
-    await SecRef.set(dataToBeSaved);
+    /*  const SecRef = firestore.doc(
+        `users/${currentUser.id}/cvs/${id}/data/${section}`
+      );
+  
+      let dataToBeSaved = {
+        sectionName: {
+          section:
+            {
+              title: sectionData.sectionName.section.title || "",
+              name: sectionData.sectionName.section.name || "",
+              start: sectionData.sectionName.section.start || "",
+              end: sectionData.sectionName.section.end || "",
+              description: sectionData.sectionName.section.description || "",
+            } || {},
+          type: value.type || "",
+          lastModified: new Date(),
+        },
+      };
+      setFlagButton(false);
+      await SecRef.set(dataToBeSaved); */
     console.log(value.section, `&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&`);
     sidebarRoutes.push({
       section: value.section,
@@ -534,7 +534,8 @@ const CreateCv = ({ currentUser }) => {
                 <FormDeatils
                   array={array}
                   sidebarRoutes={sidebarRoutes}
-                  sectionData={sectionData}
+                  sectionData={sectionData.sectionName.section}
+                  details={value.section}
                 />
               ) : null}
 

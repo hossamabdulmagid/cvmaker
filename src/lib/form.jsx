@@ -13,19 +13,17 @@ const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
   // console.log(currentUser, `from user Selector`);
 
-  const { array, sidebarRoutes, sectionData } = props;
+  const { array, sidebarRoutes, sectionData, details } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
   const value = getValues();
   const toast = useToast();
 
   const [state, setState] = useState({
-    title: {
-      title: "",
-      name: "",
-      start: "",
-      end: "",
-      description: "",
-    },
+    title: "",
+    name: "",
+    start: "",
+    end: "",
+    description: "",
     type: "text",
   });
   const { id } = useParams();
@@ -49,16 +47,14 @@ const FormDeatils = (props) => {
       return;
     }
     const SecRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/title`
+      `users/${currentUser.id}/cvs/${id}/data/${title}`
     );
     let dataToBeSaved = {
-      title: {
-        title: state.title || "",
-        name: state.name || "",
-        start: state.start || "",
-        end: state.end || "",
-        description: state.description || "",
-      },
+      title: state.title || "",
+      name: state.name || "",
+      start: state.start || "",
+      end: state.end || "",
+      description: state.description || "",
       type: state.type || "text",
     };
 
@@ -69,12 +65,12 @@ const FormDeatils = (props) => {
       `sectionData.sectionsectionData.sectionsectionData.sectionsectionData.section`
     );
     sidebarRoutes.push({
-      section: state.title,
+      section: data.title,
       type: state.type,
       lastModified: new Date(),
     });
     array.push({
-      section: state.title,
+      section: data.title,
       type: state.type,
       lastModified: new Date(),
     });
@@ -107,6 +103,7 @@ const FormDeatils = (props) => {
 
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
   const [loading, setLoading] = useState(true);
+  let newData;
   useEffect(() => {
     setLoading(true);
     if (!currentUser) {
@@ -123,15 +120,13 @@ const FormDeatils = (props) => {
         const newData = querySnapshot.data();
         console.log(newData, `newData...`);
         if (newData) {
-          console.log(newData.title, `lololololololoy`);
+          console.log(newData, `lololololololoy`);
           setState({
-            title: {
-              title: newData.title.title,
-              name: newData.title.name,
-              start: newData.title.start,
-              end: newData.title.end,
-              description: newData.title.description,
-            },
+            title: newData.title.title,
+            name: newData.title.name,
+            start: newData.title.start,
+            end: newData.title.end,
+            description: newData.title.description,
             type: newData.type || "text",
           });
           setLoading(false);
@@ -151,7 +146,7 @@ const FormDeatils = (props) => {
     setLoading(true);
     console.log(value.title, `value`);
   }, []);
-  console.log(value.title, `value`);
+  // console.log(data.title, `value`);
 
   useEffect(() => {
     console.log(`Render`);
@@ -159,7 +154,8 @@ const FormDeatils = (props) => {
       console.log(`cleaning`);
     };
   });
-
+  console.log(sectionData.sectionName, `sectionData FFROM HERE`);
+  console.log(value, `valye from asdasdzxcaqq!!@@@ `);
   return (
     <Fragment>
       <div className="container">
@@ -167,9 +163,10 @@ const FormDeatils = (props) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               ref={register({ required: true })}
-              placeholder="title"
+              placeholder="title for new Section"
               name="title"
               type="text"
+              value={details}
               onChange={HandleChangenewData}
             />
             <strong className="col-12">
@@ -262,26 +259,18 @@ const FormDeatils = (props) => {
             <Rapperd>
               <Rapperd>
                 <p className="pFornewFormSection">
-                  Title :{" "}
+                  Title :
                   <strong>
-                    {setDisplayDataToUI ? (
-                      state.title.title || title
-                    ) : (
-                      <Spinner />
-                    )}
+                    {setDisplayDataToUI ? state.title || title : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
 
               <Rapperd>
                 <p className="pFornewFormSection">
-                  Name :{" "}
+                  Name :
                   <strong>
-                    {setDisplayDataToUI ? (
-                      state.title.name || name
-                    ) : (
-                      <Spinner />
-                    )}
+                    {setDisplayDataToUI ? state.name || name : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
@@ -290,30 +279,26 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   Start :{" "}
                   <strong>
-                    {setDisplayDataToUI ? (
-                      state.title.start || start
-                    ) : (
-                      <Spinner />
-                    )}
+                    {setDisplayDataToUI ? state.start || start : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
 
               <Rapperd>
                 <p className="pFornewFormSection">
-                  End :{" "}
+                  End :
                   <strong>
-                    {setDisplayDataToUI ? state.title.end || end : <Spinner />}
+                    {setDisplayDataToUI ? state.end || end : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
 
               <Rapperd>
                 <p className="pFornewFormSection">
-                  Description :{" "}
+                  Description
                   <strong>
                     {setDisplayDataToUI ? (
-                      state.title.description || description
+                      state.description || description
                     ) : (
                       <Spinner />
                     )}

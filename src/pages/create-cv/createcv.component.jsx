@@ -59,7 +59,7 @@ import { connect } from "react-redux";
 import InputCheckBox from "./checkbox";
 import { Radio, RadioGroup, Stack } from "@chakra-ui/core";
 
-const CreateCv = ({ currentUser }) => {
+const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     { section: "basicinfo", type: "text", lastModified: new Date() },
     { section: "workexperience", type: "text", lastModified: new Date() },
@@ -68,6 +68,7 @@ const CreateCv = ({ currentUser }) => {
     { section: "interests", type: "text", lastModified: new Date() },
     { section: "references", type: "text", lastModified: new Date() },
   ]);
+  const { currentUser, details } = props;
 
   const [inputList, setInputList] = useState([]);
 
@@ -134,6 +135,7 @@ const CreateCv = ({ currentUser }) => {
   const [flagButton, setFlagButton] = useState(true);
 
   console.log(flagButton, `flagButton`);
+
   const onSubmit = async (value, isChecked) => {
     /*  const SecRef = firestore.doc(
         `users/${currentUser.id}/cvs/${id}/data/${section}`

@@ -76,6 +76,8 @@ const FormDeatils = (props) => {
       lastModified: new Date(),
     });
 
+    console.log(array.sidebarRoutes, `hellooooooo`);
+
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
@@ -94,6 +96,7 @@ const FormDeatils = (props) => {
       setDisplayDataToUI(false);
     }, 5000);
   };
+
   useEffect(() => {}, [currentUser, id, details]);
 
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
@@ -114,33 +117,28 @@ const FormDeatils = (props) => {
     firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
-      //.doc(`${data.concept}/title`)
-      //.doc(`/title`)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          //  console.log(doc.id, " => ", doc.data());
           const DataFromFireBase = doc.data();
           if (DataFromFireBase.type === "text") {
             dataTypeText.push(DataFromFireBase.title);
-          }
-          setObjectHaveTypeText(DataFromFireBase);
-          //          console.log(objectHaveTypeText, `objectHaveTypeText`)
-        });
-        console.log(dataTypeText, `dataTypeText after initialze`);
 
-        //console.log(querySnapshot, `querySnapshot`)
-        //   console.log(DataFromFireBase, `querysnapshot.data`);
-        /*if (DataFromFireBase) {
-          setState({
-            concept: DataFromFireBase.state.concept,
-            name: DataFromFireBase.state.name,
-            start: DataFromFireBase.state.start,
-            end: DataFromFireBase.state.end,
-            description: DataFromFireBase.state.description,
-          });
-        } */
+            setState({
+              title: {
+                concept: DataFromFireBase.title.concept || "",
+                name: DataFromFireBase.title.name || "",
+                start: DataFromFireBase.title.start || "",
+                end: DataFromFireBase.title.end || "",
+                description: DataFromFireBase.title.description || "",
+              },
+            });
+            setDisplayDataToUI(false);
+          }
+          console.log(dataTypeText, `dataTypeText`);
+          setObjectHaveTypeText(DataFromFireBase);
+        });
+
         setLoading(false);
       })
       .catch((error) => {
@@ -148,52 +146,6 @@ const FormDeatils = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
-  /* 
-  // wrong way to get DATA
-    useEffect(() => {
-    setLoading(true);
-    if (!currentUser) {
-      return;
-    }
-
-    firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
-      .get()
-      .then(function (querySnapshot) {
-
-        const newData = querySnapshot.data();
-        if (newData) {
-          //   console.log(newData, `lololololololoy`);
-           setState({
-              title: {
-                title: data.title.title || "",
-                name: newData.title.name,
-                start: newData.title.start,
-                end: newData.title.end,
-                description: newData.title.description,
-              },
-              type: newData.type || "text",
-            }); 
-
-          setLoading(false);
-          setTimeout(() => {
-            //   setDisplayDataToUI(false);
-          }, 2000);
-          
-        }
-      })
-      .catch((error) => {
-        console.log(error, `there is was an error`);
-      });
-  }, [currentUser, id, setState]); 
-  */
-
-  useEffect(() => {
-    setDisplayDataToUI(true);
-    setLoading(true);
-  }, []);
 
   return (
     <Fragment>
@@ -300,7 +252,7 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   Title :
                   <strong>
-                    {!displayDataToUI ? state.title.title || "" : <Spinner />}
+                    {!displayDataToUI ? state.title.concept || "" : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>

@@ -19,7 +19,7 @@ const FormDeatils = (props) => {
 
   const [state, setState] = useState({
     title: {
-      title: "",
+      concept: "",
       name: "",
       start: "",
       end: "",
@@ -27,8 +27,9 @@ const FormDeatils = (props) => {
     },
     type: "text",
   });
+
   const { id } = useParams();
-  const { title, name, start, end, description } = state;
+  const { concept, name, start, end, description, type } = state;
 
   const HandleChangenewData = (event) => {
     const { name, value } = event.target;
@@ -48,17 +49,17 @@ const FormDeatils = (props) => {
       return;
     }
     const SecRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/${value.title}`
+      `users/${currentUser.id}/cvs/${id}/data/${value.concept}`
     );
     let dataToBeSaved = {
       title: {
-        title: state.title || "",
-        name: state.name || "",
-        start: state.start || "",
-        end: state.end || "",
-        description: state.description || "",
+        concept: value.concept || "",
+        name: name || "",
+        start: start || "",
+        end: end || "",
+        description: description || "",
       },
-      type: state.type || "text",
+      type: type || "text",
     };
 
     await SecRef.set(dataToBeSaved);
@@ -80,7 +81,7 @@ const FormDeatils = (props) => {
       setFlagButton(true);
       toast({
         title: "Section Updated.",
-        description: `Your new Section  name is : ${value.title}`,
+        description: `Your new Section  name is : ${value.concept}`,
         status: "info",
         duration: 5000,
         isClosable: true,
@@ -102,6 +103,39 @@ const FormDeatils = (props) => {
   const getData = () => {};
 
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
+    firestore
+      .doc(`users/${currentUser.id}/cvs/${id}/data`)
+      .collection(`cvs/${id}/data`)
+      .doc(`${data.concept}/title`)
+      //   .doc(`/title`)
+      .get()
+      .then(function (querySnapshot) {
+        const DATAFROMFB = querySnapshot.data();
+        console.log(DATAFROMFB, `querysnapshot.data`);
+        if (DATAFROMFB) {
+          setState({
+            concept: DATAFROMFB.state.concept,
+            name: DATAFROMFB.state.name,
+            start: DATAFROMFB.state.start,
+            end: DATAFROMFB.state.end,
+            description: DATAFROMFB.state.description,
+          });
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error, `there is was an error`);
+      });
+  }, [currentUser, id]);
+
+  /* 
+  // wrong way to get DATA
+    useEffect(() => {
     setLoading(true);
     if (!currentUser) {
       return;
@@ -112,30 +146,33 @@ const FormDeatils = (props) => {
       .collection(`cvs/${id}/data`)
       .get()
       .then(function (querySnapshot) {
+
         const newData = querySnapshot.data();
         if (newData) {
           //   console.log(newData, `lololololololoy`);
-          setState({
-            title: {
-              title: value.title || "",
-              name: newData.title.name,
-              start: newData.title.start,
-              end: newData.title.end,
-              description: newData.title.description,
-            },
-            type: newData.type || "text",
-          });
+           setState({
+              title: {
+                title: data.title.title || "",
+                name: newData.title.name,
+                start: newData.title.start,
+                end: newData.title.end,
+                description: newData.title.description,
+              },
+              type: newData.type || "text",
+            }); 
 
           setLoading(false);
           setTimeout(() => {
-            setDisplayDataToUI(false);
+            //   setDisplayDataToUI(false);
           }, 2000);
+          
         }
       })
       .catch((error) => {
         console.log(error, `there is was an error`);
       });
-  }, [currentUser, id, setState]);
+  }, [currentUser, id, setState]); 
+  */
 
   useEffect(() => {
     setDisplayDataToUI(true);
@@ -158,7 +195,7 @@ const FormDeatils = (props) => {
             <Input
               ref={register({ required: true })}
               placeholder="title for new Section"
-              name="title"
+              name="concept"
               type="text"
               value={details}
               onChange={HandleChangenewData}
@@ -255,7 +292,7 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   Title :
                   <strong>
-                    {!displayDataToUI ? state.title || title : <Spinner />}
+                    {!displayDataToUI ? state.title.title || "" : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
@@ -264,7 +301,7 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   Name :
                   <strong>
-                    {!displayDataToUI ? state.name || name : <Spinner />}
+                    {!displayDataToUI ? state.title.name || "" : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
@@ -273,7 +310,7 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   Start :{" "}
                   <strong>
-                    {!displayDataToUI ? state.start || start : <Spinner />}
+                    {!displayDataToUI ? state.title.start || "" : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
@@ -282,7 +319,7 @@ const FormDeatils = (props) => {
                 <p className="pFornewFormSection">
                   End :
                   <strong>
-                    {!displayDataToUI ? state.end || end : <Spinner />}
+                    {!displayDataToUI ? state.title.end || "" : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
@@ -292,7 +329,7 @@ const FormDeatils = (props) => {
                   Description :
                   <strong>
                     {!displayDataToUI ? (
-                      state.description || description
+                      state.title.description || ""
                     ) : (
                       <Spinner />
                     )}

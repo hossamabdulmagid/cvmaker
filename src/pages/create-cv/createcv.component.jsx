@@ -157,6 +157,7 @@ const CreateCv = (props) => {
       };
       setFlagButton(false);
       await SecRef.set(dataToBeSaved); */
+
     console.log(value.section, `&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&`);
     sidebarRoutes.push({
       section: value.section,

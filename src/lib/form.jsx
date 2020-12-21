@@ -133,7 +133,10 @@ const FormDeatils = (props) => {
                 description: DataFromFireBase.title.description || "",
               },
             });
-            setDisplayDataToUI(false);
+
+            setTimeout(() => {
+              setDisplayDataToUI(false);
+            }, 1500);
           }
           console.log(dataTypeText, `dataTypeText`);
           setObjectHaveTypeText(DataFromFireBase);
@@ -160,6 +163,7 @@ const FormDeatils = (props) => {
               value={details}
               onChange={HandleChangenewData}
             />
+
             <strong className="col-12">
               {errors && errors.title && (
                 <label className="error">

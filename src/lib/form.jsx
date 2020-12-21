@@ -102,29 +102,41 @@ const FormDeatils = (props) => {
 
   const getData = () => {};
 
+  const [dataTypeText, setDataTypeText] = useState([]);
+
   useEffect(() => {
     if (!currentUser) {
       return;
     }
 
     firestore
-      .doc(`users/${currentUser.id}/cvs/${id}/data`)
+      .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
-      .doc(`${data.concept}/title`)
-      //   .doc(`/title`)
+      //.doc(`${data.concept}/title`)
+      //.doc(`/title`)
       .get()
       .then(function (querySnapshot) {
-        const DATAFROMFB = querySnapshot.data();
-        console.log(DATAFROMFB, `querysnapshot.data`);
-        if (DATAFROMFB) {
+        querySnapshot.forEach(function (doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          const DataFromFireBase = doc.data();
+          if (DataFromFireBase.type === "text") {
+            dataTypeText.push(DataFromFireBase);
+          }
+        });
+        console.log(dataTypeText, `dataTypeText after initialze`);
+
+        //console.log(querySnapshot, `querySnapshot`)
+        //   console.log(DataFromFireBase, `querysnapshot.data`);
+        /*if (DataFromFireBase) {
           setState({
-            concept: DATAFROMFB.state.concept,
-            name: DATAFROMFB.state.name,
-            start: DATAFROMFB.state.start,
-            end: DATAFROMFB.state.end,
-            description: DATAFROMFB.state.description,
+            concept: DataFromFireBase.state.concept,
+            name: DataFromFireBase.state.name,
+            start: DataFromFireBase.state.start,
+            end: DataFromFireBase.state.end,
+            description: DataFromFireBase.state.description,
           });
-        }
+        } */
         setLoading(false);
       })
       .catch((error) => {

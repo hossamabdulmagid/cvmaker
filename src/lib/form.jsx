@@ -11,7 +11,7 @@ import { BsCheck } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/ai";
 const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(props, `props every where every render`);
+  //  console.log(props, `props every where every render`);
   const { array, sidebarRoutes, sectionData, details } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
   const value = getValues();
@@ -104,6 +104,8 @@ const FormDeatils = (props) => {
 
   const [dataTypeText, setDataTypeText] = useState([]);
 
+  const [objectHaveTypeText, setObjectHaveTypeText] = useState({});
+
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -118,11 +120,13 @@ const FormDeatils = (props) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
+          //  console.log(doc.id, " => ", doc.data());
           const DataFromFireBase = doc.data();
           if (DataFromFireBase.type === "text") {
-            dataTypeText.push(DataFromFireBase);
+            dataTypeText.push(DataFromFireBase.title);
           }
+          setObjectHaveTypeText(DataFromFireBase);
+          //          console.log(objectHaveTypeText, `objectHaveTypeText`)
         });
         console.log(dataTypeText, `dataTypeText after initialze`);
 
@@ -190,14 +194,6 @@ const FormDeatils = (props) => {
     setDisplayDataToUI(true);
     setLoading(true);
   }, []);
-  // console.log(data.title, `value`);
-
-  useEffect(() => {
-    console.log(`Render`);
-    return () => {
-      console.log(`cleaning`);
-    };
-  });
 
   return (
     <Fragment>

@@ -84,7 +84,7 @@ const FormDeatils = (props) => {
       toast({
         title: "Section Updated.",
         description: `Your new Section  name is : ${value.concept}`,
-        status: "info",
+        status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom-left",
@@ -301,8 +301,10 @@ const FormDeatils = (props) => {
                 </p>
               </Rapperd>
             </Rapperd>
-            <button
-              className="btn btn-danger"
+            <Button
+              //className="buttonSavenewFrom"
+              size="sm"
+              variantColor="blue"
               onClick={() =>
                 setTimeout(() => {
                   setDisplayDataToUI(true);
@@ -310,7 +312,7 @@ const FormDeatils = (props) => {
               }
             >
               <AiTwotoneEdit />
-            </button>
+            </Button>
           </Rapperd>
         )}
       </div>

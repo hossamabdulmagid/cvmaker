@@ -134,3 +134,7 @@ p {
 .cssforeditor {
   margin-bottom: 26px;
 }
+.alert {
+  border-radius: 20px;
+  width: auto;
+}

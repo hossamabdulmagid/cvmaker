@@ -47,11 +47,9 @@ class App extends React.Component {
 
   render() {
     const { currentUser } = this.props;
-
     return (
       <Fragment>
         <ScrollToTop />
-
         <div className="Container">
           <Nav />
           <Switch>
@@ -69,7 +67,6 @@ class App extends React.Component {
             <Route path="/Help" component={Help} />
             <Route path="/tips" component={Tips} />
             <Route path="/lang" component={Lang} />
-
             <Route path="/forgetpassword" component={ForgetPassword} />
             <Route
               path="/create-cv/:id"

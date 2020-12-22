@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 export const COL = styled.div`
   margin-top: 20px;
   padding: 25px;
+
+  margin: 0 auto;
 `;
 
 export const Container = styled.div`
@@ -20,9 +22,29 @@ export const Container = styled.div`
 
 export const Title = styled.h1`
   padding: 25px;
-  color: hsl(208deg 79% 51%);
+  color: white;
   padding: 25px;
-
+  border-radius: 10px;
+  animation-name: example;
+  animation-duration: 5s;
+  background-color: #3182ce;
+  @keyframes example {
+    0% {
+      background-color: red;
+      margin: 50px;
+      padding: 10px;
+    }
+    25% {
+      background-color: yellow;
+    }
+    50% {
+      background-color: blue;
+      margin: 50px;
+    }
+    100% {
+      background-color: purple;
+    }
+  }
   font-weight: bold;
 `;
 
@@ -42,6 +64,7 @@ export const LinkForSignInSignUp = styled(Link)`
 
 export const INPUT = styled(Input)`
   margin: 0 auto;
+  margin-top: 25px;
 `;
 export const RapperdInput = styled.div`
   text-align: center;
@@ -54,6 +77,8 @@ export const Form = styled.form`
   padding: 30px;
 `;
 export const RapperdAlert = styled.div`
-  padding: 5px;
+  text-align: center;
+  padding: 30px;
+
   border-radius: 10px;
 `;

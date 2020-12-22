@@ -90,6 +90,12 @@ const OldCv = ({ currentUser, match }) => {
 
   const [loading, setLoading] = useState(true);
 
+  React.useMemo(() => {
+    console.log(
+      ` will only recompute the cache value when one of the Deps had Change`
+    );
+  }, []);
+
   const GetData = async () => {
     await firestore
       .doc(`users/${currentUser.id}`)
@@ -97,6 +103,11 @@ const OldCv = ({ currentUser, match }) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
+          if (doc.data()) {
+            console.log(`bla bla bla`);
+          } else {
+            console.log(`trep trep trep`);
+          }
           let obj = doc.data();
           obj.id = doc.id;
           obj.lastModified = new Date().toString();

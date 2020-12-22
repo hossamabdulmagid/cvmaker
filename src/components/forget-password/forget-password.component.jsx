@@ -73,24 +73,36 @@ const ForgetPassword = () => {
     <Container className="container">
       <div className="">
         <COL className="col-12">
-          <RapperdAlert>
-            {error && (
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle mr={2}>ERROR!</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
-            {massage && (
-              <Alert status="success">
-                <AlertIcon />
-                Check Your Mail
-              </Alert>
-            )}
-          </RapperdAlert>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <Title>Get in Toush</Title>
+            <Title>Get in Touch</Title>
+            <RapperdAlert>
+              {error && (
+                <Alert
+                  status="error"
+                  className="alert"
+                  alignItems="center"
+                  justifyContent="center"
+                  textAlign="center"
+                >
+                  <AlertIcon />
+                  <AlertTitle mr={2}>ERROR!</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              {massage && (
+                <Alert
+                  status="success"
+                  className="alert"
+                  alignItems="center"
+                  justifyContent="center"
+                  textAlign="center"
+                >
+                  <AlertIcon />
+                  Check Your Mail
+                </Alert>
+              )}
+            </RapperdAlert>
             <RapperdInput>
               <INPUT
                 type="email"

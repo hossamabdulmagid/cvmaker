@@ -89,12 +89,12 @@ const FormDeatils = (props) => {
         isClosable: true,
         position: "bottom-left",
       });
-      setDisplayDataToUI(false);
+
       setLoading(false);
     }, 2000);
     setTimeout(() => {
       setDisplayDataToUI(false);
-    }, 5000);
+    }, 2500);
   };
 
   useEffect(() => {}, [currentUser, id, details]);

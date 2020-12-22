@@ -20,6 +20,7 @@ import PrivateRoute from "./lib/privateRoute";
 import OldCv from "./pages/old-cv/old-cv.component";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
+import ForgetPassword from "./components/forget-password/forget-password.component";
 
 class App extends React.Component {
   unsubscribeFormAuth = null;
@@ -68,6 +69,8 @@ class App extends React.Component {
             <Route path="/Help" component={Help} />
             <Route path="/tips" component={Tips} />
             <Route path="/lang" component={Lang} />
+
+            <Route path="/forgetpassword" component={ForgetPassword} />
             <Route
               path="/create-cv/:id"
               render={() =>

@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Input, H6, BUTTON, H7, IMG } from "./sign-in.styles";
+import {
+  Box,
+  Input,
+  H6,
+  BUTTON,
+  H7,
+  IMG,
+  ForgetPassword,
+} from "./sign-in.styles";
 import { useForm } from "react-hook-form";
 import {
   auth,
@@ -8,7 +16,6 @@ import {
 } from "../../firebase/firebase.utils";
 
 import { useToast } from "@chakra-ui/core";
-
 const Signin = () => {
   const toast = useToast();
 
@@ -80,7 +87,11 @@ const Signin = () => {
           Login
         </BUTTON>
       </form>
-      {/*     <H7>  Forgot your password? </H7> */}
+      <H7>
+        <ForgetPassword to="/forgetpassword">
+          Forgot your password
+        </ForgetPassword>
+      </H7>
       <IMG src="facebook.png" alt="" onClick={signInWithFacebook} />
       <IMG src="google.png" alt="" onClick={signInWithGoogle} />
     </Box>

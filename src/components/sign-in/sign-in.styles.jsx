@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Button } from "@chakra-ui/core";
+import { Link } from "react-router-dom";
+
 export const Box = styled.div`
   background: #fff;
   float: left;
@@ -54,4 +56,8 @@ export const IMG = styled.img`
   margin: 0 auto;
   padding: 5px;
   display: inline;
+`;
+
+export const ForgetPassword = styled(Link)`
+  display: block;
 `;

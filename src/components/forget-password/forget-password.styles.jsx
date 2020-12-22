@@ -18,13 +18,15 @@ export const Container = styled.div`
   margin-bottom: 120px;
   padding: 25px;
   margin-top: 120px;
+  min-height: auto;
 `;
 
 export const Title = styled.h1`
   padding: 25px;
   color: white;
-  padding: 25px;
   border-radius: 10px;
+  min-height: auto;
+
   animation-name: example;
   animation-duration: 5s;
   background-color: #3182ce;
@@ -64,13 +66,19 @@ export const LinkForSignInSignUp = styled(Link)`
 
 export const INPUT = styled(Input)`
   margin: 0 auto;
-  margin-top: 25px;
+  margin-top: 5px;
+  min-width: auto;
 `;
 export const RapperdInput = styled.div`
   text-align: center;
-  width: 260px;
+  min-width: 150px;
   margin: 0 auto;
   padding: 5px;
+  @media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  }
 `;
 
 export const Form = styled.form`
@@ -78,7 +86,7 @@ export const Form = styled.form`
 `;
 export const RapperdAlert = styled.div`
   text-align: center;
-  padding: 30px;
+  padding: 5px;
 
   border-radius: 10px;
 `;

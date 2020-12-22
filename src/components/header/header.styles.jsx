@@ -4,11 +4,10 @@ import { Button } from "@chakra-ui/core";
 export const RapperColor = styled.div`
   min-height: 720px;
   width: auto;
+  height: auto;
   background-color: #18c7e1;
   color: white;
   @media screen and (max-width: 800px) {
-    width: 40vw;
-
     &:hover {
       .image {
         opacity: unset;

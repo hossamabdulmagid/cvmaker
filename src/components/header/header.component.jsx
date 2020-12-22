@@ -21,7 +21,7 @@ const Head = () => {
   const [save, setSave] = useState(0);
   return (
     <>
-      <RapperColor className="">
+      <RapperColor className="container-fluid">
         <RapperContent className="container">
           <div className="row">
             <div className="col-8">
@@ -43,7 +43,7 @@ const Head = () => {
                 </BUTTON>
               </Links>
             </div>
-            <div className="col-2">
+            <div className="col-  ">
               <small onClick={() => setSave(save + 1)}>
                 {save + " "}
                 saved CVs{" "}

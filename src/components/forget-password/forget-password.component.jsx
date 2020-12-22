@@ -104,14 +104,21 @@ const ForgetPassword = () => {
               )}
             </RapperdAlert>
             <RapperdInput>
-              <INPUT
-                type="email"
-                name="email"
-                placeholder="your email please"
-                ref={initialRef}
-                onChange={handleChange}
-                isRequired
-              />
+              <div className="row">
+                <div className="col-4"></div>
+
+                <div className="col-4">
+                  <INPUT
+                    type="email"
+                    name="email"
+                    placeholder="your email please"
+                    ref={initialRef}
+                    onChange={handleChange}
+                    isRequired
+                  />
+                </div>
+                <div className="col-4"> </div>
+              </div>
             </RapperdInput>
             <ButtonSubmit size="sm" variantColor="blue" type="submit">
               {!flagButton ? <Spinner /> : "Confirm"}

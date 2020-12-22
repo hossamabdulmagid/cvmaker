@@ -30,7 +30,7 @@ import {
   useDisclosure,
   FormLabel,
 } from "@chakra-ui/core";
-
+import ImageUpload from "./uploadimage";
 const BasicInfo = (props) => {
   const { currentUser, match, doc, info, basicinfo } = props;
 
@@ -356,6 +356,7 @@ const BasicInfo = (props) => {
                   </div>
                 </div>
               </div>
+              {/*   <ImageUpload /> */}
             </form>
           </>
         ) : (

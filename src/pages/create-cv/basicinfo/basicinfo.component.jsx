@@ -288,13 +288,10 @@ const BasicInfo = (props) => {
                       ref={register({ required: "*input is required" })}
                       required
                     />
-
                     <small className="errorSectionName">
                       {errors.email && errors.email.message}
                     </small>
-
                     <Label>Websites</Label>
-
                     <Input
                       name="webSites"
                       placeholder="https://www."

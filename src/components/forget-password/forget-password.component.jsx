@@ -86,7 +86,7 @@ const ForgetPassword = () => {
                 >
                   <AlertIcon />
                   <AlertTitle mr={2}>ERROR!</AlertTitle>
-                  <AlertDescription>{error}</AlertDescription>
+                  <AlertDescription>{error || error.massage}</AlertDescription>
                 </Alert>
               )}
 

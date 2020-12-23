@@ -28,7 +28,7 @@ export const Title = styled.h1`
   min-height: auto;
 
   animation-name: example;
-  animation-duration: 5s;
+  animation-duration: 3s;
   background-color: #3182ce;
   @keyframes example {
     0% {

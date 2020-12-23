@@ -11,8 +11,9 @@ import { BsCheck } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/ai";
 const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
-  //  console.log(props, `props every where every render`);
+  console.log(props, `props every where every render`);
   const { array, sidebarRoutes, sectionData, details } = props;
+
   const { handleSubmit, register, getValues, errors, data } = useForm();
   const value = getValues();
   const toast = useToast();
@@ -121,8 +122,10 @@ const FormDeatils = (props) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           const DataFromFireBase = doc.data();
+          console.log(DataFromFireBase, `DataFromFireBase 6 index`);
           if (DataFromFireBase.type === "text") {
             dataTypeText.push(DataFromFireBase.title);
+            console.log(dataTypeText, `DataFromFireBase 3 index`);
 
             setState({
               title: {

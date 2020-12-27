@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
+import { Container, Row, Col } from "react-bootstrap";
 const Nav = ({ currentUser, displayName }) => {
   const [languages, setLanguages] = useState([
     "English",
@@ -49,24 +50,27 @@ const Nav = ({ currentUser, displayName }) => {
 
   return (
     <Rapper>
-      <div className="container">
-        <div className="row">
-          <div className="col-6">
+      <Container>
+        <Row>
+          <Col xs={3} s={4} lg={6}>
             <Span>Create, maintain, publish, and share your CVs for free</Span>
-          </div>
-          <div className="col-2">
+          </Col>
+          <Col xs={3} s={4} lg={3}>
             <Select>
               {languages.map((singlelang, i) => (
                 <option key={i}>{singlelang}</option>
               ))}
             </Select>
-          </div>
-          <div className="col-3">
+          </Col>
+          <Col xs={6} s={4} lg={3}>
             {currentUser ? (
               <LINK onClick={() => auth.signOut()} to="">
                 {" "}
                 <span> Sign Out</span>
-                <Small> ({currentUser.displayName}) </Small>
+                <Small prefix="d-xs-block d-sm-block d-lg-flex d-xl-flex d-md-flex">
+                  {" "}
+                  ({currentUser.displayName}){" "}
+                </Small>
               </LINK>
             ) : (
               <>
@@ -74,9 +78,9 @@ const Nav = ({ currentUser, displayName }) => {
                 <LINK to="/login">Login | Signup</LINK>
               </>
             )}
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     </Rapper>
   );
 };

@@ -180,53 +180,57 @@ const OldCv = ({ currentUser, match }) => {
         </Content>
         <div className="container">
           {!loading ? (
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th> Name</th>
-                  <th>Created At</th>
-                  <th>Last Modified</th>
-                  <th>Options</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allcv.map((singleCv, i) => (
-                  <tr key={i}>
-                    <td>
-                      {singleCv.label}
-                      <ButtonForDeleteCv
-                        onClick={() => deleteCv(`${singleCv.id}`)}
-                      >
-                        delete
-                        <Icon />
-                      </ButtonForDeleteCv>
-                    </td>
-                    <td>
-                      <Moment format="MMMM Do YYYY, h:mm a">
-                        {singleCv.createdAt}
-                      </Moment>
-                      <IconCalendar />
-                    </td>
-                    <td>
-                      <Moment format="MMMM Do YYYY, h:mm a">
-                        {singleCv.lastModified}
-                      </Moment>
-                      <IconCalendar />
-                    </td>
+            <div className="row">
+              <div className="col" xs={12} s={12} md={12} lg={12}>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th> Name</th>
+                      <th>Created At</th>
+                      <th>Last Modified</th>
+                      <th>Options</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allcv.map((singleCv, i) => (
+                      <tr key={i}>
+                        <td>
+                          {singleCv.label}
+                          <ButtonForDeleteCv
+                            onClick={() => deleteCv(`${singleCv.id}`)}
+                          >
+                            delete
+                            <Icon />
+                          </ButtonForDeleteCv>
+                        </td>
+                        <td>
+                          <Moment format="MMMM Do YYYY, h:mm a">
+                            {singleCv.createdAt}
+                          </Moment>
+                          <IconCalendar />
+                        </td>
+                        <td>
+                          <Moment format="MMMM Do YYYY, h:mm a">
+                            {singleCv.lastModified}
+                          </Moment>
+                          <IconCalendar />
+                        </td>
 
-                    <td>
-                      <Linkcv
-                        to={"create-cv/" + `${singleCv.id}`}
-                        onClick={() => refreshlastModified()}
-                      >
-                        Edit now
-                        <Iconedit />
-                      </Linkcv>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+                        <td>
+                          <Linkcv
+                            to={"create-cv/" + `${singleCv.id}`}
+                            onClick={() => refreshlastModified()}
+                          >
+                            Edit now
+                            <Iconedit />
+                          </Linkcv>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            </div>
           ) : (
             <Spinner
               thickness="30px"

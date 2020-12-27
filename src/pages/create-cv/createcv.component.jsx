@@ -265,7 +265,7 @@ const CreateCv = (props) => {
               type: data.type || data.sectionName.type,
               lastModified,
             });
-            console.log(array, `array comming from fb`);
+            console.log(array, `arra00000000000000000000000y comming from fb`);
             setTimeout(() => {
               setFlag(false);
             }, 50);
@@ -539,11 +539,10 @@ const CreateCv = (props) => {
               {activeSection === "text" ? (
                 <FormDeatils
                   array={array}
-                  sidebarRoutes={sidebarRoutes}
-                  sectionData={sectionData.sectionName.section}
                   details={value.section}
                   displayDataToUI={displayDataToUI}
                   setDisplayDataToUI={setDisplayDataToUI}
+                  sidebarRoutes={sidebarRoutes}
                 />
               ) : null}
 

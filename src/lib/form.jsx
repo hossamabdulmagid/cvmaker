@@ -14,11 +14,11 @@ const FormDeatils = (props) => {
   //console.log(props, `props every where every render`);
   const {
     array,
-    sidebarRoutes,
-    sectionData,
     details,
+    sidebarRoutes,
     displayDataToUI,
     setDisplayDataToUI,
+    activeSection,
   } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
   const value = getValues();
@@ -128,24 +128,28 @@ const FormDeatils = (props) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           const DataFromFireBase = doc.data();
-          console.log(DataFromFireBase, `DataFromFireBase`);
-          console.log(DataFromFireBase.title, `DDDDDD 6 index`);
-          console.log(array.section, `array`);
-          console.log(
-            details,
-            `detailsdetailsdetailsdetailsdetailsxxxxxxxxxxxxxxxxxx`
-          );
 
           if (DataFromFireBase.type === "text") {
             //`&& DataFromFireBase.title || DataFromFireBase.title === details`
-            console.log(dataTypeText, `DataFromFireBase 3 index`);
             dataTypeText.push(DataFromFireBase.title);
-            if (DataFromFireBase.title === "") {
+
+            // ana 3ayez a2olo law .title === sections ||actice Section Set el State
+            if (DataFromFireBase) {
               // do some thing here
+
+              console.log(
+                dataTypeText,
+                `@@@@@@@@@@@@@@@>>Data From fireBase Only Type Text<<@@@@@@@@@@@@@@@`
+              );
+              console.log(activeSection);
+              console.log(props, `props every wehere@@@@@`);
+              console.log(`yessss`);
+            } else {
+              console.log(`nonononono`);
             }
             setState({
               title: {
-                concept: DataFromFireBase.title.concept || "",
+                concept: "" || DataFromFireBase.title.concept,
                 name: DataFromFireBase.title.name || "",
                 start: DataFromFireBase.title.start || "",
                 end: DataFromFireBase.title.end || "",
@@ -157,13 +161,16 @@ const FormDeatils = (props) => {
               setDisplayDataToUI(false);
             }, 1500);
           }
-          console.log(dataTypeText, `dataTypeText`);
           setObjectHaveTypeText(DataFromFireBase);
           console.log(
             dataTypeText.map((single) => {
               return single.concept;
             }),
             `dataTypeText.map((single)=>({single})`
+          );
+          console.log(
+            dataTypeText,
+            `@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`
           );
         });
 

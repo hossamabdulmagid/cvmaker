@@ -6,3 +6,11 @@ export const Rapperd = styled.div`
   padding: 15px;
   text-align: center;
 `;
+export const RapperdForm = styled.div`
+  margin: 0 auto;
+  text-align: center;
+`;
+export const Small = styled.small`
+  color: silver;
+  padding: 10px;
+`;

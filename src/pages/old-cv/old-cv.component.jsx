@@ -167,6 +167,7 @@ const OldCv = ({ currentUser, match }) => {
         });
       });
   };
+  //    question={"Are you sure you want to delete the survey?"}
 
   return (
     <Fragment>

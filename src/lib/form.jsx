@@ -6,18 +6,24 @@ import { useToast, Input, Textarea, Spinner } from "@chakra-ui/core";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { useSelector } from "react-redux";
-import { Rapperd } from "./styles";
+import { Rapperd, RapperdForm, Small } from "./styles";
 import { BsCheck } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/ai";
 const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(props, `props every where every render`);
-  const { array, sidebarRoutes, sectionData, details } = props;
-
+  //console.log(props, `props every where every render`);
+  const {
+    array,
+    sidebarRoutes,
+    sectionData,
+    details,
+    displayDataToUI,
+    setDisplayDataToUI,
+  } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
   const value = getValues();
   const toast = useToast();
-
+  useEffect(() => {}, [displayDataToUI]);
   const [state, setState] = useState({
     title: {
       concept: "",
@@ -100,8 +106,6 @@ const FormDeatils = (props) => {
 
   useEffect(() => {}, [currentUser, id, details]);
 
-  const [displayDataToUI, setDisplayDataToUI] = useState(true);
-
   const [loading, setLoading] = useState(true);
 
   const getData = () => {};
@@ -109,12 +113,14 @@ const FormDeatils = (props) => {
   const [dataTypeText, setDataTypeText] = useState([]);
 
   const [objectHaveTypeText, setObjectHaveTypeText] = useState({});
+  const HandleUpdates = ({ displayDataToUI }) => {
+    return <div>{displayDataToUI.toString()}</div>;
+  };
 
   useEffect(() => {
     if (!currentUser) {
       return;
     }
-
     firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
@@ -122,11 +128,21 @@ const FormDeatils = (props) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           const DataFromFireBase = doc.data();
-          console.log(DataFromFireBase, `DataFromFireBase 6 index`);
-          if (DataFromFireBase.type === "text") {
-            dataTypeText.push(DataFromFireBase.title);
-            console.log(dataTypeText, `DataFromFireBase 3 index`);
+          console.log(DataFromFireBase, `DataFromFireBase`);
+          console.log(DataFromFireBase.title, `DDDDDD 6 index`);
+          console.log(array.section, `array`);
+          console.log(
+            details,
+            `detailsdetailsdetailsdetailsdetailsxxxxxxxxxxxxxxxxxx`
+          );
 
+          if (DataFromFireBase.type === "text") {
+            //`&& DataFromFireBase.title || DataFromFireBase.title === details`
+            console.log(dataTypeText, `DataFromFireBase 3 index`);
+            dataTypeText.push(DataFromFireBase.title);
+            if (DataFromFireBase.title === "") {
+              // do some thing here
+            }
             setState({
               title: {
                 concept: DataFromFireBase.title.concept || "",
@@ -143,6 +159,12 @@ const FormDeatils = (props) => {
           }
           console.log(dataTypeText, `dataTypeText`);
           setObjectHaveTypeText(DataFromFireBase);
+          console.log(
+            dataTypeText.map((single) => {
+              return single.concept;
+            }),
+            `dataTypeText.map((single)=>({single})`
+          );
         });
 
         setLoading(false);
@@ -157,166 +179,182 @@ const FormDeatils = (props) => {
     <Fragment>
       <div className="container">
         {displayDataToUI ? (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              ref={register({ required: true })}
-              placeholder="title for new Section"
-              name="concept"
-              type="text"
-              value={details}
-              onChange={HandleChangenewData}
-            />
+          <Fragment>
+            <RapperdForm xs={12}>
+              <Small>
+                {" "}
+                If you leave the fields in a section empty, the section will not
+                appear in your CV
+              </Small>
+              <HandleUpdates displayDataToUI={displayDataToUI} />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                  ref={register({ required: true })}
+                  placeholder="title for new Section"
+                  name="concept"
+                  type="text"
+                  value={details}
+                  onChange={HandleChangenewData}
+                />
 
-            <strong className="col-12">
-              {errors && errors.title && (
-                <label className="error">
-                  {errors.title.message || "title is required"}
-                </label>
-              )}
-            </strong>
-            <Input
-              ref={register({ required: true })}
-              placeholder="name"
-              name="name"
-              type="text"
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.name && (
-                <label className="error">
-                  {errors.name.message || "name is required"}
-                </label>
-              )}
-            </strong>
-            <Input
-              ref={register({ required: true })}
-              placeholder="start"
-              name="start"
-              type="text"
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.start && (
-                <label className="error">
-                  {errors.start.message || "start is required"}
-                </label>
-              )}
-            </strong>
-            <Input
-              ref={register({ required: true })}
-              placeholder="end"
-              name="end"
-              type="text"
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.end && (
-                <label className="error">
-                  {errors.end.message || "end is required"}
-                </label>
-              )}
-            </strong>
-            <Textarea
-              ref={register({ required: true })}
-              placeholder="description  here"
-              type="textarea"
-              name="description"
-              onChange={HandleChangenewData}
-            />
-            <strong className="col-12">
-              {errors && errors.description && (
-                <label className="error">
-                  {errors.description.message || "description is required"}
-                </label>
-              )}
-            </strong>
-            <div className="someThing">
-              <Button
-                type="submit"
-                className="buttonSavenewFrom"
-                size="sm"
-                variantColor="blue"
-                //   onClick={() => setDisplayDataToUI(false)}
-              >
-                {!FlagButton ? (
-                  <Spinner
-                    thickness="4px"
-                    speed="0.65s"
-                    emptyColor="gray.200"
-                    color="blue.500"
+                <strong className="col-12">
+                  {errors && errors.title && (
+                    <label className="error">
+                      {errors.title.message || "title is required"}
+                    </label>
+                  )}
+                </strong>
+                <Input
+                  ref={register({ required: true })}
+                  placeholder="name"
+                  name="name"
+                  type="text"
+                  onChange={HandleChangenewData}
+                />
+                <strong className="col-12">
+                  {errors && errors.name && (
+                    <label className="error">
+                      {errors.name.message || "name is required"}
+                    </label>
+                  )}
+                </strong>
+                <Input
+                  ref={register({ required: true })}
+                  placeholder="start"
+                  name="start"
+                  type="text"
+                  onChange={HandleChangenewData}
+                />
+                <strong className="col-12">
+                  {errors && errors.start && (
+                    <label className="error">
+                      {errors.start.message || "start is required"}
+                    </label>
+                  )}
+                </strong>
+                <Input
+                  ref={register({ required: true })}
+                  placeholder="end"
+                  name="end"
+                  type="text"
+                  onChange={HandleChangenewData}
+                />
+                <strong className="col-12">
+                  {errors && errors.end && (
+                    <label className="error">
+                      {errors.end.message || "end is required"}
+                    </label>
+                  )}
+                </strong>
+                <Textarea
+                  ref={register({ required: true })}
+                  placeholder="description  here"
+                  type="textarea"
+                  name="description"
+                  onChange={HandleChangenewData}
+                />
+                <strong className="col-12">
+                  {errors && errors.description && (
+                    <label className="error">
+                      {errors.description.message || "description is required"}
+                    </label>
+                  )}
+                </strong>
+                <div className="someThing">
+                  <Button
+                    type="submit"
+                    className="buttonSavenewFrom"
                     size="sm"
-                  />
-                ) : (
-                  "Save"
-                )}
-              </Button>
-            </div>
-          </form>
+                    variantColor="blue"
+                    //   onClick={() => setDisplayDataToUI(false)}
+                  >
+                    {!FlagButton ? (
+                      <Spinner
+                        thickness="4px"
+                        speed="0.65s"
+                        emptyColor="gray.200"
+                        color="blue.500"
+                        size="sm"
+                      />
+                    ) : (
+                      "Save"
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </RapperdForm>
+          </Fragment>
         ) : (
-          <Rapperd>
+          <>
             <Rapperd>
               <Rapperd>
-                <p className="pFornewFormSection">
-                  Title :
-                  <strong>
-                    {!displayDataToUI ? state.title.concept || "" : <Spinner />}
-                  </strong>
-                </p>
-              </Rapperd>
+                <Rapperd>
+                  <p className="pFornewFormSection">
+                    Title :
+                    <strong>
+                      {!displayDataToUI ? (
+                        state.title.concept || ""
+                      ) : (
+                        <Spinner />
+                      )}
+                    </strong>
+                  </p>
+                </Rapperd>
 
-              <Rapperd>
-                <p className="pFornewFormSection">
-                  Name :
-                  <strong>
-                    {!displayDataToUI ? state.title.name || "" : <Spinner />}
-                  </strong>
-                </p>
-              </Rapperd>
+                <Rapperd>
+                  <p className="pFornewFormSection">
+                    Name :
+                    <strong>
+                      {!displayDataToUI ? state.title.name || "" : <Spinner />}
+                    </strong>
+                  </p>
+                </Rapperd>
 
-              <Rapperd>
-                <p className="pFornewFormSection">
-                  Start :{" "}
-                  <strong>
-                    {!displayDataToUI ? state.title.start || "" : <Spinner />}
-                  </strong>
-                </p>
-              </Rapperd>
+                <Rapperd>
+                  <p className="pFornewFormSection">
+                    Start :{" "}
+                    <strong>
+                      {!displayDataToUI ? state.title.start || "" : <Spinner />}
+                    </strong>
+                  </p>
+                </Rapperd>
 
-              <Rapperd>
-                <p className="pFornewFormSection">
-                  End :
-                  <strong>
-                    {!displayDataToUI ? state.title.end || "" : <Spinner />}
-                  </strong>
-                </p>
-              </Rapperd>
+                <Rapperd>
+                  <p className="pFornewFormSection">
+                    End :
+                    <strong>
+                      {!displayDataToUI ? state.title.end || "" : <Spinner />}
+                    </strong>
+                  </p>
+                </Rapperd>
 
-              <Rapperd>
-                <p className="pFornewFormSection">
-                  Description :
-                  <strong>
-                    {!displayDataToUI ? (
-                      state.title.description || ""
-                    ) : (
-                      <Spinner />
-                    )}
-                  </strong>
-                </p>
+                <Rapperd>
+                  <p className="pFornewFormSection">
+                    Description :
+                    <strong>
+                      {!displayDataToUI ? (
+                        state.title.description || ""
+                      ) : (
+                        <Spinner />
+                      )}
+                    </strong>
+                  </p>
+                </Rapperd>
               </Rapperd>
+              <Button
+                //className="buttonSavenewFrom"
+                size="sm"
+                variantColor="blue"
+                onClick={() =>
+                  setTimeout(() => {
+                    setDisplayDataToUI(true);
+                  }, 2000)
+                }
+              >
+                <AiTwotoneEdit />
+              </Button>
             </Rapperd>
-            <Button
-              //className="buttonSavenewFrom"
-              size="sm"
-              variantColor="blue"
-              onClick={() =>
-                setTimeout(() => {
-                  setDisplayDataToUI(true);
-                }, 2000)
-              }
-            >
-              <AiTwotoneEdit />
-            </Button>
-          </Rapperd>
+          </>
         )}
       </div>
     </Fragment>

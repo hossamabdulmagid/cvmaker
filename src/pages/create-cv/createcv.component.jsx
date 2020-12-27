@@ -68,6 +68,8 @@ const CreateCv = (props) => {
     { section: "interests", type: "text", lastModified: new Date() },
     { section: "references", type: "text", lastModified: new Date() },
   ]);
+  const [displayDataToUI, setDisplayDataToUI] = useState(true);
+
   const { currentUser, details } = props;
 
   const [inputList, setInputList] = useState([]);
@@ -174,6 +176,7 @@ const CreateCv = (props) => {
     console.log(array, `array after Submitting`);
     setTimeout(() => {
       setFlagButton(true);
+      setDisplayDataToUI(true);
       setActiveSection(value.type);
       onClose();
       toast({
@@ -539,6 +542,8 @@ const CreateCv = (props) => {
                   sidebarRoutes={sidebarRoutes}
                   sectionData={sectionData.sectionName.section}
                   details={value.section}
+                  displayDataToUI={displayDataToUI}
+                  setDisplayDataToUI={setDisplayDataToUI}
                 />
               ) : null}
 

@@ -11,7 +11,6 @@ import { BsCheck } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/ai";
 const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
-  //console.log(props, `props every where every render`);
   const {
     array,
     details,
@@ -83,8 +82,6 @@ const FormDeatils = (props) => {
       lastModified: new Date(),
     });
 
-    console.log(array.sidebarRoutes, `hellooooooo`);
-
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
@@ -96,9 +93,9 @@ const FormDeatils = (props) => {
         isClosable: true,
         position: "bottom-left",
       });
-
       setLoading(false);
     }, 2000);
+
     setTimeout(() => {
       setDisplayDataToUI(false);
     }, 2500);
@@ -113,6 +110,7 @@ const FormDeatils = (props) => {
   const [dataTypeText, setDataTypeText] = useState([]);
 
   const [objectHaveTypeText, setObjectHaveTypeText] = useState({});
+
   const HandleUpdates = ({ displayDataToUI }) => {
     return <div>{displayDataToUI.toString()}</div>;
   };
@@ -127,51 +125,40 @@ const FormDeatils = (props) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
+          console.log(doc.id, `doC`);
           const DataFromFireBase = doc.data();
 
           if (DataFromFireBase.type === "text") {
-            //`&& DataFromFireBase.title || DataFromFireBase.title === details`
             dataTypeText.push(DataFromFireBase.title);
+            //`&& DataFromFireBase.title || DataFromFireBase.title === details`
 
-            // ana 3ayez a2olo law .title === sections ||actice Section Set el State
-            if (DataFromFireBase) {
+            if (doc.id === DataFromFireBase.title.concept) {
               // do some thing here
+              console.log(doc.id, `=>>`, DataFromFireBase.title.concept, `=>>`);
 
-              console.log(
-                dataTypeText,
-                `@@@@@@@@@@@@@@@>>Data From fireBase Only Type Text<<@@@@@@@@@@@@@@@`
-              );
-              console.log(activeSection);
-              console.log(props, `props every wehere@@@@@`);
-              console.log(`yessss`);
+              setState({
+                title: {
+                  concept: "" || DataFromFireBase.title.concept,
+                  name: DataFromFireBase.title.name || "",
+                  start: DataFromFireBase.title.start || "",
+                  end: DataFromFireBase.title.end || "",
+                  description: DataFromFireBase.title.description || "",
+                },
+              });
+
+              setObjectHaveTypeText(state);
+              console.log(`iam trueeeeeee`);
+              console.log(`Yes*************`);
             } else {
-              console.log(`nonononono`);
+              console.log(`Iam Falseeeee`);
+              console.log(`No*******************`);
             }
-            setState({
-              title: {
-                concept: "" || DataFromFireBase.title.concept,
-                name: DataFromFireBase.title.name || "",
-                start: DataFromFireBase.title.start || "",
-                end: DataFromFireBase.title.end || "",
-                description: DataFromFireBase.title.description || "",
-              },
-            });
 
             setTimeout(() => {
               setDisplayDataToUI(false);
             }, 1500);
           }
           setObjectHaveTypeText(DataFromFireBase);
-          console.log(
-            dataTypeText.map((single) => {
-              return single.concept;
-            }),
-            `dataTypeText.map((single)=>({single})`
-          );
-          console.log(
-            dataTypeText,
-            `@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`
-          );
         });
 
         setLoading(false);
@@ -349,7 +336,6 @@ const FormDeatils = (props) => {
                 </Rapperd>
               </Rapperd>
               <Button
-                //className="buttonSavenewFrom"
                 size="sm"
                 variantColor="blue"
                 onClick={() =>

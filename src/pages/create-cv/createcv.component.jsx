@@ -78,8 +78,6 @@ const CreateCv = (props) => {
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
 
-  console.log(sidebarRoutes, `lastModified`);
-
   const toast = useToast();
 
   const [color, setColor] = React.useState("");
@@ -136,8 +134,6 @@ const CreateCv = (props) => {
 
   const [flagButton, setFlagButton] = useState(true);
 
-  console.log(flagButton, `flagButton`);
-
   const onSubmit = async (value, isChecked) => {
     /*  const SecRef = firestore.doc(
         `users/${currentUser.id}/cvs/${id}/data/${section}`
@@ -160,20 +156,17 @@ const CreateCv = (props) => {
       setFlagButton(false);
       await SecRef.set(dataToBeSaved); */
 
-    console.log(value.section, `&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&`);
     sidebarRoutes.push({
       section: value.section,
       type: value.type,
       lastModified: new Date(),
     });
-    console.log(value.section, `value.section.title`);
     array.push({
       section: value.section,
       type: value.type,
       lastModified: new Date(),
     });
     setFlagButton(false);
-    console.log(array, `array after Submitting`);
     setTimeout(() => {
       setFlagButton(true);
       setDisplayDataToUI(true);

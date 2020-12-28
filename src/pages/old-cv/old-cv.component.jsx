@@ -13,21 +13,19 @@ import {
   ButtonforcreateCv,
   Linkcv,
   Iconedit,
-  Td,
   ButtonForDeleteCv,
   IconCalendar,
-  IconEditNameOfSection,
 } from "./old-cv.styles";
+import { Col } from "react-bootstrap";
 import {
   Accordion,
   AccordionHeader,
   AccordionItem,
   AccordionPanel,
   Box,
-  hh,
 } from "@chakra-ui/core";
 import { firestore } from "../../firebase/firebase.utils";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
@@ -180,57 +178,62 @@ const OldCv = ({ currentUser, match }) => {
         </Content>
         <div className="container">
           {!loading ? (
-            <div className="row">
-              <div className="col" xs={12} s={12} md={12} lg={12}>
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th> Name</th>
-                      <th>Created At</th>
-                      <th>Last Modified</th>
-                      <th>Options</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allcv.map((singleCv, i) => (
-                      <tr key={i}>
-                        <td>
-                          {singleCv.label}
-                          <ButtonForDeleteCv
-                            onClick={() => deleteCv(`${singleCv.id}`)}
-                          >
-                            delete
-                            <Icon />
-                          </ButtonForDeleteCv>
-                        </td>
-                        <td>
-                          <Moment format="MMMM Do YYYY, h:mm a">
-                            {singleCv.createdAt}
-                          </Moment>
-                          <IconCalendar />
-                        </td>
-                        <td>
-                          <Moment format="MMMM Do YYYY, h:mm a">
-                            {singleCv.lastModified}
-                          </Moment>
-                          <IconCalendar />
-                        </td>
+            <Table
+              striped
+              bordered
+              hover
+              size="xs"
+              responsive="xl"
+              responsive="sm"
+              responsive="md"
+              responsive="lg"
+            >
+              <thead>
+                <tr>
+                  <th> Name</th>
+                  <th>Created At</th>
+                  <th>Last Modified</th>
+                  <th>Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allcv.map((singleCv, i) => (
+                  <tr key={i}>
+                    <td>
+                      {singleCv.label}
+                      <ButtonForDeleteCv
+                        onClick={() => deleteCv(`${singleCv.id}`)}
+                      >
+                        delete
+                        <Icon />
+                      </ButtonForDeleteCv>
+                    </td>
+                    <td>
+                      <Moment format="MMMM Do YYYY, h:mm a">
+                        {singleCv.createdAt}
+                      </Moment>
+                      <IconCalendar />
+                    </td>
+                    <td>
+                      <Moment format="MMMM Do YYYY, h:mm a">
+                        {singleCv.lastModified}
+                      </Moment>
+                      <IconCalendar />
+                    </td>
 
-                        <td>
-                          <Linkcv
-                            to={"create-cv/" + `${singleCv.id}`}
-                            onClick={() => refreshlastModified()}
-                          >
-                            Edit now
-                            <Iconedit />
-                          </Linkcv>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </div>
-            </div>
+                    <td>
+                      <Linkcv
+                        to={"create-cv/" + `${singleCv.id}`}
+                        onClick={() => refreshlastModified()}
+                      >
+                        Edit now
+                        <Iconedit />
+                      </Linkcv>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           ) : (
             <Spinner
               thickness="30px"
@@ -242,72 +245,77 @@ const OldCv = ({ currentUser, match }) => {
           )}
 
           <div className="container">
-            <Accordion
-              defaultIndex={[0]}
-              allowToggle
-              show={show}
-              handleClose={handleClose}
-            >
-              <AccordionItem className="AccordionItem">
-                <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
-                  <Box flex="1" textAlign="left">
-                    <h1>
-                      Go <Strong>Premium </Strong> ❤
-                    </h1>
-                    <Span> Show details ★ </Span>
-                  </Box>
-                </AccordionHeader>
-                <AccordionPanel pb={4}>
-                  CV Maker is absolutely FREE with no restrictions, but you can
-                  get a lot more out of it and support its continued development
-                  by going premium for a nominal annual subscription fee.
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-6">
-                        <H2> Free</H2>
-                        <Small>Basic templates</Small>
-                        <Small>Add custom plain sections to your CV</Small>
-                        <Small>Basic rich text editor</Small>
-                        <Small>$0</Small>
-                      </div>
-                      <div className="col-6">
-                        <H2> Premium</H2>
-                        <Small>
-                          <Green>★</Green>
-                          Premium templates in addition to the free ones
-                        </Small>
-                        <Small>
-                          <Green>★</Green>
-                          Add custom plain and special sections (similar to
-                          education and work) to your CV
-                        </Small>
-                        <Small>
-                          <Green>★</Green>
-                          Advanced rich text editor. Choose fonts, text colors
-                          and more
-                        </Small>
-                        <Small>
-                          <Green>★</Green>
-                          One-click e-mail. Send your resume directly to your
-                          e-mail easily from your mobile or tablet that doesn't
-                          allow file downloads
-                        </Small>
-                        <Small>
-                          <Green>★</Green>
-                          Continued access to upcoming premium features and
-                          templates
-                        </Small>
-                        <Small>$16 / year</Small>
-                        <ButtonForPremium>
-                          Upgrade to Premium ♥
-                        </ButtonForPremium>
-                        <img src="paypal.png" alt="" />
+            <div className="row">
+              <Accordion
+                defaultIndex={[0]}
+                allowToggle
+                show={show}
+                handleClose={handleClose}
+              >
+                <AccordionItem className="AccordionItem">
+                  <AccordionHeader
+                    _expanded={{ bg: "gray", color: "darkgray" }}
+                  >
+                    <Box flex="1" textAlign="left">
+                      <h1>
+                        Go <Strong>Premium </Strong> ❤
+                      </h1>
+                      <Span> Show details ★ </Span>
+                    </Box>
+                  </AccordionHeader>
+                  <AccordionPanel pb={4}>
+                    CV Maker is absolutely FREE with no restrictions, but you
+                    can get a lot more out of it and support its continued
+                    development by going premium for a nominal annual
+                    subscription fee.
+                    <div className="container">
+                      <div className="row">
+                        <Col xs={12} lg={6} md={6}>
+                          <H2> Free</H2>
+                          <Small>Basic templates</Small>
+                          <Small>Add custom plain sections to your CV</Small>
+                          <Small>Basic rich text editor</Small>
+                          <Small>$0</Small>
+                        </Col>
+                        <div className="col" xs={12} lg={6} md={6}>
+                          <H2> Premium</H2>
+                          <Small>
+                            <Green>★</Green>
+                            Premium templates in addition to the free ones
+                          </Small>
+                          <Small>
+                            <Green>★</Green>
+                            Add custom plain and special sections (similar to
+                            education and work) to your CV
+                          </Small>
+                          <Small>
+                            <Green>★</Green>
+                            Advanced rich text editor. Choose fonts, text colors
+                            and more
+                          </Small>
+                          <Small>
+                            <Green>★</Green>
+                            One-click e-mail. Send your resume directly to your
+                            e-mail easily from your mobile or tablet that
+                            doesn't allow file downloads
+                          </Small>
+                          <Small>
+                            <Green>★</Green>
+                            Continued access to upcoming premium features and
+                            templates
+                          </Small>
+                          <Small>$16 / year</Small>
+                          <ButtonForPremium>
+                            Upgrade to Premium ♥
+                          </ButtonForPremium>
+                          <img src="paypal.png" alt="" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+            </div>
           </div>
         </div>
       </RapperdColor>

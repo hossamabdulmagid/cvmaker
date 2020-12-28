@@ -5,61 +5,77 @@ import {
   RapperContent,
   Links,
   SPan,
-  P,
   BUTTON,
+  RapperdRow,
   Div,
-  BUTTONFORLIKE,
-  BUTTONFORTWITTER,
-  BUTTONFORSHARE,
-  BUTTONFORLOGIN,
+  RapperdCols,
 } from "./header.styles";
 import Caro from "../carousel/carousel.component";
 import Content from "../content/content.component";
 import { Button } from "@chakra-ui/core";
+import { Container, Col, Row } from "react-bootstrap";
 const Head = () => {
   const [download, setDownload] = useState(0);
   const [save, setSave] = useState(0);
   return (
     <>
-      <RapperColor className="container-fluid">
+      <RapperColor className="">
         <RapperContent className="container">
-          <div className="row">
-            <div className="col-8">
-              <img src="./cvmaker.png" alt="" />
-              <P>
-                Create beautiful, professional resumes in minutes,
-                <SPan> free.</SPan>
-              </P>
-            </div>
-            <div className="col-2">
-              <small onClick={() => setDownload(download + 1)}>
-                {download + " "}
-                downloads
-              </small>
-              <Links to="/cv">
-                <BUTTON variant="outline-dark" size="sm" variant="success">
-                  <img src="ico_start.png" alt="" />
-                  Create a cv now
-                </BUTTON>
-              </Links>
-            </div>
-            <div className="col-  ">
-              <small onClick={() => setSave(save + 1)}>
-                {save + " "}
-                saved CVs{" "}
-              </small>
-            </div>
-            <Caro />
-          </div>
+          <RapperdRow>
+            <Row>
+              <Col xs={3} md={6} lg={6}>
+                <img src="./cvmaker.png" alt="" />
+              </Col>
+              <Col xs={5} md={3} lg={4}>
+                <small onClick={() => setDownload(download + 1)}>
+                  {download + " "}
+                  downloads
+                </small>
+              </Col>
+              <Col xs={4} md={3} lg={2}>
+                <small onClick={() => setSave(save + 1)}>
+                  {save + " "}
+                  saved{" "}
+                </small>
+              </Col>
+            </Row>
+          </RapperdRow>
+
+          <RapperdRow>
+            <Row>
+              <Col xs={3} md={5} lg={5}>
+                <p>
+                  Create beautiful, professional resumes in minutes,
+                  <SPan> free.</SPan>
+                </p>
+              </Col>
+              <Col xs={3} md={3} lg={3} />
+
+              <Col xs={6} md={4} lg={4}>
+                <RapperdCols>
+                  <Links to="/cv">
+                    <BUTTON variant="outline-dark" size="xs" variant="success">
+                      <img src="ico_start.png" alt="" />
+                      Create a cv now
+                    </BUTTON>
+                  </Links>
+                </RapperdCols>
+              </Col>
+            </Row>
+          </RapperdRow>
+          <Row>
+            <Col xs={12} md={12} lg={12}>
+              <Caro />
+            </Col>
+          </Row>
         </RapperContent>
       </RapperColor>
-      <div className="container">
+      <Container>
         <Div className="row">
           <div className="col-7">
             <Button size="xs"> Like 17k</Button>
             <Button size="xs"> twitter</Button>
             <Button variant="info" size="xs">
-              {" "}
               in Share
             </Button>
           </div>
@@ -73,7 +89,7 @@ const Head = () => {
           </div>
         </Div>
         <Content />
-      </div>
+      </Container>
     </>
   );
 };

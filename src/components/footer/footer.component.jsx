@@ -1,19 +1,20 @@
 import React from "react";
 import { RapperColor, Content, LINK } from "./footer.styles";
+import { Row, Col } from "react-bootstrap";
 const Footer = () => {
   return (
     <RapperColor>
       <Content className="container">
-        <div className="row">
-          <div className="col-4">
+        <Row>
+          <Col xs={4} md={4} lg={4}>
             CV Maker © 2010 - 2020. All rights reserved
-          </div>
-          <div className="col-4"></div>
-          <div className="col-4">
-            <LINK to="/policy">Terms & Privacy policy</LINK>||
+          </Col>
+          <Col xs={3} md={4} lg={4}></Col>
+          <Col xs={5} md={4} lg={4}>
+            <LINK to="/policy">Privacy policy</LINK> ||
             <LINK to="/contact">Contact</LINK>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </Content>
     </RapperColor>
   );

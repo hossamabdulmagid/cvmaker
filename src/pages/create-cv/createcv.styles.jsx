@@ -19,7 +19,7 @@ export const Alert = styled.p`
   font-size: 13px;
 `;
 
-export const Container = styled.div`
+export const Containers = styled.div`
   padding-top: 30px;
 `;
 export const Buttons = styled(Button)`
@@ -42,18 +42,13 @@ export const IMG = styled.img`
   padding-left: 210px;
 `;
 
-export const Col = styled.div`
-  display: flex;
-  padding-bottom: 35px;
-`;
-
 export const RapperSidebar = styled.div`
   float: left;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial;
   font-size: 13px;
   line-height: 24px;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   color: #444;
 `;
 
@@ -217,4 +212,9 @@ export const Aroow = styled(BsArrowRightShort)`
   &:hover {
     color: black;
   }
+`;
+export const RapperdForms = styled.div`
+  margin: 0 auto;
+  padding: 10px;
+  padding-bottom: 30px;
 `;

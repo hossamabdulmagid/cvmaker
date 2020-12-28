@@ -8,9 +8,12 @@ import {
   H6,
   Container,
   Li,
+  RapperdCols,
   Ul,
 } from "./botttom.styles";
 import "../../App.css";
+import { Row, Col } from "react-bootstrap";
+import { RapperdCol } from "../nav-guest/navGuest.styles";
 const Bottom = () => {
   const [languages, setLanguages] = useState([
     "English",
@@ -60,32 +63,41 @@ const Bottom = () => {
 
   return (
     <Container className="container-fluid">
-      <div className="row">
-        <div className="col-4">
-          <img src="ico.png" className="edit" alt="" />
-          <RapperText>
-            <p> Secure 256 bit SSL encryption</p>
-            <p>Available on the Chrome webstore</p>
-            <p> follow updates at @cvmkr </p>
-          </RapperText>
+      <div className="container">
+        <div className="row">
+          <Col xs={12} md={4} lg={4}>
+            <RapperdCols>
+              <H6>System </H6>
+              <RapperText>
+                <p> Secure 256 bit SSL encryption</p>
+                <p>Available on the Chrome webstore</p>
+                <p> follow updates at @cvmkr </p>
+              </RapperText>
+            </RapperdCols>
+          </Col>
+          <Col xs={12} md={4} lg={4}>
+            <RapperdCols>
+              <H6>Language </H6>
+              <Ul>
+                {languages.map((lang, i) => (
+                  <Li key={i}>
+                    <LINK to="">{lang}</LINK>{" "}
+                  </Li>
+                ))}
+              </Ul>
+            </RapperdCols>
+          </Col>
+          <Col xs={12} md={4} lg={4}>
+            <RapperdCols>
+              <H6>Links </H6>
+              {links.map((link, i) => (
+                <div key={i}>
+                  <LINK to={link.url}>{link.title}</LINK>
+                </div>
+              ))}
+            </RapperdCols>
+          </Col>
         </div>
-        <COL className="col-4">
-          <Ul>
-            {languages.map((lang, i) => (
-              <Li key={i}>
-                <LINK to="">{lang}</LINK>{" "}
-              </Li>
-            ))}
-          </Ul>
-        </COL>
-        <COL className="col-4">
-          <H6>Links </H6>
-          {links.map((link, i) => (
-            <div key={i}>
-              <LINK to={link.url}>{link.title}</LINK>
-            </div>
-          ))}
-        </COL>
       </div>
     </Container>
   );

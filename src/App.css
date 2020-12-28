@@ -23,6 +23,11 @@ img {
   font-weight: 350;
   width: 150px;
 }
+.LabelforSignup {
+  display: inline-flex;
+  margin: 35px;
+  font-weight: 350;
+}
 .checkboxterms {
   margin: 25px;
 }

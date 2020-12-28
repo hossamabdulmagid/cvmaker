@@ -1,6 +1,6 @@
 import React from "react";
 import { Contents, H5, BoxShadow, IMG } from "./content.styles";
-
+import { Container, Row, Col } from "react-bootstrap";
 const Content = () => {
   return (
     <Contents className="container">
@@ -53,8 +53,10 @@ const Content = () => {
         </BoxShadow>
       </div>
 
-      <div className="container">
-        <IMG src="premum.png" />
+      <div className="row">
+        <Col xs={12} md={12} lg={12} className="text-center">
+          <IMG src="premum.png" />
+        </Col>
       </div>
     </Contents>
   );

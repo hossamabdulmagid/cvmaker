@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { Button } from "@chakra-ui/core";
 import { AiTwotoneEdit } from "react-icons/ai";
 
+export const ButtonForSaveBasicInfo = styled(Button)`
+  float: left;
+`;
 export const DIV = styled.div`
   padding: 20px;
   margin: 20px;
@@ -27,7 +30,8 @@ export const Input = styled.input`
   padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 92%;
+  min_width: auto;
+  width: 93%;
 `;
 
 export const P = styled.p`
@@ -40,7 +44,7 @@ export const Container = styled.div`
   background-color: #ffffff;
   padding: 15px;
   margin: 2px;
-  height: 500px;
+  height: auto;
 `;
 
 export const Span = styled.span`

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import {
   RapperColor,
-  Container,
+  Containers,
   Alert,
-  Col,
   Buttons,
   IMG,
   Ul,
@@ -15,7 +14,9 @@ import {
   LINK,
   ButtonForAddNewSection,
   Aroow,
+  RapperdForms,
 } from "./createcv.styles";
+import { Col } from "react-bootstrap";
 import FormDeatils from "../../lib/form";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
@@ -58,7 +59,7 @@ import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import InputCheckBox from "./checkbox";
 import { Radio, RadioGroup, Stack } from "@chakra-ui/core";
-
+import { Row } from "react-bootstrap";
 const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     { section: "basicinfo", type: "text", lastModified: new Date() },
@@ -289,8 +290,8 @@ const CreateCv = (props) => {
   return (
     <Fragment>
       <NavGuest />
-      <RapperColor>
-        <Container className="container">
+      <RapperColor className="container-fluid">
+        <Containers className="container">
           {currentUser ? null : (
             <Alert>
               <LinkOption to="/login">
@@ -301,56 +302,62 @@ const CreateCv = (props) => {
               </LinkOption>
             </Alert>
           )}
-          <div className="cvName">
-            {!loading ? (
-              <form onSubmit={handleSubmit(onSubmitLabel)}>
-                <Editable defaultValue={cvName.labelName}>
-                  <EditablePreview />
-                  <EditableInput
-                    width="110px"
-                    placeholder="cvName here"
-                    type="text"
-                    name="label"
-                    value={cvName.label}
-                    ref={register()}
-                    onChange={handleChange}
-                  />
-                  <Button
-                    variant="outline-info"
-                    size="sm"
-                    className="buttonforlabelcv"
-                    type="submit"
-                  >
-                    Confirm
-                  </Button>
-                  <br />
-                  Your Cv Name is :
-                  <strong className="labelcv"> {cvName.label}</strong>
-                </Editable>
-              </form>
-            ) : (
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="lg"
-              />
-            )}
-          </div>
+          {!loading ? (
+            <div className="row">
+              <div className="col" xs={10} s={12} md={12} lg={12}>
+                <RapperdForms>
+                  <form onSubmit={handleSubmit(onSubmitLabel)}>
+                    <Editable defaultValue={cvName.labelName}>
+                      <EditablePreview />
+                      <EditableInput
+                        width="110px"
+                        placeholder="cvName here"
+                        type="text"
+                        name="label"
+                        value={cvName.label}
+                        ref={register()}
+                        onChange={handleChange}
+                      />
+                      <Button
+                        variant="outline-info"
+                        size="sm"
+                        className="buttonforlabelcv"
+                        type="submit"
+                      >
+                        Confirm
+                      </Button>
+                      <br />
+                      Your Cv Name is :
+                      <strong className="labelcv"> {cvName.label}</strong>
+                    </Editable>
+                  </form>
+                </RapperdForms>
+              </div>
+            </div>
+          ) : (
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="lg"
+            />
+          )}
+
           <div className="row">
-            <div className="col-5"></div>
-            <div className="col-2">
+            <Col xs={0} md={0} lg={4} />
+            <Col xs={6} md={5} lg={4}>
               <AllCvLinks to="/cv">
                 Show All Cv
                 <Aroow />
               </AllCvLinks>
-            </div>
-            <Col className="col-5">
+            </Col>
+            <Col xs={6} md={7} lg={4}>
               <Buttons size="xs" variant="success">
                 <AiOutlineExclamation />
                 Help
               </Buttons>
+
               <Buttons size="xs" variant="success">
                 <AiTwotoneFileExcel />
                 Quick preview
@@ -361,10 +368,13 @@ const CreateCv = (props) => {
               </Buttons>
               <Buttons size="xs" variant="success">
                 <AiTwotoneFolderOpen />
-                Save & Download
+                Download
               </Buttons>
             </Col>
-            <RapperSidebar className="col-3">
+          </div>
+
+          <div className="row">
+            <Col className="col" xs={5} lg={3} md={3} xl={3}>
               <Ul>
                 {!flag
                   ? array.map((singleRouteforSidebar, x) => (
@@ -509,8 +519,8 @@ const CreateCv = (props) => {
                 * If you leave the fields in a section empty, the section will
                 not appear in your CV.
               </small>
-            </RapperSidebar>
-            <div className="col-9">
+            </Col>
+            <div className="col" xs={7} md={10} lg={10}>
               {activeSection === sidebarRoutes[0].section ? (
                 <BasicInfo />
               ) : null}
@@ -540,17 +550,10 @@ const CreateCv = (props) => {
               ) : null}
 
               {activeSection === "entry" ? <Editor /> : null}
-
-              {/* inputList.map((inx,key)=>(<div key={key}>  {idx} </div))*/}
             </div>
           </div>
-        </Container>
+        </Containers>
       </RapperColor>
-      <div className="container-fluid">
-        <div className="container">
-          <IMG src="premum.png" alt="" />
-        </div>
-      </div>
     </Fragment>
   );
 };

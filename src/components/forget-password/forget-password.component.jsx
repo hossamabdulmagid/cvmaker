@@ -14,6 +14,7 @@ import { Input, Button, Spinner } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { auth } from "../../firebase/firebase.utils";
 import { useToast } from "@chakra-ui/core";
+import { Col } from "react-bootstrap";
 import {
   Alert,
   AlertIcon,
@@ -72,62 +73,56 @@ const ForgetPassword = () => {
   return (
     <Container className="container">
       <div className="">
-        <COL className="col-12">
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Title>Get in Touch</Title>
-            <RapperdAlert>
-              {error && (
-                <Alert
-                  status="error"
-                  className="alert"
-                  alignItems="center"
-                  justifyContent="center"
-                  textAlign="center"
-                >
-                  <AlertIcon />
-                  <AlertTitle mr={2}>ERROR!</AlertTitle>
-                  <AlertDescription>{error || error.massage}</AlertDescription>
-                </Alert>
-              )}
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Title>Get in Touch</Title>
+          <RapperdAlert>
+            {error && (
+              <Alert
+                status="error"
+                className="alert"
+                alignItems="center"
+                justifyContent="center"
+                textAlign="center"
+              >
+                <AlertIcon />
+                <AlertTitle mr={2}>ERROR!</AlertTitle>
+                <AlertDescription>{error || error.massage}</AlertDescription>
+              </Alert>
+            )}
 
-              {massage && (
-                <Alert
-                  status="success"
-                  className="alert"
-                  alignItems="center"
-                  justifyContent="center"
-                  textAlign="center"
-                >
-                  <AlertIcon />
-                  Check Your Mail
-                </Alert>
-              )}
-            </RapperdAlert>
-            <RapperdInput>
-              <div className="row">
-                <div className="col-4"></div>
+            {massage && (
+              <Alert
+                status="success"
+                className="alert"
+                alignItems="center"
+                justifyContent="center"
+                textAlign="center"
+              >
+                <AlertIcon />
+                Check Your Mail
+              </Alert>
+            )}
+          </RapperdAlert>
 
-                <div className="col-4">
-                  <INPUT
-                    type="email"
-                    name="email"
-                    placeholder="your email please"
-                    ref={initialRef}
-                    onChange={handleChange}
-                    isRequired
-                  />
-                </div>
-                <div className="col-4"> </div>
-              </div>
-            </RapperdInput>
-            <ButtonSubmit size="sm" variantColor="blue" type="submit">
-              {!flagButton ? <Spinner /> : "Confirm"}
-            </ButtonSubmit>
-          </Form>
-          <LinkForSignInSignUp to="/login">
-            Login || Register
-          </LinkForSignInSignUp>
-        </COL>
+          <RapperdInput>
+            <div className="row">
+              <Col className="col" xs={12} lg={12} md={12}>
+                <INPUT
+                  type="email"
+                  name="email"
+                  placeholder="your email please"
+                  ref={initialRef}
+                  onChange={handleChange}
+                  isRequired
+                />
+              </Col>
+            </div>
+          </RapperdInput>
+          <ButtonSubmit size="sm" variantColor="blue" type="submit">
+            {!flagButton ? <Spinner /> : "Confirm"}
+          </ButtonSubmit>
+        </Form>
+        <LinkForSignInSignUp to="/login">Login || Register</LinkForSignInSignUp>
       </div>
     </Container>
   );

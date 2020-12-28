@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Rapper, Span, LINK, Select, Icon, Small } from "./nav.styles";
-import { BsFillLockFill } from "react-icons/bs";
 import { auth } from "../../firebase/firebase.utils";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
@@ -52,25 +50,21 @@ const Nav = ({ currentUser, displayName }) => {
     <Rapper>
       <Container>
         <Row>
-          <Col xs={3} s={4} lg={6}>
+          <Col xs={4} s={4} lg={6}>
             <Span>Create, maintain, publish, and share your CVs for free</Span>
           </Col>
-          <Col xs={3} s={4} lg={3}>
+          <Col xs={4} s={4} lg={3}>
             <Select>
               {languages.map((singlelang, i) => (
                 <option key={i}>{singlelang}</option>
               ))}
             </Select>
           </Col>
-          <Col xs={6} s={4} lg={3}>
+          <Col xs={4} s={4} lg={3}>
             {currentUser ? (
               <LINK onClick={() => auth.signOut()} to="">
                 {" "}
-                <span> Sign Out</span>
-                <Small prefix="d-xs-block d-sm-block d-lg-flex d-xl-flex d-md-flex">
-                  {" "}
-                  ({currentUser.displayName}){" "}
-                </Small>
+                <span>Sign Out ({currentUser.displayName})</span>
               </LINK>
             ) : (
               <>

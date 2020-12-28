@@ -7,6 +7,7 @@ import {
   H7,
   IMG,
   ForgetPassword,
+  RapperdButton,
 } from "./sign-in.styles";
 import { useForm } from "react-hook-form";
 import {
@@ -14,7 +15,7 @@ import {
   signInWithGoogle,
   signInWithFacebook,
 } from "../../firebase/firebase.utils";
-
+import { Container, Col, Row } from "react-bootstrap";
 import { useToast } from "@chakra-ui/core";
 const Signin = () => {
   const toast = useToast();
@@ -51,50 +52,58 @@ const Signin = () => {
     }
   };
   return (
-    <Box>
-      <H6> Member login </H6>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label className="Label">Email</label>
-        <Input
-          name="email"
-          placeholder="email"
-          ref={register({
-            required: "Required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "invalid email address",
-            },
-          })}
-        />
-        <br />
-        <small className="error">{errors.email && errors.email.message}</small>
-        <br />
-        <label className="Label">Password</label>
+    <Container>
+      <Box>
+        <H6> Member login </H6>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label className="Label">Email</label>
+          <Input
+            name="email"
+            placeholder="email"
+            ref={register({
+              required: "Required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "invalid email address",
+              },
+            })}
+          />
+          <br />
+          <small className="error">
+            {errors.email && errors.email.message}
+          </small>
+          <br />
+          <label className="Label">Password</label>
 
-        <Input
-          name="password"
-          placeholder="Password"
-          type="password"
-          ref={register({
-            validate: (value) => value !== "admin" || "Nice try!",
-          })}
-        />
-        <br />
-        <small className="error">
-          {errors.password && errors.password.message}
-        </small>
-        <BUTTON type="submit" size="xs">
-          Login
-        </BUTTON>
-      </form>
-      <H7>
-        <ForgetPassword to="/forgetpassword">
-          Forgot your password
-        </ForgetPassword>
-      </H7>
-      <IMG src="facebook.png" alt="" onClick={signInWithFacebook} />
-      <IMG src="google.png" alt="" onClick={signInWithGoogle} />
-    </Box>
+          <Input
+            name="password"
+            placeholder="Password"
+            type="password"
+            ref={register({
+              validate: (value) => value !== "admin" || "Nice try!",
+            })}
+          />
+          <br />
+          <small className="error">
+            {errors.password && errors.password.message}
+          </small>
+          <RapperdButton>
+            <BUTTON type="submit" size="xs">
+              Login
+            </BUTTON>
+          </RapperdButton>
+        </form>
+        <Container>
+          <H7>
+            <ForgetPassword to="/forgetpassword">
+              Forgot your password
+            </ForgetPassword>
+          </H7>
+          <IMG src="facebook.png" alt="" onClick={signInWithFacebook} />
+          <IMG src="google.png" alt="" onClick={signInWithGoogle} />
+        </Container>
+      </Box>
+    </Container>
   );
 };
 

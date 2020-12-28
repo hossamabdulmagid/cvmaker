@@ -2,26 +2,15 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Button } from "@chakra-ui/core";
 export const RapperColor = styled.div`
-  min-height: 720px;
+  min-height: auto;
   width: auto;
   height: auto;
   background-color: #18c7e1;
   color: white;
-  @media screen and (max-width: 800px) {
-    &:hover {
-      .image {
-        opacity: unset;
-      }
-
-      button {
-        opacity: unset;
-      }
-    }
-  }
 `;
 
 export const RapperContent = styled.div`
-  padding: 25px;
+  padding: 15px;
 
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial;
   font-size: 28px;
@@ -55,11 +44,10 @@ export const LINK = styled(Link)`
 export const BUTTON = styled(Button)`
   background-img: url(cvmaker.png);
   background-repeat: no-repeat;
-  margin-top: 80px;
+  margin-top: ;
   padding: 2px;
   background-position: 0px 0px 0px 0px;
-  height: 40px;
-  width: 250px;
+
   background-color: #009fb5;
   border-radius: 10px;
   &:hover {
@@ -119,4 +107,10 @@ export const Links = styled(Link)`
     color: white;
     text-decoration: none;
   }
+`;
+export const RapperdRow = styled.div`
+  padding: 10px;
+`;
+export const RapperdCols = styled.div`
+  margin-top: 20px;
 `;

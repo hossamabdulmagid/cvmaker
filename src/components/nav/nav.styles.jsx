@@ -35,8 +35,7 @@ export const I = styled.i`
 
 export const LINK = styled(Link)`
   color: white;
-  font-size: 15px;
-  display: inline;
+  display: inli;
   margin: 2px;
   padding: 1px;
   padding-right: 2px;

@@ -13,7 +13,6 @@ export const COL = styled.div`
 `;
 
 export const LINK = styled(Link)`
-  margin: 5px;
   padding: 2px;
   color: black;
   &:hover {
@@ -30,10 +29,6 @@ export const IMG = styled.img`
   display: inline;
 `;
 export const RapperText = styled.div`
-  margin-top: 10px;
-  padding-top: 45px;
-  padding-left: 17px;
-  margin-left: 22px;
   margin-top: 0;
   line-height: 1;
   font-size: 15px;
@@ -62,3 +57,6 @@ export const Li = styled.li`
 `;
 
 export const Ul = styled.ul``;
+export const RapperdCols = styled.div`
+  padding: 10px;
+`;

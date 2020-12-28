@@ -12,11 +12,11 @@ export const IconCalendar = styled(FcAlarmClock)`
 `;
 
 export const RapperdColor = styled.div`
-  text-align: ;
   background-color: #f9f9f9;
   color: black;
   height: auto;
   padding-bottom: 25px;
+  margin: 0 auto;
 `;
 
 export const Content = styled.div`

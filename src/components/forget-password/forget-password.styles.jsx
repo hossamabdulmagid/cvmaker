@@ -70,15 +70,8 @@ export const INPUT = styled(Input)`
   min-width: auto;
 `;
 export const RapperdInput = styled.div`
-  text-align: center;
-  min-width: 150px;
   margin: 0 auto;
   padding: 5px;
-  @media only screen and (max-width: 600px) {
-    body {
-      background-color: lightblue;
-    }
-  }
 `;
 
 export const Form = styled.form`

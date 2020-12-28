@@ -37,6 +37,5 @@ export const H1 = styled.h1`
 `;
 
 export const IMG = styled.img`
-  margin: 25px;
-  margin-left: 22%;
+  margin: 0 auto;
 `;

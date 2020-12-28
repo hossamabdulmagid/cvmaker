@@ -2,15 +2,13 @@ import styled from "styled-components";
 import { Button } from "@chakra-ui/core";
 export const Box = styled.div`
   background: #fff;
-  float: left;
-  width: 95%;
+
   padding: 15px;
-  min-height: 220px;
+  min-height: 200px;
   border: 1px solid #ddd;
-  height: 400px;
   position: relative;
   margin-top: 35px;
-  text-align: left;
+  text-align: ;
 `;
 export const Input = styled.input`
 repeat-x bottom left;
@@ -30,12 +28,11 @@ export const BUTTON = styled(Button)`
   color: #fff;
   border-color: #18c7e1;
   border-radius: 16px;
-  width: 70px;
-  height: 32px;
-  display: block;
-  margin-left: 190px;
+
+  float: right;
   padding: 4px;
   font-size: 13px;
+  margin-bottom: 10px;
   &:hover {
     background-color: black;
     color: white;
@@ -57,15 +54,11 @@ export const IMG = styled.img`
 export const Small = styled.small`
   font-size: 11px;
   padding: 0;
-  padding-left: 195px;
   display: block;
   color: #aaa;
 `;
 
-export const SmalL = styled.small`
-  font-size: 11px;
-  padding: 0;
-  padding-left: 195px;
-  display: block;
-  color: red;
+export const RapperdButton = styled.div`
+  padding: 10px;
+  margin-bottom: 10px;
 `;

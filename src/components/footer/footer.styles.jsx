@@ -8,7 +8,7 @@ export const RapperColor = styled.div`
   padding: 2px;
   width: auto;
   margin-top: 20px;
-  display:block;
+  display: block;
 `;
 
 export const Content = styled.div`
@@ -18,8 +18,9 @@ export const Content = styled.div`
 
 export const LINK = styled(Link)`
   color: white;
-  margin: 5px;
-  padding: 2px;
+  margin: 0 auto;
+  padding: 5px;
+  display: inline-block;
   &:hover {
     color: white;
   }

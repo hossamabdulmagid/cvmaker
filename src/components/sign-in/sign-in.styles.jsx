@@ -5,13 +5,11 @@ import { Link } from "react-router-dom";
 export const Box = styled.div`
   background: #fff;
   float: left;
-  width: 90%;
   padding: 15px;
   min-height: 200px;
   border: 1px solid #ddd;
   position: relative;
   margin-top: 35px;
-  text-align: left;
 `;
 export const Input = styled.input`
 repeat-x bottom left;
@@ -31,10 +29,9 @@ export const BUTTON = styled(Button)`
   color: #fff;
   border-color: #18c7e1;
   border-radius: 16px;
-  width: 70px;
   height: 32px;
   display: block;
-  margin-left: 190px;
+  float: right;
   padding: 4px;
   font-size: 13px;
   &:hover {
@@ -60,4 +57,8 @@ export const IMG = styled.img`
 
 export const ForgetPassword = styled(Link)`
   display: block;
+`;
+export const RapperdButton = styled.div`
+  padding: 10px;
+  margin-bottom: 10px;
 `;

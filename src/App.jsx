@@ -50,7 +50,7 @@ class App extends React.Component {
     return (
       <Fragment>
         <ScrollToTop />
-        <div className="Container">
+        <div>
           <Nav />
           <Switch>
             <Route path="/" exact component={Head} />

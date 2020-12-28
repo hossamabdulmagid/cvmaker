@@ -11,7 +11,9 @@ import {
   Buttons,
   Upload,
   IconEditNameOfSection,
+  ButtonForSaveBasicInfo,
 } from "./basicinfo.styles";
+import { Col } from "react-bootstrap";
 import { BsCheck } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useParams, useHistory, Progress } from "react-router-dom";
@@ -108,7 +110,6 @@ const BasicInfo = (props) => {
       .doc(`basicinfo`)
       .get()
       .then(function (querySnapshot) {
-        console.log(querySnapshot, `querySnapshot from basic info`);
         const newData = querySnapshot.data();
         if (newData) {
           setDataform({
@@ -225,7 +226,7 @@ const BasicInfo = (props) => {
                 </button>
 
                 <div className="row basicinfo">
-                  <div className="col-6">
+                  <Col xs={12} md={6} lg={6}>
                     <Label>Full name</Label>
                     <Input
                       name="fullname"
@@ -276,9 +277,9 @@ const BasicInfo = (props) => {
                     <small className="errorSectionName">
                       {errors.address3 && errors.address3.message}
                     </small>
-                  </div>
+                  </Col>
                   <hr />
-                  <div className="col-6">
+                  <Col xs={12} md={6} lg={6}>
                     <Label>E-mail address</Label>
                     <Input
                       name="email"
@@ -314,7 +315,7 @@ const BasicInfo = (props) => {
                     <small className="errorSectionName">
                       {errors.address2 && errors.address2.message}
                     </small>
-                    <Button
+                    <ButtonForSaveBasicInfo
                       type="submit"
                       className="Deal"
                       size="sm"
@@ -331,26 +332,26 @@ const BasicInfo = (props) => {
                       ) : (
                         "Save"
                       )}
-                    </Button>
-                  </div>
+                    </ButtonForSaveBasicInfo>
+                  </Col>
                   <hr />
                 </div>
 
                 <div className="row">
-                  <div className="col-6">
+                  <Col lg={6} md={6} xs={12}>
                     <Upload type="file" onChange={handleChangeImage} />
                     <br />
                     <img
                       src={url || "http://via.placeholder.com/100"}
                       alt="firebase-image"
                     />
-                  </div>
-                  <div className="col-6">
+                  </Col>
+                  <Col lg={6} md={6} xs={12}>
                     <Buttons onClick={handleUpload}>Upload</Buttons>
                     <br />
                     <br />
                     {url.length > 5 ? null : null}
-                  </div>
+                  </Col>
                 </div>
               </div>
               {/*   <ImageUpload /> */}

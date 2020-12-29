@@ -29,6 +29,9 @@ const Interests = () => {
     const data = editor.getData();
     setState({ content_intersets: data });
   };
+  const createMarkup = () => {
+    return { __html: state.content_intersets };
+  };
 
   console.log(state, `here is State =>>>>>>>>>`);
 
@@ -42,7 +45,7 @@ const Interests = () => {
         onChange={HandleCkEditorState}
         data=""
       />
-      <Paragraph>{state.content_intersets}</Paragraph>
+      <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
     </div>
   );
 };

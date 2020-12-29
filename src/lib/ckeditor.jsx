@@ -42,6 +42,9 @@ const Editor = ({ details }) => {
   const Title = ({ details }) => {
     return <h1>{details}</h1>;
   };
+  const createMarkup = () => {
+    return { __html: state.content_new };
+  };
 
   return (
     <Fragment>
@@ -53,7 +56,7 @@ const Editor = ({ details }) => {
         onChange={HandleCkEditorState}
         data=""
       />
-      <Paragraph>{state.content_new}</Paragraph>
+      <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
     </Fragment>
   );
 };

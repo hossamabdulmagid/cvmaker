@@ -140,3 +140,7 @@ p {
   border-radius: 20px;
   width: auto;
 }
+.editor {
+  text-align: center;
+  background-color: silver;
+}

@@ -58,24 +58,24 @@ const Qualifications = () => {
       console.log("cleanup");
     };
   }, []);
-  const onSubmit = (data) => console.log(data);
+  const createMarkup = () => {
+    return { __html: state.content_qualifications };
+  };
 
   return (
     <div className="container">
       <Title> Qualifications </Title>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <CKEditor
-          className="cssforeditor"
-          editor={ClassicEditor}
-          ref={register({ required: true })}
-          config={editorConfiguration}
-          name="content_qualifications"
-          onInit={(editor) => {}}
-          onChange={HandleCkEditorState}
-          data=""
-        />
-        <Paragraph>{state.content_qualifications}</Paragraph>
-      </form>
+      <CKEditor
+        className="cssforeditor"
+        editor={ClassicEditor}
+        ref={register({ required: true })}
+        config={editorConfiguration}
+        name="content_qualifications"
+        onInit={(editor) => {}}
+        onChange={HandleCkEditorState}
+        data=""
+      />
+      <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
     </div>
   );
 };

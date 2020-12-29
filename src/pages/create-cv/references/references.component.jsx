@@ -28,6 +28,9 @@ const References = () => {
     const data = editor.getData();
     setState({ content_references: data });
   };
+  const createMarkup = () => {
+    return { __html: state.content_references };
+  };
 
   console.log(state, `here is State =>>>>>>>>>`);
 
@@ -41,7 +44,7 @@ const References = () => {
         data=""
         config={editorConfiguration}
       />
-      <Paragraph>{state.content_references}</Paragraph>
+      <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
     </div>
   );
 };

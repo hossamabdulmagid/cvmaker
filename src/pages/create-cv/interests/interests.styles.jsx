@@ -7,4 +7,5 @@ export const Title = styled.h4`
 export const Paragraph = styled.p`
   margin: 0 auto;
   text-align: center;
+  display: block;
 `;

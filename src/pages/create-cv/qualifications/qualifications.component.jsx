@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Title } from "./qualifications.styles";
+import { Title, Paragraph } from "./qualifications.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useForm } from "react-hook-form";
@@ -72,9 +72,9 @@ const Qualifications = () => {
           name="content_qualifications"
           onInit={(editor) => {}}
           onChange={HandleCkEditorState}
-          data="Qualifications Section"
+          data=""
         />
-        <button type="submit">Submit</button>
+        <Paragraph>{state.content_qualifications}</Paragraph>
       </form>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Title } from "./references.styles";
+import { Title, Paragraph } from "./references.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const editorConfiguration = {
@@ -38,9 +38,10 @@ const References = () => {
         editor={ClassicEditor}
         onInit={(editor) => {}}
         onChange={HandleCkEditorState}
-        data="<p> References Section</p>"
+        data=""
         config={editorConfiguration}
       />
+      <Paragraph>{state.content_references}</Paragraph>
     </div>
   );
 };

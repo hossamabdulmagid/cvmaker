@@ -50,8 +50,6 @@ import {
   Input,
   useToast,
   Spinner,
-  Progress,
-  Textarea,
 } from "@chakra-ui/core";
 import { Button } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
@@ -549,7 +547,9 @@ const CreateCv = (props) => {
                 />
               ) : null}
 
-              {activeSection === "entry" ? <Editor /> : null}
+              {activeSection === "entry" ? (
+                <Editor details={value.section} />
+              ) : null}
             </div>
           </div>
         </Containers>

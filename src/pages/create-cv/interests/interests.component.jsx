@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Title } from "./interests.styles";
+import { Title, Paragraph } from "./interests.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -40,8 +40,9 @@ const Interests = () => {
         editor={ClassicEditor}
         onInit={(editor) => {}}
         onChange={HandleCkEditorState}
-        data="<p> Interests Section</p>"
+        data=""
       />
+      <Paragraph>{state.content_intersets}</Paragraph>
     </div>
   );
 };

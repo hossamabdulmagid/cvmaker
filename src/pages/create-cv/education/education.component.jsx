@@ -19,7 +19,7 @@ import { ButtonForEducation, P, Rapperd, Strong } from "./education.styles";
 import { connect } from "react-redux";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
-
+import { Container, Row, Col } from "react-bootstrap";
 const Education = (props) => {
   const { currentUser } = props;
   const { id } = useParams();
@@ -137,22 +137,25 @@ const Education = (props) => {
           </ButtonForEducation>
         </div>
       </div>
+
       <Rapperd>
         {!loading ? (
-          <Rapperd>
-            <P>
-              CollageName: <Strong>{collagename}</Strong>
-            </P>
-            <P>
-              StartGraduationYear: <Strong>{startgraduationyear}</Strong>
-            </P>
-            <P>
-              EndGraduationYear: <Strong>{endgraduationyear}</Strong>
-            </P>
-            <P>
-              Education Majoring : <Strong>{eduactionmajor}</Strong>
-            </P>
-          </Rapperd>
+          <Row>
+            <Col xs={12} md={12} lg={12}>
+              <P>
+                CollageName: <Strong>{collagename}</Strong>
+              </P>
+              <P>
+                StartGraduationYear: <Strong>{startgraduationyear}</Strong>
+              </P>
+              <P>
+                EndGraduationYear: <Strong>{endgraduationyear}</Strong>
+              </P>
+              <P>
+                Education Majoring : <Strong>{eduactionmajor}</Strong>
+              </P>
+            </Col>
+          </Row>
         ) : (
           <Spinner
             thickness="4px"

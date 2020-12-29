@@ -20,6 +20,7 @@ import {
 import { ButtonForWork, Rapperd, P, Strong } from "./workexperience.styles";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
 
 const Workexperience = (props) => {
   const { AddToList, currentUser, cvs } = props;
@@ -132,8 +133,8 @@ const Workexperience = (props) => {
   }, []);
 
   return (
-    <div className="container">
-      <div className="row">
+    <Container>
+      <Row>
         <div className="col-5">
           <ButtonForWork
             className="buttonforpremium"
@@ -143,23 +144,30 @@ const Workexperience = (props) => {
             + WorkExpernice
           </ButtonForWork>
         </div>
-      </div>
+      </Row>
+
       <Rapperd>
         {!loading ? (
-          <Rapperd>
-            <P>
-              CompanyName: <Strong>{companyname}</Strong>
-            </P>
-            <P>
-              Start Work: <Strong>{startwork}</Strong>
-            </P>
-            <P>
-              End Work: <Strong>{endwork}</Strong>
-            </P>
-            <P>
-              Position: <Strong>{position}</Strong>
-            </P>
-          </Rapperd>
+          <Row>
+            <Col xs={10} md={12} lg={12}>
+              <P>
+                CompanyName:
+                <Strong>{companyname}</Strong>
+              </P>
+              <P>
+                Start Work:
+                <Strong>{startwork}</Strong>
+              </P>
+              <P>
+                End Work:
+                <Strong>{endwork}</Strong>
+              </P>
+              <P>
+                Position:
+                <Strong>{position}</Strong>
+              </P>
+            </Col>
+          </Row>
         ) : (
           <Spinner
             thickness="4px"
@@ -245,7 +253,7 @@ const Workexperience = (props) => {
           </form>
         </ModalContent>
       </Modal>
-    </div>
+    </Container>
   );
 };
 

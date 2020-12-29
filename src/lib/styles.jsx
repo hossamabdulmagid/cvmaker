@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const Rapperd = styled.div`
-  margin: 10px;
+  margin: 0px;
   border: 1px dotted darkgray;
-  padding: 15px;
+  padding: 1px;
   text-align: center;
 `;
 export const RapperdForm = styled.div`

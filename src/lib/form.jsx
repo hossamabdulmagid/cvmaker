@@ -111,10 +111,6 @@ const FormDeatils = (props) => {
 
   const [objectHaveTypeText, setObjectHaveTypeText] = useState({});
 
-  const HandleUpdates = ({ displayDataToUI }) => {
-    return <div>{displayDataToUI.toString()}</div>;
-  };
-
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -180,7 +176,6 @@ const FormDeatils = (props) => {
                 If you leave the fields in a section empty, the section will not
                 appear in your CV
               </Small>
-              <HandleUpdates displayDataToUI={displayDataToUI} />
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Input
                   ref={register({ required: true })}

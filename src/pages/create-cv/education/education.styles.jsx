@@ -14,6 +14,8 @@ export const ButtonForEducation = styled.button`
   line-height: revert;
   height: 28px;
   width: 150px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   &:hover {
     background-color: #18c7e1;
     color: white;
@@ -21,18 +23,19 @@ export const ButtonForEducation = styled.button`
 `;
 
 export const P = styled.p`
-  margin: 10px;
-  padding: 10px;
+  margin: 0px;
+  padding: 0px;
   color: black;
 `;
 
 export const Strong = styled.strong`
-  padding: 10px;
+  padding: 0px;
   color: black;
+  display: block;
 `;
 
 export const Rapperd = styled.div`
-  margin: 10px;
+  margin: 0px;
   border: 1px dotted darkgray;
   padding: 15px;
 `;

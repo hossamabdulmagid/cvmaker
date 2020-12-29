@@ -23,19 +23,19 @@ const Head = () => {
         <RapperContent className="container">
           <RapperdRow>
             <Row>
-              <Col xs={3} md={6} lg={6}>
+              <Col xs={4} md={6} lg={6}>
                 <img src="./cvmaker.png" alt="" />
               </Col>
-              <Col xs={5} md={3} lg={4}>
+              <Col xs={4} md={3} lg={4}>
                 <small onClick={() => setDownload(download + 1)}>
-                  {download + " "}
-                  downloads
+                  {download}
+                  download
                 </small>
               </Col>
               <Col xs={4} md={3} lg={2}>
                 <small onClick={() => setSave(save + 1)}>
-                  {save + " "}
-                  saved{" "}
+                  {save}
+                  saved
                 </small>
               </Col>
             </Row>
@@ -49,9 +49,9 @@ const Head = () => {
                   <SPan> free.</SPan>
                 </p>
               </Col>
-              <Col xs={3} md={3} lg={3} />
+              <Col xs={3} md={3} lg={4} />
 
-              <Col xs={6} md={4} lg={4}>
+              <Col xs={6} md={4} lg={3}>
                 <RapperdCols>
                   <Links to="/cv">
                     <BUTTON variant="outline-dark" size="xs" variant="success">

@@ -14,23 +14,25 @@ export const ButtonForWork = styled.button`
   line-height: revert;
   height: 28px;
   width: 150px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   &:hover {
     background-color: #18c7e1;
     color: white;
   }
 `;
 export const Rapperd = styled.div`
-  margin: 10px;
   border: 1px dotted darkgray;
-  padding: 15px;
+  padding: 1px;
 `;
 export const P = styled.p`
-  margin: 10px;
-  padding: 10px;
+  margin: 00px;
+  padding: 00px;
   color: black;
 `;
 
 export const Strong = styled.strong`
-  padding: 10px;
+  padding: 0px;
+  display: block;
   color: black;
 `;

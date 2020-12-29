@@ -24,7 +24,7 @@ export const ButtonForEducation = styled.button`
 
 export const P = styled.p`
   margin: 0px;
-  padding: 0px;
+  padding: 1px;
   color: black;
 `;
 
@@ -35,7 +35,7 @@ export const Strong = styled.strong`
 `;
 
 export const Rapperd = styled.div`
-  margin: 0px;
+  margin: 1px;
   border: 1px dotted darkgray;
-  padding: 15px;
+  padding: 1px;
 `;

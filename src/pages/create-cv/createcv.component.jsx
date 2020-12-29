@@ -214,8 +214,8 @@ const CreateCv = (props) => {
       .get()
       .then(function (querySnapshot) {
         const newData = querySnapshot.data();
-        console.log(newData, `weewewewewewe@@@@`);
         if (newData) {
+          console.log(newData, `newData@@@@ From CreateCv.jsx Line 218`);
           setCvName({
             label: newData.label,
           });

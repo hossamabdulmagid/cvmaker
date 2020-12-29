@@ -7,8 +7,7 @@ export const Rapper = styled.div`
 export const Box = styled.div`
   background: #f8f8f8;
   border: 1px solid #cfcfcf;
-  width: 40%;
-  height: 270px;
+  height: auto;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial;
   font-size: 11px;
   line-height: 24px;

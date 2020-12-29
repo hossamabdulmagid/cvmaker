@@ -4,10 +4,8 @@ import { useForm } from "react-hook-form";
 import { Button } from "@chakra-ui/core";
 import { useToast, Input, Textarea, Spinner } from "@chakra-ui/core";
 import { useParams } from "react-router-dom";
-import { connect } from "react-redux";
 import { useSelector } from "react-redux";
 import { Rapperd, RapperdForm, Small } from "./styles";
-import { BsCheck } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/ai";
 const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);

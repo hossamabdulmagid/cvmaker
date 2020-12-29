@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const RapperColor = styled.div`
-  height: 720px;
+  height: auto;
   background-color: #f9f9f9;
 `;
 
@@ -24,7 +24,7 @@ export const Ph = styled.p`
   padding: 2px;
   margin: 0;
   color: #444;
-  font-weight: 250;
+  font-weight: 350;
 `;
 
 export const H5 = styled.h6`

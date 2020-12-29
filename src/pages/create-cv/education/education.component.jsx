@@ -152,7 +152,7 @@ const Education = (props) => {
                 EndGraduationYear: <Strong>{endgraduationyear}</Strong>
               </P>
               <P>
-                Education Majoring : <Strong>{eduactionmajor}</Strong>
+                Education Majoring: <Strong>{eduactionmajor}</Strong>
               </P>
             </Col>
           </Row>

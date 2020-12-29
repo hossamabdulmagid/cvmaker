@@ -14,24 +14,23 @@ export const Content = styled.div`
 
 export const UL = styled.ul`
   list-style: none;
-  margin: 20px;
+  margin: 0px;
 `;
 
 export const Li = styled.li`
-  padding: 10px;
+  padding: 1px;
 `;
 
 export const P = styled.p`
-  padding: 10px;
+  padding: 1px;
 `;
 
 export const H5 = styled.h5`
-  margin: 0 0 10px 0;
+  margin: 0 auto;
   font-size: 32px;
   font-weight: 300;
   line-height: 38px;
   color: #444;
-  padding: 12px;
+  padding: 1px;
+  margin-bottom: 15px;
 `;
-
-export const MOSA = styled.div``;

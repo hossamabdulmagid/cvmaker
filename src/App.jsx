@@ -53,7 +53,7 @@ class App extends React.Component {
     const { currentUser } = this.props;
     return (
       <Fragment>
-        <Suspense fallback={<Spinner /> && <FallbackComponent />}>
+        <Suspense>
           <ScrollToTop />
           <div>
             <Nav />

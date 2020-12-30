@@ -290,16 +290,19 @@ const CreateCv = (props) => {
       <NavGuest />
       <RapperColor className="container-fluid">
         <Containers className="container">
-          {currentUser ? null : (
-            <Alert>
-              <LinkOption to="/login">
-                <strong>You are not logged in.</strong>
-                for download and save for now Or later editing, you will need to
-                signup or login by clicking the 'Save' button (your CV will
-                automatically be added to your account).
-              </LinkOption>
-            </Alert>
-          )}
+          <div className="row">
+            {currentUser ? null : (
+              <Alert>
+                <LinkOption to="/login">
+                  <strong>You are not logged in.</strong>
+                  for download and save for now Or later editing, you will need
+                  to signup or login by clicking the 'Save' button (your CV will
+                  automatically be added to your account).
+                </LinkOption>
+              </Alert>
+            )}
+          </div>
+
           {!loading ? (
             <div className="row">
               <div className="col" xs={10} s={12} md={12} lg={12}>
@@ -410,10 +413,10 @@ const CreateCv = (props) => {
                   closeOnEsc={true}
                   autoFocus={true}
                   blockScrollOnMount={true}
-                  //    allowPinchZoom={false}
+                  allowPinchZoom={false}
                   // blockScrollOnMount={true}
                 >
-                  <ModalOverlay />
+                  <ModalOverlay />1
                   <ModalContent>
                     <ModalHeader>Add your section</ModalHeader>
                     <ModalCloseButton />

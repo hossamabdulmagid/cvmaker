@@ -96,9 +96,7 @@ const FormDeatils = (props) => {
       setLoading(false);
     }, 2000);
 
-    setTimeout(() => {
-      setDisplayDataToUI(false);
-    }, 3500);
+    setTimeout(() => {}, 3500);
   };
 
   useEffect(() => {}, [currentUser, id, details]);
@@ -124,37 +122,34 @@ const FormDeatils = (props) => {
           console.log(doc.id, `doC`);
           const DataFromFireBase = doc.data();
 
-          if (DataFromFireBase.type === "text") {
+          if (
+            DataFromFireBase.type === "text" &&
+            doc.id === DataFromFireBase.title.concept
+          ) {
             dataTypeText.push(DataFromFireBase.title);
             //`&& DataFromFireBase.title || DataFromFireBase.title === details`
 
-            if (doc.id === DataFromFireBase.title.concept) {
-              // do some thing here
-              console.log(doc.id, `=>>`, DataFromFireBase.title.concept, `=>>`);
+            setState({
+              title: {
+                concept: "" || DataFromFireBase.title.concept,
+                name: DataFromFireBase.title.name || "",
+                start: DataFromFireBase.title.start || "",
+                end: DataFromFireBase.title.end || "",
+                description: DataFromFireBase.title.description || "",
+              },
+            });
 
-              setState({
-                title: {
-                  concept: "" || DataFromFireBase.title.concept,
-                  name: DataFromFireBase.title.name || "",
-                  start: DataFromFireBase.title.start || "",
-                  end: DataFromFireBase.title.end || "",
-                  description: DataFromFireBase.title.description || "",
-                },
-              });
+            //  setObjectHaveTypeText(state);
 
-              setObjectHaveTypeText(state);
-              console.log(`iam trueeeeeee`);
-              console.log(`Yes*************`);
-            } else {
-              console.log(`Iam Falseeeee`);
-              console.log(`No*******************`);
-            }
-
-            setTimeout(() => {
+            /*          setTimeout(() => {
               setDisplayDataToUI(false);
             }, 3500);
+*/
+          } else {
+            console.log(`Iam Falseeeee`);
+
+            console.log(`No*******************`);
           }
-          setObjectHaveTypeText(DataFromFireBase);
         });
 
         setLoading(false);

@@ -12,11 +12,11 @@ export const RapperColor = styled.div`
 export const Alert = styled.p`
   background-color: #fff8b0;
   color: black;
-  height: 50px;
+  height: auto;
   width: auto;
-  margin: 14px 0px 20px 20px;
-  padding: 2px 0 20px 20px;
+  padding: 10px;
   font-size: 13px;
+  border-radius: 15px;
 `;
 
 export const Containers = styled.div`

@@ -82,7 +82,6 @@ const Education = (props) => {
   };
   useEffect(() => {
     setFlagButton(true);
-    console.log(FlagButton, `consolelog iam runing`);
   }, []);
 
   const handleChange = (event) => {
@@ -138,34 +137,36 @@ const Education = (props) => {
         </div>
       </div>
 
-      <Rapperd>
-        {!loading ? (
-          <Row>
-            <Col xs={12} md={12} lg={12}>
-              <P>
-                CollageName: <Strong>{collagename}</Strong>
-              </P>
-              <P>
-                StartGraduationYear: <Strong>{startgraduationyear}</Strong>
-              </P>
-              <P>
-                EndGraduationYear: <Strong>{endgraduationyear}</Strong>
-              </P>
-              <P>
-                Education Majoring: <Strong>{eduactionmajor}</Strong>
-              </P>
-            </Col>
-          </Row>
-        ) : (
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="blue.500"
-            size="lg"
-          />
-        )}
-      </Rapperd>
+      {!loading ? (
+        <>
+          <Rapperd>
+            <Row>
+              <Col xs={12} md={12} lg={12}>
+                <P>
+                  CollageName: <Strong>{collagename}</Strong>
+                </P>
+                <P>
+                  StartGraduationYear: <Strong>{startgraduationyear}</Strong>
+                </P>
+                <P>
+                  EndGraduationYear: <Strong>{endgraduationyear}</Strong>
+                </P>
+                <P>
+                  Education Majoring: <Strong>{eduactionmajor}</Strong>
+                </P>
+              </Col>
+            </Row>
+          </Rapperd>
+        </>
+      ) : (
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="lg"
+        />
+      )}
 
       <Modal
         initialFocusRef={initialRef}

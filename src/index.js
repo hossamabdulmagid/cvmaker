@@ -16,6 +16,7 @@ import * as serviceWorker from "./serviceWorker";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
 import { unregister } from "./registerServiceWorker";
+
 unregister();
 
 ReactDOM.render(

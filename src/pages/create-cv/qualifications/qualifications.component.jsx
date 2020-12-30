@@ -66,11 +66,8 @@ const Qualifications = () => {
     <div className="container">
       <Title> Qualifications </Title>
       <CKEditor
-        className="cssforeditor"
-        editor={ClassicEditor}
-        ref={register({ required: true })}
         config={editorConfiguration}
-        name="content_qualifications"
+        editor={ClassicEditor}
         onInit={(editor) => {}}
         onChange={HandleCkEditorState}
         data=""

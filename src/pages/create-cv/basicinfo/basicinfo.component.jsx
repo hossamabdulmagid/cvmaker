@@ -212,7 +212,7 @@ const BasicInfo = (props) => {
   };
   return (
     <Fragment>
-      <Container className="container-fluid">
+      <Container className="container">
         {!loading ? (
           <>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -224,7 +224,6 @@ const BasicInfo = (props) => {
                 >
                   <IconEditNameOfSection />
                 </button>
-
                 <div className="row basicinfo">
                   <Col xs={12} md={6} lg={6}>
                     <Label>Full name</Label>
@@ -337,7 +336,7 @@ const BasicInfo = (props) => {
                   <hr />
                 </div>
 
-                <div className="row">
+                {/*   <div className="row">
                   <Col lg={6} md={6} xs={12}>
                     <Upload type="file" onChange={handleChangeImage} />
                     <br />
@@ -346,15 +345,15 @@ const BasicInfo = (props) => {
                       alt="firebase-image"
                     />
                   </Col>
-                  <Col lg={6} md={6} xs={12}>
+                  <Col lg={6} md={6} xs={12} s={12}>
                     <Buttons onClick={handleUpload}>Upload</Buttons>
                     <br />
                     <br />
                     {url.length > 5 ? null : null}
                   </Col>
                 </div>
+                <ImageUpload /> */}
               </div>
-              {/*   <ImageUpload /> */}
             </form>
           </>
         ) : (
@@ -366,55 +365,56 @@ const BasicInfo = (props) => {
             size="lg"
           />
         )}
+
+        <Modal
+          initialFocusRef={initialRef}
+          finalFocusRef={finalRef}
+          isOpen={isOpen}
+          onClose={onClose}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Edit Section Name</ModalHeader>
+            <ModalCloseButton />
+            <form onSubmit={handleSubmit(onSubmitSectionLabel)}>
+              <ModalBody pb={6}>
+                <FormLabel>Section name</FormLabel>
+                <Input
+                  placeholder="SectionName"
+                  type="text"
+                  name="sectionlabel"
+                  //value={sectionlabel}
+                  onChange={handleChangeSectionName}
+                  ref={register({
+                    required: true,
+                  })}
+                />
+                <small className="">
+                  {errors && errors.sectionlabel && (
+                    <label className="errorForEditSectionName">
+                      {errors.sectionlabel.message || "SectionName is required"}
+                    </label>
+                  )}
+                </small>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  variantColor="blue"
+                  mr={3}
+                  type="submit"
+                  className=""
+                  onOpen
+                >
+                  Save
+                </Button>
+                <Button onClick={onClose} className="">
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </form>
+          </ModalContent>
+        </Modal>
       </Container>
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Edit Section Name</ModalHeader>
-          <ModalCloseButton />
-          <form onSubmit={handleSubmit(onSubmitSectionLabel)}>
-            <ModalBody pb={6}>
-              <FormLabel>Section name</FormLabel>
-              <Input
-                placeholder="SectionName"
-                type="text"
-                name="sectionlabel"
-                //value={sectionlabel}
-                onChange={handleChangeSectionName}
-                ref={register({
-                  required: true,
-                })}
-              />
-              <small className="">
-                {errors && errors.sectionlabel && (
-                  <label className="errorForEditSectionName">
-                    {errors.sectionlabel.message || "SectionName is required"}
-                  </label>
-                )}
-              </small>
-            </ModalBody>
-            <ModalFooter>
-              <Button
-                variantColor="blue"
-                mr={3}
-                type="submit"
-                className=""
-                onOpen
-              >
-                Save
-              </Button>
-              <Button onClick={onClose} className="buttonForCancleNewSection">
-                Cancel
-              </Button>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
     </Fragment>
   );
 };

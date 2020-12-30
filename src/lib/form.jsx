@@ -21,6 +21,7 @@ const FormDeatils = (props) => {
   const value = getValues();
   const toast = useToast();
   useEffect(() => {}, [displayDataToUI]);
+
   const [state, setState] = useState({
     title: {
       concept: "",
@@ -33,6 +34,7 @@ const FormDeatils = (props) => {
   });
 
   const { id } = useParams();
+
   const { concept, name, start, end, description, type } = state;
 
   const HandleChangenewData = (event) => {
@@ -96,7 +98,7 @@ const FormDeatils = (props) => {
 
     setTimeout(() => {
       setDisplayDataToUI(false);
-    }, 2500);
+    }, 3500);
   };
 
   useEffect(() => {}, [currentUser, id, details]);
@@ -150,7 +152,7 @@ const FormDeatils = (props) => {
 
             setTimeout(() => {
               setDisplayDataToUI(false);
-            }, 1500);
+            }, 3500);
           }
           setObjectHaveTypeText(DataFromFireBase);
         });
@@ -162,7 +164,7 @@ const FormDeatils = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
+  console.log(objectHaveTypeText, `objectHaveTypeText from from.jsx`);
   return (
     <Fragment>
       <div className="container">
@@ -275,58 +277,44 @@ const FormDeatils = (props) => {
           <>
             <Rapperd>
               <Rapperd>
-                <Rapperd>
-                  <p className="pFornewFormSection">
-                    Title :
-                    <strong>
-                      {!displayDataToUI ? (
-                        state.title.concept || ""
-                      ) : (
-                        <Spinner />
-                      )}
-                    </strong>
-                  </p>
-                </Rapperd>
+                <p className="pFornewFormSection">
+                  Title :
+                  <strong>
+                    {!displayDataToUI ? state.title.concept || "" : <Spinner />}
+                  </strong>
+                </p>
 
-                <Rapperd>
-                  <p className="pFornewFormSection">
-                    Name :
-                    <strong>
-                      {!displayDataToUI ? state.title.name || "" : <Spinner />}
-                    </strong>
-                  </p>
-                </Rapperd>
+                <p className="pFornewFormSection">
+                  Name :
+                  <strong>
+                    {!displayDataToUI ? state.title.name || "" : <Spinner />}
+                  </strong>
+                </p>
 
-                <Rapperd>
-                  <p className="pFornewFormSection">
-                    Start :{" "}
-                    <strong>
-                      {!displayDataToUI ? state.title.start || "" : <Spinner />}
-                    </strong>
-                  </p>
-                </Rapperd>
+                <p className="pFornewFormSection">
+                  Start :{" "}
+                  <strong>
+                    {!displayDataToUI ? state.title.start || "" : <Spinner />}
+                  </strong>
+                </p>
 
-                <Rapperd>
-                  <p className="pFornewFormSection">
-                    End :
-                    <strong>
-                      {!displayDataToUI ? state.title.end || "" : <Spinner />}
-                    </strong>
-                  </p>
-                </Rapperd>
+                <p className="pFornewFormSection">
+                  End :
+                  <strong>
+                    {!displayDataToUI ? state.title.end || "" : <Spinner />}
+                  </strong>
+                </p>
 
-                <Rapperd>
-                  <p className="pFornewFormSection">
-                    Description :
-                    <strong>
-                      {!displayDataToUI ? (
-                        state.title.description || ""
-                      ) : (
-                        <Spinner />
-                      )}
-                    </strong>
-                  </p>
-                </Rapperd>
+                <p className="pFornewFormSection">
+                  Description :
+                  <strong>
+                    {!displayDataToUI ? (
+                      state.title.description || ""
+                    ) : (
+                      <Spinner />
+                    )}
+                  </strong>
+                </p>
               </Rapperd>
               <Button
                 size="sm"

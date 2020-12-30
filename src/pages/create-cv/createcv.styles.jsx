@@ -184,8 +184,8 @@ export const ButtonForAddNewSection = styled.button`
   font-size: 13px;
   padding: 8px;
   line-height: revert;
-  height: 28px;
-  width: 150px;
+  height: auto;
+  width: auto;
   margin-top: 1px;
   &:hover {
     background-color: #18c7e1;

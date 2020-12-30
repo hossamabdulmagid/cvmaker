@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Suspense } from "react";
 import Nav from "./components/nav/nav.component";
 import Head from "./components/header/header.component";
 import Bottom from "./components/bottom/bottom.component";
@@ -21,6 +21,10 @@ import OldCv from "./pages/old-cv/old-cv.component";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
 import ForgetPassword from "./components/forget-password/forget-password.component";
+import { Spinner } from "@chakra-ui/core";
+const FallbackComponent = () => {
+  return <div>An error has occurred</div>;
+};
 
 class App extends React.Component {
   unsubscribeFormAuth = null;
@@ -49,46 +53,48 @@ class App extends React.Component {
     const { currentUser } = this.props;
     return (
       <Fragment>
-        <ScrollToTop />
-        <div>
-          <Nav />
-          <Switch>
-            <Route path="/" exact component={Head} />
-            <Route
-              path="/login"
-              exact
-              render={() =>
-                currentUser ? <Redirect to="/cv" /> : <SigninSignup />
-              }
-            />
-            <PrivateRoute exact path="/login" component={SigninSignup} />
-            <Route path="/policy" component={Privacy} />
-            <Route path="/contact" component={Contact} />
-            <Route path="/Help" component={Help} />
-            <Route path="/tips" component={Tips} />
-            <Route path="/lang" component={Lang} />
-            <Route path="/forgetpassword" component={ForgetPassword} />
-            <Route
-              path="/create-cv/:id"
-              render={() =>
-                currentUser ? <Redirect to="/cv" /> : <SigninSignup />
-              }
-              component={CreateCv}
-            />
-            {/*
+        <Suspense fallback={<Spinner /> && <FallbackComponent />}>
+          <ScrollToTop />
+          <div>
+            <Nav />
+            <Switch>
+              <Route path="/" exact component={Head} />
+              <Route
+                path="/login"
+                exact
+                render={() =>
+                  currentUser ? <Redirect to="/cv" /> : <SigninSignup />
+                }
+              />
+              <PrivateRoute exact path="/login" component={SigninSignup} />
+              <Route path="/policy" component={Privacy} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/Help" component={Help} />
+              <Route path="/tips" component={Tips} />
+              <Route path="/lang" component={Lang} />
+              <Route path="/forgetpassword" component={ForgetPassword} />
+              <Route
+                path="/create-cv/:id"
+                render={() =>
+                  currentUser ? <Redirect to="/cv" /> : <SigninSignup />
+                }
+                component={CreateCv}
+              />
+              {/*
             <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} /> */}
-            <PrivateRoute
-              exact
-              path="/cv"
-              render={() =>
-                currentUser ? <Redirect to="/cv" /> : <SigninSignup />
-              }
-              component={OldCv}
-            />
-          </Switch>
-          <Bottom />
-          <Footer />
-        </div>
+              <PrivateRoute
+                exact
+                path="/cv"
+                render={() =>
+                  currentUser ? <Redirect to="/cv" /> : <SigninSignup />
+                }
+                component={OldCv}
+              />
+            </Switch>
+            <Bottom />
+            <Footer />
+          </div>
+        </Suspense>
       </Fragment>
     );
   }

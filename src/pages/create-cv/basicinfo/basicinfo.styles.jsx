@@ -42,7 +42,7 @@ export const P = styled.p`
 
 export const Container = styled.div`
   background-color: #ffffff;
-  padding: 15px;
+  padding: 5px;
   margin: 2px;
   height: auto;
 `;
@@ -61,10 +61,10 @@ export const Buttons = styled.button`
   background-color: rgb(206, 206, 206);
   color: black;
   border-radius: 1px;
-  padding: 4px;
-  margin: 5px;
+  padding: 5px;
+  margin: 10px;
   width: auto;
-  height: 35px;
+  height: auto;
 `;
 
 export const Upload = styled.input`

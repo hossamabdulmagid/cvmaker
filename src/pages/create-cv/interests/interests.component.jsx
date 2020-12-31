@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Title, Paragraph } from "./interests.styles";
+import { Title, Small } from "./interests.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,8 @@ import { Button, Spinner, useToast } from "@chakra-ui/core";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Container, Row, Col } from "react-bootstrap";
+
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -91,7 +93,15 @@ const Interests = () => {
   console.log(state, `here is State =>>>>>>>>>`);
 
   return (
-    <div className="container">
+    <Container>
+      <Row className="text-center">
+        <Col>
+          <Small>
+            If you leave the fields in a section empty, the section will not
+            appear in your CV
+          </Small>
+        </Col>
+      </Row>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Title> Interests </Title>
         <CKEditor
@@ -108,7 +118,7 @@ const Interests = () => {
           {!flagButton ? <Spinner /> : "Save"}
         </Button>
       </form>
-    </div>
+    </Container>
   );
 };
 

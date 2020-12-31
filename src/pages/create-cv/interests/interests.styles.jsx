@@ -9,3 +9,7 @@ export const Paragraph = styled.p`
   text-align: center;
   display: block;
 `;
+
+export const Small = styled.small`
+  color: silver;
+`;

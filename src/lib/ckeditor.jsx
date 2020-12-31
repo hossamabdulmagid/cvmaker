@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Paragraph } from "./styles";
 import { useForm } from "react-hook-form";
-import { Input, Button, useToast } from "@chakra-ui/core";
+import { Spinner, Input, Button, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { firestore } from "../firebase/firebase.utils";
 import { BsCheck } from "react-icons/bs";
+
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -82,7 +83,7 @@ const Editor = ({ details, currentUser }) => {
     };
 
     await SecRef.set(dataToBeSaved);
-
+    setLoading(false);
     setTimeout(() => {
       setFlagButton(false);
       toast({
@@ -94,9 +95,12 @@ const Editor = ({ details, currentUser }) => {
         position: "bottom-left",
       });
     }, 2000);
+    if (!loading) {
+      return <Spinner />;
+    }
   };
   console.log(state, `here is fullstate`);
-
+  const [loading, setLoading] = useState(true);
   return (
     <Fragment>
       <small>
@@ -130,8 +134,11 @@ const Editor = ({ details, currentUser }) => {
           data={""}
           name={content_new}
         />
+
         <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
-        <Button type="submit">{flagButton ? "Submit" : <BsCheck />}</Button>
+        <Button type="submit" size="sm" variantColor="blue">
+          {flagButton ? "Submit" : <BsCheck />}
+        </Button>
       </form>
     </Fragment>
   );

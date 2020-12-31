@@ -61,7 +61,6 @@ const Editor = ({ details, currentUser }) => {
 
   const onSubmit = async (data) => {
     const info = state.content_new;
-    console.log(data.concept, info, `data on Submitting`);
 
     if (!currentUser.id) {
       return;
@@ -93,7 +92,6 @@ const Editor = ({ details, currentUser }) => {
     }, 2000);
   };
 
-  console.log(state, `here is fullstate`);
   const [loading, setLoading] = useState(true);
   return (
     <Fragment className="text-center">

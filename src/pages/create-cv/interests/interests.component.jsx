@@ -56,9 +56,7 @@ const Interests = () => {
   const createMarkup = () => {
     return { __html: state.content_intersets };
   };
-  console.log(state.concept, `state.concept`);
   const onSubmit = async (data) => {
-    console.log(data, `data from interstes Component`);
     const info = state.content_intersets;
 
     if (!currentUser.id) {
@@ -69,7 +67,7 @@ const Interests = () => {
     );
     let dataToBeSaved = {
       concept: state.concept || "Interests",
-      content_new: info || "",
+      content_intersets: info || "",
       type: state.type || "entry",
     };
 
@@ -90,7 +88,6 @@ const Interests = () => {
       setFlagButton(true);
     }, 2000);
   };
-  console.log(state, `here is State =>>>>>>>>>`);
 
   return (
     <Container>
@@ -112,6 +109,7 @@ const Interests = () => {
           onInit={(editor) => {}}
           onChange={HandleCkEditorState}
           data=""
+          isRequired
         />
         <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
         <Button type="submit" size="sm" variantColor="blue">

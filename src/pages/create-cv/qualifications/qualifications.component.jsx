@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Title, Paragraph } from "./qualifications.styles";
+import { Title, Small } from "./qualifications.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useForm } from "react-hook-form";
+import { Button, Spinner, useToast } from "@chakra-ui/core";
+import { firestore } from "../../../firebase/firebase.utils";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Container, Row, Col } from "react-bootstrap";
 
 const editorConfiguration = {
   toolbar: {
@@ -21,59 +26,96 @@ const editorConfiguration = {
     ],
   },
 };
-
 const Qualifications = () => {
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const [state, setState] = useState({
+    concept: "Qualifications",
+    content_Qualifications: "",
+    type: "entry",
+  });
+
+  const { concept, content_interset, type } = state;
+
   const { handleSubmit, register, getValues, errors, data } = useForm();
+
+  const toast = useToast();
 
   const value = getValues();
 
-  const [state, setState] = useState({
-    title: "",
-    name: "",
-    position: "",
-    address: "",
-    content_qualifications: "",
-  });
+  const [loading, setLoading] = useState(true);
 
-  // const { content } = state;
+  const [flagButton, setFlagButton] = useState(true);
+  const { id } = useParams();
 
   const HandleCkEditorState = (event, editor) => {
-    const datahere = editor.getData();
-    setState({ content_qualifications: datahere });
+    const data = editor.getData();
+    setState({ content_Qualifications: data });
   };
 
-  const [datas, setDatas] = useState({});
-
-  const handleChangeTitle = (event) => {
-    const target = event.target;
-    const { name, value } = target;
-    setState({ [name]: value });
-  };
-
-  console.log("_state", state);
-
-  React.useEffect(() => {
-    console.log("_state", state);
-    return () => {
-      console.log("cleanup");
-    };
-  }, []);
   const createMarkup = () => {
-    return { __html: state.content_qualifications };
+    return { __html: state.content_Qualifications };
+  };
+  const onSubmit = async (data) => {
+    const info = state.content_Qualifications;
+
+    if (!currentUser.id) {
+      return;
+    }
+    const SecRef = firestore.doc(
+      `users/${currentUser.id}/cvs/${id}/data/Qualifications`
+    );
+    let dataToBeSaved = {
+      concept: state.concept || "Qualifications",
+      content_Qualifications: info || "",
+      type: state.type || "entry",
+    };
+
+    await SecRef.set(dataToBeSaved);
+    setLoading(false);
+    setTimeout(() => {
+      toast({
+        title: "Section Updated.",
+        description: `Your new Section  name is : Qualifications`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }, 2000);
+    setFlagButton(false);
+    setTimeout(() => {
+      setFlagButton(true);
+    }, 2000);
   };
 
   return (
-    <div className="container">
-      <Title> Qualifications </Title>
-      <CKEditor
-        config={editorConfiguration}
-        editor={ClassicEditor}
-        onInit={(editor) => {}}
-        onChange={HandleCkEditorState}
-        data=""
-      />
-      <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
-    </div>
+    <Container>
+      <Row className="text-center">
+        <Col>
+          <Small>
+            If you leave the fields in a section empty, the section will not
+            appear in your CV
+          </Small>
+        </Col>
+      </Row>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Title> Qualifications </Title>
+        <CKEditor
+          config={editorConfiguration}
+          editor={ClassicEditor}
+          ref={register({ required: true })}
+          name={state.content_Qualifications}
+          onInit={(editor) => {}}
+          onChange={HandleCkEditorState}
+          data=""
+        />
+        <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
+        <Button type="submit" size="sm" variantColor="blue">
+          {!flagButton ? <Spinner /> : "Save"}
+        </Button>
+      </form>
+    </Container>
   );
 };
 

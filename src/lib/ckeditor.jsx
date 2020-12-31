@@ -1,14 +1,13 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import { Paragraph } from "./styles";
+import { Small } from "./styles";
 import { useForm } from "react-hook-form";
 import { Spinner, Input, Button, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { firestore } from "../firebase/firebase.utils";
-import { BsCheck } from "react-icons/bs";
-
+import { Container, Row, Col } from "react-bootstrap";
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -37,6 +36,7 @@ const Editor = ({ details, currentUser }) => {
   const { handleSubmit, register, getValues, errors, data } = useForm();
 
   const value = getValues();
+
   const toast = useToast();
 
   const HandleChange = (event) => {
@@ -47,19 +47,12 @@ const Editor = ({ details, currentUser }) => {
 
   const HandleCkEditorState = (event, editor) => {
     const data = editor.getData();
+
     setState({ content_new: data });
   };
   const { id } = useParams();
 
   const [updateTitle, setUpdateTitle] = useState(true);
-
-  useEffect(() => {
-    if (details) {
-      setTimeout(() => {
-        setUpdateTitle(false);
-      }, 5000);
-    }
-  }, []);
 
   const createMarkup = () => {
     return { __html: state.content_new };
@@ -85,7 +78,6 @@ const Editor = ({ details, currentUser }) => {
     await SecRef.set(dataToBeSaved);
     setLoading(false);
     setTimeout(() => {
-      setFlagButton(false);
       toast({
         title: "Section Updated.",
         description: `Your new Section  name is : ${value.concept}`,
@@ -95,51 +87,63 @@ const Editor = ({ details, currentUser }) => {
         position: "bottom-left",
       });
     }, 2000);
-    if (!loading) {
-      return <Spinner />;
-    }
+    setFlagButton(false);
+    setTimeout(() => {
+      setFlagButton(true);
+    }, 2000);
   };
+
   console.log(state, `here is fullstate`);
   const [loading, setLoading] = useState(true);
   return (
-    <Fragment>
-      <small>
-        If you leave the fields in a section empty, the section will not appear
-        in your CV
-      </small>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          ref={register({ required: true })}
-          placeholder="title for new Section"
-          name="concept"
-          type="text"
-          value={details}
-          onChange={HandleChange}
-        />
+    <Fragment className="text-center">
+      <Container>
+        <Row className="text-center">
+          <Col>
+            <Small>
+              If you leave the fields in a section empty, the section will not
+              appear in your CV
+            </Small>
+          </Col>
+        </Row>
 
-        <strong className="col-12">
-          {errors && errors.title && (
-            <label className="error">
-              {errors.title.message || "title is required"}
-            </label>
-          )}
-        </strong>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            ref={register({ required: true })}
+            placeholder="title for new Section"
+            name="concept"
+            type="text"
+            value={details}
+            onChange={HandleChange}
+          />
 
-        <CKEditor
-          ref={register({ required: true })}
-          config={editorConfiguration}
-          editor={ClassicEditor}
-          onInit={(Editor) => {}}
-          onChange={HandleCkEditorState}
-          data={""}
-          name={content_new}
-        />
+          <strong className="col-12">
+            {errors && errors.title && (
+              <label className="error">
+                {errors.title.message || "title is required"}
+              </label>
+            )}
+          </strong>
 
-        <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
-        <Button type="submit" size="sm" variantColor="blue">
-          {flagButton ? "Submit" : <BsCheck />}
-        </Button>
-      </form>
+          <CKEditor
+            ref={register({ required: true })}
+            config={editorConfiguration}
+            editor={ClassicEditor}
+            onInit={(Editor) => {}}
+            onChange={HandleCkEditorState}
+            data={""}
+            name={content_new}
+          />
+
+          <div
+            dangerouslySetInnerHTML={createMarkup()}
+            className="editor"
+          ></div>
+          <Button type="submit" size="sm" variantColor="blue">
+            {!flagButton ? <Spinner /> : "Save"}
+          </Button>
+        </form>
+      </Container>
     </Fragment>
   );
 };

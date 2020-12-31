@@ -41,10 +41,10 @@ class App extends React.Component {
       setCurrentUser(userAuth);
     });
   }
+
   componentWillUnmount() {
     this.unsubscribeFormAuth();
   }
-  //this line for commit ..
 
   render() {
     const { currentUser } = this.props;

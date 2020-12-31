@@ -18,11 +18,15 @@ const FormDeatils = (props) => {
     activeSection,
   } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
+
   const value = getValues();
+
   const toast = useToast();
+
   useEffect(() => {}, [displayDataToUI]);
 
   console.log(activeSection, `activeSection`);
+
   const [state, setState] = useState({
     title: {
       concept: "",
@@ -45,11 +49,9 @@ const FormDeatils = (props) => {
 
   const [FlagButton, setFlagButton] = useState(true);
 
-  useEffect(() => {}, [currentUser.id]);
-
   useEffect(() => {
     setFlagButton(true);
-  }, []);
+  }, [currentUser.id]);
 
   const onSubmit = async (data, props) => {
     if (!currentUser.id) {
@@ -71,12 +73,6 @@ const FormDeatils = (props) => {
 
     await SecRef.set(dataToBeSaved);
 
-    console.log(
-      sidebarRoutes,
-      data.title,
-      value.concept,
-      `sidebarRoutesfrom From`
-    );
     sidebarRoutes.push({
       section: value.concept,
       type: state.type,

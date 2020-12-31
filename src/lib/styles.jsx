@@ -12,7 +12,6 @@ export const RapperdForm = styled.div`
 `;
 export const Small = styled.small`
   color: silver;
-  padding: 10px;
 `;
 export const Title = styled.h4`
   padding: 11px;

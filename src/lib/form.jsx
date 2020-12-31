@@ -22,6 +22,7 @@ const FormDeatils = (props) => {
   const toast = useToast();
   useEffect(() => {}, [displayDataToUI]);
 
+  console.log(activeSection, `activeSection`);
   const [state, setState] = useState({
     title: {
       concept: "",
@@ -70,8 +71,14 @@ const FormDeatils = (props) => {
 
     await SecRef.set(dataToBeSaved);
 
+    console.log(
+      sidebarRoutes,
+      data.title,
+      value.concept,
+      `sidebarRoutesfrom From`
+    );
     sidebarRoutes.push({
-      section: data.title,
+      section: value.concept,
       type: state.type,
       lastModified: new Date(),
     });
@@ -96,10 +103,12 @@ const FormDeatils = (props) => {
       setLoading(false);
     }, 2000);
 
-    setTimeout(() => {}, 3500);
+    setTimeout(() => {
+      console.log(sidebarRoutes, `last thing from Submitting`);
+    }, 3500);
   };
 
-  useEffect(() => {}, [currentUser, id, details]);
+  useEffect(() => {}, [currentUser, id, details, sidebarRoutes]);
 
   const [loading, setLoading] = useState(true);
 
@@ -121,14 +130,15 @@ const FormDeatils = (props) => {
         querySnapshot.forEach(function (doc) {
           console.log(doc.id, `doC`);
           const DataFromFireBase = doc.data();
-
+          console.log(doc.data(), `doc/data()`);
           if (
             DataFromFireBase.type === "text" &&
-            doc.id === DataFromFireBase.title.concept
+            DataFromFireBase.title.concept === doc.id
           ) {
             dataTypeText.push(DataFromFireBase.title);
-            //`&& DataFromFireBase.title || DataFromFireBase.title === details`
-
+            console.log(dataTypeText, `dataTypeText`);
+            setObjectHaveTypeText(DataFromFireBase.title);
+            console.log(objectHaveTypeText);
             setState({
               title: {
                 concept: "" || DataFromFireBase.title.concept,
@@ -138,16 +148,13 @@ const FormDeatils = (props) => {
                 description: DataFromFireBase.title.description || "",
               },
             });
+            setObjectHaveTypeText(state);
 
-            //  setObjectHaveTypeText(state);
-
-            /*          setTimeout(() => {
+            setTimeout(() => {
               setDisplayDataToUI(false);
-            }, 3500);
-*/
+            }, 5000);
           } else {
             console.log(`Iam Falseeeee`);
-
             console.log(`No*******************`);
           }
         });
@@ -159,7 +166,7 @@ const FormDeatils = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-  console.log(objectHaveTypeText, `objectHaveTypeText from from.jsx`);
+
   return (
     <Fragment>
       <div className="container">
@@ -250,7 +257,6 @@ const FormDeatils = (props) => {
                     className="buttonSavenewFrom"
                     size="sm"
                     variantColor="blue"
-                    //   onClick={() => setDisplayDataToUI(false)}
                   >
                     {!FlagButton ? (
                       <Spinner
@@ -269,45 +275,41 @@ const FormDeatils = (props) => {
             </RapperdForm>
           </Fragment>
         ) : (
-          <>
+          <Fragment>
             <Rapperd>
               <Rapperd>
-                <p className="pFornewFormSection">
+                <p className="text-center">
                   Title :
                   <strong>
                     {!displayDataToUI ? state.title.concept || "" : <Spinner />}
                   </strong>
                 </p>
 
-                <p className="pFornewFormSection">
+                <p className="text-center">
                   Name :
                   <strong>
                     {!displayDataToUI ? state.title.name || "" : <Spinner />}
                   </strong>
                 </p>
 
-                <p className="pFornewFormSection">
-                  Start :{" "}
+                <p className="text-center">
+                  Start :
                   <strong>
                     {!displayDataToUI ? state.title.start || "" : <Spinner />}
                   </strong>
                 </p>
 
-                <p className="pFornewFormSection">
+                <p className="text-center">
                   End :
                   <strong>
                     {!displayDataToUI ? state.title.end || "" : <Spinner />}
                   </strong>
                 </p>
 
-                <p className="pFornewFormSection">
+                <p className="text-center">
                   Description :
                   <strong>
-                    {!displayDataToUI ? (
-                      state.title.description || ""
-                    ) : (
-                      <Spinner />
-                    )}
+                    {!displayDataToUI ? state.title.description : <Spinner />}
                   </strong>
                 </p>
               </Rapperd>
@@ -323,7 +325,7 @@ const FormDeatils = (props) => {
                 <AiTwotoneEdit />
               </Button>
             </Rapperd>
-          </>
+          </Fragment>
         )}
       </div>
     </Fragment>

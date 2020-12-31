@@ -547,6 +547,7 @@ const CreateCv = (props) => {
                   displayDataToUI={displayDataToUI}
                   setDisplayDataToUI={setDisplayDataToUI}
                   sidebarRoutes={sidebarRoutes}
+                  activeSection={activeSection}
                 />
               ) : null}
 

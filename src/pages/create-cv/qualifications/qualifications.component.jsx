@@ -27,7 +27,7 @@ const editorConfiguration = {
   },
 };
 const Qualifications = ({ currentUser }) => {
-  console.log(currentUser, `currentUser from interests Component`);
+  console.log(currentUser, `currentUser from Qualifications Component`);
 
   const [state, setState] = useState({
     concept: "Qualifications",
@@ -35,7 +35,7 @@ const Qualifications = ({ currentUser }) => {
     type: "entry",
   });
 
-  const { concept, content_interset, type } = state;
+  const { concept, content_Qualifications, type } = state;
 
   const { handleSubmit, register, getValues, errors, data } = useForm();
 
@@ -104,7 +104,7 @@ const Qualifications = ({ currentUser }) => {
         <CKEditor
           config={editorConfiguration}
           editor={ClassicEditor}
-          ref={register({ required: true })}
+          refVal={register({ required: true })}
           name={state.content_Qualifications}
           //onInit={(editor) => {}}
           onChange={HandleCkEditorState}

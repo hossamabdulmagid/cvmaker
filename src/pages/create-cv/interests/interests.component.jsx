@@ -34,7 +34,7 @@ const Interests = ({ currentUser }) => {
     type: "entry",
   });
 
-  const { concept, content_interset, type } = state;
+  const { concept, content_intersets, type } = state;
 
   const { handleSubmit, register, getValues, errors, data } = useForm();
 

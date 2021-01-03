@@ -105,7 +105,7 @@ const References = ({ currentUser }) => {
         <CKEditor
           config={editorConfiguration}
           editor={ClassicEditor}
-          ref={register({ required: true })}
+          refVal={register({ required: true })}
           name={state.content_references}
           // onInit={(editor) => { }}
           onChange={HandleCkEditorState}

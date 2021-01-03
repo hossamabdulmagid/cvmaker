@@ -54,7 +54,7 @@ const Education = (props) => {
 
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/education`
+      `users/${currentUser.id}/cvs/${id}/data/Education`
     );
     let dataToBeSaved = {
       education: {
@@ -99,7 +99,7 @@ const Education = (props) => {
     firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
-      .doc(`education`)
+      .doc(`Education`)
       .get()
       .then(function (querySnapshot) {
         const eduactionData = querySnapshot.data();

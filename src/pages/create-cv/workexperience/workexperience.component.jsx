@@ -65,7 +65,7 @@ const Workexperience = (props) => {
 
   const onSubmit = async (value) => {
     const cvRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/workexperience`
+      `users/${currentUser.id}/cvs/${id}/data/Workexperience`
     );
 
     let dataToBeSave = {
@@ -104,7 +104,7 @@ const Workexperience = (props) => {
     firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
-      .doc(`workexperience`)
+      .doc(`Workexperience`)
       .get()
       .then(function (querySnapshot) {
         const workexpData = querySnapshot.data();

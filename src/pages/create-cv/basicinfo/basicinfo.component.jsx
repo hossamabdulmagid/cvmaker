@@ -69,7 +69,7 @@ const BasicInfo = (props) => {
   const [FlagButton, setFlagButton] = useState(true);
   const onSubmit = async (value, data) => {
     const cvRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/basicinfo`
+      `users/${currentUser.id}/cvs/${id}/data/Basicinfo`
     );
     let dataToBeSaved = {
       basicinfo: {
@@ -107,7 +107,7 @@ const BasicInfo = (props) => {
     firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
-      .doc(`basicinfo`)
+      .doc(`Basicinfo`)
       .get()
       .then(function (querySnapshot) {
         const newData = querySnapshot.data();

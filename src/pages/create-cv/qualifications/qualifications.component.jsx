@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Title, Small } from "./qualifications.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -14,7 +14,6 @@ const editorConfiguration = {
     items: [
       "heading",
       "|",
-      "alignment",
       "bold",
       "italic",
       "link",
@@ -27,12 +26,10 @@ const editorConfiguration = {
   },
 };
 const Qualifications = ({ currentUser }) => {
-  console.log(currentUser, `currentUser from Qualifications Component`);
-
   const [state, setState] = useState({
     concept: "Qualifications",
     content_Qualifications: "",
-    type: "entry",
+    type: "qualifications",
   });
 
   const { concept, content_Qualifications, type } = state;
@@ -68,7 +65,7 @@ const Qualifications = ({ currentUser }) => {
     let dataToBeSaved = {
       concept: state.concept || "Qualifications",
       content_Qualifications: info || "",
-      type: state.type || "entry",
+      type: state.type || "qualifications",
     };
 
     await SecRef.set(dataToBeSaved);
@@ -88,6 +85,32 @@ const Qualifications = ({ currentUser }) => {
       setFlagButton(true);
     }, 2000);
   };
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    firestore
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .doc(`Qualifications`)
+      .get()
+      .then(function (querySnapshot) {
+        const newData = querySnapshot.data();
+        if (newData) {
+          setState({
+            content_Qualifications: newData.content_Qualifications,
+          });
+          console.log(newData, `newData`);
+        }
+        setLoading(false);
+        //        setFlagButton(false)
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error(error, `there is was an error`);
+        console.log(error, `there is was an error`);
+      });
+  }, [currentUser]);
 
   return (
     <Container>
@@ -106,9 +129,10 @@ const Qualifications = ({ currentUser }) => {
           editor={ClassicEditor}
           refVal={register({ required: true })}
           name={state.content_Qualifications}
-          //onInit={(editor) => {}}
+          onInit={(editor) => {}}
           onChange={HandleCkEditorState}
-          data=""
+          data={state.content_Qualifications || ""}
+          required
         />
         <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
         <Button type="submit" size="sm" variantColor="blue">

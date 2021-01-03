@@ -95,7 +95,7 @@ const Editor = ({ details, currentUser }) => {
 
   const [loading, setLoading] = useState(true);
   return (
-    <Fragment className="text-center">
+    <Fragment>
       <Container>
         <Row className="text-center">
           <Col>

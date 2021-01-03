@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Title, Small } from "./references.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -32,7 +32,7 @@ const References = ({ currentUser }) => {
   const [state, setState] = useState({
     concept: "References",
     content_references: "",
-    type: "entry",
+    type: "references",
   });
 
   const { concept, content_references, type } = state;
@@ -69,7 +69,7 @@ const References = ({ currentUser }) => {
     let dataToBeSaved = {
       concept: state.concept || "References",
       content_references: info || "",
-      type: state.type || "entry",
+      type: state.type || "references",
     };
 
     await SecRef.set(dataToBeSaved);
@@ -90,6 +90,32 @@ const References = ({ currentUser }) => {
     }, 2000);
   };
 
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    firestore
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .doc(`References`)
+      .get()
+      .then(function (querySnapshot) {
+        const newData = querySnapshot.data();
+        if (newData) {
+          setState({
+            content_references: newData.content_references,
+          });
+          console.log(newData, `newData`);
+        }
+        setLoading(false);
+        //        setFlagButton(false)
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error(error, `there is was an error`);
+        console.log(error, `there is was an error`);
+      });
+  }, [currentUser]);
   return (
     <Container>
       <Row className="text-center">
@@ -107,9 +133,9 @@ const References = ({ currentUser }) => {
           editor={ClassicEditor}
           refVal={register({ required: true })}
           name={state.content_references}
-          // onInit={(editor) => { }}
+          onInit={(editor) => {}}
           onChange={HandleCkEditorState}
-          data={""}
+          data={state.content_references || ""}
         />
         <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
         <Button type="submit" size="sm" variantColor="blue">

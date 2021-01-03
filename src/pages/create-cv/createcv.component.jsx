@@ -60,12 +60,20 @@ import { Radio, RadioGroup, Stack } from "@chakra-ui/core";
 import { Row } from "react-bootstrap";
 const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
-    { section: "basicinfo", type: "text", lastModified: new Date() },
-    { section: "workexperience", type: "text", lastModified: new Date() },
-    { section: "qualifications", type: "text", lastModified: new Date() },
-    { section: "education", type: "text", lastModified: new Date() },
-    { section: "interests", type: "text", lastModified: new Date() },
-    { section: "references", type: "text", lastModified: new Date() },
+    { section: "Basicinfo", type: "basicinfo", lastModified: new Date() },
+    {
+      section: "Workexperience",
+      type: "workexperience",
+      lastModified: new Date(),
+    },
+    {
+      section: "Qualifications",
+      type: "qualifications",
+      lastModified: new Date(),
+    },
+    { section: "Education", type: "education", lastModified: new Date() },
+    { section: "Interests", type: "interests", lastModified: new Date() },
+    { section: "References", type: "references", lastModified: new Date() },
   ]);
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
 
@@ -75,7 +83,7 @@ const CreateCv = (props) => {
 
   const [editorList, setEditorList] = useState([]);
 
-  const [activeSection, setActiveSection] = useState(sidebarRoutes[0].section);
+  const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
   const toast = useToast();
 
@@ -395,7 +403,7 @@ const CreateCv = (props) => {
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
-                          setActiveSection(singleRouteforSidebar.section);
+                          setActiveSection(singleRouteforSidebar.type);
                         }}
                         key={x}
                       >
@@ -522,24 +530,16 @@ const CreateCv = (props) => {
               </small>
             </Col>
             <div className="col" xs={7} md={10} lg={10}>
-              {activeSection === sidebarRoutes[0].section ? (
-                <BasicInfo />
-              ) : null}
-              {activeSection === sidebarRoutes[1].section ? (
+              {activeSection === sidebarRoutes[0].type ? <BasicInfo /> : null}
+              {activeSection === sidebarRoutes[1].type ? (
                 <Workexperience />
               ) : null}
-              {activeSection === sidebarRoutes[2].section ? (
+              {activeSection === sidebarRoutes[2].type ? (
                 <Qualifications />
               ) : null}
-              {activeSection === sidebarRoutes[3].section ? (
-                <Education />
-              ) : null}
-              {activeSection === sidebarRoutes[4].section ? (
-                <Interests />
-              ) : null}
-              {activeSection === sidebarRoutes[5].section ? (
-                <References />
-              ) : null}
+              {activeSection === sidebarRoutes[3].type ? <Education /> : null}
+              {activeSection === sidebarRoutes[4].type ? <Interests /> : null}
+              {activeSection === sidebarRoutes[5].type ? <References /> : null}
               {activeSection === "text" ? (
                 <FormDeatils
                   array={array}

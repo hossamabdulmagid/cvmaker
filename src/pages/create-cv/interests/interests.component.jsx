@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Title, Small } from "./interests.styles";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -14,7 +14,6 @@ const editorConfiguration = {
     items: [
       "heading",
       "|",
-      "alignment",
       "bold",
       "italic",
       "link",
@@ -27,11 +26,10 @@ const editorConfiguration = {
   },
 };
 const Interests = ({ currentUser }) => {
-  console.log(currentUser, `currentUser from interests Component`);
   const [state, setState] = useState({
     concept: "Interests",
     content_intersets: "",
-    type: "entry",
+    type: "interests",
   });
 
   const { concept, content_intersets, type } = state;
@@ -69,7 +67,7 @@ const Interests = ({ currentUser }) => {
     let dataToBeSaved = {
       concept: state.concept || "Interests",
       content_intersets: info || "",
-      type: state.type || "entry",
+      type: state.type || "interests",
     };
 
     await SecRef.set(dataToBeSaved);
@@ -90,6 +88,33 @@ const Interests = ({ currentUser }) => {
     }, 2000);
   };
 
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    firestore
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .doc(`Interests`)
+      .get()
+      .then(function (querySnapshot) {
+        const newData = querySnapshot.data();
+        if (newData) {
+          setState({
+            content_intersets: newData.content_intersets,
+          });
+          console.log(newData, `newData`);
+        }
+        setLoading(false);
+        //        setFlagButton(false)
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error(error, `there is was an error`);
+        console.log(error, `there is was an error`);
+      });
+  }, [currentUser]);
+
   return (
     <Container>
       <Row className="text-center">
@@ -107,10 +132,10 @@ const Interests = ({ currentUser }) => {
           editor={ClassicEditor}
           refVal={register({ required: true })}
           name={state.content_intersets}
-          //onInit={(editor) => {}}
+          onInit={(editor) => {}}
           onChange={HandleCkEditorState}
-          data=""
-          isRequired
+          data={state.content_intersets || ""}
+          Required
         />
         <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
         <Button type="submit" size="sm" variantColor="blue">

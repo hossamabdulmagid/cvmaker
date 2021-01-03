@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Button, Spinner, useToast } from "@chakra-ui/core";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 
 const editorConfiguration = {
@@ -26,8 +26,8 @@ const editorConfiguration = {
     ],
   },
 };
-const References = () => {
-  const currentUser = useSelector((state) => state.user.currentUser);
+const References = ({ currentUser }) => {
+  console.log(currentUser, `currentUser from interests Component`);
 
   const [state, setState] = useState({
     concept: "References",
@@ -35,7 +35,7 @@ const References = () => {
     type: "entry",
   });
 
-  const { concept, content_interset, type } = state;
+  const { concept, content_references, type } = state;
 
   const { handleSubmit, register, getValues, errors, data } = useForm();
 
@@ -46,6 +46,7 @@ const References = () => {
   const [loading, setLoading] = useState(true);
 
   const [flagButton, setFlagButton] = useState(true);
+
   const { id } = useParams();
 
   const HandleCkEditorState = (event, editor) => {
@@ -56,7 +57,7 @@ const References = () => {
   const createMarkup = () => {
     return { __html: state.content_references };
   };
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
     const info = state.content_references;
 
     if (!currentUser.id) {
@@ -106,9 +107,9 @@ const References = () => {
           editor={ClassicEditor}
           ref={register({ required: true })}
           name={state.content_references}
-          onInit={(editor) => {}}
+          // onInit={(editor) => { }}
           onChange={HandleCkEditorState}
-          data=""
+          data={""}
         />
         <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
         <Button type="submit" size="sm" variantColor="blue">
@@ -119,4 +120,8 @@ const References = () => {
   );
 };
 
-export default References;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(References);

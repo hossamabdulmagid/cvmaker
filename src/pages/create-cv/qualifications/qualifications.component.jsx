@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Button, Spinner, useToast } from "@chakra-ui/core";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 
 const editorConfiguration = {
@@ -26,8 +26,8 @@ const editorConfiguration = {
     ],
   },
 };
-const Qualifications = () => {
-  const currentUser = useSelector((state) => state.user.currentUser);
+const Qualifications = ({ currentUser }) => {
+  console.log(currentUser, `currentUser from interests Component`);
 
   const [state, setState] = useState({
     concept: "Qualifications",
@@ -56,7 +56,7 @@ const Qualifications = () => {
   const createMarkup = () => {
     return { __html: state.content_Qualifications };
   };
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
     const info = state.content_Qualifications;
 
     if (!currentUser.id) {
@@ -106,7 +106,7 @@ const Qualifications = () => {
           editor={ClassicEditor}
           ref={register({ required: true })}
           name={state.content_Qualifications}
-          onInit={(editor) => {}}
+          //onInit={(editor) => {}}
           onChange={HandleCkEditorState}
           data=""
         />
@@ -119,4 +119,8 @@ const Qualifications = () => {
   );
 };
 
-export default Qualifications;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(Qualifications);

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Button, Spinner, useToast } from "@chakra-ui/core";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 
 const editorConfiguration = {
@@ -26,9 +26,8 @@ const editorConfiguration = {
     ],
   },
 };
-const Interests = () => {
-  const currentUser = useSelector((state) => state.user.currentUser);
-
+const Interests = ({ currentUser }) => {
+  console.log(currentUser, `currentUser from interests Component`);
   const [state, setState] = useState({
     concept: "Interests",
     content_intersets: "",
@@ -46,6 +45,7 @@ const Interests = () => {
   const [loading, setLoading] = useState(true);
 
   const [flagButton, setFlagButton] = useState(true);
+
   const { id } = useParams();
 
   const HandleCkEditorState = (event, editor) => {
@@ -56,7 +56,8 @@ const Interests = () => {
   const createMarkup = () => {
     return { __html: state.content_intersets };
   };
-  const onSubmit = async (data) => {
+
+  const onSubmit = async () => {
     const info = state.content_intersets;
 
     if (!currentUser.id) {
@@ -104,9 +105,9 @@ const Interests = () => {
         <CKEditor
           config={editorConfiguration}
           editor={ClassicEditor}
-          ref={register({ required: true })}
+          refVal={register({ required: true })}
           name={state.content_intersets}
-          onInit={(editor) => {}}
+          //onInit={(editor) => {}}
           onChange={HandleCkEditorState}
           data=""
           isRequired
@@ -120,4 +121,7 @@ const Interests = () => {
   );
 };
 
-export default Interests;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+export default connect(mapStateToProps)(Interests);

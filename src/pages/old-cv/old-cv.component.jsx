@@ -102,9 +102,9 @@ const OldCv = ({ currentUser, match }) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           if (doc.data()) {
-            console.log(`bla bla bla`);
+            //   console.log(`bla bla bla`);
           } else {
-            console.log(`trep trep trep`);
+            //  console.log(`trep trep trep`);
           }
           let obj = doc.data();
           obj.id = doc.id;

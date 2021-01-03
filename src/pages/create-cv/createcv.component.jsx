@@ -308,7 +308,7 @@ const CreateCv = (props) => {
               <div className="col" xs={10} s={12} md={12} lg={12}>
                 <RapperdForms>
                   <form onSubmit={handleSubmit(onSubmitLabel)}>
-                    <Editable defaultValue={cvName.labelName}>
+                    <Editable defaultValue={cvName.labelName || ""}>
                       <EditablePreview />
                       <EditableInput
                         width="110px"

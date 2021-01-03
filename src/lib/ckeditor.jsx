@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Small } from "./styles";
 import { useForm } from "react-hook-form";
 import { Spinner, Input, Button, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { firestore } from "../firebase/firebase.utils";
 import { Container, Row, Col } from "react-bootstrap";
 const editorConfiguration = {

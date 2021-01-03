@@ -35,8 +35,6 @@ const Editor = ({ details, currentUser }) => {
 
   const { handleSubmit, register, getValues, errors, data } = useForm();
 
-  const value = getValues();
-
   const toast = useToast();
 
   const HandleChange = (event) => {
@@ -59,7 +57,9 @@ const Editor = ({ details, currentUser }) => {
   };
   const [flagButton, setFlagButton] = useState(true);
 
-  const onSubmit = async (data) => {
+  const value = getValues();
+
+  const onSubmit = async (value, data) => {
     const info = state.content_new;
 
     if (!currentUser.id) {
@@ -68,6 +68,7 @@ const Editor = ({ details, currentUser }) => {
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${value.concept}`
     );
+    console.log(value.concept, `value concept`);
     let dataToBeSaved = {
       concept: value.concept || "",
       content_new: info || "",
@@ -124,10 +125,10 @@ const Editor = ({ details, currentUser }) => {
           </strong>
 
           <CKEditor
-            ref={register({ required: true })}
+            refVal={register({ required: true })}
             config={editorConfiguration}
             editor={ClassicEditor}
-            onInit={(Editor) => {}}
+            // onInit={(Editor) => { }}
             onChange={HandleCkEditorState}
             data={""}
             name={content_new}

@@ -242,6 +242,7 @@ const CreateCv = (props) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           const data = doc.data();
+          console.log(data, `Dataa`);
           const newData = doc.id;
           setLastModified(lastModified);
           if (newData) {
@@ -251,7 +252,9 @@ const CreateCv = (props) => {
               lastModified,
             });
             setTimeout(() => {
-              setFlag(false);
+              if (array.length > 4) {
+                setFlag(false);
+              }
             }, 50);
           }
         });

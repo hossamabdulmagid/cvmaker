@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import {
   RapperColor,
   Containers,
@@ -56,11 +56,14 @@ import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import InputCheckBox from "./checkbox";
-import { Radio, RadioGroup, Stack } from "@chakra-ui/core";
-import { Row } from "react-bootstrap";
+
 const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
-    { section: "Basicinfo", type: "basicinfo", lastModified: new Date() },
+    {
+      section: "Basicinfo",
+      type: "basicinfo",
+      lastModified: new Date(),
+    },
     {
       section: "Workexperience",
       type: "workexperience",
@@ -71,17 +74,25 @@ const CreateCv = (props) => {
       type: "qualifications",
       lastModified: new Date(),
     },
-    { section: "Education", type: "education", lastModified: new Date() },
-    { section: "Interests", type: "interests", lastModified: new Date() },
-    { section: "References", type: "references", lastModified: new Date() },
+    {
+      section: "Education",
+      type: "education",
+      lastModified: new Date(),
+    },
+    {
+      section: "Interests",
+      type: "interests",
+      lastModified: new Date(),
+    },
+    {
+      section: "References",
+      type: "references",
+      lastModified: new Date(),
+    },
   ]);
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
 
   const { currentUser, details } = props;
-
-  const [inputList, setInputList] = useState([]);
-
-  const [editorList, setEditorList] = useState([]);
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
@@ -97,9 +108,9 @@ const CreateCv = (props) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = React.useRef();
+  const initialRef = useRef();
 
-  const finalRef = React.useRef();
+  const finalRef = useRef();
 
   const { id } = useParams();
 
@@ -142,27 +153,6 @@ const CreateCv = (props) => {
   const [flagButton, setFlagButton] = useState(true);
 
   const onSubmit = async (value, isChecked) => {
-    /*  const SecRef = firestore.doc(
-        `users/${currentUser.id}/cvs/${id}/data/${section}`
-      );
-  
-      let dataToBeSaved = {
-        sectionName: {
-          section:
-            {
-              title: sectionData.sectionName.section.title || "",
-              name: sectionData.sectionName.section.name || "",
-              start: sectionData.sectionName.section.start || "",
-              end: sectionData.sectionName.section.end || "",
-              description: sectionData.sectionName.section.description || "",
-            } || {},
-          type: value.type || "",
-          lastModified: new Date(),
-        },
-      };
-      setFlagButton(false);
-      await SecRef.set(dataToBeSaved); */
-
     sidebarRoutes.push({
       section: value.section,
       type: value.type,
@@ -221,7 +211,6 @@ const CreateCv = (props) => {
       .then(function (querySnapshot) {
         const newData = querySnapshot.data();
         if (newData) {
-          console.log(newData, `newData@@@@ From CreateCv.jsx Line 218`);
           setCvName({
             label: newData.label,
           });
@@ -252,12 +241,8 @@ const CreateCv = (props) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          console.log(doc.data(), `############Data`);
           const data = doc.data();
-          console.log(data, `*******`);
-          console.log(doc.id, "@@@@@@@@@@@@@id");
           const newData = doc.id;
-          console.log(data, `data.sectionName`);
           setLastModified(lastModified);
           if (newData) {
             array.unshift({
@@ -265,7 +250,6 @@ const CreateCv = (props) => {
               type: data.type || data.sectionName.type,
               lastModified,
             });
-            console.log(array, `arra00000000000000000000000y comming from fb`);
             setTimeout(() => {
               setFlag(false);
             }, 50);

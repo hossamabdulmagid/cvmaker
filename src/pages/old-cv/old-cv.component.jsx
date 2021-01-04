@@ -118,16 +118,15 @@ const OldCv = ({ currentUser, match }) => {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          if (doc.data()) {
-            //   console.log(`bla bla bla`);
-          } else {
-            //  console.log(`trep trep trep`);
-          }
           let obj = doc.data();
           obj.id = doc.id;
           obj.lastModified = new Date().toString();
           allcv.push(obj);
+          console.log(`${doc.id}`);
+
           console.log(obj, `object Dataaaaaaa`);
+
+          console.log(allcv, `allcv`);
           setLoading(false);
         });
       });
@@ -159,6 +158,7 @@ const OldCv = ({ currentUser, match }) => {
       .delete()
       .then(function () {
         setAllcv([]);
+        //  setAllcv([GetData()]);
         onClose();
         setTimeout(() => {
           GetData();
@@ -183,6 +183,10 @@ const OldCv = ({ currentUser, match }) => {
         });
       });
   };
+
+  useEffect(() => {
+    deleteCv();
+  }, [allcv, setAllcv]);
   //    question={"Are you sure you want to delete the survey?"}
 
   return (
@@ -229,9 +233,9 @@ const OldCv = ({ currentUser, match }) => {
                           <ModalOverlay />
                           <ModalContent>
                             <ModalHeader>Are you sure</ModalHeader>
-                            <ModalCloseButton />
+                            {/*  <ModalCloseButton /> */}
                             <ModalBody pb={6}>
-                              <p>you want to delete this Survey</p>
+                              <p>you want to delete this document of cv</p>
                             </ModalBody>
                             <ModalFooter>
                               <Button

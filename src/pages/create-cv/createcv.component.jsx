@@ -253,7 +253,6 @@ const CreateCv = (props) => {
               if (array.length > 5) {
                 setFlag(false);
               }
-              //  { array.length > 5 ? setFlag(false) : setFlag(true) }
             }, 50);
           }
         });

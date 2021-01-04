@@ -123,8 +123,6 @@ const BasicInfo = (props) => {
             lastModified: newData.basicinfo.lastModified,
             type: newData.type,
           });
-          console.log(newData.basicinfo.fullname, `newData.basicinfo.fullname`);
-          console.log(dataform, `dataform`);
         }
         setLoading(false);
         //        setFlagButton(false)

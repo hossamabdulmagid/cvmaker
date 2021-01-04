@@ -104,6 +104,7 @@ th {
 }
 .errorSectionName {
   display: block;
+  width: 100px;
   color: red;
 }
 .inputradiobox {

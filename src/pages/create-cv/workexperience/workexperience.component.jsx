@@ -95,7 +95,42 @@ const Workexperience = (props) => {
   };
 
   const [loading, setLoading] = useState(true);
-
+  /*
+  
+  querySnapshot.forEach(function (doc) {
+  
+     console.log(doc.id, " => ", doc.data());
+  
+     //Prepare the new data that you want to add :
+     var newCasesObject = {
+         casesPoliceStation: "New police station Value",
+         crimeNumber: "New crime value",
+         sectionOfLaw: "New section of law",
+         stage: "ss",
+     }
+  
+     //Get the array with data from the loaded document
+     var dataObj = doc.data().casesObject;
+  
+     //Push the new data to that array
+     dataObj.push(newCasesObject);
+  
+     //Call another function that will update the document with the new data
+     updateData(doc.id, dataObj);
+  
+  });
+  
+  //The new update function:
+  async function updateData(docID, obj){
+  
+     const cityRef = db.collection('[COLLECTION_NAME]').doc(docID);
+  
+     // Set the 'capital' field of the city
+     const res = await cityRef.update({casesObject: obj});
+  
+  }
+  
+  */
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -108,7 +143,6 @@ const Workexperience = (props) => {
       .get()
       .then(function (querySnapshot) {
         const workexpData = querySnapshot.data();
-
         if (workexpData) {
           setWorkexperinceform({
             companyname: workexpData.workexperience.companyname,

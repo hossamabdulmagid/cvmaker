@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import {
   ButtonForPremium,
   Content,
@@ -30,10 +30,27 @@ import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { Spinner, useToast, Progress } from "@chakra-ui/core";
-
+import { Spinner, useToast, Button } from "@chakra-ui/core";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormLabel,
+  Input,
+} from "@chakra-ui/core";
 const OldCv = ({ currentUser, match }) => {
-  const [show, setShow] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef = useRef();
+
+  const finalRef = useRef();
+
+  const [show, setShow] = useState(true);
 
   const handleClose = () => setShow(false);
 
@@ -142,6 +159,7 @@ const OldCv = ({ currentUser, match }) => {
       .delete()
       .then(function () {
         setAllcv([]);
+        onClose();
         setTimeout(() => {
           GetData();
         }, 500);
@@ -201,9 +219,35 @@ const OldCv = ({ currentUser, match }) => {
                   <tr key={i}>
                     <td>
                       {singleCv.label}
-                      <ButtonForDeleteCv
-                        onClick={() => deleteCv(`${singleCv.id}`)}
-                      >
+                      <ButtonForDeleteCv onClick={() => onOpen()}>
+                        <Modal
+                          initialFocusRef={initialRef}
+                          finalFocusRef={finalRef}
+                          isOpen={isOpen}
+                          onClose={onClose}
+                        >
+                          <ModalOverlay />
+                          <ModalContent>
+                            <ModalHeader>Are you sure</ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody pb={6}>
+                              <p>you want to delete this Survey</p>
+                            </ModalBody>
+                            <ModalFooter>
+                              <Button
+                                variantColor="blue"
+                                mr={3}
+                                type="submit"
+                                onClick={() => deleteCv(`${singleCv.id}`)}
+                              >
+                                Delete
+                              </Button>
+                              <Button onClick={onClose} className="">
+                                Cancel
+                              </Button>
+                            </ModalFooter>
+                          </ModalContent>
+                        </Modal>
                         delete
                         <Icon />
                       </ButtonForDeleteCv>
@@ -250,6 +294,7 @@ const OldCv = ({ currentUser, match }) => {
               allowToggle
               show={show}
               handleClose={handleClose}
+              handleChange={handleShow}
             >
               <AccordionItem className="AccordionItem">
                 <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
@@ -257,7 +302,7 @@ const OldCv = ({ currentUser, match }) => {
                     <h1>
                       Go <Strong>Premium </Strong> ❤
                     </h1>
-                    <Span> Show details ★ </Span>
+                    <Span> {show ? "Show details ★" : "Hide details ★"} </Span>
                   </Box>
                 </AccordionHeader>
                 <AccordionPanel pb={4}>

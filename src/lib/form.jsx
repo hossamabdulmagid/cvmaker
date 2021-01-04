@@ -148,7 +148,7 @@ const FormDeatils = (props) => {
 
             setTimeout(() => {
               setDisplayDataToUI(false);
-            }, 5000);
+            }, 100);
           } else {
             console.log(`Iam Falseeeee`);
             console.log(`No*******************`);

@@ -25,8 +25,6 @@ import {
   AiTwotoneFileExcel,
   AiTwotonePlaySquare,
 } from "react-icons/ai";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import BasicInfo from "./basicinfo/basicinfo.component";
 import Education from "./education/education.component";
 import Workexperience from "./workexperience/workexperience.component";
@@ -252,9 +250,10 @@ const CreateCv = (props) => {
               lastModified,
             });
             setTimeout(() => {
-              if (array.length > 4) {
+              if (array.length > 5) {
                 setFlag(false);
               }
+              //  { array.length > 5 ? setFlag(false) : setFlag(true) }
             }, 50);
           }
         });

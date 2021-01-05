@@ -24,14 +24,14 @@ export const ButtonForEducation = styled.button`
 
 export const P = styled.p`
   margin: 0px;
-  padding: 0px;
+  padding: 10px;
   color: black;
 `;
 
 export const Strong = styled.strong`
-  padding: 0px;
+  padding: 5px;
   color: black;
-  display: block;
+  display: flex-inline;
 `;
 
 export const Rapperd = styled.div`

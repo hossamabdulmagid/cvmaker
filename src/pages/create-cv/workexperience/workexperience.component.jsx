@@ -103,10 +103,10 @@ const Workexperience = (props) => {
   
      //Prepare the new data that you want to add :
      var newCasesObject = {
-         casesPoliceStation: "New police station Value",
-         crimeNumber: "New crime value",
-         sectionOfLaw: "New section of law",
-         stage: "ss",
+         casesPoliceStation: "String",
+         crimeNumber: "String",
+         sectionOfLaw: "String",
+         stage: "String",
      }
   
      //Get the array with data from the loaded document
@@ -117,7 +117,6 @@ const Workexperience = (props) => {
   
      //Call another function that will update the document with the new data
      updateData(doc.id, dataObj);
-  
   });
   
   //The new update function:
@@ -131,6 +130,7 @@ const Workexperience = (props) => {
   }
   
   */
+
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -182,26 +182,33 @@ const Workexperience = (props) => {
 
       <Rapperd>
         {!loading ? (
-          <Row>
-            <Col xs={10} md={12} lg={12}>
-              <P>
-                CompanyName:
-                <Strong>{companyname}</Strong>
-              </P>
-              <P>
-                Start Work:
-                <Strong>{startwork}</Strong>
-              </P>
-              <P>
-                End Work:
-                <Strong>{endwork}</Strong>
-              </P>
-              <P>
-                Position:
-                <Strong>{position}</Strong>
-              </P>
-            </Col>
-          </Row>
+          <>
+            <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
+              <Col xs={10} md={12} lg={12} className="text-center">
+                <P>
+                  CompanyName:
+                  <Strong>{companyname}</Strong>
+                </P>
+                <P>
+                  Start Work:
+                  <Strong>{startwork}</Strong>
+                </P>
+                <P>
+                  End Work:
+                  <Strong>{endwork}</Strong>
+                </P>
+                <P>
+                  Position:
+                  <Strong>{position}</Strong>
+                </P>
+              </Col>
+            </Row>
+            <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+              <Col xs={10} md={12} lg={12}>
+                <p>Hello from smalll Size</p>
+              </Col>
+            </Row>
+          </>
         ) : (
           <Spinner
             thickness="4px"

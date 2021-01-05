@@ -135,7 +135,12 @@ const Qualifications = ({ currentUser }) => {
           required
         />
         <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
-        <Button type="submit" size="sm" variantColor="blue">
+        <Button
+          type="submit"
+          size="sm"
+          variantColor="blue"
+          className="saveEditor"
+        >
           {!flagButton ? <Spinner /> : "Save"}
         </Button>
       </form>

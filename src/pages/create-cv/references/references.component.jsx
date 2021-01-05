@@ -138,7 +138,12 @@ const References = ({ currentUser }) => {
           data={state.content_references || ""}
         />
         <div dangerouslySetInnerHTML={createMarkup()} className="editor"></div>
-        <Button type="submit" size="sm" variantColor="blue">
+        <Button
+          type="submit"
+          size="sm"
+          variantColor="blue"
+          className="saveEditor"
+        >
           {!flagButton ? <Spinner /> : "Save"}
         </Button>
       </form>

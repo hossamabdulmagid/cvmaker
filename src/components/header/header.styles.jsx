@@ -8,7 +8,7 @@ export const RapperColor = styled.div`
   background-color: #18c7e1;
   color: white;
 `;
-
+// #18c7e1
 export const RapperContent = styled.div`
   padding: 15px;
 

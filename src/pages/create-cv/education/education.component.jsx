@@ -140,8 +140,8 @@ const Education = (props) => {
       {!loading ? (
         <>
           <Rapperd>
-            <Row>
-              <Col xs={12} md={12} lg={12}>
+            <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
+              <Col xs={12} md={12} lg={12} className="text-center">
                 <P>
                   CollageName: <Strong>{collagename}</Strong>
                 </P>
@@ -154,6 +154,11 @@ const Education = (props) => {
                 <P>
                   Education Majoring: <Strong>{eduactionmajor}</Strong>
                 </P>
+              </Col>
+            </Row>
+            <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+              <Col>
+                <p>Hello from small size</p>
               </Col>
             </Row>
           </Rapperd>

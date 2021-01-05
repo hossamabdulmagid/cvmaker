@@ -135,12 +135,12 @@ export const LINK = styled(Link)`
   padding: 6px 0 6px 8px;
   overflow: hidden;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   color: #666;
   border-width: 0 0 1px 1px;
   border-style: solid;
   border-color: #d7d7d7;
-  line-height: 24px;
+  line-height: 22px;
   cursor: move;
   text-decoration: none;
   &:hover {

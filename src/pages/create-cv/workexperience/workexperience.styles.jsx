@@ -27,12 +27,13 @@ export const Rapperd = styled.div`
 `;
 export const P = styled.p`
   margin: 00px;
-  padding: 00px;
+  padding: 10px;
   color: black;
 `;
 
 export const Strong = styled.strong`
-  padding: 0px;
-  display: block;
+  padding: 5px;
+  text-align: right;
   color: black;
+  display: flex-inline;
 `;

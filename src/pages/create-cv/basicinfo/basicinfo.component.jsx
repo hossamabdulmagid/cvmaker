@@ -1,19 +1,12 @@
 import React, { useEffect, Fragment, useState } from "react";
 import {
-  Title,
   Input,
   Label,
-  P,
-  DIV,
   Container,
-  Span,
-  IMG,
-  Buttons,
-  Upload,
   IconEditNameOfSection,
   ButtonForSaveBasicInfo,
 } from "./basicinfo.styles";
-import { Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { BsCheck } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useParams, useHistory, Progress } from "react-router-dom";
@@ -222,7 +215,10 @@ const BasicInfo = (props) => {
                 >
                   <IconEditNameOfSection />
                 </button>
-                <div className="row basicinfo">
+                <Row
+                  className="basicinfo"
+                  bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item"
+                >
                   <Col xs={12} md={6} lg={6}>
                     <Label>Full name</Label>
                     <Input
@@ -332,7 +328,12 @@ const BasicInfo = (props) => {
                     </ButtonForSaveBasicInfo>
                   </Col>
                   <hr />
-                </div>
+                </Row>
+                <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+                  <Col xs={12} s={12}>
+                    <p>welcome to Small Size</p>
+                  </Col>
+                </Row>
 
                 {/*   <div className="row">
                   <Col lg={6} md={6} xs={12}>

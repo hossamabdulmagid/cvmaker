@@ -20,13 +20,13 @@ export const RapperdColor = styled.div`
 `;
 
 export const Content = styled.div`
-  margin-top: 30px;
   margin-bottom: 30px;
 `;
 
 export const Title = styled.h2`
   font-size: 25px;
   margin: 5px;
+  padding: 10px 10px 0px 0px;
 `;
 
 export const ButtonforcreateCv = styled(Button)`

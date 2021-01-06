@@ -17,7 +17,13 @@ import {
   Spinner,
   useToast,
 } from "@chakra-ui/core";
-import { ButtonForWork, Rapperd, P, Strong } from "./workexperience.styles";
+import {
+  ButtonForWork,
+  Rapperd,
+  P,
+  Strong,
+  StrongMobile,
+} from "./workexperience.styles";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
@@ -179,24 +185,26 @@ const Workexperience = (props) => {
           </ButtonForWork>
         </div>
       </Row>
-
       <Rapperd>
         {!loading ? (
           <>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              <Col xs={10} md={12} lg={12} className="text-center">
+              <Col md={12} lg={12} xl={12} className="text-center">
                 <P>
                   CompanyName:
                   <Strong>{companyname}</Strong>
                 </P>
+                <hr />
                 <P>
                   Start Work:
                   <Strong>{startwork}</Strong>
                 </P>
+                <hr />
                 <P>
                   End Work:
                   <Strong>{endwork}</Strong>
                 </P>
+                <hr />
                 <P>
                   Position:
                   <Strong>{position}</Strong>
@@ -204,8 +212,26 @@ const Workexperience = (props) => {
               </Col>
             </Row>
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              <Col xs={10} md={12} lg={12}>
-                <p>Hello from smalll Size</p>
+              <Col xs={12} s={12} className="text-center">
+                <p>
+                  CompanyName
+                  <StrongMobile>{companyname}</StrongMobile>
+                </p>
+                <hr />
+                <p>
+                  Start Work
+                  <StrongMobile>{startwork}</StrongMobile>
+                </p>
+                <hr />
+                <p>
+                  End Work
+                  <StrongMobile>{endwork}</StrongMobile>
+                </p>
+                <hr />
+                <p>
+                  Position
+                  <StrongMobile>{position}</StrongMobile>
+                </p>
               </Col>
             </Row>
           </>

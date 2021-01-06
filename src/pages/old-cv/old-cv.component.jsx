@@ -43,6 +43,7 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/core";
+import NavGuest from "../../components/nav-guest/navGuest.component";
 const OldCv = ({ currentUser, match }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -191,6 +192,7 @@ const OldCv = ({ currentUser, match }) => {
 
   return (
     <Fragment>
+      <NavGuest />
       <RapperdColor className="container-fluid">
         <Content className="container">
           <Title>Your CVs</Title>
@@ -239,7 +241,7 @@ const OldCv = ({ currentUser, match }) => {
                             </ModalBody>
                             <ModalFooter>
                               <Button
-                                variantColor="blue"
+                                variantColor="red"
                                 mr={3}
                                 type="submit"
                                 onClick={() => deleteCv(`${singleCv.id}`)}
@@ -268,7 +270,6 @@ const OldCv = ({ currentUser, match }) => {
                       </Moment>
                       <IconCalendar />
                     </td>
-
                     <td>
                       <Linkcv
                         to={"create-cv/" + `${singleCv.id}`}

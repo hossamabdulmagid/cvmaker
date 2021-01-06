@@ -38,4 +38,10 @@ export const Rapperd = styled.div`
   margin: 0 auto;
   padding: 0px;
   border: 1px dotted gray;
+  margin-bottom: 10px;
+`;
+export const StrongMobile = styled.strong`
+  padding: 5px;
+  color: black;
+  display: block;
 `;

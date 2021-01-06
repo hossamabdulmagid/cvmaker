@@ -24,6 +24,7 @@ export const ButtonForWork = styled.button`
 export const Rapperd = styled.div`
   border: 1px dotted darkgray;
   padding: 1px;
+  margin-bottom: 10px;
 `;
 export const P = styled.p`
   margin: 00px;
@@ -33,7 +34,11 @@ export const P = styled.p`
 
 export const Strong = styled.strong`
   padding: 5px;
-  text-align: right;
   color: black;
   display: flex-inline;
+`;
+export const StrongMobile = styled.strong`
+  padding: 5px;
+  color: black;
+  display: block;
 `;

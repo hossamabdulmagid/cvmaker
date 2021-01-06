@@ -73,7 +73,7 @@ export const Li = styled.li`
   font-size: 13px;
   line-height: 18px;
   padding: 0px;
-  margin: 2px;
+  margin: 1px;
   color: #04b2cc;
   border-top: 1px solid #d7d7d7;
   &:hover {
@@ -217,4 +217,8 @@ export const RapperdForms = styled.div`
   margin: 0 auto;
   padding: 10px;
   padding-bottom: 30px;
+`;
+
+export const SmallSideBar = styled.small`
+  padding: 7px;
 `;

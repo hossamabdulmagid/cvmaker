@@ -65,10 +65,9 @@ button {
 
 .Deal {
   min-width: auto;
-  justify-content: space-between;
   min-height: auto;
-  margin: 25px;
-  float: right;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .error {
   color: red;
@@ -116,7 +115,6 @@ th {
   padding: 5px;
 }
 .buttonSavenewFrom {
-  float: right;
   min-width: auto;
   min-height: auto;
 }
@@ -147,7 +145,14 @@ p {
   background-color: silver;
 }
 .saveEditor {
-  float: right;
   padding: 8px;
   margin: 15px 0px 10px 10px;
+}
+
+.saveEditorMobile {
+  padding: 8px;
+  margin: 15px 0px 10px 10px;
+}
+.menulabel {
+  float: right;
 }

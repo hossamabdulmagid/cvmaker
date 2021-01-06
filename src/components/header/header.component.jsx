@@ -81,7 +81,7 @@ const Head = () => {
           </div>
           <div className="col-5">
             <small>
-              Already have your resumes on CV Maker?
+              Already have your resumes on CV Creator?
               <Button size="xs">
                 <Links to="/login">login </Links>{" "}
               </Button>

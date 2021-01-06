@@ -2,11 +2,11 @@ import React, { useEffect, Fragment, useState } from "react";
 import {
   Input,
   Label,
-  Container,
+  Containers,
   IconEditNameOfSection,
   ButtonForSaveBasicInfo,
 } from "./basicinfo.styles";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import { BsCheck } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useParams, useHistory, Progress } from "react-router-dom";
@@ -203,11 +203,11 @@ const BasicInfo = (props) => {
   };
   return (
     <Fragment>
-      <Container className="container">
+      <Containers>
         {!loading ? (
           <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="container">
+            <Container>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <button
                   onClick={onOpen}
                   variant="success"
@@ -219,7 +219,7 @@ const BasicInfo = (props) => {
                   className="basicinfo"
                   bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item"
                 >
-                  <Col xs={12} md={6} lg={6}>
+                  <Col md={6} lg={6} xl={6}>
                     <Label>Full name</Label>
                     <Input
                       name="fullname"
@@ -272,7 +272,7 @@ const BasicInfo = (props) => {
                     </small>
                   </Col>
                   <hr />
-                  <Col xs={12} md={6} lg={6}>
+                  <Col md={6} lg={6} xl={6}>
                     <Label>E-mail address</Label>
                     <Input
                       name="email"
@@ -331,7 +331,108 @@ const BasicInfo = (props) => {
                 </Row>
                 <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
                   <Col xs={12} s={12}>
-                    <p>welcome to Small Size</p>
+                    <Label>Full name</Label>
+                    <Input
+                      name="fullname"
+                      value={dataform.fullname}
+                      ref={register({ required: "*input is required" })}
+                      placeholder="Full Name"
+                      onChange={handleChange}
+                    />
+                    <small className="errorSectionName">
+                      {errors.fullname && errors.fullname.message}
+                    </small>
+                    <Label>Phone numbers</Label>
+                    <Input
+                      name="phone"
+                      value={dataform.phone}
+                      placeholder="010 000 0000"
+                      onChange={handleChange}
+                      ref={register({ required: "*input is required" })}
+                      required
+                    />
+                    <small className="errorSectionName">
+                      {errors.phone && errors.phone.message}
+                    </small>
+
+                    <Label>Address Line 1</Label>
+
+                    <Input
+                      name="address1"
+                      ref={register({ required: "*input is required" })}
+                      placeholder="Country"
+                      value={dataform.address1}
+                      onChange={handleChange}
+                    />
+
+                    <small className="errorSectionName">
+                      {errors.address1 && errors.address1.message}
+                    </small>
+                    <Label>Address Line 3</Label>
+                    <Input
+                      name="address3"
+                      placeholder="Street"
+                      ref={register()}
+                      value={dataform.address3}
+                      onChange={handleChange}
+                    />
+
+                    <small className="errorSectionName">
+                      {errors.address3 && errors.address3.message}
+                    </small>
+
+                    <Label>E-mail address</Label>
+                    <Input
+                      name="email"
+                      value={dataform.email}
+                      onChange={handleChange}
+                      placeholder="Email"
+                      ref={register({ required: "*input is required" })}
+                      required
+                    />
+                    <small className="errorSectionName">
+                      {errors.email && errors.email.message}
+                    </small>
+                    <Label>Websites</Label>
+                    <Input
+                      name="webSites"
+                      placeholder="https://www."
+                      ref={register()}
+                      value={dataform.webSites}
+                      onChange={handleChange}
+                    />
+                    <small className="errorSectionName">
+                      {errors.websites && errors.websites.message}
+                    </small>
+                    <Label>Address Line 2</Label>
+                    <Input
+                      name="address2"
+                      ref={register({ required: "*input is required" })}
+                      placeholder="City"
+                      value={dataform.address2}
+                      onChange={handleChange}
+                    />
+                    <small className="errorSectionName">
+                      {errors.address2 && errors.address2.message}
+                    </small>
+                    <ButtonForSaveBasicInfo
+                      type="submit"
+                      className="Deal"
+                      size="sm"
+                      variantColor="blue"
+                    >
+                      {!FlagButton ? (
+                        <Spinner
+                          thickness="4px"
+                          speed="0.65s"
+                          emptyColor="gray.200"
+                          color="blue.500"
+                          size="sm"
+                        />
+                      ) : (
+                        "Save"
+                      )}
+                    </ButtonForSaveBasicInfo>
                   </Col>
                 </Row>
 
@@ -351,9 +452,10 @@ const BasicInfo = (props) => {
                     {url.length > 5 ? null : null}
                   </Col>
                 </div>
-                <ImageUpload /> */}
-              </div>
-            </form>
+                <ImageUpload />
+                 */}
+              </form>
+            </Container>
           </>
         ) : (
           <Spinner
@@ -413,7 +515,7 @@ const BasicInfo = (props) => {
             </form>
           </ModalContent>
         </Modal>
-      </Container>
+      </Containers>
     </Fragment>
   );
 };

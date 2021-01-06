@@ -114,8 +114,8 @@ const Qualifications = ({ currentUser }) => {
 
   return (
     <Container>
-      <Row className="text-center">
-        <Col>
+      <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
+        <Col className="text-center">
           <Small>
             If you leave the fields in a section empty, the section will not
             appear in your CV

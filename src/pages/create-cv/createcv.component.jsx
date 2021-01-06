@@ -10,13 +10,14 @@ import {
   P,
   RapperSidebar,
   AllCvLinks,
+  SmallSideBar,
   LinkOption,
   LINK,
   ButtonForAddNewSection,
   Aroow,
   RapperdForms,
 } from "./createcv.styles";
-import { Col } from "react-bootstrap";
+import { Col, Row, Container } from "react-bootstrap";
 import FormDeatils from "../../lib/form";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
@@ -33,7 +34,7 @@ import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
 import { firestore } from "../../firebase/firebase.utils";
 import InputRadioBox from "./radiobox";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import Editor from "../../lib/ckeditor";
 import {
   Modal,
@@ -49,7 +50,7 @@ import {
   useToast,
   Spinner,
 } from "@chakra-ui/core";
-import { Button } from "react-bootstrap";
+import { Button, Navbar, Nav } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
@@ -89,6 +90,8 @@ const CreateCv = (props) => {
     },
   ]);
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
+
+  const [expanded, setExpanded] = useState(false);
 
   const { currentUser, details } = props;
 
@@ -338,7 +341,7 @@ const CreateCv = (props) => {
             />
           )}
 
-          <div className="row">
+          <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
             <Col xs={0} md={0} lg={4} />
             <Col xs={6} md={5} lg={4}>
               <AllCvLinks to="/cv">
@@ -365,10 +368,10 @@ const CreateCv = (props) => {
                 Download
               </Buttons>
             </Col>
-          </div>
+          </Row>
 
-          <div className="row">
-            <Col className="col" xs={5} lg={3} md={3} xl={3}>
+          <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
+            <Col lg={3} xl={3} md={3}>
               <Ul>
                 {!flag
                   ? array.map((singleRouteforSidebar, x) => (
@@ -409,7 +412,7 @@ const CreateCv = (props) => {
                   allowPinchZoom={false}
                   // blockScrollOnMount={true}
                 >
-                  <ModalOverlay />1
+                  <ModalOverlay />
                   <ModalContent>
                     <ModalHeader>Add your section</ModalHeader>
                     <ModalCloseButton />
@@ -514,7 +517,7 @@ const CreateCv = (props) => {
                 not appear in your CV.
               </small>
             </Col>
-            <div className="col" xs={7} md={10} lg={10}>
+            <Col xl={8} md={8} lg={8}>
               {activeSection === sidebarRoutes[0].type ? <BasicInfo /> : null}
               {activeSection === sidebarRoutes[1].type ? (
                 <Workexperience />
@@ -539,8 +542,207 @@ const CreateCv = (props) => {
               {activeSection === "entry" ? (
                 <Editor details={value.section} />
               ) : null}
-            </div>
-          </div>
+            </Col>
+          </Row>
+          <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+            <Col>
+              <Navbar bg="light" expand="sm" dir="rtl" expanded={expanded}>
+                <Navbar.Brand>
+                  <Col xs={6} md={5} lg={4}>
+                    <AllCvLinks to="/cv">
+                      <Aroow />
+                      Show All Cv
+                    </AllCvLinks>
+                  </Col>
+                </Navbar.Brand>
+                <Navbar.Toggle
+                  aria-controls="basic-navbar-nav"
+                  onClick={() => setExpanded(expanded ? false : "expanded")}
+                />
+                <Navbar.Collapse id="basic-navbar-nav">
+                  <Nav className="mr-auto">
+                    <Ul>
+                      {!flag
+                        ? array.map((singleRouteforSidebar, x) => (
+                            <Li
+                              key={x}
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setActiveSection(singleRouteforSidebar.type);
+                              }}
+                            >
+                              <LINK onClick={() => setExpanded(false)}>
+                                {singleRouteforSidebar.section}
+                              </LINK>
+                            </Li>
+                          ))
+                        : sidebarRoutes.map((singleRouteforSidebar, x) => (
+                            <Li
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setActiveSection(singleRouteforSidebar.type);
+                              }}
+                              key={x}
+                            >
+                              <LINK onClick={() => setExpanded(false)}>
+                                {singleRouteforSidebar.section}
+                              </LINK>
+                            </Li>
+                          ))}
+                      <ButtonForAddNewSection
+                        onClick={onOpen}
+                        variant="success"
+                      >
+                        + New Section
+                      </ButtonForAddNewSection>
+                      <Modal
+                        initialFocusRef={initialRef}
+                        finalFocusRef={finalRef}
+                        isOpen={isOpen}
+                        onClose={onClose}
+                        closeOnEsc={true}
+                        autoFocus={true}
+                        blockScrollOnMount={true}
+                        allowPinchZoom={false}
+                        // blockScrollOnMount={true}
+                      >
+                        <ModalOverlay />
+                        <ModalContent>
+                          <ModalHeader>Add your section</ModalHeader>
+                          <ModalCloseButton />
+                          <form onSubmit={handleSubmit(onSubmit)}>
+                            <ModalBody pb={6}>
+                              <FormLabel>Section name</FormLabel>
+                              <Input
+                                placeholder="SectionName"
+                                type="text"
+                                name="section"
+                                onChange={handleChangeSection}
+                                ref={register({
+                                  required: true,
+                                })}
+                              />
+                              <div className="col-12">
+                                {errors && errors.section && (
+                                  <label className="error">
+                                    {errors.section.message ||
+                                      "Section is required"}
+                                  </label>
+                                )}
+                              </div>
+                              {errors.section && errors.section.message}
+                              <InputCheckBox
+                                refVal={register({ required: true })}
+                                name="role"
+                                labelText=""
+                                id="checkbox-0"
+                                value={true}
+                                onChange={handleChangeCheckBox}
+                                options={{
+                                  value: "agree Rules",
+                                  label: " Agree and understand",
+                                }}
+                              />
+                              <div className="col-12">
+                                {errors && errors.role && (
+                                  <label className="error">
+                                    {errors.role.message || "Role is required"}
+                                  </label>
+                                )}
+                              </div>
+                              <div className="inputradiobox">
+                                <InputRadioBox
+                                  refVal={register({ required: true })}
+                                  name="type"
+                                  id="checkbox-1"
+                                  labelText=""
+                                  value={true}
+                                  hint="You Will Be Added Basicform Details"
+                                  options={{
+                                    value: "text",
+                                    label: "Added Form",
+                                  }}
+                                  disabled={turnOf}
+                                  required
+                                />
+
+                                <InputRadioBox
+                                  refVal={register({ required: true })}
+                                  name="type"
+                                  id="checkbox-2"
+                                  labelText=""
+                                  value={false}
+                                  hint="You Will Be Added Editor Details"
+                                  options={{
+                                    value: "entry",
+                                    label: "Added Entry",
+                                  }}
+                                  disabled={turnOf}
+                                />
+                              </div>
+                            </ModalBody>
+                            <ModalFooter>
+                              <Button
+                                variantcolor="blue"
+                                mr={3}
+                                type="submit"
+                                className="buttonForSaveNewSection"
+                                onOpen
+                              >
+                                {!flagButton ? <Spinner /> : "Save"}
+                              </Button>
+                              <Button
+                                onClick={onClose}
+                                className="buttonForCancleNewSection"
+                              >
+                                Cancel
+                              </Button>
+                            </ModalFooter>
+                          </form>
+                        </ModalContent>
+                      </Modal>
+                    </Ul>
+                    <SmallSideBar>
+                      Click and drag section names in the above list to reorder
+                      sections in your CV.
+                    </SmallSideBar>
+                    <SmallSideBar>
+                      If you leave the fields in a section empty, the section
+                      will not appear in your CV.
+                    </SmallSideBar>
+                  </Nav>
+                </Navbar.Collapse>
+              </Navbar>
+            </Col>
+            <Col xs={12} s={12}>
+              {activeSection === sidebarRoutes[0].type ? <BasicInfo /> : null}
+              {activeSection === sidebarRoutes[1].type ? (
+                <Workexperience />
+              ) : null}
+              {activeSection === sidebarRoutes[2].type ? (
+                <Qualifications />
+              ) : null}
+              {activeSection === sidebarRoutes[3].type ? <Education /> : null}
+              {activeSection === sidebarRoutes[4].type ? <Interests /> : null}
+              {activeSection === sidebarRoutes[5].type ? <References /> : null}
+              {activeSection === "text" ? (
+                <FormDeatils
+                  array={array}
+                  details={value.section}
+                  displayDataToUI={displayDataToUI}
+                  setDisplayDataToUI={setDisplayDataToUI}
+                  sidebarRoutes={sidebarRoutes}
+                  activeSection={activeSection}
+                />
+              ) : null}
+
+              {activeSection === "entry" ? (
+                <Editor details={value.section} />
+              ) : null}
+            </Col>
+          </Row>
         </Containers>
       </RapperColor>
     </Fragment>

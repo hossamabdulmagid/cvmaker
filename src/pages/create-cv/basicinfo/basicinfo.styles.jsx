@@ -2,9 +2,7 @@ import styled from "styled-components";
 import { Button } from "@chakra-ui/core";
 import { AiTwotoneEdit } from "react-icons/ai";
 
-export const ButtonForSaveBasicInfo = styled(Button)`
-  float: left;
-`;
+export const ButtonForSaveBasicInfo = styled(Button)``;
 export const DIV = styled.div`
   padding: 20px;
   margin: 20px;
@@ -40,11 +38,12 @@ export const P = styled.p`
   border-bottom: 1px solid gray;
 `;
 
-export const Container = styled.div`
+export const Containers = styled.div`
   background-color: #ffffff;
   padding: 5px;
   margin: 2px;
   height: auto;
+  margin-bottom: 10px;
 `;
 
 export const Span = styled.span`

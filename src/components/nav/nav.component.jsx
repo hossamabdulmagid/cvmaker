@@ -49,7 +49,7 @@ const Nav = ({ currentUser, displayName }) => {
   return (
     <Rapper>
       <Container>
-        <Row>
+        <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
           <Col xs={4} s={4} lg={6}>
             <Span>Create, maintain, publish, and share your CVs for free</Span>
           </Col>
@@ -61,6 +61,20 @@ const Nav = ({ currentUser, displayName }) => {
             </Select>
           </Col>
           <Col xs={4} s={4} lg={3}>
+            {currentUser ? (
+              <LINK onClick={() => auth.signOut()} to="">
+                <span>Sign Out ({currentUser.displayName})</span>
+              </LINK>
+            ) : (
+              <>
+                <Icon className="lock" />
+                <LINK to="/login">Login | Signup</LINK>
+              </>
+            )}
+          </Col>
+        </Row>
+        <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+          <Col xs={12} s={12} className="text-center">
             {currentUser ? (
               <LINK onClick={() => auth.signOut()} to="">
                 {" "}

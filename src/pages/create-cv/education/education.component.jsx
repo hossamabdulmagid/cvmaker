@@ -15,7 +15,13 @@ import {
   Spinner,
   useToast,
 } from "@chakra-ui/core";
-import { ButtonForEducation, P, Rapperd, Strong } from "./education.styles";
+import {
+  ButtonForEducation,
+  P,
+  Rapperd,
+  Strong,
+  StrongMobile,
+} from "./education.styles";
 import { connect } from "react-redux";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
@@ -141,24 +147,45 @@ const Education = (props) => {
         <>
           <Rapperd>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              <Col xs={12} md={12} lg={12} className="text-center">
+              <Col md={12} lg={12} xl={12} className="text-center">
                 <P>
                   CollageName: <Strong>{collagename}</Strong>
                 </P>
+                <hr />
                 <P>
                   StartGraduationYear: <Strong>{startgraduationyear}</Strong>
                 </P>
+                <hr />
                 <P>
                   EndGraduationYear: <Strong>{endgraduationyear}</Strong>
                 </P>
+                <hr />
                 <P>
                   Education Majoring: <Strong>{eduactionmajor}</Strong>
                 </P>
               </Col>
             </Row>
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              <Col>
-                <p>Hello from small size</p>
+              <Col xs={12} s={12} className="text-center">
+                <p>
+                  CollageName
+                  <StrongMobile>{collagename}</StrongMobile>
+                </p>
+                <hr />
+                <p>
+                  StartGraduationYear
+                  <StrongMobile>{startgraduationyear}</StrongMobile>
+                </p>
+                <hr />
+                <p>
+                  EndGraduationYear
+                  <StrongMobile>{endgraduationyear}</StrongMobile>
+                </p>
+                <hr />
+                <p>
+                  Education Majoring
+                  <StrongMobile>{eduactionmajor}</StrongMobile>
+                </p>
               </Col>
             </Row>
           </Rapperd>

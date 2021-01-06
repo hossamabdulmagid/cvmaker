@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const RapperColor = styled.div`
   background-color: #ffffff;
   height: auto;
-  padding: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding: 4px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   margin: 0 auto;
 `;
 

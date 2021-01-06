@@ -109,8 +109,8 @@ export const ButtonForPremium = styled.button`
   background-color: #37c871;
   font-size: 15px;
   padding: 6px;
-  margin: 5px;
-  height: 38px;
+  margin: 0 auto;
+  height: 0 auto;
   color: white;
   margin-top: 20px;
   &:hover {

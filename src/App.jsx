@@ -79,7 +79,8 @@ class App extends React.Component {
                   component={CreateCv}
                 />
                 {/*
-            <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} /> */}
+                  <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} /> 
+                 */}
                 <PrivateRoute
                   exact
                   path="/cv"

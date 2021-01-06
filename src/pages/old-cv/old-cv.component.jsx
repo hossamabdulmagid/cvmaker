@@ -316,14 +316,14 @@ const OldCv = ({ currentUser, match }) => {
                   by going premium for a nominal annual subscription fee.
                   <div className="container">
                     <div className="row">
-                      <Col xs={12} lg={6} md={6}>
+                      <Col xs={12} lg={6} md={6} className="center-item">
                         <H2> Free</H2>
                         <Small>Basic templates</Small>
                         <Small>Add custom plain sections to your CV</Small>
                         <Small>Basic rich text editor</Small>
                         <Small>$0</Small>
                       </Col>
-                      <div className="col" xs={12} lg={6} md={6}>
+                      <Col xs={12} lg={6} md={6}>
                         <H2> Premium</H2>
                         <Small>
                           <Green>★</Green>
@@ -351,11 +351,13 @@ const OldCv = ({ currentUser, match }) => {
                           templates
                         </Small>
                         <Small>$16 / year</Small>
-                        <ButtonForPremium>
-                          Upgrade to Premium ♥
-                        </ButtonForPremium>
-                        <img src="paypal.png" alt="" />
-                      </div>
+                        <div className="container text-center center-item">
+                          <ButtonForPremium>
+                            Upgrade to Premium ♥
+                          </ButtonForPremium>
+                          <img src="paypal.png" alt="" className="imgpaypal" />
+                        </div>
+                      </Col>
                     </div>
                   </div>
                 </AccordionPanel>

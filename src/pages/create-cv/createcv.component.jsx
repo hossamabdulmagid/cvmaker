@@ -507,15 +507,18 @@ const CreateCv = (props) => {
                   </ModalContent>
                 </Modal>
               </Ul>
-              <small>
-                * Click and drag section names in the above list to reorder
-                sections in your CV.
-              </small>
-              <br />
-              <small>
-                * If you leave the fields in a section empty, the section will
-                not appear in your CV.
-              </small>
+              <Col bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+                <small>
+                  * Click and drag section names in the above list to reorder
+                  sections in your CV.
+                </small>
+                <br />
+
+                <small>
+                  * If you leave the fields in a section empty, the section will
+                  not appear in your CV.
+                </small>
+              </Col>
             </Col>
             <Col xl={8} md={8} lg={8}>
               {activeSection === sidebarRoutes[0].type ? <BasicInfo /> : null}
@@ -544,7 +547,7 @@ const CreateCv = (props) => {
               ) : null}
             </Col>
           </Row>
-          <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+          <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none  center-item">
             <Col>
               <Navbar bg="light" expand="sm" dir="rtl" expanded={expanded}>
                 <Navbar.Brand>
@@ -704,14 +707,16 @@ const CreateCv = (props) => {
                         </ModalContent>
                       </Modal>
                     </Ul>
-                    <SmallSideBar>
-                      Click and drag section names in the above list to reorder
-                      sections in your CV.
-                    </SmallSideBar>
-                    <SmallSideBar>
-                      If you leave the fields in a section empty, the section
-                      will not appear in your CV.
-                    </SmallSideBar>
+                    <Col bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+                      <SmallSideBar>
+                        Click and drag section names in the above list to
+                        reorder sections in your CV.
+                      </SmallSideBar>
+                      <SmallSideBar>
+                        If you leave the fields in a section empty, the section
+                        will not appear in your CV.
+                      </SmallSideBar>
+                    </Col>
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>

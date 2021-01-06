@@ -12,8 +12,12 @@
 Button {
   margin: 5px;
 }
+.imgpaypal {
+  margin: 0 auto;
+  padding: 10px;
+}
 img {
-  margin: 8px;
+  margin-top: 12px;
 }
 .edit {
   display: inline-flex;

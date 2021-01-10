@@ -71,7 +71,7 @@ const Bottom = () => {
               <RapperText>
                 <p> Secure 256 bit SSL encryption</p>
                 <p>Available on the Chrome webstore</p>
-                <p> follow updates at @cvmkr </p>
+                <p> follow updates at @cvCreator </p>
               </RapperText>
             </RapperdCols>
           </Col>

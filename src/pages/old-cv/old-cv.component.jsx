@@ -123,8 +123,7 @@ const OldCv = ({ currentUser, match }) => {
           obj.id = doc.id;
           obj.lastModified = new Date().toString();
           allcv.push(obj);
-          console.log(`${doc.id}`);
-
+          console.log(obj, `obj.doc.data()`);
           console.log(obj, `object Dataaaaaaa`);
 
           console.log(allcv, `allcv`);
@@ -311,9 +310,10 @@ const OldCv = ({ currentUser, match }) => {
                   </Box>
                 </AccordionHeader>
                 <AccordionPanel pb={4}>
-                  CV Maker is absolutely FREE with no restrictions, but you can
-                  get a lot more out of it and support its continued development
-                  by going premium for a nominal annual subscription fee.
+                  CV Creator is absolutely FREE with no restrictions, but you
+                  can get a lot more out of it and support its continued
+                  development by going premium for a nominal annual subscription
+                  fee.
                   <div className="container">
                     <div className="row">
                       <Col xs={12} lg={6} md={6} className="center-item">

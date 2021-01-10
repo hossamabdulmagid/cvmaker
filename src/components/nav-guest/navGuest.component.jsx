@@ -11,7 +11,7 @@ const NavGuest = () => {
         <Row>
           <Col xs={4} md={6} lg={6}>
             <Link to="/">
-              <img src="https://cvmkr.com/images/logo.png" alt="" />
+              <img src="cvcreator.png" alt="" width="100" />
             </Link>
           </Col>
           <Col xs={4} md={3} lg={3}>

@@ -16,9 +16,7 @@ Button {
   margin: 0 auto;
   padding: 10px;
 }
-img {
-  margin-top: 12px;
-}
+
 .edit {
   display: inline-flex;
 }
@@ -159,4 +157,8 @@ p {
 }
 .menulabel {
   float: right;
+}
+#idforcss {
+  padding: 20px;
+  border-bottom: 1px solid orange;
 }

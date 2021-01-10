@@ -9,6 +9,7 @@ import {
   RapperdRow,
   Div,
   RapperdCols,
+  Small,
 } from "./header.styles";
 import Caro from "../carousel/carousel.component";
 import Content from "../content/content.component";
@@ -24,19 +25,19 @@ const Head = () => {
           <RapperdRow>
             <Row>
               <Col xs={4} md={6} lg={6}>
-                <img src="./cvmaker.png" alt="" />
+                <img src="cvcreator.png" alt="" width="90" />
               </Col>
               <Col xs={4} md={3} lg={4}>
-                <small onClick={() => setDownload(download + 1)}>
+                <Small onClick={() => setDownload(download + 1)}>
                   {download}
                   download
-                </small>
+                </Small>
               </Col>
               <Col xs={4} md={3} lg={2}>
-                <small onClick={() => setSave(save + 1)}>
+                <Small onClick={() => setSave(save + 1)}>
                   {save}
                   saved
-                </small>
+                </Small>
               </Col>
             </Row>
           </RapperdRow>
@@ -55,7 +56,7 @@ const Head = () => {
                 <RapperdCols>
                   <Links to="/cv">
                     <BUTTON variant="outline-dark" size="xs" variant="success">
-                      <img src="ico_start.png" alt="" />
+                      <img src="ico_start.png" alt="" margin="1" />
                       Create a cv now
                     </BUTTON>
                   </Links>

@@ -55,6 +55,7 @@ import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import InputCheckBox from "./checkbox";
+import { getDataaaaa } from "../../redux/data/dataAction";
 
 const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
@@ -93,7 +94,7 @@ const CreateCv = (props) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const { currentUser, details } = props;
+  const { currentUser, details, getDataaaaa } = props;
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
@@ -281,6 +282,7 @@ const CreateCv = (props) => {
     }
     FetchData();
   }, [array, currentUser]);
+
   return (
     <Fragment>
       <NavGuest />
@@ -756,4 +758,5 @@ const CreateCv = (props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
+
 export default connect(mapStateToProps, null)(CreateCv);

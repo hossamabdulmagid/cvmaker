@@ -94,13 +94,6 @@ export const BUTTONFORLOGIN = styled(Button)`
   width: 100px;
 `;
 
-export const Small = styled.span`
-  float: left;
-  background-color: blue;
-  width: 25px;
-  padding: 1px;
-`;
-
 export const Links = styled(Link)`
   color: white;
   &:hover {
@@ -113,4 +106,9 @@ export const RapperdRow = styled.div`
 `;
 export const RapperdCols = styled.div`
   margin-top: 20px;
+`;
+
+export const Small = styled.small`
+  padding-top: 25px;
+  margin-top: 25px;
 `;

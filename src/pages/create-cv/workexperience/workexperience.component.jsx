@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { AddToList } from "../../../redux/addtolist/addtolistAction";
 import { connect } from "react-redux";
@@ -27,6 +27,7 @@ import {
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 
 const Workexperience = (props) => {
   const { AddToList, currentUser, cvs } = props;
@@ -44,15 +45,13 @@ const Workexperience = (props) => {
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const value = getValues();
-
+  const [workexp, setWorkexp] = useState([]);
   const [workexperinceform, setWorkexperinceform] = useState({
-    workexperience: {
-      companyname: "",
-      startwork: "",
-      endwork: "",
-      position: "",
-      lastModified: new Date(),
-    },
+    companyname: "",
+    startwork: "",
+    endwork: "",
+    position: "",
+    lastModified: new Date(),
     type: "workexperience",
   });
 
@@ -74,14 +73,10 @@ const Workexperience = (props) => {
       `users/${currentUser.id}/cvs/${id}/data/Workexperience`
     );
 
+    workexp.push(workexperinceform);
+    console.log(workexp, `arraytosend after pusing`);
     let dataToBeSave = {
-      workexperience: {
-        companyname: companyname || "",
-        startwork: startwork || "",
-        endwork: endwork || "",
-        position: position || "",
-        lastModified: new Date(),
-      },
+      allwork: workexp,
       type: "workexperience",
     };
 
@@ -101,42 +96,7 @@ const Workexperience = (props) => {
   };
 
   const [loading, setLoading] = useState(true);
-  /*
-  
-  querySnapshot.forEach(function (doc) {
-  
-     console.log(doc.id, " => ", doc.data());
-  
-     //Prepare the new data that you want to add :
-     var newCasesObject = {
-         casesPoliceStation: "String",
-         crimeNumber: "String",
-         sectionOfLaw: "String",
-         stage: "String",
-     }
-  
-     //Get the array with data from the loaded document
-     var dataObj = doc.data().casesObject;
-  
-     //Push the new data to that array
-     dataObj.push(newCasesObject);
-  
-     //Call another function that will update the document with the new data
-     updateData(doc.id, dataObj);
-  });
-  
-  //The new update function:
-  async function updateData(docID, obj){
-  
-     const cityRef = db.collection('[COLLECTION_NAME]').doc(docID);
-  
-     // Set the 'capital' field of the city
-     const res = await cityRef.update({casesObject: obj});
-  
-  }
-  
-  */
-
+  const [oldworks, setOldWorks] = useState([]);
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -149,16 +109,22 @@ const Workexperience = (props) => {
       .get()
       .then(function (querySnapshot) {
         const workexpData = querySnapshot.data();
+
         if (workexpData) {
-          setWorkexperinceform({
+          setOldWorks(workexpData.allwork);
+
+          /*setWorkexperinceform({
             companyname: workexpData.workexperience.companyname,
             startwork: workexpData.workexperience.startwork,
             endwork: workexpData.workexperience.endwork,
             position: workexpData.workexperience.position,
             lastModified: workexpData.workexperience.lastModified,
-          });
+          }); */
         }
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+          console.log(oldworks, `fafff`);
+        }, 3000);
       })
       .catch((error) => {
         setLoading(false);
@@ -171,6 +137,10 @@ const Workexperience = (props) => {
   useEffect(() => {
     setFlagButton(true);
   }, []);
+
+  const saw = useMemo(() => {}, [setOldWorks, oldworks]);
+
+  console.log(workexp.allwork, `$$$`);
 
   return (
     <Container>
@@ -187,54 +157,71 @@ const Workexperience = (props) => {
       </Row>
       <Rapperd>
         {!loading ? (
-          <>
+          <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              <Col md={12} lg={12} xl={12} className="text-center">
-                <P>
-                  CompanyName:
-                  <Strong>{companyname}</Strong>
-                </P>
-                <hr />
-                <P>
-                  Start Work:
-                  <Strong>{startwork}</Strong>
-                </P>
-                <hr />
-                <P>
-                  End Work:
-                  <Strong>{endwork}</Strong>
-                </P>
-                <hr />
-                <P>
-                  Position:
-                  <Strong>{position}</Strong>
-                </P>
-              </Col>
+              {oldworks.map((single, i) => (
+                <Col
+                  md={12}
+                  lg={12}
+                  xl={12}
+                  className="text-center"
+                  key={i}
+                  id="idforcss"
+                >
+                  <P>
+                    CompanyName:
+                    <Strong>{single.companyname}</Strong>
+                  </P>
+                  <hr />
+                  <P>
+                    Start Work:
+                    <Strong>{single.startwork}</Strong>
+                  </P>
+                  <hr />
+                  <P>
+                    End Work:
+                    <Strong>{single.endwork}</Strong>
+                  </P>
+                  <hr />
+                  <P>
+                    Position:
+                    <Strong>{single.position}</Strong>
+                  </P>
+                </Col>
+              ))}
             </Row>
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              <Col xs={12} s={12} className="text-center">
-                <p>
-                  CompanyName
-                  <StrongMobile>{companyname}</StrongMobile>
-                </p>
-                <hr />
-                <p>
-                  Start Work
-                  <StrongMobile>{startwork}</StrongMobile>
-                </p>
-                <hr />
-                <p>
-                  End Work
-                  <StrongMobile>{endwork}</StrongMobile>
-                </p>
-                <hr />
-                <p>
-                  Position
-                  <StrongMobile>{position}</StrongMobile>
-                </p>
-              </Col>
+              {oldworks.map((single, i) => (
+                <Col
+                  xs={12}
+                  s={12}
+                  className="text-center"
+                  key={i}
+                  id="idforcss"
+                >
+                  <p>
+                    CompanyName
+                    <StrongMobile>{single.companyname}</StrongMobile>
+                  </p>
+                  <hr />
+                  <p>
+                    Start Work
+                    <StrongMobile>{single.startwork}</StrongMobile>
+                  </p>
+                  <hr />
+                  <p>
+                    End Work
+                    <StrongMobile>{single.endwork}</StrongMobile>
+                  </p>
+                  <hr />
+                  <p>
+                    Position
+                    <StrongMobile>{single.position}</StrongMobile>
+                  </p>
+                </Col>
+              ))}
             </Row>
-          </>
+          </Fragment>
         ) : (
           <Spinner
             thickness="4px"
@@ -262,7 +249,7 @@ const Workexperience = (props) => {
               <Input
                 ref={register({ required: "this Feild is Required" })}
                 name="companyname"
-                value={companyname}
+                value={"" || companyname}
                 onChange={handleChange}
                 placeholder="CompanyName"
               />
@@ -275,7 +262,7 @@ const Workexperience = (props) => {
                 ref={register({ required: "this Feild is Required" })}
                 name="startwork"
                 onChange={handleChange}
-                value={startwork}
+                value={"" || startwork}
                 placeholder="Graduation Year"
                 type="date"
               />
@@ -289,7 +276,7 @@ const Workexperience = (props) => {
                 name="endwork"
                 placeholder="Graduation Year"
                 onChange={handleChange}
-                value={endwork}
+                value={"" || endwork}
                 type="date"
               />
               <small className="error">
@@ -302,7 +289,7 @@ const Workexperience = (props) => {
                 name="position"
                 placeholder="Position"
                 onChange={handleChange}
-                value={position}
+                value={"" || position}
                 type="text"
               />
               <small className="error">

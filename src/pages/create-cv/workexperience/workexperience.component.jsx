@@ -20,6 +20,7 @@ import {
 import {
   ButtonForWork,
   Rapperd,
+  ButtonFordeleteWork,
   P,
   Strong,
   StrongMobile,
@@ -28,8 +29,7 @@ import {
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
-import generateRandom from "../../../lib/random";
+
 const Workexperience = (props) => {
   const { AddToList, currentUser } = props;
   const { id } = useParams();
@@ -160,11 +160,23 @@ const Workexperience = (props) => {
           <ButtonForWork
             className="buttonforpremium"
             variant="success"
-            onClick={() => onOpen() + uuidv4()}
+            onClick={() => onOpen()}
           >
             + WorkExpernice
           </ButtonForWork>
         </div>
+        <Col xs={12} s={12} md={5} lg={5} xl={5}>
+          {allworkexp.length ? (
+            <ButtonFordeleteWork
+              className="buttonforpremium"
+              variant="success"
+              onClick={() => DeleteSingleJob()}
+            >
+              - Clear Your Jobs
+              <Icon />
+            </ButtonFordeleteWork>
+          ) : null}
+        </Col>
       </Row>
       <Rapperd>
         {!loading ? (
@@ -201,9 +213,6 @@ const Workexperience = (props) => {
                 </Col>
               ))}
             </Row>
-            {allworkexp.length ? (
-              <Icon onClick={() => DeleteSingleJob()} />
-            ) : null}
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
               {allworkexp.map((single, key) => (
@@ -233,14 +242,19 @@ const Workexperience = (props) => {
                     Position
                     <StrongMobile>{single.position}</StrongMobile>
                   </p>
-                  <Icon />
                 </Col>
               ))}
             </Row>
           </Fragment>
         ) : (
           <>
-            <Strong>no job experniece.</Strong>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="lg"
+            />
           </>
         )}
       </Rapperd>

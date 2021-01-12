@@ -24,17 +24,16 @@ export const ButtonForWork = styled.button`
 
 export const Icon = styled(BsFillBucketFill)`
   margin: 0 auto;
+  display: inline-flex;
+  padding: 1px;
+  margin: 3px;
+  margin-top: -1px;
   color: orangered;
 `;
 export const Rapperd = styled.div`
   border: 1px dotted darkgray;
   padding: 1px;
   margin-bottom: 10px;
-  ${Icon} {
-  }
-  &:hover ${Icon} {
-    display: block;
-  }
 `;
 export const P = styled.p`
   margin: 00px;
@@ -51,4 +50,20 @@ export const StrongMobile = styled.strong`
   padding: 5px;
   color: black;
   display: block;
+`;
+export const ButtonFordeleteWork = styled.button`
+  border-radius: 15px;
+  background-color: #cf2323;
+  color: white;
+  font-size: 13px;
+  padding: 6px;
+  line-height: revert;
+  height: 28px;
+  width: 150px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  &:hover {
+    background-color: #18c7e1;
+    color: white;
+  }
 `;

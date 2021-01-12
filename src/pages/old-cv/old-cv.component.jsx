@@ -68,6 +68,7 @@ const OldCv = ({ currentUser, match }) => {
   const history = useHistory();
 
   const [datee, setDatee] = useState(new Date());
+
   const [lastModified, setLastModified] = useState(new Date().toString());
 
   const refreshlastModified = () => {
@@ -106,12 +107,6 @@ const OldCv = ({ currentUser, match }) => {
 
   const [loading, setLoading] = useState(true);
 
-  React.useMemo(() => {
-    console.log(
-      ` will only recompute the cache value when one of the Deps had Change`
-    );
-  }, []);
-
   const GetData = async () => {
     await firestore
       .doc(`users/${currentUser.id}`)
@@ -123,10 +118,7 @@ const OldCv = ({ currentUser, match }) => {
           obj.id = doc.id;
           obj.lastModified = new Date().toString();
           allcv.push(obj);
-          console.log(obj, `obj.doc.data()`);
-          console.log(obj, `object Dataaaaaaa`);
 
-          console.log(allcv, `allcv`);
           setLoading(false);
         });
       });
@@ -158,7 +150,6 @@ const OldCv = ({ currentUser, match }) => {
       .delete()
       .then(function () {
         setAllcv([]);
-        //  setAllcv([GetData()]);
         onClose();
         setTimeout(() => {
           GetData();
@@ -187,7 +178,6 @@ const OldCv = ({ currentUser, match }) => {
   useEffect(() => {
     deleteCv();
   }, [allcv, setAllcv]);
-  //    question={"Are you sure you want to delete the survey?"}
 
   return (
     <Fragment>

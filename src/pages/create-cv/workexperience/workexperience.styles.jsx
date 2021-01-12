@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
+import { BsFillBucketFill } from "react-icons/bs";
 export const Title = styled.h4`
   padding: 11px;
   font-weight: 200px;
@@ -21,10 +21,20 @@ export const ButtonForWork = styled.button`
     color: white;
   }
 `;
+
+export const Icon = styled(BsFillBucketFill)`
+  margin: 0 auto;
+  color: orangered;
+`;
 export const Rapperd = styled.div`
   border: 1px dotted darkgray;
   padding: 1px;
   margin-bottom: 10px;
+  ${Icon} {
+  }
+  &:hover ${Icon} {
+    display: block;
+  }
 `;
 export const P = styled.p`
   margin: 00px;

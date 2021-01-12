@@ -23,20 +23,22 @@ import {
   P,
   Strong,
   StrongMobile,
+  Icon,
 } from "./workexperience.styles";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-
+import { v4 as uuidv4 } from "uuid";
+import generateRandom from "../../../lib/random";
 const Workexperience = (props) => {
   const { AddToList, currentUser } = props;
-
   const { id } = useParams();
 
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  let _ID = uuidv4();
+  console.log(_ID, `_ID`);
   const initialRef = React.useRef();
 
   const finalRef = React.useRef();
@@ -54,6 +56,7 @@ const Workexperience = (props) => {
     position: "",
     lastModified: new Date(),
     type: "workexperience",
+    _ID,
   });
 
   const {
@@ -71,7 +74,7 @@ const Workexperience = (props) => {
 
   const [loading, setLoading] = useState(true);
 
-  const onSubmit = async () => {
+  const onSubmit = async (_ID) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/Workexperience`
     );
@@ -95,7 +98,7 @@ const Workexperience = (props) => {
         isClosable: true,
         position: "bottom-right",
       });
-    }, 2000);
+    }, 200);
     setLoading(false);
   };
 
@@ -131,6 +134,12 @@ const Workexperience = (props) => {
     setFlagButton(true);
   }, []);
 
+  useEffect(() => {
+    generateRandom();
+    console.log(generateRandom());
+    console.log(`iam refresher`);
+  });
+
   return (
     <Container>
       <Row>
@@ -138,7 +147,7 @@ const Workexperience = (props) => {
           <ButtonForWork
             className="buttonforpremium"
             variant="success"
-            onClick={onOpen}
+            onClick={() => onOpen() + uuidv4()}
           >
             + WorkExpernice
           </ButtonForWork>
@@ -148,13 +157,13 @@ const Workexperience = (props) => {
         {!loading ? (
           <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              {allworkexp.map((single, i) => (
+              {allworkexp.map((single, key) => (
                 <Col
                   md={12}
                   lg={12}
                   xl={12}
                   className="text-center"
-                  key={i}
+                  key={key}
                   id="idforcss"
                 >
                   <P>
@@ -176,16 +185,21 @@ const Workexperience = (props) => {
                     Position:
                     <Strong>{single.position}</Strong>
                   </P>
+                  <P>
+                    ID:
+                    <Strong>{single._ID}</Strong>
+                  </P>
+                  <Icon />
                 </Col>
               ))}
             </Row>
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              {allworkexp.map((single, i) => (
+              {allworkexp.map((single, key) => (
                 <Col
                   xs={12}
                   s={12}
                   className="text-center"
-                  key={i}
+                  key={key}
                   id="idforcss"
                 >
                   <p>
@@ -207,6 +221,7 @@ const Workexperience = (props) => {
                     Position
                     <StrongMobile>{single.position}</StrongMobile>
                   </p>
+                  <Icon />
                 </Col>
               ))}
             </Row>
@@ -238,7 +253,7 @@ const Workexperience = (props) => {
               <Input
                 ref={register({ required: "this Feild is Required" })}
                 name="companyname"
-                value={"" || companyname}
+                //value={"" }
                 onChange={handleChange}
                 placeholder="CompanyName"
               />

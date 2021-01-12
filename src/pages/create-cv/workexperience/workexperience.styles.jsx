@@ -67,3 +67,7 @@ export const ButtonFordeleteWork = styled.button`
     color: white;
   }
 `;
+export const Strongs = styled.strong`
+  margin: 0 auto;
+  text-align: center;
+`;

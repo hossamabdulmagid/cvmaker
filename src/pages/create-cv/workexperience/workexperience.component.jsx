@@ -23,6 +23,7 @@ import {
   ButtonFordeleteWork,
   P,
   Strong,
+  Strongs,
   StrongMobile,
   Icon,
 } from "./workexperience.styles";
@@ -156,7 +157,7 @@ const Workexperience = (props) => {
   return (
     <Container>
       <Row>
-        <div className="col-5">
+        <Col xs={12} s={12} md={5} lg={5} xl={5}>
           <ButtonForWork
             className="buttonforpremium"
             variant="success"
@@ -164,7 +165,7 @@ const Workexperience = (props) => {
           >
             + WorkExpernice
           </ButtonForWork>
-        </div>
+        </Col>
         <Col xs={12} s={12} md={5} lg={5} xl={5}>
           {allworkexp.length ? (
             <ButtonFordeleteWork
@@ -172,7 +173,7 @@ const Workexperience = (props) => {
               variant="success"
               onClick={() => DeleteSingleJob()}
             >
-              - Clear Your Jobs
+              - ClearYourJobs
               <Icon />
             </ButtonFordeleteWork>
           ) : null}
@@ -182,68 +183,82 @@ const Workexperience = (props) => {
         {!loading ? (
           <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              {allworkexp.map((single, key) => (
-                <Col
-                  md={12}
-                  lg={12}
-                  xl={12}
-                  className="text-center"
-                  key={key}
-                  id="idforcss"
-                >
-                  <P>
-                    CompanyName:
-                    <Strong>{single.companyname}</Strong>
-                  </P>
-                  <hr />
-                  <P>
-                    Start Work:
-                    <Strong>{single.startwork}</Strong>
-                  </P>
-                  <hr />
-                  <P>
-                    End Work:
-                    <Strong>{single.endwork}</Strong>
-                  </P>
-                  <hr />
-                  <P>
-                    Position:
-                    <Strong>{single.position}</Strong>
-                  </P>
+              {allworkexp.length ? (
+                allworkexp.map((single, key) => (
+                  <Col
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className="text-center"
+                    key={key}
+                    id="idforcss"
+                  >
+                    <P>
+                      CompanyName:
+                      <Strong>{single.companyname}</Strong>
+                    </P>
+                    <hr />
+                    <P>
+                      Start Work:
+                      <Strong>{single.startwork}</Strong>
+                    </P>
+                    <hr />
+                    <P>
+                      End Work:
+                      <Strong>{single.endwork}</Strong>
+                    </P>
+                    <hr />
+                    <P>
+                      Position:
+                      <Strong>{single.position}</Strong>
+                    </P>
+                  </Col>
+                ))
+              ) : (
+                <Col className="text-center">
+                  {" "}
+                  <Strongs>Add Your Last Jobs</Strongs>{" "}
                 </Col>
-              ))}
+              )}
             </Row>
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              {allworkexp.map((single, key) => (
-                <Col
-                  xs={12}
-                  s={12}
-                  className="text-center"
-                  key={key}
-                  id="idforcss"
-                >
-                  <p>
-                    CompanyName
-                    <StrongMobile>{single.companyname}</StrongMobile>
-                  </p>
-                  <hr />
-                  <p>
-                    Start Work
-                    <StrongMobile>{single.startwork}</StrongMobile>
-                  </p>
-                  <hr />
-                  <p>
-                    End Work
-                    <StrongMobile>{single.endwork}</StrongMobile>
-                  </p>
-                  <hr />
-                  <p>
-                    Position
-                    <StrongMobile>{single.position}</StrongMobile>
-                  </p>
+              {allworkexp.length ? (
+                allworkexp.map((single, key) => (
+                  <Col
+                    xs={12}
+                    s={12}
+                    className="text-center"
+                    key={key}
+                    id="idforcss"
+                  >
+                    <p>
+                      CompanyName
+                      <StrongMobile>{single.companyname}</StrongMobile>
+                    </p>
+                    <hr />
+                    <p>
+                      Start Work
+                      <StrongMobile>{single.startwork}</StrongMobile>
+                    </p>
+                    <hr />
+                    <p>
+                      End Work
+                      <StrongMobile>{single.endwork}</StrongMobile>
+                    </p>
+                    <hr />
+                    <p>
+                      Position
+                      <StrongMobile>{single.position}</StrongMobile>
+                    </p>
+                  </Col>
+                ))
+              ) : (
+                <Col className="text-center">
+                  {" "}
+                  <Strongs>Add Your Last Jobs</Strongs>{" "}
                 </Col>
-              ))}
+              )}
             </Row>
           </Fragment>
         ) : (

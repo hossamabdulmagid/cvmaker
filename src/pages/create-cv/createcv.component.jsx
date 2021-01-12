@@ -94,7 +94,7 @@ const CreateCv = (props) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const { currentUser, details, getDataaaaa } = props;
+  const { currentUser, details } = props;
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 

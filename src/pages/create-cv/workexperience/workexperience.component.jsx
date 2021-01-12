@@ -27,10 +27,9 @@ import {
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
 
 const Workexperience = (props) => {
-  const { AddToList, currentUser, cvs } = props;
+  const { AddToList, currentUser } = props;
 
   const { id } = useParams();
 
@@ -45,7 +44,9 @@ const Workexperience = (props) => {
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const value = getValues();
-  const [workexp, setWorkexp] = useState([]);
+
+  const [allworkexp, setAllWorkexp] = useState([]);
+
   const [workexperinceform, setWorkexperinceform] = useState({
     companyname: "",
     startwork: "",
@@ -68,15 +69,17 @@ const Workexperience = (props) => {
     setWorkexperinceform({ ...workexperinceform, [name]: value });
   };
 
-  const onSubmit = async (value) => {
+  const [loading, setLoading] = useState(true);
+
+  const onSubmit = async () => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/Workexperience`
     );
 
-    workexp.push(workexperinceform);
-    console.log(workexp, `arraytosend after pusing`);
+    allworkexp.unshift(workexperinceform);
+
     let dataToBeSave = {
-      allwork: workexp,
+      allwork: [...allworkexp],
       type: "workexperience",
     };
 
@@ -93,15 +96,13 @@ const Workexperience = (props) => {
         position: "bottom-right",
       });
     }, 2000);
+    setLoading(false);
   };
 
-  const [loading, setLoading] = useState(true);
-  const [oldworks, setOldWorks] = useState([]);
   useEffect(() => {
     if (!currentUser) {
       return;
     }
-
     firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
@@ -111,20 +112,12 @@ const Workexperience = (props) => {
         const workexpData = querySnapshot.data();
 
         if (workexpData) {
-          setOldWorks(workexpData.allwork);
+          workexpData.allwork.map((Singlejob) => allworkexp.push(Singlejob));
 
-          /*setWorkexperinceform({
-            companyname: workexpData.workexperience.companyname,
-            startwork: workexpData.workexperience.startwork,
-            endwork: workexpData.workexperience.endwork,
-            position: workexpData.workexperience.position,
-            lastModified: workexpData.workexperience.lastModified,
-          }); */
+          setTimeout(() => {
+            setLoading(false);
+          }, 300);
         }
-        setTimeout(() => {
-          setLoading(false);
-          console.log(oldworks, `fafff`);
-        }, 3000);
       })
       .catch((error) => {
         setLoading(false);
@@ -137,10 +130,6 @@ const Workexperience = (props) => {
   useEffect(() => {
     setFlagButton(true);
   }, []);
-
-  const saw = useMemo(() => {}, [setOldWorks, oldworks]);
-
-  console.log(workexp.allwork, `$$$`);
 
   return (
     <Container>
@@ -159,7 +148,7 @@ const Workexperience = (props) => {
         {!loading ? (
           <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              {oldworks.map((single, i) => (
+              {allworkexp.map((single, i) => (
                 <Col
                   md={12}
                   lg={12}
@@ -191,7 +180,7 @@ const Workexperience = (props) => {
               ))}
             </Row>
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              {oldworks.map((single, i) => (
+              {allworkexp.map((single, i) => (
                 <Col
                   xs={12}
                   s={12}
@@ -300,7 +289,10 @@ const Workexperience = (props) => {
 
             <ModalFooter>
               <Button variantColor="blue" mr={3} type="submit">
+                Save
+                {/*
                 {!FlagButton ? <Spinner /> : "Save"}
+              */}
               </Button>
               <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>

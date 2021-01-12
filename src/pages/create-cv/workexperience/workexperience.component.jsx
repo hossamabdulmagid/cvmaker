@@ -37,8 +37,7 @@ const Workexperience = (props) => {
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  let _ID = uuidv4();
-  console.log(_ID, `_ID`);
+
   const initialRef = React.useRef();
 
   const finalRef = React.useRef();
@@ -56,7 +55,6 @@ const Workexperience = (props) => {
     position: "",
     lastModified: new Date(),
     type: "workexperience",
-    _ID,
   });
 
   const {
@@ -133,12 +131,27 @@ const Workexperience = (props) => {
   useEffect(() => {
     setFlagButton(true);
   }, []);
-
-  useEffect(() => {
-    generateRandom();
-    console.log(generateRandom());
-    console.log(`iam refresher`);
-  });
+  const DeleteSingleJob = () => {
+    firestore
+      .collection(`users/${currentUser.id}/cvs/${id}/data`)
+      .doc(`Workexperience`)
+      .delete()
+      .then(function () {
+        setAllWorkexp([]);
+        console.log("Document successfully deleted!");
+        toast({
+          title: "jobs has Been deleted.",
+          description: `Document successfully deleted`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-right",
+        });
+      })
+      .catch(function (error) {
+        console.error("Error removing document: ", error);
+      });
+  };
 
   return (
     <Container>
@@ -185,14 +198,13 @@ const Workexperience = (props) => {
                     Position:
                     <Strong>{single.position}</Strong>
                   </P>
-                  <P>
-                    ID:
-                    <Strong>{single._ID}</Strong>
-                  </P>
-                  <Icon />
                 </Col>
               ))}
             </Row>
+            {allworkexp.length ? (
+              <Icon onClick={() => DeleteSingleJob()} />
+            ) : null}
+
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
               {allworkexp.map((single, key) => (
                 <Col
@@ -227,13 +239,9 @@ const Workexperience = (props) => {
             </Row>
           </Fragment>
         ) : (
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="blue.500"
-            size="lg"
-          />
+          <>
+            <Strong>no job experniece.</Strong>
+          </>
         )}
       </Rapperd>
 
@@ -266,7 +274,7 @@ const Workexperience = (props) => {
                 ref={register({ required: "this Feild is Required" })}
                 name="startwork"
                 onChange={handleChange}
-                value={"" || startwork}
+                // value={"" || startwork}
                 placeholder="Graduation Year"
                 type="date"
               />
@@ -280,7 +288,7 @@ const Workexperience = (props) => {
                 name="endwork"
                 placeholder="Graduation Year"
                 onChange={handleChange}
-                value={"" || endwork}
+                // value={"" || endwork}
                 type="date"
               />
               <small className="error">
@@ -293,7 +301,7 @@ const Workexperience = (props) => {
                 name="position"
                 placeholder="Position"
                 onChange={handleChange}
-                value={"" || position}
+                // value={"" || position}
                 type="text"
               />
               <small className="error">

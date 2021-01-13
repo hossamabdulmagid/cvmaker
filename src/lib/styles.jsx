@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const Rapperd = styled.div`
-  margin: 0px;
+  margin: 0 auto;
   border: 1px dotted darkgray;
-  padding: 1px;
+  padding: 4px;
   text-align: center;
 `;
 export const RapperdForm = styled.div`
@@ -20,4 +20,11 @@ export const Title = styled.h4`
 export const Paragraph = styled.p`
   margin: 0 auto;
   text-align: center;
+`;
+
+export const P = styled.p`
+  font-size: 15px;
+  padding: 10px;
+  margin: 2px;
+  border-bottom: 1px solid orange;
 `;

@@ -56,7 +56,12 @@ const Head = () => {
                 <RapperdCols>
                   <Links to="/cv">
                     <BUTTON variant="outline-dark" size="xs" variant="success">
-                      <img src="ico_start.png" alt="" margin="1" />
+                      <img
+                        src="ico_start.png"
+                        alt=""
+                        margin="1"
+                        className="imgforcreateCv"
+                      />
                       Create a cv now
                     </BUTTON>
                   </Links>

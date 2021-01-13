@@ -44,8 +44,8 @@ export const LINK = styled(Link)`
 export const BUTTON = styled(Button)`
   background-img: url(cvmaker.png);
   background-repeat: no-repeat;
-  margin-top: ;
   padding: 2px;
+  margin: 2px 2px 2px 2px;
   background-position: 0px 0px 0px 0px;
 
   background-color: #009fb5;

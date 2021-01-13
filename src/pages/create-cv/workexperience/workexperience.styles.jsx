@@ -28,7 +28,7 @@ export const Icon = styled(BsFillBucketFill)`
   padding: 1px;
   margin: 3px;
   margin-top: -1px;
-  color: orangered;
+  color: white;
 `;
 export const Rapperd = styled.div`
   border: 1px dotted darkgray;

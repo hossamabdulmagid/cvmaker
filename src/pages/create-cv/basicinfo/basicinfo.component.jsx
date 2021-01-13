@@ -41,6 +41,7 @@ const BasicInfo = (props) => {
 
   const [dataform, setDataform] = useState({
     basicinfo: {
+      title: "",
       fullname: "",
       phone: "",
       email: "",
@@ -66,6 +67,7 @@ const BasicInfo = (props) => {
     );
     let dataToBeSaved = {
       basicinfo: {
+        title: dataform.title || "",
         fullname: dataform.fullname || "",
         phone: dataform.phone || "",
         email: dataform.email || "",
@@ -106,6 +108,7 @@ const BasicInfo = (props) => {
         const newData = querySnapshot.data();
         if (newData) {
           setDataform({
+            title: newData.basicinfo.title,
             fullname: newData.basicinfo.fullname,
             phone: newData.basicinfo.phone,
             address1: newData.basicinfo.address1,
@@ -188,9 +191,8 @@ const BasicInfo = (props) => {
 
   const onSubmitSectionLabel = async (value) => {
     await firestore
-      .doc(`users/${currentUser.id}/cvs/${id}/data/${sectionlabel}`)
-      .set({ sectionlabel: `${sectionlabel}` });
-    //.update("sectionlabel", sectionName.sectionlabel);
+      .doc(`users/${currentUser.id}/cvs/${id}/data/Basicinfo`)
+      .update("basicinfo.title", `${sectionlabel}`, "lastModified", new Date());
     onClose();
     toast({
       title: "section name updated.",

@@ -250,7 +250,7 @@ const CreateCv = (props) => {
           if (newData) {
             array.unshift({
               section: newData.toString(),
-              type: data.type || data.sectionName.type,
+              type: data.type || data.sectionName.type || "",
               lastModified,
             });
             setTimeout(() => {

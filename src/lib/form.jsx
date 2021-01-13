@@ -5,8 +5,9 @@ import { Button } from "@chakra-ui/core";
 import { useToast, Input, Textarea, Spinner } from "@chakra-ui/core";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Rapperd, RapperdForm, Small } from "./styles";
+import { Rapperd, RapperdForm, Small, P } from "./styles";
 import { AiTwotoneEdit } from "react-icons/ai";
+import { Col } from "react-bootstrap";
 const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const {
@@ -151,7 +152,6 @@ const FormDeatils = (props) => {
             }, 100);
           } else {
             console.log(`Iam Falseeeee`);
-            console.log(`No*******************`);
           }
         });
 
@@ -273,42 +273,40 @@ const FormDeatils = (props) => {
         ) : (
           <Fragment>
             <Rapperd>
-              <Rapperd>
-                <p className="text-center">
-                  Title :
-                  <strong>
-                    {!displayDataToUI ? state.title.concept || "" : <Spinner />}
-                  </strong>
-                </p>
+              <P className="text-center">
+                Title :
+                <strong>
+                  {!displayDataToUI ? state.title.concept || "" : <Spinner />}
+                </strong>
+              </P>
 
-                <p className="text-center">
-                  Name :
-                  <strong>
-                    {!displayDataToUI ? state.title.name || "" : <Spinner />}
-                  </strong>
-                </p>
+              <P className="text-center">
+                Name :
+                <strong>
+                  {!displayDataToUI ? state.title.name || "" : <Spinner />}
+                </strong>
+              </P>
 
-                <p className="text-center">
-                  Start :
-                  <strong>
-                    {!displayDataToUI ? state.title.start || "" : <Spinner />}
-                  </strong>
-                </p>
+              <P className="text-center">
+                Start :
+                <strong>
+                  {!displayDataToUI ? state.title.start || "" : <Spinner />}
+                </strong>
+              </P>
 
-                <p className="text-center">
-                  End :
-                  <strong>
-                    {!displayDataToUI ? state.title.end || "" : <Spinner />}
-                  </strong>
-                </p>
+              <P className="text-center">
+                End :
+                <strong>
+                  {!displayDataToUI ? state.title.end || "" : <Spinner />}
+                </strong>
+              </P>
 
-                <p className="text-center">
-                  Description :
-                  <strong>
-                    {!displayDataToUI ? state.title.description : <Spinner />}
-                  </strong>
-                </p>
-              </Rapperd>
+              <P className="text-center">
+                Description :
+                <strong>
+                  {!displayDataToUI ? state.title.description : <Spinner />}
+                </strong>
+              </P>
               <Button
                 size="sm"
                 variantColor="blue"

@@ -3,6 +3,7 @@ import {
   Input,
   Label,
   Containers,
+  H4,
   IconEditNameOfSection,
   ButtonForSaveBasicInfo,
 } from "./basicinfo.styles";
@@ -203,6 +204,7 @@ const BasicInfo = (props) => {
       position: "top-right",
     });
   };
+  useEffect(() => {}, [dataform.title]);
   return (
     <Fragment>
       <Containers>
@@ -217,6 +219,19 @@ const BasicInfo = (props) => {
                 >
                   <IconEditNameOfSection />
                 </button>
+                <Row>
+                  <Col
+                    xs={12}
+                    s={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className="text-center rappertitlebasicinfo"
+                  >
+                    Title Section:
+                    <H4>{`${sectionName.sectionlabel}`}</H4>
+                  </Col>
+                </Row>
                 <Row
                   className="basicinfo"
                   bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item"

@@ -73,3 +73,9 @@ export const Upload = styled.input`
 export const IconEditNameOfSection = styled(AiTwotoneEdit)`
   display: inline-flex;
 `;
+export const H4 = styled.h4`
+  display: inline-flex;
+  margin: 0 auto;
+  color: slateblue;
+  padding: 5px;
+`;

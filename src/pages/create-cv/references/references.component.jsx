@@ -27,8 +27,6 @@ const editorConfiguration = {
   },
 };
 const References = ({ currentUser }) => {
-  console.log(currentUser, `currentUser from interests Component`);
-
   const [state, setState] = useState({
     concept: "References",
     content_references: "",

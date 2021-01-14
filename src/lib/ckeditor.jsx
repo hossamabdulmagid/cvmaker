@@ -25,7 +25,7 @@ const editorConfiguration = {
     ],
   },
 };
-const Editor = ({ details, currentUser }) => {
+const Editor = ({ details, currentUser, array = [] }) => {
   const [state, setState] = useState({
     concept: "",
     content_new: "",
@@ -92,6 +92,45 @@ const Editor = ({ details, currentUser }) => {
       setFlagButton(true);
     }, 2000);
   };
+  const [flag, setFlag] = useState(false);
+
+  const [lastModified, setLastModified] = useState(new Date());
+  const FetchData = async (value) => {
+    await firestore
+      .doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          const data = doc.data();
+          const newData = doc.id;
+          setLastModified(lastModified);
+
+          if (Object.keys(data).includes("concept")) {
+            setState({
+              concept: data.concept,
+              content_new: data.content_new,
+            });
+          }
+
+          return;
+        });
+      })
+      .catch((error) => {
+        setFlag(false);
+        toast({
+          title: `there is was an error`,
+          description: `${error} `,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        console.log(error, `there is was an error`);
+      });
+  };
+  React.useEffect(() => {
+    FetchData();
+  }, [currentUser, array]);
 
   const [loading, setLoading] = useState(true);
   return (
@@ -112,7 +151,7 @@ const Editor = ({ details, currentUser }) => {
             placeholder="title for new Section"
             name="concept"
             type="text"
-            value={details}
+            value={details || concept}
             onChange={HandleChange}
           />
 
@@ -130,7 +169,7 @@ const Editor = ({ details, currentUser }) => {
             editor={ClassicEditor}
             // onInit={(Editor) => { }}
             onChange={HandleCkEditorState}
-            data={""}
+            data={state.content_new || ""}
             name={content_new}
           />
 

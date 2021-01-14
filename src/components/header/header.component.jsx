@@ -25,7 +25,7 @@ const Head = () => {
           <RapperdRow>
             <Row>
               <Col xs={4} md={6} lg={6}>
-                <img src="cvcreator.png" alt="" width="90" />
+                <img src="cvcreator.png" alt="" />
               </Col>
               <Col xs={4} md={3} lg={4}>
                 <Small onClick={() => setDownload(download + 1)}>

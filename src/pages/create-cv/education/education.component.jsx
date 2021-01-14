@@ -40,7 +40,6 @@ const Education = (props) => {
   const toast = useToast();
   const [education, setEducation] = useState({
     education: {
-      title: "",
       collagename: "",
       startgraduationyear: "",
       endgraduationyear: "",
@@ -51,7 +50,6 @@ const Education = (props) => {
   });
 
   const {
-    title,
     collagename,
     startgraduationyear,
     endgraduationyear,
@@ -66,7 +64,6 @@ const Education = (props) => {
     );
     let dataToBeSaved = {
       education: {
-        title: title || "",
         collagename: collagename || "",
         startgraduationyear: startgraduationyear || "",
         endgraduationyear: endgraduationyear || "",
@@ -115,7 +112,6 @@ const Education = (props) => {
 
         if (eduactionData) {
           setEducation({
-            title: eduactionData.education.title,
             collagename: eduactionData.education.collagename,
             startgraduationyear: eduactionData.education.startgraduationyear,
             endgraduationyear: eduactionData.education.endgraduationyear,

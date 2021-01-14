@@ -193,7 +193,12 @@ const BasicInfo = (props) => {
   const onSubmitSectionLabel = async (value) => {
     await firestore
       .doc(`users/${currentUser.id}/cvs/${id}/data/Basicinfo`)
-      .update("basicinfo.title", `${sectionlabel}`, "lastModified", new Date());
+      .update(
+        "basicinfo.title",
+        `${sectionlabel}`,
+        "basicinfo.lastModified",
+        new Date()
+      );
     onClose();
     toast({
       title: "section name updated.",
@@ -204,6 +209,7 @@ const BasicInfo = (props) => {
       position: "top-right",
     });
   };
+
   useEffect(() => {}, [dataform.title]);
   return (
     <Fragment>
@@ -229,7 +235,7 @@ const BasicInfo = (props) => {
                     className="text-center rappertitlebasicinfo"
                   >
                     Title Section:
-                    <H4>{`${sectionName.sectionlabel}`}</H4>
+                    <H4>{`${sectionName.sectionlabel}` || dataform.title}</H4>
                   </Col>
                 </Row>
                 <Row
@@ -501,7 +507,6 @@ const BasicInfo = (props) => {
                   placeholder="SectionName"
                   type="text"
                   name="sectionlabel"
-                  //value={sectionlabel}
                   onChange={handleChangeSectionName}
                   ref={register({
                     required: true,

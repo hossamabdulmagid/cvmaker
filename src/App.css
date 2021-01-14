@@ -167,5 +167,9 @@ p {
 }
 .rappertitlebasicinfo {
   padding: 1px;
+  margin-bottom: 5px;
   border: 1px solid darkgray;
+}
+.logo {
+  padding-top: 13px;
 }

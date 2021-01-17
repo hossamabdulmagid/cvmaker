@@ -26,8 +26,14 @@ import { connect } from "react-redux";
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import { GET_Education } from "../../../redux/education/educationAction";
 const Education = (props) => {
-  const { currentUser } = props;
+  const { currentUser, GET_Education } = props;
+
+  useEffect(() => {
+    GET_Education(currentUser, id, toast);
+  }, [GET_Education]);
+
   const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -283,4 +289,8 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps, null)(Education);
+const mapDispatchToProps = (dispatch) => ({
+  GET_Education: (currentUser, id, toast) =>
+    dispatch(GET_Education(currentUser, id, toast)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Education);

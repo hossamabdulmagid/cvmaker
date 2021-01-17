@@ -31,13 +31,7 @@ export const GetBasicInfo = (currentUser, id, toast) => {
       })
       .catch((errorMessage) => {
         dispatch(BasicInfoError(errorMessage));
-        toast({
-          title: `there is was an error`,
-          description: `${errorMessage} `,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+        console.log(errorMessage, `error from redux files`);
       });
   };
 };

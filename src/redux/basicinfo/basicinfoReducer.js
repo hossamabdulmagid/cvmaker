@@ -47,7 +47,7 @@ const basicinfoReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        errorMessage: action.payload,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;

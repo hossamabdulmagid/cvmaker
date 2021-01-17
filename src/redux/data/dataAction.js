@@ -32,13 +32,7 @@ export const Getdata = (currentUser, id, toast) => {
       })
       .catch((errorMessage) => {
         dispatch(CollectionError(errorMessage));
-        toast({
-          title: `there is was an error`,
-          description: `${errorMessage} `,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+        console.log(errorMessage, `error from redux files`);
       });
   };
 };

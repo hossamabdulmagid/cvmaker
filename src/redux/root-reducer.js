@@ -5,7 +5,7 @@ import AddToListReducer from "./addtolist/addtolistReducer";
 import userReducer from "./user/userReducer";
 import dataReducer from "./data/dataReducer";
 import basicinfoReducer from "./basicinfo/basicinfoReducer";
-
+import educationReducer from "./education/educationReducer";
 //blacklist
 const persistConfig = {
   key: "root",
@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   sections: dataReducer,
   basicInfo: basicinfoReducer,
+  education: educationReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

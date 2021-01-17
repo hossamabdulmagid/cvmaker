@@ -1,0 +1,1 @@
+import { interestsActionType } from "./interestsType";

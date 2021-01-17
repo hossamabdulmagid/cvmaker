@@ -1,7 +1,8 @@
 import { dataActionType } from "./dataType";
 
 import { firestore } from "../../firebase/firebase.utils";
-import { useToast } from "@chakra-ui/core";
+
+const db = firestore;
 const CollectionStart = () => ({
   type: dataActionType.FETCH_COLLECTIONS_START,
 });
@@ -19,8 +20,7 @@ const CollectionError = (errorMessage) => ({
 export const Getdata = (currentUser, id, toast) => {
   return (dispatch) => {
     dispatch(CollectionStart());
-    firestore
-      .doc(`users/${currentUser.id}`)
+    db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .get()
       .then((querySnapshot) => {

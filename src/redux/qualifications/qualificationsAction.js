@@ -1,0 +1,1 @@
+import { qualificationsActionType } from "./qualificationsType";

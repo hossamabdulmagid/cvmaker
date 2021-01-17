@@ -1,0 +1,1 @@
+import { basicInfoActionType } from "./basicinfoType";

@@ -1,0 +1,1 @@
+import { educationActionType } from "./basicinfoType";

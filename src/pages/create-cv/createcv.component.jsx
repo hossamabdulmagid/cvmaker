@@ -55,7 +55,7 @@ import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import InputCheckBox from "./checkbox";
-import { getDataaaaa } from "../../redux/data/dataAction";
+import { Getdata } from "../../redux/data/dataAction";
 
 const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
@@ -94,7 +94,7 @@ const CreateCv = (props) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const { currentUser, details } = props;
+  const { currentUser, details, Getdata } = props;
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
@@ -254,7 +254,7 @@ const CreateCv = (props) => {
               lastModified,
             });
             setTimeout(() => {
-              if (array.length > 5) {
+              if (array.length > 6) {
                 setFlag(false);
               }
             }, 50);
@@ -283,6 +283,25 @@ const CreateCv = (props) => {
     FetchData();
   }, [array, currentUser]);
 
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Getdata(currentUser, id, toast);
+    if (sectionData) {
+      array.unshift({
+        section: sectionData.toString(),
+        //   type: sectionData.type || sectionData.sectionName.type || "",
+        lastModified,
+      });
+
+      setTimeout(() => {
+        if (array.length > 6) {
+          setFlag(false);
+        }
+      }, 50);
+    }
+  }, [sectionData]);
   return (
     <Fragment>
       <NavGuest />
@@ -327,7 +346,7 @@ const CreateCv = (props) => {
                       </Button>
                       <br />
                       Your Cv Name is :
-                      <strong className="labelcv"> {cvName.label}</strong>
+                      <strong className="labelcv">{cvName.label}</strong>
                     </Editable>
                   </form>
                 </RapperdForms>
@@ -514,7 +533,6 @@ const CreateCv = (props) => {
                   * Click and drag section names in the above list to reorder
                   sections in your CV.
                 </small>
-                <br />
 
                 <small>
                   * If you leave the fields in a section empty, the section will
@@ -541,6 +559,7 @@ const CreateCv = (props) => {
                   setDisplayDataToUI={setDisplayDataToUI}
                   sidebarRoutes={sidebarRoutes}
                   activeSection={activeSection}
+                  setActiveSection={setActiveSection}
                 />
               ) : null}
 
@@ -611,7 +630,7 @@ const CreateCv = (props) => {
                         autoFocus={true}
                         blockScrollOnMount={true}
                         allowPinchZoom={false}
-                        // blockScrollOnMount={true}
+                        blockScrollOnMount={true}
                       >
                         <ModalOverlay />
                         <ModalContent>
@@ -764,6 +783,10 @@ const CreateCv = (props) => {
 };
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  sectionData: state.data,
 });
-
-export default connect(mapStateToProps, null)(CreateCv);
+const mapDispatchToProps = (dispatch) => ({
+  Getdata: (currentUser, id, toast) =>
+    dispatch(Getdata(currentUser, id, toast)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(CreateCv);

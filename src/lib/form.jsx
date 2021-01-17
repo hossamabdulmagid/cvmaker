@@ -17,6 +17,7 @@ const FormDeatils = (props) => {
     displayDataToUI,
     setDisplayDataToUI,
     activeSection,
+    setActiveSection,
   } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
 

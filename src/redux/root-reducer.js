@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import AddToListReducer from "./addtolist/addtolistReducer";
 import userReducer from "./user/userReducer";
 import dataReducer from "./data/dataReducer";
+import basicinfoReducer from "./basicinfo/basicinfoReducer";
 
 //blacklist
 const persistConfig = {
@@ -15,7 +16,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   add: AddToListReducer,
   user: userReducer,
-  data: dataReducer,
+  sections: dataReducer,
+  basicInfo: basicinfoReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

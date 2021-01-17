@@ -27,8 +27,17 @@ import {
   FormLabel,
 } from "@chakra-ui/core";
 import ImageUpload from "./uploadimage";
+import { GetBasicInfo } from "../../../redux/basicinfo/basicinfoAction";
 const BasicInfo = (props) => {
-  const { currentUser, match, doc, info, basicinfo } = props;
+  const {
+    currentUser,
+    match,
+    doc,
+    info,
+    basicinfo,
+    GetBasicInfo,
+    basicInfoData,
+  } = props;
 
   const { id } = useParams();
 
@@ -95,6 +104,13 @@ const BasicInfo = (props) => {
       });
     }, 2000);
   };
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    GetBasicInfo(currentUser, id, toast);
+  });
 
   useEffect(() => {
     if (!currentUser) {
@@ -543,5 +559,10 @@ const BasicInfo = (props) => {
 };
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  basicInfoData: state.basicinfo,
 });
-export default connect(mapStateToProps, null)(BasicInfo);
+const mapDispatchToProps = (dispatch) => ({
+  GetBasicInfo: (currentUser, id, toast) =>
+    dispatch(GetBasicInfo(currentUser, id, toast)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(BasicInfo);

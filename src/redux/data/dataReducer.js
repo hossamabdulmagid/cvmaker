@@ -1,5 +1,4 @@
 import { dataActionType } from "./dataType";
-import { useToast } from "@chakra-ui/core";
 
 const INITIAL_STATE = {
   data: {},
@@ -9,12 +8,12 @@ const INITIAL_STATE = {
 
 const dataReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case dataActionType.FETCH_COLLECTIONS_START:
+    case dataActionType.GET_SECTIONS_START:
       return {
         ...state,
         isFetching: true,
       };
-    case dataActionType.FETCH_COLLECTIONS_SUCCESS:
+    case dataActionType.GET_SECTIONS_SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -28,7 +27,7 @@ const dataReducer = (state = INITIAL_STATE, action) => {
           ...action.payload,
         },
       };
-    case dataActionType.FETCH_COLLECTIONS_ERROR:
+    case dataActionType.GET_SECTIONS_ERROR:
       return {
         ...state,
         isFetching: false,

@@ -3,23 +3,23 @@ import { dataActionType } from "./dataType";
 import { firestore } from "../../firebase/firebase.utils";
 
 const db = firestore;
-const CollectionStart = () => ({
-  type: dataActionType.FETCH_COLLECTIONS_START,
+const SectionStart = () => ({
+  type: dataActionType.GET_SECTIONS_START,
 });
 
-const CollectionSuccess = (collections) => ({
-  type: dataActionType.FETCH_COLLECTIONS_SUCCESS,
+const SectionSuccess = (collections) => ({
+  type: dataActionType.GET_SECTIONS_SUCCESS,
   payload: collections,
 });
 
-const CollectionError = (errorMessage) => ({
-  type: dataActionType.FETCH_COLLECTIONS_ERROR,
+const SectionError = (errorMessage) => ({
+  type: dataActionType.GET_SECTIONS_ERROR,
   payload: errorMessage,
 });
 
 export const Getdata = (currentUser, id, toast) => {
   return (dispatch) => {
-    dispatch(CollectionStart());
+    dispatch(SectionStart());
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .get()
@@ -33,9 +33,9 @@ export const Getdata = (currentUser, id, toast) => {
             querySnapshot.error &&
             querySnapshot.errors &&
             errorMessage
-              ? dispatch(CollectionError(errorMessage)) &&
+              ? dispatch(SectionError(errorMessage)) &&
                 console.log(errorMessage, `error from dataAction.JS`)
-              : dispatch(CollectionSuccess(newData)) &&
+              : dispatch(SectionSuccess(newData)) &&
                 console.log(newData, `Data Comming From DataAction.JS`);
           }
         });
@@ -43,9 +43,9 @@ export const Getdata = (currentUser, id, toast) => {
       .catch((errorMessage, data, newData) => {
         {
           errorMessage && !data && !newData
-            ? dispatch(CollectionError(errorMessage)) &&
+            ? dispatch(SectionError(errorMessage)) &&
               console.log(errorMessage, `error from dataAction.JS`)
-            : dispatch(CollectionSuccess(newData)) &&
+            : dispatch(SectionSuccess(newData)) &&
               console.log(newData, `Data Comming From DataAction.JS`);
         }
       });

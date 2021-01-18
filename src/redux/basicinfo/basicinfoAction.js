@@ -28,14 +28,24 @@ export const GetBasicInfo = (currentUser, id, toast) => {
       .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
         {
-          !newData && querySnapshot.error && querySnapshot.errors
-            ? dispatch(BasicInfoError(errorMessage))
-            : dispatch(BasicInfoSuccess(newData));
+          !newData &&
+          querySnapshot.error &&
+          querySnapshot.errors &&
+          errorMessage
+            ? dispatch(BasicInfoError(errorMessage)) &&
+              console.log(errorMessage, `error from redux files basicinfo`)
+            : dispatch(BasicInfoSuccess(newData)) &&
+              console.log(newData, `data Coming from basicInfoSection`);
         }
       })
-      .catch((errorMessage) => {
-        dispatch(BasicInfoError(errorMessage));
-        console.log(errorMessage, `error from redux files`);
+      .catch((errorMessage, newData) => {
+        {
+          errorMessage && !newData
+            ? dispatch(BasicInfoError(errorMessage)) &&
+              console.log(errorMessage, `error from redux files basicinfo`)
+            : dispatch(BasicInfoSuccess(newData)) &&
+              console.log(newData, `data Coming from basicInfoSection`);
+        }
       });
   };
 };

@@ -28,14 +28,20 @@ export const GET_Education = (currentUser, id, toast) => {
         const newData = querySnapshot.data();
         {
           !newData && querySnapshot.error && querySnapshot.errors
-            ? dispatch(EDUCATION_ERROR(errorMessage))
-            : dispatch(EDUCATION_SUCCESS(newData));
-          console.log(newData, `data from redux`);
+            ? dispatch(EDUCATION_ERROR(errorMessage)) &&
+              console.log(errorMessage, `error from educationAction.Js`)
+            : dispatch(EDUCATION_SUCCESS(newData)) &&
+              console.log(newData, `data from eductionAction.js`);
         }
       })
-      .catch((errorMessage) => {
-        dispatch(EDUCATION_ERROR(errorMessage));
-        console.log(errorMessage, `error from redux files`);
+      .catch((errorMessage, newData) => {
+        {
+          errorMessage && !newData
+            ? dispatch(EDUCATION_ERROR(errorMessage)) &&
+              console.log(errorMessage, `error from EduactionAction.JS`)
+            : dispatch(EDUCATION_SUCCESS(newData)) &&
+              console.log(newData, `data comming from EducationAction.JS`);
+        }
       });
   };
 };

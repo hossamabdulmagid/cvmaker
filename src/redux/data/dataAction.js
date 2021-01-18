@@ -28,15 +28,26 @@ export const Getdata = (currentUser, id, toast) => {
           const data = doc.data();
           const newData = doc.id;
           {
-            !data && !newData && querySnapshot.error && querySnapshot.errors
-              ? dispatch(CollectionError(errorMessage))
-              : dispatch(CollectionSuccess(newData));
+            !data &&
+            !newData &&
+            querySnapshot.error &&
+            querySnapshot.errors &&
+            errorMessage
+              ? dispatch(CollectionError(errorMessage)) &&
+                console.log(errorMessage, `error from dataAction.JS`)
+              : dispatch(CollectionSuccess(newData)) &&
+                console.log(newData, `Data Comming From DataAction.JS`);
           }
         });
       })
-      .catch((errorMessage) => {
-        dispatch(CollectionError(errorMessage));
-        console.log(errorMessage, `error from redux files`);
+      .catch((errorMessage, data, newData) => {
+        {
+          errorMessage && !data && !newData
+            ? dispatch(CollectionError(errorMessage)) &&
+              console.log(errorMessage, `error from dataAction.JS`)
+            : dispatch(CollectionSuccess(newData)) &&
+              console.log(newData, `Data Comming From DataAction.JS`);
+        }
       });
   };
 };

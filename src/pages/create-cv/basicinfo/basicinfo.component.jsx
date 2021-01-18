@@ -134,7 +134,6 @@ const BasicInfo = (props) => {
             webSites: newData.basicinfo.webSites,
             email: newData.basicinfo.email,
             lastModified: newData.basicinfo.lastModified,
-            type: newData.type,
           });
         }
         setLoading(false);
@@ -142,7 +141,6 @@ const BasicInfo = (props) => {
       })
       .catch((error) => {
         setLoading(false);
-        toast.error(error, `there is was an error`);
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id, setDataform]);

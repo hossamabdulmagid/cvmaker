@@ -18,14 +18,14 @@ const Referenes_Error = (errorMessage) => {
       if (typeof errorMessage[key] === "object") {
         if (errorMessage[key][0]) {
           console.log(errorMessage[key][0], `error from referencesAction.JS`);
-          return {
-            type: referencesActionType.GET_REFERENCES_ERROR,
-            payload: errorMessage,
-          };
         }
       }
     }
   }
+  return {
+    type: referencesActionType.GET_REFERENCES_ERROR,
+    payload: errorMessage,
+  };
 };
 
 export const Get_References = (currentUser, id) => {

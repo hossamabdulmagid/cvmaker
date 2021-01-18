@@ -19,14 +19,14 @@ const SectionError = (errorMessage) => {
       if (typeof errorMessage[key] === "object") {
         if (errorMessage[key][0]) {
           console.log(errorMessage, `error from dataAction.JS`);
-          return {
-            type: dataActionType.GET_SECTIONS_ERROR,
-            payload: errorMessage,
-          };
         }
       }
     }
   }
+  return {
+    type: dataActionType.GET_SECTIONS_ERROR,
+    payload: errorMessage,
+  };
 };
 
 export const Get_allSection = (currentUser, id, toast) => {

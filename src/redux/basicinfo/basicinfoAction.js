@@ -19,14 +19,14 @@ const BasicInfoError = (errorMessage) => {
       if (typeof errorMessage[key] === "object") {
         if (errorMessage[key][0]) {
           console.log(errorMessage, `error from redux files basicinfo`);
-          return {
-            type: basicInfoActionType.GET_BASICINFO_ERROR,
-            payload: errorMessage,
-          };
         }
       }
     }
   }
+  return {
+    type: basicInfoActionType.GET_BASICINFO_ERROR,
+    payload: errorMessage,
+  };
 };
 
 export const GetBasicInfo = (currentUser, id, toast) => {

@@ -14,6 +14,7 @@ const INITIAL_STATE = {
       phone: "",
       lastModified: "",
     },
+    type: "basicinfo",
   },
   errorMessage: null,
 };
@@ -41,6 +42,7 @@ const basicinfoReducer = (state = INITIAL_STATE, action) => {
             title: action.payload.basicinfo.title,
             lastModified: action.payload.basicinfo.lastModified,
           },
+          type: action.payload.type,
         },
       };
     case basicInfoActionType.GET_BASICINFO_ERROR:

@@ -30,9 +30,10 @@ import {
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-
+import { Get_Workexperince } from "../../../redux/workexperince/workexperinceAction";
 const Workexperience = (props) => {
-  const { AddToList, currentUser } = props;
+  const { AddToList, currentUser, Get_Workexperince } = props;
+
   const { id } = useParams();
 
   const toast = useToast();
@@ -132,6 +133,7 @@ const Workexperience = (props) => {
   useEffect(() => {
     setFlagButton(true);
   }, []);
+
   const DeleteSingleJob = () => {
     firestore
       .collection(`users/${currentUser.id}/cvs/${id}/data`)
@@ -153,7 +155,12 @@ const Workexperience = (props) => {
         console.error("Error removing document: ", error);
       });
   };
-
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Get_Workexperince(currentUser, id);
+  }, [Get_Workexperince]);
   return (
     <Container>
       <Row>
@@ -361,6 +368,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   AddToList: () => dispatch(AddToList()),
+  Get_Workexperince: (currentUser, id) =>
+    dispatch(Get_Workexperince(currentUser, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workexperience);

@@ -18,14 +18,14 @@ const EDUCATION_ERROR = (errorMessage) => {
       if (typeof errorMessage[key] === "object") {
         if (errorMessage[key][0]) {
           console.log(errorMessage, `error from educationAction.Js`);
-          return {
-            type: educationActionType.GET_EDUCATION_ERROR,
-            payload: errorMessage,
-          };
         }
       }
     }
   }
+  return {
+    type: educationActionType.GET_EDUCATION_ERROR,
+    payload: errorMessage,
+  };
 };
 
 export const GET_Education = (currentUser, id, toast) => {

@@ -38,7 +38,7 @@ export const Get_Interest = (currentUser, id) => {
         {
           errorMessage && !newData
             ? dispatch(Interest_Error(errorMessage)) &&
-              console.log(errorMessage, `error from redux files basicinfo`)
+              console.log(errorMessage, `error from   InterestsAction.JS`)
             : dispatch(Interest_Success(newData)) &&
               console.log(newData, `data Coming from basicInfoSection`);
         }

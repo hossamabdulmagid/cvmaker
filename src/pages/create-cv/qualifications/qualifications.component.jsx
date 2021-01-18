@@ -8,7 +8,7 @@ import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
-
+import { Get_Qualifications } from "../../../redux/qualifications/qualificationsAction";
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -25,7 +25,14 @@ const editorConfiguration = {
     ],
   },
 };
-const Qualifications = ({ currentUser }) => {
+const Qualifications = ({ currentUser, Get_Qualifications }) => {
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Get_Qualifications(currentUser, id);
+  }, [Get_Qualifications]);
+
   const [state, setState] = useState({
     concept: "Qualifications",
     content_Qualifications: "",
@@ -151,5 +158,8 @@ const Qualifications = ({ currentUser }) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
-
-export default connect(mapStateToProps)(Qualifications);
+const mapDispatchToProps = (dispatch) => ({
+  Get_Qualifications: (currentUser, id) =>
+    dispatch(Get_Qualifications(currentUser, id)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Qualifications);

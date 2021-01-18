@@ -44,8 +44,8 @@ export const Get_Qualifications = (currentUser, id) => {
           errorMessage
             ? dispatch(Qualifications_Error(errorMessage)) &&
               console.log(errorMessage, `error from   qualifications.JS`)
-            : dispatch(Qualifications_Success(newData)) &&
-              console.log(newData, `dataComing  from   qualifications.JS`);
+            : dispatch(Qualifications_Success(newData)); //&&
+          // console.log(newData, `dataComing  from   qualifications.JS`);
         }
       })
       .catch((errorMessage, newData) => {
@@ -53,8 +53,8 @@ export const Get_Qualifications = (currentUser, id) => {
           errorMessage && !newData
             ? dispatch(Qualifications_Error(errorMessage)) &&
               console.log(errorMessage, `error from   qualifications.JS`)
-            : dispatch(Qualifications_Success(newData)) &&
-              console.log(newData, `dataComing  from   qualifications.JS`);
+            : dispatch(Qualifications_Success(newData)); // &&
+          // console.log(newData, `dataComing  from   qualifications.JS`);
         }
       });
   };

@@ -44,8 +44,8 @@ export const GET_Education = (currentUser, id, toast) => {
           errorMessage
             ? dispatch(EDUCATION_ERROR(errorMessage)) &&
               console.log(errorMessage, `error from educationAction.Js`)
-            : dispatch(EDUCATION_SUCCESS(newData)) &&
-              console.log(newData, `data from eductionAction.js`);
+            : dispatch(EDUCATION_SUCCESS(newData)); //&&
+          // console.log(newData, `data from eductionAction.js`);
         }
       })
       .catch((errorMessage, newData) => {
@@ -53,8 +53,8 @@ export const GET_Education = (currentUser, id, toast) => {
           errorMessage && !newData
             ? dispatch(EDUCATION_ERROR(errorMessage)) &&
               console.log(errorMessage, `error from EduactionAction.JS`)
-            : dispatch(EDUCATION_SUCCESS(newData)) &&
-              console.log(newData, `data comming from EducationAction.JS`);
+            : dispatch(EDUCATION_SUCCESS(newData)); //&&
+          //     console.log(newData, `data comming from EducationAction.JS`);
         }
       });
   };

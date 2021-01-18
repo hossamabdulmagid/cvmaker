@@ -45,8 +45,8 @@ export const Get_Workexperince = (currentUser, id) => {
           errorMessage
             ? dispatch(Workexperince_Error(errorMessage)) &&
               console.log(errorMessage, `error from workexperinceAction.JS`)
-            : dispatch(Workexperince_Success(newData)) &&
-              console.log(newData, `dataComming from referencesAction.JS`);
+            : dispatch(Workexperince_Success(newData)); //&&
+          //console.log(newData, `dataComming from workexperinceAction.JS`);
         }
       })
       .catch((errorMessage, newData) => {
@@ -54,8 +54,8 @@ export const Get_Workexperince = (currentUser, id) => {
           errorMessage && !newData
             ? dispatch(Workexperince_Error(errorMessage)) &&
               console.log(errorMessage, `error from workexperinceAction.JS`)
-            : dispatch(Workexperince_Success(newData)) &&
-              console.log(newData, `dataComming from  workexperinceAction.JS`);
+            : dispatch(Workexperince_Success(newData)); //&&
+          //   console.log(newData, `dataComming from  workexperinceAction.JS`);
         }
       });
   };

@@ -110,7 +110,7 @@ const References = ({ currentUser, Get_References }) => {
           setState({
             content_references: newData.content_references,
           });
-          console.log(newData, `newData`);
+          //  console.log(newData, `newData`);
         }
         setLoading(false);
         //        setFlagButton(false)

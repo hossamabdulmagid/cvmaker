@@ -107,7 +107,7 @@ const Qualifications = ({ currentUser, Get_Qualifications }) => {
           setState({
             content_Qualifications: newData.content_Qualifications,
           });
-          console.log(newData, `newData`);
+          // console.log(newData, `newData`);
         }
         setLoading(false);
         //        setFlagButton(false)

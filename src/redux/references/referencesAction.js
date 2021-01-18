@@ -44,8 +44,8 @@ export const Get_References = (currentUser, id) => {
           errorMessage
             ? dispatch(Referenes_Error(errorMessage)) &&
               console.log(errorMessage, `error from referencesAction.JS`)
-            : dispatch(Referenes_Success(newData)) &&
-              console.log(newData, `dataComming from referencesAction.JS`);
+            : dispatch(Referenes_Success(newData)); //&&
+          //   console.log(newData, `dataComming from referencesAction.JS`);
         }
       })
       .catch((errorMessage, newData) => {
@@ -53,8 +53,8 @@ export const Get_References = (currentUser, id) => {
           errorMessage && !newData
             ? dispatch(Referenes_Error(errorMessage)) &&
               console.log(errorMessage, `error from referencesAction.JS`)
-            : dispatch(Referenes_Success(newData)) &&
-              console.log(newData, `dataComming from referencesAction.JS`);
+            : dispatch(Referenes_Success(newData)); //&&
+          // console.log(newData, `dataComming from referencesAction.JS`);
         }
       });
   };

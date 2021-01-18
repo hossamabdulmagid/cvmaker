@@ -45,8 +45,8 @@ export const GetBasicInfo = (currentUser, id, toast) => {
           errorMessage
             ? dispatch(BasicInfoError(errorMessage)) &&
               console.log(errorMessage, `error from redux files basicinfo`)
-            : dispatch(BasicInfoSuccess(newData)) &&
-              console.log(newData, `data Coming from basicInfoSection`);
+            : dispatch(BasicInfoSuccess(newData)); //&&
+          // console.log(newData, `data Coming from basicInfoSection`);
         }
       })
       .catch((errorMessage, newData) => {
@@ -54,8 +54,8 @@ export const GetBasicInfo = (currentUser, id, toast) => {
           errorMessage && !newData
             ? dispatch(BasicInfoError(errorMessage)) &&
               console.log(errorMessage, `error from redux files basicinfo`)
-            : dispatch(BasicInfoSuccess(newData)) &&
-              console.log(newData, `data Coming from basicInfoSection`);
+            : dispatch(BasicInfoSuccess(newData)); //&&
+          // console.log(newData, `data Coming from basicInfoSection`);
         }
       });
   };

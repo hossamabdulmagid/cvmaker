@@ -103,7 +103,7 @@ const Interests = ({ currentUser, Get_Interest }) => {
           setState({
             content_intersets: newData.content_intersets,
           });
-          console.log(newData, `newData`);
+          //  console.log(newData, `newData`);
         }
         setLoading(false);
         //        setFlagButton(false)

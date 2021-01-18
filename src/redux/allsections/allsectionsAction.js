@@ -47,8 +47,8 @@ export const Get_allSection = (currentUser, id, toast) => {
             errorMessage
               ? dispatch(SectionError(errorMessage)) &&
                 console.log(errorMessage, `error from dataAction.JS`)
-              : dispatch(SectionSuccess(newData)) &&
-                console.log(newData, `Data Comming From DataAction.JS`);
+              : dispatch(SectionSuccess(newData)); //&&
+            // console.log(newData, `Data Comming From DataAction.JS`);
           }
         });
       })
@@ -57,8 +57,8 @@ export const Get_allSection = (currentUser, id, toast) => {
           errorMessage && !data && !newData
             ? dispatch(SectionError(errorMessage)) &&
               console.log(errorMessage, `error from dataAction.JS`)
-            : dispatch(SectionSuccess(newData)) &&
-              console.log(newData, `Data Comming From DataAction.JS`);
+            : dispatch(SectionSuccess(newData)); // &&
+          //console.log(newData, `Data Comming From DataAction.JS`);
         }
       });
   };

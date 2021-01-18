@@ -25,10 +25,10 @@ export const GetBasicInfo = (currentUser, id, toast) => {
       .collection(`cvs/${id}/data`)
       .doc(`Basicinfo`)
       .get()
-      .then((querySnapshot) => {
+      .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
         {
-          !newData
+          !newData && querySnapshot.error && querySnapshot.errors
             ? dispatch(BasicInfoError(errorMessage))
             : dispatch(BasicInfoSuccess(newData));
         }

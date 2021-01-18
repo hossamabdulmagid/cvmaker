@@ -23,12 +23,12 @@ export const Getdata = (currentUser, id, toast) => {
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .get()
-      .then((querySnapshot) => {
+      .then((querySnapshot, errorMessage) => {
         querySnapshot.forEach(function (doc) {
           const data = doc.data();
           const newData = doc.id;
           {
-            !data && !newData
+            !data && !newData && querySnapshot.error && querySnapshot.errors
               ? dispatch(CollectionError(errorMessage))
               : dispatch(CollectionSuccess(newData));
           }

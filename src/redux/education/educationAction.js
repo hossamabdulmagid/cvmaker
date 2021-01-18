@@ -24,10 +24,10 @@ export const GET_Education = (currentUser, id, toast) => {
       .collection(`cvs/${id}/data`)
       .doc(`Education`)
       .get()
-      .then((querySnapshot) => {
+      .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
         {
-          !newData
+          !newData && querySnapshot.error && querySnapshot.errors
             ? dispatch(EDUCATION_ERROR(errorMessage))
             : dispatch(EDUCATION_SUCCESS(newData));
           console.log(newData, `data from redux`);

@@ -3,7 +3,7 @@ import { dataActionType } from "./dataType";
 const INITIAL_STATE = {
   data: {},
   isFetching: false,
-  errorMessage: undefined,
+  errorMessage: null,
 };
 
 const dataReducer = (state = INITIAL_STATE, action) => {

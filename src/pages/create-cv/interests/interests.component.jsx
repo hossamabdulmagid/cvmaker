@@ -8,7 +8,7 @@ import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
-
+import { Get_Interest } from "../../../redux/interests/interestsAction";
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -25,7 +25,7 @@ const editorConfiguration = {
     ],
   },
 };
-const Interests = ({ currentUser }) => {
+const Interests = ({ currentUser, Get_Interest }) => {
   const [state, setState] = useState({
     concept: "Interests",
     content_intersets: "",
@@ -115,6 +115,13 @@ const Interests = ({ currentUser }) => {
       });
   }, [currentUser]);
 
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Get_Interest(currentUser, id);
+  }, [Get_Interest]);
+
   return (
     <Container>
       <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
@@ -155,4 +162,9 @@ const Interests = ({ currentUser }) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
-export default connect(mapStateToProps)(Interests);
+
+const mapDispatchToProps = (dispatch) => ({
+  Get_Interest: (currentUser, id) => dispatch(Get_Interest(currentUser, id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Interests);

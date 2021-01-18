@@ -12,10 +12,15 @@ const SectionSuccess = (collections) => ({
   payload: collections,
 });
 
-const SectionError = (errorMessage) => ({
-  type: dataActionType.GET_SECTIONS_ERROR,
-  payload: errorMessage,
-});
+const SectionError = (errorMessage) => {
+  if (errorMessage) {
+    console.log(errorMessage, `error from dataAction.JS`);
+    return {
+      type: dataActionType.GET_SECTIONS_ERROR,
+      payload: errorMessage,
+    };
+  }
+};
 
 export const Getdata = (currentUser, id, toast) => {
   return (dispatch) => {

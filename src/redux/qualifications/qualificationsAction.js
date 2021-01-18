@@ -12,10 +12,15 @@ const Qualifications_Success = (qualifications) => ({
   payload: qualifications,
 });
 
-const Qualifications_Error = (errorMessage) => ({
-  type: qualificationsActionType.GET_QUALIFICATIONS_ERROR,
-  payload: errorMessage,
-});
+const Qualifications_Error = (errorMessage) => {
+  if (errorMessage) {
+    console.log(errorMessage, `error from   qualifications.JS`);
+    return {
+      type: qualificationsActionType.GET_QUALIFICATIONS_ERROR,
+      payload: errorMessage,
+    };
+  }
+};
 
 export const Get_Qualifications = (currentUser, id) => {
   return (dispatch) => {

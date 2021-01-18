@@ -12,10 +12,15 @@ const EDUCATION_SUCCESS = (data) => ({
   payload: data,
 });
 
-const EDUCATION_ERROR = (errorMessage) => ({
-  type: educationActionType.GET_EDUCATION_ERROR,
-  payload: errorMessage,
-});
+const EDUCATION_ERROR = (errorMessage) => {
+  if (errorMessage) {
+    console.log(errorMessage, `error from educationAction.Js`);
+    return {
+      type: educationActionType.GET_EDUCATION_ERROR,
+      payload: errorMessage,
+    };
+  }
+};
 
 export const GET_Education = (currentUser, id, toast) => {
   return (dispatch) => {

@@ -13,10 +13,15 @@ const BasicInfoSuccess = (basicinfo) => ({
   payload: basicinfo,
 });
 
-const BasicInfoError = (errorMessage) => ({
-  type: basicInfoActionType.GET_BASICINFO_ERROR,
-  payload: errorMessage,
-});
+const BasicInfoError = (errorMessage) => {
+  if (errorMessage) {
+    console.log(errorMessage, `error from redux files basicinfo`);
+    return {
+      type: basicInfoActionType.GET_BASICINFO_ERROR,
+      payload: errorMessage,
+    };
+  }
+};
 
 export const GetBasicInfo = (currentUser, id, toast) => {
   return (dispatch) => {

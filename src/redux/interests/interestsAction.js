@@ -12,10 +12,15 @@ const Interest_Success = (interests) => ({
   payload: interests,
 });
 
-const Interest_Error = (errorMessage) => ({
-  type: interestsActionType.GET_INTERESTS_SUCCESS,
-  payload: errorMessage,
-});
+const Interest_Error = (errorMessage) => {
+  if (errorMessage) {
+    console.log(errorMessage, `error from   InterestsAction.JS`);
+    return {
+      type: interestsActionType.GET_INTERESTS_SUCCESS,
+      payload: errorMessage,
+    };
+  }
+};
 
 export const Get_Interest = (currentUser, id) => {
   return (dispatch) => {

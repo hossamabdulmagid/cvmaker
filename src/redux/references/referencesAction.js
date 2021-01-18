@@ -11,10 +11,15 @@ const Referenes_Success = (references) => ({
   type: referencesActionType.GET_REFERENCES_SUCCESS,
   payload: references,
 });
-const Referenes_Error = (errorMessage) => ({
-  type: referencesActionType.GET_REFERENCES_ERROR,
-  payload: errorMessage,
-});
+const Referenes_Error = (errorMessage) => {
+  if (errorMessage) {
+    console.log(errorMessage, `error from referencesAction.JS`);
+    return {
+      type: referencesActionType.GET_REFERENCES_ERROR,
+      payload: errorMessage,
+    };
+  }
+};
 
 export const Get_References = (currentUser, id) => {
   return (dispatch) => {

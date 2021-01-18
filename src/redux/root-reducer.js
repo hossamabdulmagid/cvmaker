@@ -3,6 +3,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import AddToListReducer from "./addtolist/addtolistReducer";
 import userReducer from "./user/userReducer";
+import oldcvReducer from "./oldcv/oldcvReducer";
 import allSectionReducer from "./allsections/allsectionsReducer";
 import basicinfoReducer from "./basicinfo/basicinfoReducer";
 import educationReducer from "./education/educationReducer";
@@ -10,6 +11,7 @@ import interestsReducer from "./interests/interestsReducer";
 import qualificationsReducer from "./qualifications/qualificationsReducer";
 import referencesReducer from "./references/referencesReducer";
 import workexperinceReducer from "./workexperince/workexperinceReducer";
+
 //blacklist
 const persistConfig = {
   key: "root",
@@ -20,6 +22,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   add: AddToListReducer,
   user: userReducer,
+  allOldCv: oldcvReducer,
   allSections: allSectionReducer,
   sectionBasicInfo: basicinfoReducer,
   sectionEducation: educationReducer,

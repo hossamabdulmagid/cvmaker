@@ -44,7 +44,15 @@ import {
   Input,
 } from "@chakra-ui/core";
 import NavGuest from "../../components/nav-guest/navGuest.component";
-const OldCv = ({ currentUser, match }) => {
+import { Get_oldCv } from "../../redux/oldcv/oldcvAction";
+const OldCv = ({ currentUser, match, Get_oldCv }) => {
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Get_oldCv(currentUser);
+  }, [Get_oldCv]);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = useRef();
@@ -377,4 +385,8 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps, null)(OldCv);
+const mapDispatchToProps = (dispatch) => ({
+  Get_oldCv: (currentUser) => dispatch(Get_oldCv(currentUser)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(OldCv);

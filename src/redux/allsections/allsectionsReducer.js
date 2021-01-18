@@ -1,8 +1,8 @@
 import { dataActionType } from "./allsectionsType";
 
 const INITIAL_STATE = {
-  data: {},
   isFetching: false,
+  data: {},
   errorMessage: null,
 };
 

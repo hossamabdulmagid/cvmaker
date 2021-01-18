@@ -1,4 +1,4 @@
-import { dataActionType } from "./dataType";
+import { dataActionType } from "./allsectionsType";
 
 const INITIAL_STATE = {
   data: {},
@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   errorMessage: null,
 };
 
-const dataReducer = (state = INITIAL_STATE, action) => {
+const allSectionReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case dataActionType.GET_SECTIONS_START:
       return {
@@ -38,4 +38,4 @@ const dataReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default dataReducer;
+export default allSectionReducer;

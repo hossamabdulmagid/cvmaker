@@ -3,7 +3,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import AddToListReducer from "./addtolist/addtolistReducer";
 import userReducer from "./user/userReducer";
-import dataReducer from "./data/dataReducer";
+import allSectionReducer from "./allsections/allsectionsReducer";
 import basicinfoReducer from "./basicinfo/basicinfoReducer";
 import educationReducer from "./education/educationReducer";
 import interestsReducer from "./interests/interestsReducer";
@@ -19,7 +19,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   add: AddToListReducer,
   user: userReducer,
-  allSections: dataReducer,
+  allSections: allSectionReducer,
   sectionBasicInfo: basicinfoReducer,
   sectionEducation: educationReducer,
   sectionInterests: interestsReducer,

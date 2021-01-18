@@ -1,4 +1,4 @@
-import { dataActionType } from "./dataType";
+import { dataActionType } from "./allsectionsType";
 
 import { firestore } from "../../firebase/firebase.utils";
 
@@ -29,7 +29,7 @@ const SectionError = (errorMessage) => {
   }
 };
 
-export const Getdata = (currentUser, id, toast) => {
+export const Get_allSection = (currentUser, id, toast) => {
   return (dispatch) => {
     dispatch(SectionStart());
     db.doc(`users/${currentUser.id}`)

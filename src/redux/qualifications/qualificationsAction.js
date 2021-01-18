@@ -27,7 +27,10 @@ export const Get_Qualifications = (currentUser, id) => {
       .then(function (querySnapshot, errorMessage) {
         const newData = querySnapshot.data();
         {
-          !newData && querySnapshot.errors && querySnapshot.error
+          !newData &&
+          querySnapshot.errors &&
+          querySnapshot.error &&
+          errorMessage
             ? dispatch(Qualifications_Error(errorMessage)) &&
               console.log(errorMessage, `error from   qualifications.JS`)
             : dispatch(Qualifications_Success(newData)) &&

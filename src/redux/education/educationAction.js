@@ -27,7 +27,10 @@ export const GET_Education = (currentUser, id, toast) => {
       .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
         {
-          !newData && querySnapshot.error && querySnapshot.errors
+          !newData &&
+          querySnapshot.error &&
+          querySnapshot.errors &&
+          errorMessage
             ? dispatch(EDUCATION_ERROR(errorMessage)) &&
               console.log(errorMessage, `error from educationAction.Js`)
             : dispatch(EDUCATION_SUCCESS(newData)) &&

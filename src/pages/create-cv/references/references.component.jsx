@@ -8,7 +8,7 @@ import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
-
+import { Get_References } from "../../../redux/references/referencesAction";
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -26,7 +26,14 @@ const editorConfiguration = {
     ],
   },
 };
-const References = ({ currentUser }) => {
+const References = ({ currentUser, Get_References }) => {
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Get_References(currentUser, id);
+  }, [Get_References]);
+
   const [state, setState] = useState({
     concept: "References",
     content_references: "",
@@ -153,4 +160,9 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(References);
+const mapDispatchToProps = (dispatch) => ({
+  Get_References: (currentUser, id) =>
+    dispatch(Get_References(currentUser, id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(References);

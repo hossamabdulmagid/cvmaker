@@ -27,7 +27,10 @@ export const Get_Interest = (currentUser, id) => {
       .then(function (querySnapshot, errorMessage) {
         const newData = querySnapshot.data();
         {
-          !newData && querySnapshot.error && querySnapshot.errors
+          !newData &&
+          querySnapshot.error &&
+          querySnapshot.errors &&
+          errorMessage
             ? dispatch(Interest_Error(errorMessage)) &&
               console.log(errorMessage, `error from   InterestsAction.JS`)
             : dispatch(Interest_Success(newData)) &&
@@ -40,7 +43,7 @@ export const Get_Interest = (currentUser, id) => {
             ? dispatch(Interest_Error(errorMessage)) &&
               console.log(errorMessage, `error from   InterestsAction.JS`)
             : dispatch(Interest_Success(newData)) &&
-              console.log(newData, `data Coming from basicInfoSection`);
+              console.log(newData, ` data Coming from InterestsAction.JS`);
         }
       });
   };

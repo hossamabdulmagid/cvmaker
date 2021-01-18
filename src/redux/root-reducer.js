@@ -8,6 +8,7 @@ import basicinfoReducer from "./basicinfo/basicinfoReducer";
 import educationReducer from "./education/educationReducer";
 import interestsReducer from "./interests/interestsReducer";
 import qualificationsReducer from "./qualifications/qualificationsReducer";
+import referencesReducer from "./references/referencesReducer";
 //blacklist
 const persistConfig = {
   key: "root",
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   sectionEducation: educationReducer,
   sectionInterests: interestsReducer,
   sectionQualifications: qualificationsReducer,
+  sectionReferences: referencesReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

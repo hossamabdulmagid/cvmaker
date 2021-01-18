@@ -14,12 +14,18 @@ const BasicInfoSuccess = (basicinfo) => ({
 });
 
 const BasicInfoError = (errorMessage) => {
-  if (errorMessage) {
-    console.log(errorMessage, `error from redux files basicinfo`);
-    return {
-      type: basicInfoActionType.GET_BASICINFO_ERROR,
-      payload: errorMessage,
-    };
+  if (errorMessage && typeof errorMessage === "object") {
+    for (let key in errorMessage) {
+      if (typeof errorMessage[key] === "object") {
+        if (errorMessage[key][0]) {
+          console.log(errorMessage, `error from redux files basicinfo`);
+          return {
+            type: basicInfoActionType.GET_BASICINFO_ERROR,
+            payload: errorMessage,
+          };
+        }
+      }
+    }
   }
 };
 

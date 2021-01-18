@@ -3,6 +3,7 @@ import { dataActionType } from "./dataType";
 import { firestore } from "../../firebase/firebase.utils";
 
 const db = firestore;
+
 const SectionStart = () => ({
   type: dataActionType.GET_SECTIONS_START,
 });
@@ -13,12 +14,18 @@ const SectionSuccess = (collections) => ({
 });
 
 const SectionError = (errorMessage) => {
-  if (errorMessage) {
-    console.log(errorMessage, `error from dataAction.JS`);
-    return {
-      type: dataActionType.GET_SECTIONS_ERROR,
-      payload: errorMessage,
-    };
+  if (errorMessage && typeof errorMessage === "object") {
+    for (let key in errorMessage) {
+      if (typeof errorMessage[key] === "object") {
+        if (errorMessage[key][0]) {
+          console.log(errorMessage, `error from dataAction.JS`);
+          return {
+            type: dataActionType.GET_SECTIONS_ERROR,
+            payload: errorMessage,
+          };
+        }
+      }
+    }
   }
 };
 

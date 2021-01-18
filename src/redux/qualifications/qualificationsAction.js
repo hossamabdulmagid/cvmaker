@@ -13,12 +13,18 @@ const Qualifications_Success = (qualifications) => ({
 });
 
 const Qualifications_Error = (errorMessage) => {
-  if (errorMessage) {
-    console.log(errorMessage, `error from   qualifications.JS`);
-    return {
-      type: qualificationsActionType.GET_QUALIFICATIONS_ERROR,
-      payload: errorMessage,
-    };
+  if (errorMessage && typeof errorMessage === "object") {
+    for (let key in errorMessage) {
+      if (typeof errorMessage[key] === "object") {
+        if (errorMessage[key][0]) {
+          console.log(errorMessage, `error from   qualifications.JS`);
+          return {
+            type: qualificationsActionType.GET_QUALIFICATIONS_ERROR,
+            payload: errorMessage,
+          };
+        }
+      }
+    }
   }
 };
 

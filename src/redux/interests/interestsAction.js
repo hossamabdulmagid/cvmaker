@@ -13,12 +13,18 @@ const Interest_Success = (interests) => ({
 });
 
 const Interest_Error = (errorMessage) => {
-  if (errorMessage) {
-    console.log(errorMessage, `error from   InterestsAction.JS`);
-    return {
-      type: interestsActionType.GET_INTERESTS_SUCCESS,
-      payload: errorMessage,
-    };
+  if (errorMessage && typeof errorMessage === "object") {
+    for (let key in errorMessage) {
+      if (typeof errorMessage[key] === "object") {
+        if (errorMessage[key][0]) {
+          console.log(errorMessage, `error from   InterestsAction.JS`);
+          return {
+            type: interestsActionType.GET_INTERESTS_SUCCESS,
+            payload: errorMessage,
+          };
+        }
+      }
+    }
   }
 };
 

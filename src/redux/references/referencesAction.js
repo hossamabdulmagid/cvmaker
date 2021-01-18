@@ -11,13 +11,20 @@ const Referenes_Success = (references) => ({
   type: referencesActionType.GET_REFERENCES_SUCCESS,
   payload: references,
 });
+
 const Referenes_Error = (errorMessage) => {
-  if (errorMessage) {
-    console.log(errorMessage, `error from referencesAction.JS`);
-    return {
-      type: referencesActionType.GET_REFERENCES_ERROR,
-      payload: errorMessage,
-    };
+  if (errorMessage && typeof errorMessage === "object") {
+    for (let key in errorMessage) {
+      if (typeof errorMessage[key] === "object") {
+        if (errorMessage[key][0]) {
+          console.log(errorMessage[key][0], `error from referencesAction.JS`);
+          return {
+            type: referencesActionType.GET_REFERENCES_ERROR,
+            payload: errorMessage,
+          };
+        }
+      }
+    }
   }
 };
 

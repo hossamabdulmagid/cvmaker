@@ -27,7 +27,11 @@ export const Getdata = (currentUser, id, toast) => {
         querySnapshot.forEach(function (doc) {
           const data = doc.data();
           const newData = doc.id;
-          dispatch(CollectionSuccess(newData));
+          {
+            !data && !newData
+              ? dispatch(CollectionError(errorMessage))
+              : dispatch(CollectionSuccess(newData));
+          }
         });
       })
       .catch((errorMessage) => {

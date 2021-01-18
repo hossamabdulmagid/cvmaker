@@ -27,7 +27,11 @@ export const GetBasicInfo = (currentUser, id, toast) => {
       .get()
       .then((querySnapshot) => {
         const newData = querySnapshot.data();
-        dispatch(BasicInfoSuccess(newData));
+        {
+          !newData
+            ? dispatch(BasicInfoError(errorMessage))
+            : dispatch(BasicInfoSuccess(newData));
+        }
       })
       .catch((errorMessage) => {
         dispatch(BasicInfoError(errorMessage));

@@ -26,8 +26,12 @@ export const GET_Education = (currentUser, id, toast) => {
       .get()
       .then((querySnapshot) => {
         const newData = querySnapshot.data();
-        dispatch(EDUCATION_SUCCESS(newData));
-        console.log(newData, `data from redux`);
+        {
+          !newData
+            ? dispatch(EDUCATION_ERROR(errorMessage))
+            : dispatch(EDUCATION_SUCCESS(newData));
+          console.log(newData, `data from redux`);
+        }
       })
       .catch((errorMessage) => {
         dispatch(EDUCATION_ERROR(errorMessage));

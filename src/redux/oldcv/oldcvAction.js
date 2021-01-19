@@ -7,9 +7,9 @@ const Oldcv_Start = () => ({
   type: oldcvActionType.GET_OLDCV_START,
 });
 
-const Oldcv_Success = (oldcv) => ({
+const Oldcv_Success = (data) => ({
   type: oldcvActionType.GET_OLDCV_SUCCESS,
-  payload: oldcv,
+  payload: data,
 });
 
 const Oldcv_Error = (errorMessage) => {
@@ -30,14 +30,18 @@ const Oldcv_Error = (errorMessage) => {
 
 export const Get_oldCv = (currentUser) => {
   return (dispatch) => {
+    let array = [];
+
     dispatch(Oldcv_Start());
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs`)
       .get()
+
       .then(function (querySnapshot, errorMessage) {
         querySnapshot.forEach(function (doc) {
           let newData = doc.data();
           newData.id = doc.id;
+          array.push(newData);
           {
             !newData &&
             !newData.id &&
@@ -46,8 +50,7 @@ export const Get_oldCv = (currentUser) => {
             errorMessage
               ? dispatch(Oldcv_Error(errorMessage)) &&
                 console.log(errorMessage, `error from OldcvAction.JS`)
-              : dispatch(Oldcv_Success(newData)); // &&
-            //   console.log(newData, `data coming from OldCvAction.JS `)
+              : dispatch(Oldcv_Success(array));
           }
         });
       })
@@ -56,9 +59,45 @@ export const Get_oldCv = (currentUser) => {
           errorMessage && !newData
             ? dispatch(Oldcv_Error(errorMessage)) &&
               console.log(errorMessage, `error from OldcvAction.JS`)
-            : dispatch(Oldcv_Success(newData)); // &&
-          //console.log(newData, `Data Comming From OldcvAction.JS`);
+            : dispatch(Oldcv_Success(array));
         }
       });
+  };
+};
+
+const Delete_Start = () => ({
+  type: oldcvActionType.DELETE_CV_START,
+});
+
+const Delete_Success = (data) => ({
+  type: oldcvActionType.GET_OLDCV_SUCCESS,
+  payload: data,
+});
+
+const Delete_Error = (errorMessage) => ({
+  type: oldcvActionType.DELETE_CV_ERROR,
+  payload: errorMessage,
+});
+
+export const Delete_Single_CV = (id, currentUser) => {
+  console.log(id, `id here`);
+  return (dispatch) => {
+    setTimeout(async () => {
+      console.log(id, `id after asyncrouns`);
+
+      dispatch(Delete_Start());
+      await db
+        .doc(`users/${currentUser.id}`)
+        .collection(`cvs`)
+        .doc(`${id}`)
+        .delete()
+        .then((id) => {
+          console.log(`${id} +data deleted SuccessFul`);
+        })
+        .catch((errorMessage) => {
+          console.log(errorMessage);
+          dispatch(Delete_Error(errorMessage));
+        });
+    }, 2000);
   };
 };

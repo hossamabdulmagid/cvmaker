@@ -44,13 +44,23 @@ import {
   Input,
 } from "@chakra-ui/core";
 import NavGuest from "../../components/nav-guest/navGuest.component";
-import { Get_oldCv } from "../../redux/oldcv/oldcvAction";
-const OldCv = ({ currentUser, match, Get_oldCv }) => {
+import { Get_oldCv, Delete_Single_CV } from "../../redux/oldcv/oldcvAction";
+const OldCv = ({
+  currentUser,
+  match,
+  Get_oldCv,
+  OldCvForUsers = [],
+  Delete_Single_CV,
+}) => {
   useEffect(() => {
     if (!currentUser) {
       return;
     }
     Get_oldCv(currentUser);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, [Get_oldCv]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -71,8 +81,6 @@ const OldCv = ({ currentUser, match, Get_oldCv }) => {
 
   const [data, setData] = useState([]);
 
-  let { id } = match.params;
-
   const history = useHistory();
 
   const [datee, setDatee] = useState(new Date());
@@ -84,6 +92,7 @@ const OldCv = ({ currentUser, match, Get_oldCv }) => {
 
     console.log(`herrllllloooooooo`, lastModified);
   };
+  let { id } = match.params;
 
   const createAnewCv = async () => {
     const label = "Simple Cv";
@@ -115,7 +124,7 @@ const OldCv = ({ currentUser, match, Get_oldCv }) => {
 
   const [loading, setLoading] = useState(true);
 
-  const GetData = async () => {
+  /*const GetData = async () => {
     await firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs`)
@@ -146,6 +155,18 @@ const OldCv = ({ currentUser, match, Get_oldCv }) => {
     GetData();
   }, [data, currentUser, id, allcv]);
 
+*/
+  console.log(id, `id gona delete from oldcv.jsx`);
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    if (!currentUser) {
+      return;
+    }
+    Delete_Single_CV(id, currentUser);
+  }, [Delete_Single_CV, currentUser, id]);
   const deleteCv = async (id) => {
     if (!id) {
       return;
@@ -159,9 +180,7 @@ const OldCv = ({ currentUser, match, Get_oldCv }) => {
       .then(function () {
         setAllcv([]);
         onClose();
-        setTimeout(() => {
-          GetData();
-        }, 500);
+
         toast({
           title: "Your Cv Successfully Deleted!",
           description: "cv deleted you can Create new one.",
@@ -218,7 +237,7 @@ const OldCv = ({ currentUser, match, Get_oldCv }) => {
                 </tr>
               </thead>
               <tbody>
-                {allcv.map((singleCv, i) => (
+                {OldCvForUsers.map((singleCv, i) => (
                   <tr key={i}>
                     <td>
                       {singleCv.label}
@@ -241,7 +260,7 @@ const OldCv = ({ currentUser, match, Get_oldCv }) => {
                                 variantColor="red"
                                 mr={3}
                                 type="submit"
-                                onClick={() => deleteCv(`${singleCv.id}`)}
+                                onClick={() => deleteCv(`${singleCv.id}}`)}
                               >
                                 Delete
                               </Button>
@@ -383,10 +402,13 @@ const PrivateRoute = ({ component: Component, currentUser, ...rest }) => (
 );
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  OldCvForUsers: state.allOldCv.oldCv,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   Get_oldCv: (currentUser) => dispatch(Get_oldCv(currentUser)),
+  Delete_Single_CV: (id, currentUser) =>
+    dispatch(Delete_Single_CV(id, currentUser)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OldCv);

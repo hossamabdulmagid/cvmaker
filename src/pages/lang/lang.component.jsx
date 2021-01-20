@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 
 import { RapperColor, Content, UL, Li, H5 } from "./lang.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";

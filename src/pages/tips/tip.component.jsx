@@ -1,5 +1,3 @@
-import React from "react";
-
 import { RapperColor, Title, Ph, H5 } from "./tips.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 

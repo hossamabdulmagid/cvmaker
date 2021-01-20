@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Input, H6, BUTTON, Small, RapperdButton } from "./sign-up.styles";
 import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/core";

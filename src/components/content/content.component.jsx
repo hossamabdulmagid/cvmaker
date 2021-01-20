@@ -1,4 +1,3 @@
-import React from "react";
 import { Contents, H5, BoxShadow, IMG } from "./content.styles";
 import { Container, Row, Col } from "react-bootstrap";
 const Content = () => {

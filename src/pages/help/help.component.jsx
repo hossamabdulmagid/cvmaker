@@ -1,4 +1,3 @@
-import React from "react";
 import { Rapper, Box, Ol, Li, P, IMG, Title, Ph, H5 } from "./help.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 const Help = () => {

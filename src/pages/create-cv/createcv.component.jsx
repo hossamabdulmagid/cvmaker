@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
+import { useState, useEffect, Fragment, useRef } from "react";
 import {
   RapperColor,
   Containers,
@@ -100,7 +100,7 @@ const CreateCv = (props) => {
 
   const toast = useToast();
 
-  const [color, setColor] = React.useState("");
+  const [color, setColor] = useState("");
 
   const styles = {
     backgroundColor: color,

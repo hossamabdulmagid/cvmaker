@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   COL,
   Container,
@@ -27,7 +27,8 @@ const ForgetPassword = () => {
   const { handleSubmit, register, errors, data, getValues } = useForm();
 
   const value = getValues();
-  const initialRef = React.useRef();
+
+  const initialRef = useRef();
 
   const toast = useToast();
 

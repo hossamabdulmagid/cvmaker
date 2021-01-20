@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../App.css";
 import {
   RapperColor,
@@ -20,19 +20,21 @@ const Head = () => {
   const [save, setSave] = useState(0);
   return (
     <>
-      <RapperColor className="">
+      <RapperColor>
         <RapperContent className="container">
           <RapperdRow>
             <Row>
               <Col xs={4} md={6} lg={6}>
                 <img src="cvcreator.png" alt="" />
               </Col>
+
               <Col xs={4} md={3} lg={4}>
                 <Small onClick={() => setDownload(download + 1)}>
                   {download}
                   download
                 </Small>
               </Col>
+
               <Col xs={4} md={3} lg={2}>
                 <Small onClick={() => setSave(save + 1)}>
                   {save}

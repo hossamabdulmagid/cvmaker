@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, Fragment } from "react";
+import React, { useState, useEffect, useMemo, Fragment, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { AddToList } from "../../../redux/addtolist/addtolistAction";
 import { connect } from "react-redux";
@@ -40,9 +40,9 @@ const Workexperience = (props) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = React.useRef();
+  const initialRef = useRef();
 
-  const finalRef = React.useRef();
+  const finalRef = useRef();
 
   const { handleSubmit, register, getValues, errors } = useForm();
 

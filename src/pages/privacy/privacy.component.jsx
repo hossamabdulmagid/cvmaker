@@ -1,4 +1,3 @@
-import React from "react";
 import { H1, P, Small, RapperedColor } from "./privacy.styles";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 const Privacy = () => {

@@ -1,4 +1,3 @@
-import React from "react";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 
 import { Color, Container, H2, H3 } from "./contact.styles";

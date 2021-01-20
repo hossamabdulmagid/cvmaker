@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from "react";
+import { useEffect, Fragment, useState, useRef } from "react";
 import {
   Input,
   Label,
@@ -181,7 +181,7 @@ const BasicInfo = (props) => {
 
   //  console.log("image :", image);
 
-  const [color, setColor] = React.useState("");
+  const [color, setColor] = useState("");
 
   const styles = {
     backgroundColor: color,
@@ -189,9 +189,9 @@ const BasicInfo = (props) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = React.useRef();
+  const initialRef = useRef();
 
-  const finalRef = React.useRef();
+  const finalRef = useRef();
 
   const [sectionName, setSectionName] = useState({
     sectionlabel: "",

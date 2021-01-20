@@ -1,4 +1,4 @@
-import React from "react";
+import { Component, StrictMode, Suspense, Fragment } from "react";
 import Nav from "./components/nav/nav.component";
 import Head from "./components/header/header.component";
 import Bottom from "./components/bottom/bottom.component";
@@ -23,7 +23,7 @@ import { createStructuredSelector } from "reselect";
 import ForgetPassword from "./components/forget-password/forget-password.component";
 import { Spinner } from "@chakra-ui/core";
 
-class App extends React.Component {
+class App extends Component {
   unsubscribeFormAuth = null;
 
   componentDidMount() {
@@ -49,9 +49,9 @@ class App extends React.Component {
   render() {
     const { currentUser } = this.props;
     return (
-      <React.Fragment>
-        <React.StrictMode>
-          <React.Suspense fallback={<Spinner />}>
+      <Fragment>
+        <StrictMode>
+          <Suspense fallback={<Spinner />}>
             <ScrollToTop />
             <div>
               <Nav />
@@ -93,9 +93,9 @@ class App extends React.Component {
               <Bottom />
               <Footer />
             </div>
-          </React.Suspense>
-        </React.StrictMode>
-      </React.Fragment>
+          </Suspense>
+        </StrictMode>
+      </Fragment>
     );
   }
 }

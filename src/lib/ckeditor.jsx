@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -128,7 +128,7 @@ const Editor = ({ details, currentUser, array = [] }) => {
         console.log(error, `there is was an error`);
       });
   };
-  React.useEffect(() => {
+  useEffect(() => {
     FetchData();
   }, [currentUser, array]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { firestore } from "../firebase/firebase.utils";
 import { useForm } from "react-hook-form";
 import { Button } from "@chakra-ui/core";

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { storage } from "../../../firebase/firebase.utils";
 
 class ImageUpload extends Component {

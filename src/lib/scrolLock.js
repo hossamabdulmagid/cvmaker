@@ -1,11 +1,11 @@
-import React from "react";
+import { Component } from "react";
 import {
   disableBodyScroll,
   enableBodyScroll,
   clearAllBodyScrollLocks,
 } from "body-scroll-lock";
 
-class SomeComponent extends React.Component {
+class SomeComponent extends Component {
   targetElement = null;
 
   componentDidMount() {

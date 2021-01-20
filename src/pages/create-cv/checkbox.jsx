@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import generateRandom from "../../lib/random";
 import "./App.scss";
 const InputCheckBox = ({

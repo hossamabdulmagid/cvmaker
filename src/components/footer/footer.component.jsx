@@ -1,4 +1,3 @@
-import React from "react";
 import { RapperColor, Content, LINK } from "./footer.styles";
 import { Row, Col } from "react-bootstrap";
 const Footer = () => {

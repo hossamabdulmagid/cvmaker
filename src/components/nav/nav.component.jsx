@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Rapper, Span, LINK, Select, Icon, Small } from "./nav.styles";
 import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";

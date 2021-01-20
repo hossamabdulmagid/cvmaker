@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -37,8 +37,8 @@ const Education = (props) => {
   const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = React.useRef();
-  const finalRef = React.useRef();
+  const initialRef = useRef();
+  const finalRef = useRef();
 
   const { handleSubmit, register, getValues, errors } = useForm();
 

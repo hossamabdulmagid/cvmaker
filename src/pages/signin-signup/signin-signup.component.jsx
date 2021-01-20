@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { Fragment, useState } from "react";
 import {
   RapperColor,
   RapperdCol,
@@ -11,8 +11,8 @@ import Signin from "../../components/sign-in/sign-in.component";
 import Signup from "../../components/sign-up/sign-up.component";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 const SigninSignup = () => {
-  const [download, setDownload] = React.useState(0);
-  const [save, setSave] = React.useState(0);
+  const [download, setDownload] = useState(0);
+  const [save, setSave] = useState(0);
 
   return (
     <Fragment>

@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import { oldcvActionType } from "./oldcvType";
 import { firestore } from "../../firebase/firebase.utils";
 
@@ -42,6 +43,7 @@ export const Get_oldCv = (currentUser) => {
           let newData = doc.data();
           newData.id = doc.id;
           array.push(newData);
+
           {
             !newData &&
             !newData.id &&
@@ -65,12 +67,8 @@ export const Get_oldCv = (currentUser) => {
   };
 };
 
-const Delete_Start = () => ({
+const Delete_Start = (data) => ({
   type: oldcvActionType.DELETE_CV_START,
-});
-
-const Delete_Success = (data) => ({
-  type: oldcvActionType.GET_OLDCV_SUCCESS,
   payload: data,
 });
 
@@ -82,22 +80,22 @@ const Delete_Error = (errorMessage) => ({
 export const Delete_Single_CV = (id, currentUser) => {
   console.log(id, `id here`);
   return (dispatch) => {
-    setTimeout(async () => {
-      console.log(id, `id after asyncrouns`);
+    console.log(id, `id after asyncrouns`);
 
-      dispatch(Delete_Start());
-      await db
-        .doc(`users/${currentUser.id}`)
-        .collection(`cvs`)
-        .doc(`${id}`)
-        .delete()
-        .then((id) => {
-          console.log(`${id} +data deleted SuccessFul`);
-        })
-        .catch((errorMessage) => {
-          console.log(errorMessage);
-          dispatch(Delete_Error(errorMessage));
-        });
-    }, 2000);
+    dispatch(Delete_Start());
+    db.doc(`users/${currentUser.id}/cvs/${id}`)
+      .delete()
+      .then((errorMessage) => {
+        {
+          errorMessage
+            ? dispatch(Delete_Error(errorMessage)) &&
+              console.log(errorMessage, `error`)
+            : dispatch(Get_oldCv(currentUser));
+        }
+      })
+      .catch((errorMessage) => {
+        console.log(errorMessage);
+        dispatch(Delete_Error(errorMessage));
+      });
   };
 };

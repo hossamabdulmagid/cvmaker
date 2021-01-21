@@ -43,7 +43,9 @@ const Education = (props) => {
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const value = getValues();
+
   const toast = useToast();
+
   const [education, setEducation] = useState({
     education: {
       collagename: "",
@@ -62,6 +64,7 @@ const Education = (props) => {
     eduactionmajor,
     lastModified,
   } = education;
+
   const [FlagButton, setFlagButton] = useState(true);
 
   const onSubmit = async (value) => {
@@ -93,7 +96,9 @@ const Education = (props) => {
     }, 2000);
   };
   useEffect(() => {
-    setFlagButton(true);
+    return () => {
+      setFlagButton(true);
+    };
   }, []);
 
   const handleChange = (event) => {

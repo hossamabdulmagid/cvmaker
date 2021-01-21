@@ -1,4 +1,13 @@
-import { Fragment, useEffect, useState, useRef } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import {
+  Fragment,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useLayoutEffect,
+} from "react";
 import {
   ButtonForPremium,
   Content,
@@ -30,19 +39,7 @@ import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { Spinner, useToast, Button } from "@chakra-ui/core";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  FormLabel,
-  Input,
-} from "@chakra-ui/core";
+import { Spinner, useToast, Button, useDisclosure } from "@chakra-ui/core";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import { Get_oldCv, Delete_Single_CV } from "../../redux/oldcv/oldcvAction";
 const OldCv = ({
@@ -61,7 +58,10 @@ const OldCv = ({
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-  }, [Get_oldCv]);
+    return () => {
+      document.OldCvForUsers = OldCvForUsers;
+    };
+  }, [Get_oldCv, currentUser]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -155,22 +155,11 @@ const OldCv = ({
     GetData();
   }, [data, currentUser, id, allcv]);
 
-*/
-  console.log(id, `id gona delete from oldcv.jsx`);
-
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    if (!currentUser) {
-      return;
-    }
-    Delete_Single_CV(id, currentUser);
-  }, [Delete_Single_CV, currentUser, id]);
   const deleteCv = async (id) => {
     if (!id) {
       return;
     }
+
     console.log(id, `here is id gona deleted`);
     await firestore
       .doc(`users/${currentUser.id}`)
@@ -180,7 +169,6 @@ const OldCv = ({
       .then(function () {
         setAllcv([]);
         onClose();
-
         toast({
           title: "Your Cv Successfully Deleted!",
           description: "cv deleted you can Create new one.",
@@ -191,6 +179,7 @@ const OldCv = ({
         });
       })
       .catch(function (error) {
+        console.log(error, `error for removing deoucte`)
         toast({
           title: "Error removing document",
           description: `${error}`,
@@ -201,11 +190,56 @@ const OldCv = ({
         });
       });
   };
+  */
 
-  useEffect(() => {
-    deleteCv();
-  }, [allcv, setAllcv]);
+  const RenderTHeaderForTable = () => {
+    let headerElement = ["Name", "Create At", "Last Modified", "Options"];
 
+    return headerElement.map((key, index) => {
+      return <th key={index}>{key.toUpperCase()}</th>;
+    });
+  };
+
+  const RenderTBodyForTable = () => {
+    return (
+      OldCvForUsers &&
+      OldCvForUsers.map(({ label, lastModified, createdAt, id }) => {
+        return (
+          <tr key={id}>
+            <td>
+              {label}
+              <ButtonForDeleteCv
+                onClick={() => Delete_Single_CV(id, currentUser)}
+              >
+                delete
+                <Icon />
+              </ButtonForDeleteCv>
+            </td>
+
+            <td>
+              <Moment format="MMMM Do YYYY, h:mm a">{createdAt}</Moment>
+              <IconCalendar />
+            </td>
+
+            <td>
+              <Moment format="MMMM Do YYYY, h:mm a">{lastModified}</Moment>
+              <IconCalendar />
+            </td>
+
+            <td>
+              <Linkcv
+                to={"create-cv/" + `${id}`}
+                onClick={() => refreshlastModified()}
+              >
+                Edit now
+                <Iconedit />
+              </Linkcv>
+            </td>
+          </tr>
+        );
+      })
+    );
+  };
   return (
     <Fragment>
       <NavGuest />
@@ -230,16 +264,19 @@ const OldCv = ({
             >
               <thead>
                 <tr>
+                  {/* 
                   <th> Name</th>
                   <th>Created At</th>
                   <th>Last Modified</th>
                   <th>Options</th>
+                    */}
+                  {RenderTHeaderForTable()}
                 </tr>
               </thead>
               <tbody>
-                {OldCvForUsers.map((singleCv, i) => (
-                  <tr key={i}>
-                    <td>
+                {/*  {OldCvForUsers.map((singleCv, x) => (
+                  <tr key={x}>
+                    <td key={x}>
                       {singleCv.label}
                       <ButtonForDeleteCv onClick={() => onOpen()}>
                         <Modal
@@ -251,7 +288,7 @@ const OldCv = ({
                           <ModalOverlay />
                           <ModalContent>
                             <ModalHeader>Are you sure</ModalHeader>
-                            {/*  <ModalCloseButton /> */}
+                            {/*  <ModalCloseButton /> 
                             <ModalBody pb={6}>
                               <p>you want to delete this document of cv</p>
                             </ModalBody>
@@ -260,11 +297,11 @@ const OldCv = ({
                                 variantColor="red"
                                 mr={3}
                                 type="submit"
-                                onClick={() => deleteCv(`${singleCv.id}}`)}
+                                onClick={() => deleteCv(`${singleCv.id}`)}
                               >
                                 Delete
                               </Button>
-                              <Button onClick={onClose} className="">
+                              <Button onClick={onClose}>
                                 Cancel
                               </Button>
                             </ModalFooter>
@@ -296,7 +333,8 @@ const OldCv = ({
                       </Linkcv>
                     </td>
                   </tr>
-                ))}
+                ))} */}
+                {RenderTBodyForTable()}
               </tbody>
             </Table>
           ) : (
@@ -407,8 +445,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   Get_oldCv: (currentUser) => dispatch(Get_oldCv(currentUser)),
-  Delete_Single_CV: (id, currentUser) =>
-    dispatch(Delete_Single_CV(id, currentUser)),
+  Delete_Single_CV: (id, currentUser, toast) =>
+    dispatch(Delete_Single_CV(id, currentUser, toast)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OldCv);

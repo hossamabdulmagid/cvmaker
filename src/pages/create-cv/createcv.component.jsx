@@ -136,8 +136,8 @@ const CreateCv = (props) => {
 
   const { section, type } = sectionData;
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setCvName({ ...cvName, [name]: value });
   };
 
@@ -236,6 +236,7 @@ const CreateCv = (props) => {
 
   const [lastModified, setLastModified] = useState(new Date());
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const FetchData = async (value) => {
     await firestore
       .doc(`users/${currentUser.id}`)
@@ -280,8 +281,11 @@ const CreateCv = (props) => {
     if (!currentUser) {
       return;
     }
-    FetchData();
-  }, [array, currentUser]);
+
+    return () => {
+      FetchData();
+    };
+  }, [array, currentUser, FetchData]);
 
   useEffect(() => {
     if (!currentUser) {

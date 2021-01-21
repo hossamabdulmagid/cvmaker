@@ -31,12 +31,7 @@ const oldcvReducer = (state = INITAIL_STATE, action) => {
         ...state,
         isFetching: true,
       };
-    case oldcvActionType.DELETE_CV_SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        oldCv: action.payload,
-      };
+
     case oldcvActionType.DELETE_CV_ERROR:
       return {
         ...state,

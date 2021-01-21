@@ -215,6 +215,7 @@ const OldCv = ({
             {label}
             <ButtonForDeleteCv
               onClick={() => Delete_Single_CV(id, currentUser)}
+              //  onClick={() => TogglePopup()}
             >
               delete
               <Icon />
@@ -352,15 +353,16 @@ const OldCv = ({
           )}
 
           <div className="container">
-            <button onClick={() => TogglePopup()}>
+            {/*            <button onClick={() => TogglePopup()}>
               {" "}
               Click To Launch Popup
             </button>
-
+*/}
             {showtogglePopUp ? (
               <Popup
                 text='Click "Close Button" to hide popup'
                 closePopup={() => TogglePopup()}
+                delete={() => Delete_Single_CV(id, currentUser)}
               />
             ) : null}
             <Accordion

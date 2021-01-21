@@ -42,6 +42,7 @@ import Moment from "react-moment";
 import { Spinner, useToast, Button, useDisclosure } from "@chakra-ui/core";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import { Get_oldCv, Delete_Single_CV } from "../../redux/oldcv/oldcvAction";
+import Popup from "./popup";
 const OldCv = ({
   currentUser,
   match,
@@ -59,7 +60,7 @@ const OldCv = ({
       setLoading(false);
     }, 2000);
     return () => {
-      document.OldCvForUsers = OldCvForUsers;
+      setLoading(true);
     };
   }, [Get_oldCv, currentUser]);
 
@@ -83,7 +84,7 @@ const OldCv = ({
 
   const history = useHistory();
 
-  const [datee, setDatee] = useState(new Date());
+  // const [datee, setDatee] = useState(new Date());
 
   const [lastModified, setLastModified] = useState(new Date().toString());
 
@@ -192,6 +193,12 @@ const OldCv = ({
   };
   */
 
+  const [showtogglePopUp, setShowTogglePopUp] = useState(false);
+
+  const TogglePopup = () =>
+    setShowTogglePopUp(!showtogglePopUp) &&
+    console.log(showtogglePopUp, `aheh`);
+
   const RenderTHeaderForTable = () => {
     let headerElement = ["Name", "Create At", "Last Modified", "Options"];
 
@@ -201,44 +208,41 @@ const OldCv = ({
   };
 
   const RenderTBodyForTable = () => {
-    return (
-      OldCvForUsers &&
-      OldCvForUsers.map(({ label, lastModified, createdAt, id }) => {
-        return (
-          <tr key={id}>
-            <td>
-              {label}
-              <ButtonForDeleteCv
-                onClick={() => Delete_Single_CV(id, currentUser)}
-              >
-                delete
-                <Icon />
-              </ButtonForDeleteCv>
-            </td>
+    return OldCvForUsers.map(({ label, lastModified, createdAt, id }) => {
+      return (
+        <tr key={id}>
+          <td>
+            {label}
+            <ButtonForDeleteCv
+              onClick={() => Delete_Single_CV(id, currentUser)}
+            >
+              delete
+              <Icon />
+            </ButtonForDeleteCv>
+          </td>
 
-            <td>
-              <Moment format="MMMM Do YYYY, h:mm a">{createdAt}</Moment>
-              <IconCalendar />
-            </td>
+          <td>
+            <Moment format="MMMM Do YYYY, h:mm a">{createdAt}</Moment>
+            <IconCalendar />
+          </td>
 
-            <td>
-              <Moment format="MMMM Do YYYY, h:mm a">{lastModified}</Moment>
-              <IconCalendar />
-            </td>
+          <td>
+            <Moment format="MMMM Do YYYY, h:mm a">{lastModified}</Moment>
+            <IconCalendar />
+          </td>
 
-            <td>
-              <Linkcv
-                to={"create-cv/" + `${id}`}
-                onClick={() => refreshlastModified()}
-              >
-                Edit now
-                <Iconedit />
-              </Linkcv>
-            </td>
-          </tr>
-        );
-      })
-    );
+          <td>
+            <Linkcv
+              to={"create-cv/" + `${id}`}
+              onClick={() => refreshlastModified()}
+            >
+              Edit now
+              <Iconedit />
+            </Linkcv>
+          </td>
+        </tr>
+      );
+    });
   };
   return (
     <Fragment>
@@ -348,6 +352,17 @@ const OldCv = ({
           )}
 
           <div className="container">
+            <button onClick={() => TogglePopup()}>
+              {" "}
+              Click To Launch Popup
+            </button>
+
+            {showtogglePopUp ? (
+              <Popup
+                text='Click "Close Button" to hide popup'
+                closePopup={() => TogglePopup()}
+              />
+            ) : null}
             <Accordion
               defaultIndex={[0]}
               allowToggle

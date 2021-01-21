@@ -90,7 +90,7 @@ export const Delete_Single_CV = (id, currentUser) => {
           errorMessage
             ? dispatch(Delete_Error(errorMessage)) &&
               console.log(errorMessage, `error`)
-            : dispatch(Get_oldCv(currentUser));
+            : dispatch(Get_oldCv(currentUser)) && window.location.reload();
         }
       })
       .catch((errorMessage) => {

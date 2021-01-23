@@ -32,6 +32,7 @@ const Oldcv_Error = (errorMessage) => {
 export const Get_oldCv = (currentUser) => {
   return (dispatch) => {
     let array = [];
+    let hasError = false;
 
     dispatch(Oldcv_Start());
     db.doc(`users/${currentUser.id}`)
@@ -44,17 +45,21 @@ export const Get_oldCv = (currentUser) => {
           newData.id = doc.id;
           array.push(newData);
 
-          {
+          if (
             !newData &&
             !newData.id &&
             querySnapshot.error &&
             querySnapshot.errors &&
             errorMessage
-              ? dispatch(Oldcv_Error(errorMessage)) &&
-                console.log(errorMessage, `error from OldcvAction.JS`)
-              : dispatch(Oldcv_Success(array));
+          ) {
+            hasError = true;
+            dispatch(Oldcv_Error(errorMessage));
+            console.log(errorMessage, `error from OldcvAction.JS`);
           }
         });
+        if (!hasError) {
+          dispatch(Oldcv_Success(array));
+        }
       })
       .catch((errorMessage, newData) => {
         {
@@ -67,11 +72,13 @@ export const Get_oldCv = (currentUser) => {
   };
 };
 
-const Delete_Start = (data) => ({
+const Delete_Start = () => ({
   type: oldcvActionType.DELETE_CV_START,
-  payload: data,
 });
 
+const Delete_Success = () => ({
+  type: oldcvActionType.DELETE_CV_SUCCESS,
+});
 const Delete_Error = (errorMessage) => ({
   type: oldcvActionType.DELETE_CV_ERROR,
   payload: errorMessage,
@@ -85,12 +92,13 @@ export const Delete_Single_CV = (id, currentUser) => {
     dispatch(Delete_Start());
     db.doc(`users/${currentUser.id}/cvs/${id}`)
       .delete()
-      .then((errorMessage) => {
-        {
-          errorMessage
-            ? dispatch(Delete_Error(errorMessage)) &&
-              console.log(errorMessage, `error`)
-            : dispatch(Get_oldCv(currentUser)) && window.location.reload();
+      .then((errorMessage, data) => {
+        if (errorMessage) {
+          console.log(errorMessage, `error`);
+          dispatch(Delete_Error(errorMessage));
+        } else {
+          dispatch(Delete_Success());
+          dispatch(Get_oldCv(currentUser));
         }
       })
       .catch((errorMessage) => {

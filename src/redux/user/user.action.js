@@ -1,4 +1,3 @@
-import React from "react";
 import { UserTypeAction } from "./userType";
 import { firestore } from "../../firebase/firebase.utils";
 const setCurrentUser = (user) => {

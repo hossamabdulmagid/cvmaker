@@ -39,26 +39,26 @@ export const Get_allSection = (currentUser, id, toast) => {
         querySnapshot.forEach(function (doc) {
           const data = doc.data();
           const newData = doc.id;
-          {
+          if (
             !data &&
             !newData &&
             querySnapshot.error &&
             querySnapshot.errors &&
             errorMessage
-              ? dispatch(SectionError(errorMessage)) &&
-                console.log(errorMessage, `error from dataAction.JS`)
-              : dispatch(SectionSuccess(newData)); //&&
-            // console.log(newData, `Data Comming From DataAction.JS`);
+          ) {
+            dispatch(SectionError(errorMessage));
+            console.log(errorMessage, `error from dataAction.JS`);
+          } else {
+            dispatch(SectionSuccess(newData));
           }
         });
       })
       .catch((errorMessage, data, newData) => {
-        {
-          errorMessage && !data && !newData
-            ? dispatch(SectionError(errorMessage)) &&
-              console.log(errorMessage, `error from dataAction.JS`)
-            : dispatch(SectionSuccess(newData)); // &&
-          //console.log(newData, `Data Comming From DataAction.JS`);
+        if (errorMessage && !data && !newData) {
+          dispatch(SectionError(errorMessage));
+          console.log(errorMessage, `error from dataAction.JS`);
+        } else {
+          dispatch(SectionSuccess(newData));
         }
       });
   };

@@ -14,7 +14,7 @@ import {
   signInWithGoogle,
   signInWithFacebook,
 } from "../../firebase/firebase.utils";
-import { Container, Col, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useToast } from "@chakra-ui/core";
 const Signin = () => {
   const toast = useToast();

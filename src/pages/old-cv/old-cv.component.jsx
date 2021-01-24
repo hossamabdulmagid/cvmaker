@@ -42,7 +42,7 @@ import Moment from "react-moment";
 import { Spinner, useToast, Button, useDisclosure } from "@chakra-ui/core";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import { Get_oldCv, Delete_Single_CV } from "../../redux/oldcv/oldcvAction";
-import Popup from "./popup";
+import { Row } from "react-bootstrap";
 const OldCv = ({
   currentUser,
   match,
@@ -58,7 +58,7 @@ const OldCv = ({
 
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
     return () => {
       setLoading(true);
     };
@@ -84,8 +84,6 @@ const OldCv = ({
 
   const history = useHistory();
 
-  // const [datee, setDatee] = useState(new Date());
-
   const [lastModified, setLastModified] = useState(new Date().toString());
 
   const refreshlastModified = () => {
@@ -94,9 +92,13 @@ const OldCv = ({
     console.log(`herrllllloooooooo`, lastModified);
   };
   let { id } = match.params;
+  let btnRef = useRef();
 
-  const createAnewCv = async () => {
+  const createAnewCv = async (e) => {
     const label = "Simple Cv";
+    if (btnRef.current) {
+      btnRef.current.setAttribute("disabled", "disabled");
+    }
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
@@ -193,12 +195,6 @@ const OldCv = ({
   };
   */
 
-  const [showtogglePopUp, setShowTogglePopUp] = useState(false);
-
-  const TogglePopup = () =>
-    setShowTogglePopUp(!showtogglePopUp) &&
-    console.log(showtogglePopUp, `aheh`);
-
   const RenderTHeaderForTable = () => {
     let headerElement = ["Name", "Create At", "Last Modified", "Options"];
 
@@ -214,8 +210,17 @@ const OldCv = ({
           <td>
             {label}
             <ButtonForDeleteCv
-              onClick={() => Delete_Single_CV(id, currentUser)}
-              //  onClick={() => TogglePopup()}
+              onClick={() =>
+                Delete_Single_CV(id, currentUser) +
+                toast({
+                  title: "Your Cv Successfully Deleted!",
+                  description: "cv deleted you can Create new one.",
+                  status: "error",
+                  duration: 9000,
+                  isClosable: true,
+                  position: "top-right",
+                })
+              }
             >
               delete
               <Icon />
@@ -251,120 +256,74 @@ const OldCv = ({
       <RapperdColor className="container-fluid">
         <Content className="container">
           <Title>Your CVs</Title>
-          <ButtonforcreateCv onClick={createAnewCv}>
+          <ButtonforcreateCv onClick={createAnewCv} ref={btnRef}>
             Create a new CV
           </ButtonforcreateCv>
         </Content>
         <div className="container">
-          {!loading ? (
-            <Table
-              striped
-              bordered
-              hover
-              size="xs"
-              responsive="xl"
-              responsive="sm"
-              responsive="md"
-              responsive="lg"
-            >
-              <thead>
-                <tr>
-                  {/* 
-                  <th> Name</th>
-                  <th>Created At</th>
-                  <th>Last Modified</th>
-                  <th>Options</th>
-                    */}
-                  {RenderTHeaderForTable()}
+          <Table
+            striped
+            bordered
+            hover
+            size="xs"
+            responsive="xl"
+            responsive="sm"
+            responsive="md"
+            responsive="lg"
+          >
+            <thead>
+              <tr>{RenderTHeaderForTable()}</tr>
+            </thead>
+            <tbody>
+              {!loading ? (
+                RenderTBodyForTable()
+              ) : (
+                <tr className="text-center">
+                  <td>
+                    <span>Loading ...</span>
+                    <Spinner
+                      thickness="10px"
+                      speed="0.65s"
+                      emptyColor="gray.200"
+                      color="blue.200"
+                      size="sm"
+                    />
+                  </td>
+                  <td>
+                    <span>Loading ...</span>
+                    <Spinner
+                      thickness="10px"
+                      speed="0.65s"
+                      emptyColor="gray.200"
+                      color="blue.200"
+                      size="sm"
+                    />
+                  </td>
+                  <td>
+                    <span>Loading ...</span>
+                    <Spinner
+                      thickness="10px"
+                      speed="0.65s"
+                      emptyColor="gray.200"
+                      color="blue.200"
+                      size="sm"
+                    />
+                  </td>
+                  <td>
+                    <span>Loading ...</span>
+                    <Spinner
+                      thickness="10px"
+                      speed="0.65s"
+                      emptyColor="gray.200"
+                      color="blue.200"
+                      size="sm"
+                    />
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {/*  {OldCvForUsers.map((singleCv, x) => (
-                  <tr key={x}>
-                    <td key={x}>
-                      {singleCv.label}
-                      <ButtonForDeleteCv onClick={() => onOpen()}>
-                        <Modal
-                          initialFocusRef={initialRef}
-                          finalFocusRef={finalRef}
-                          isOpen={isOpen}
-                          onClose={onClose}
-                        >
-                          <ModalOverlay />
-                          <ModalContent>
-                            <ModalHeader>Are you sure</ModalHeader>
-                            {/*  <ModalCloseButton /> 
-                            <ModalBody pb={6}>
-                              <p>you want to delete this document of cv</p>
-                            </ModalBody>
-                            <ModalFooter>
-                              <Button
-                                variantColor="red"
-                                mr={3}
-                                type="submit"
-                                onClick={() => deleteCv(`${singleCv.id}`)}
-                              >
-                                Delete
-                              </Button>
-                              <Button onClick={onClose}>
-                                Cancel
-                              </Button>
-                            </ModalFooter>
-                          </ModalContent>
-                        </Modal>
-                        delete
-                        <Icon />
-                      </ButtonForDeleteCv>
-                    </td>
-                    <td>
-                      <Moment format="MMMM Do YYYY, h:mm a">
-                        {singleCv.createdAt}
-                      </Moment>
-                      <IconCalendar />
-                    </td>
-                    <td>
-                      <Moment format="MMMM Do YYYY, h:mm a">
-                        {singleCv.lastModified}
-                      </Moment>
-                      <IconCalendar />
-                    </td>
-                    <td>
-                      <Linkcv
-                        to={"create-cv/" + `${singleCv.id}`}
-                        onClick={() => refreshlastModified()}
-                      >
-                        Edit now
-                        <Iconedit />
-                      </Linkcv>
-                    </td>
-                  </tr>
-                ))} */}
-                {RenderTBodyForTable()}
-              </tbody>
-            </Table>
-          ) : (
-            <Spinner
-              thickness="30px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-            />
-          )}
-
+              )}
+            </tbody>
+          </Table>
           <div className="container">
-            {/*            <button onClick={() => TogglePopup()}>
-              {" "}
-              Click To Launch Popup
-            </button>
-*/}
-            {showtogglePopUp ? (
-              <Popup
-                text='Click "Close Button" to hide popup'
-                closePopup={() => TogglePopup()}
-                delete={() => Delete_Single_CV(id, currentUser)}
-              />
-            ) : null}
             <Accordion
               defaultIndex={[0]}
               allowToggle

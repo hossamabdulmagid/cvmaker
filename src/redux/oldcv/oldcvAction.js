@@ -84,7 +84,7 @@ const Delete_Error = (errorMessage) => ({
   payload: errorMessage,
 });
 
-export const Delete_Single_CV = (id, currentUser) => {
+export const Delete_Single_CV = (id, currentUser, toast) => {
   console.log(id, `id here`);
   return (dispatch) => {
     console.log(id, `id after asyncrouns`);
@@ -99,6 +99,14 @@ export const Delete_Single_CV = (id, currentUser) => {
         } else {
           dispatch(Delete_Success());
           dispatch(Get_oldCv(currentUser));
+          toast({
+            title: "Your Cv Successfully Deleted!",
+            description: "cv deleted you can Create new one.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+            position: "top-right",
+          });
         }
       })
       .catch((errorMessage) => {

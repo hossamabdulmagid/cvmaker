@@ -88,13 +88,11 @@ const OldCv = ({
 
   const refreshlastModified = () => {
     setLastModified(new Date().toString());
-
-    console.log(`herrllllloooooooo`, lastModified);
   };
   let { id } = match.params;
   let btnRef = useRef();
 
-  const createAnewCv = async (e) => {
+  const createAnewCv = async () => {
     const label = "Simple Cv";
     if (btnRef.current) {
       btnRef.current.setAttribute("disabled", "disabled");
@@ -210,17 +208,7 @@ const OldCv = ({
           <td>
             {label}
             <ButtonForDeleteCv
-              onClick={() =>
-                Delete_Single_CV(id, currentUser) +
-                toast({
-                  title: "Your Cv Successfully Deleted!",
-                  description: "cv deleted you can Create new one.",
-                  status: "error",
-                  duration: 9000,
-                  isClosable: true,
-                  position: "top-right",
-                })
-              }
+              onClick={() => Delete_Single_CV(id, currentUser, toast)}
             >
               delete
               <Icon />

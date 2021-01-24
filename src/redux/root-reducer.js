@@ -11,7 +11,7 @@ import interestsReducer from "./interests/interestsReducer";
 import qualificationsReducer from "./qualifications/qualificationsReducer";
 import referencesReducer from "./references/referencesReducer";
 import workexperinceReducer from "./workexperince/workexperinceReducer";
-
+import createnewcvReducer from "./createnewcv/createnewcvReducer";
 //blacklist
 const persistConfig = {
   key: "root",
@@ -23,6 +23,7 @@ const rootReducer = combineReducers({
   add: AddToListReducer,
   user: userReducer,
   allOldCv: oldcvReducer,
+  createnewcv: createnewcvReducer,
   allSections: allSectionReducer,
   sectionBasicInfo: basicinfoReducer,
   sectionEducation: educationReducer,

@@ -295,7 +295,7 @@ const Workexperience = (props) => {
             <ModalBody pb={6}>
               <FormLabel>Company Name</FormLabel>
               <Input
-                ref={register({ required: "this Feild is Required" })}
+                ref={register({ required: "Company Name Required" })}
                 name="companyname"
                 //value={"" }
                 onChange={handleChange}
@@ -307,11 +307,9 @@ const Workexperience = (props) => {
               <br />
               <FormLabel> Start Year</FormLabel>
               <Input
-                ref={register({ required: "this Feild is Required" })}
+                ref={register({ required: "Start Work Required" })}
                 name="startwork"
                 onChange={handleChange}
-                // value={"" || startwork}
-                placeholder="Graduation Year"
                 type="date"
               />
               <small className="error">
@@ -320,11 +318,9 @@ const Workexperience = (props) => {
               <br />
               <FormLabel> End Year</FormLabel>
               <Input
-                ref={register({ required: "this Feild is Required" })}
+                ref={register({ required: "End Work  Required" })}
                 name="endwork"
-                placeholder="Graduation Year"
                 onChange={handleChange}
-                // value={"" || endwork}
                 type="date"
               />
               <small className="error">
@@ -333,11 +329,10 @@ const Workexperience = (props) => {
               <br />
               <FormLabel> Postion</FormLabel>
               <Input
-                ref={register({ required: "this Content is Required" })}
+                ref={register({ required: "Position Required" })}
                 name="position"
                 placeholder="Position"
                 onChange={handleChange}
-                // value={"" || position}
                 type="text"
               />
               <small className="error">

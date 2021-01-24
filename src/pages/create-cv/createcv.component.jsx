@@ -56,7 +56,7 @@ import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import InputCheckBox from "./checkbox";
 import { Get_allSection } from "../../redux/allsections/allsectionsAction";
-
+import { GetNameOfCv } from "../../redux/createnewcv/createnewcvAction";
 const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     {
@@ -94,7 +94,7 @@ const CreateCv = (props) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const { currentUser, details, Get_allSection } = props;
+  const { currentUser, details, Get_allSection, GetNameOfCv, CvLabel } = props;
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
@@ -177,7 +177,7 @@ const CreateCv = (props) => {
         status: "success",
         duration: 5000,
         isClosable: true,
-        position: "bottom-left",
+        position: "top-left",
       });
       setTurnOf(isChecked);
     }, 2000);
@@ -232,12 +232,14 @@ const CreateCv = (props) => {
       });
   }, [currentUser, id]);
 
+  console.log(CvLabel, `CvLabel`);
+
   const [array, setArray] = useState([]);
 
   const [lastModified, setLastModified] = useState(new Date());
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const FetchData = async (value) => {
+  /* const FetchData = async (value) => {
     await firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
@@ -245,7 +247,6 @@ const CreateCv = (props) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           const data = doc.data();
-          console.log(data, `Dataa`);
           const newData = doc.id;
           setLastModified(lastModified);
           if (newData) {
@@ -274,6 +275,19 @@ const CreateCv = (props) => {
         console.log(error, `there is was an error`);
       });
   };
+  */
+
+  /* useEffect(() => {
+     if (!currentUser) {
+       return;
+     }
+ 
+     return () => {
+       
+     };
+   }, [array, currentUser]);
+
+   */
 
   const [flag, setFlag] = useState(true);
 
@@ -281,11 +295,8 @@ const CreateCv = (props) => {
     if (!currentUser) {
       return;
     }
-
-    return () => {
-      FetchData();
-    };
-  }, [array, currentUser, FetchData]);
+    GetNameOfCv(currentUser, id);
+  }, [GetNameOfCv]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -293,12 +304,6 @@ const CreateCv = (props) => {
     }
     Get_allSection(currentUser, id, toast);
     if (sectionData) {
-      array.unshift({
-        section: sectionData.toString(),
-        //   type: sectionData.type || sectionData.sectionName.type || "",
-        lastModified,
-      });
-
       setTimeout(() => {
         if (array.length > 6) {
           setFlag(false);
@@ -433,9 +438,8 @@ const CreateCv = (props) => {
                   onClose={onClose}
                   closeOnEsc={true}
                   autoFocus={true}
-                  blockScrollOnMount={true}
+                  blockScrollOnMount={false}
                   allowPinchZoom={false}
-                  // blockScrollOnMount={true}
                 >
                   <ModalOverlay />
                   <ModalContent>
@@ -788,9 +792,11 @@ const CreateCv = (props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   sectionData: state.data,
+  CvLabel: state.createnewcv,
 });
 const mapDispatchToProps = (dispatch) => ({
   Get_allSection: (currentUser, id, toast) =>
     dispatch(Get_allSection(currentUser, id, toast)),
+  GetNameOfCv: (currnetUser, id) => dispatch(GetNameOfCv(currnetUser, id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCv);

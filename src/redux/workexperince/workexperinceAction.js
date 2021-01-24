@@ -38,24 +38,24 @@ export const Get_Workexperince = (currentUser, id) => {
       .get()
       .then(function (querySnapshot, errorMessage) {
         const newData = querySnapshot.data();
-        {
+        if (
           !newData &&
           querySnapshot.errors &&
           querySnapshot.error &&
           errorMessage
-            ? dispatch(Workexperince_Error(errorMessage)) &&
-              console.log(errorMessage, `error from workexperinceAction.JS`)
-            : dispatch(Workexperince_Success(newData)); //&&
-          //console.log(newData, `dataComming from workexperinceAction.JS`);
+        ) {
+          dispatch(Workexperince_Error(errorMessage));
+          console.log(errorMessage, `error from workexperinceAction.JS`);
+        } else {
+          dispatch(Workexperince_Success(newData));
         }
       })
       .catch((errorMessage, newData) => {
-        {
-          errorMessage && !newData
-            ? dispatch(Workexperince_Error(errorMessage)) &&
-              console.log(errorMessage, `error from workexperinceAction.JS`)
-            : dispatch(Workexperince_Success(newData)); //&&
-          //   console.log(newData, `dataComming from  workexperinceAction.JS`);
+        if (errorMessage && !newData) {
+          dispatch(Workexperince_Error(errorMessage));
+          console.log(errorMessage, `error from workexperinceAction.JS`);
+        } else {
+          dispatch(Workexperince_Success(newData));
         }
       });
   };

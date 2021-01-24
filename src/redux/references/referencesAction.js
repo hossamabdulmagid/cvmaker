@@ -37,24 +37,24 @@ export const Get_References = (currentUser, id) => {
       .get()
       .then(function (querySnapshot, errorMessage) {
         const newData = querySnapshot.data();
-        {
+        if (
           !newData &&
           querySnapshot.errors &&
           querySnapshot.error &&
           errorMessage
-            ? dispatch(Referenes_Error(errorMessage)) &&
-              console.log(errorMessage, `error from referencesAction.JS`)
-            : dispatch(Referenes_Success(newData)); //&&
-          //   console.log(newData, `dataComming from referencesAction.JS`);
+        ) {
+          dispatch(Referenes_Error(errorMessage));
+          console.log(errorMessage, `error from referencesAction.JS`);
+        } else {
+          dispatch(Referenes_Success(newData));
         }
       })
       .catch((errorMessage, newData) => {
-        {
-          errorMessage && !newData
-            ? dispatch(Referenes_Error(errorMessage)) &&
-              console.log(errorMessage, `error from referencesAction.JS`)
-            : dispatch(Referenes_Success(newData)); //&&
-          // console.log(newData, `dataComming from referencesAction.JS`);
+        if (errorMessage && !newData) {
+          dispatch(Referenes_Error(errorMessage));
+          console.log(errorMessage, `error from referencesAction.JS`);
+        } else {
+          dispatch(Referenes_Success(newData));
         }
       });
   };

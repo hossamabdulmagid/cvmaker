@@ -37,24 +37,24 @@ export const Get_Qualifications = (currentUser, id) => {
       .get()
       .then(function (querySnapshot, errorMessage) {
         const newData = querySnapshot.data();
-        {
+        if (
           !newData &&
           querySnapshot.errors &&
           querySnapshot.error &&
           errorMessage
-            ? dispatch(Qualifications_Error(errorMessage)) &&
-              console.log(errorMessage, `error from   qualifications.JS`)
-            : dispatch(Qualifications_Success(newData)); //&&
-          // console.log(newData, `dataComing  from   qualifications.JS`);
+        ) {
+          dispatch(Qualifications_Error(errorMessage));
+          console.log(errorMessage, `error from   qualifications.JS`);
+        } else {
+          dispatch(Qualifications_Success(newData));
         }
       })
       .catch((errorMessage, newData) => {
-        {
-          errorMessage && !newData
-            ? dispatch(Qualifications_Error(errorMessage)) &&
-              console.log(errorMessage, `error from   qualifications.JS`)
-            : dispatch(Qualifications_Success(newData)); // &&
-          // console.log(newData, `dataComing  from   qualifications.JS`);
+        if ((errorMessage, !newData)) {
+          dispatch(Qualifications_Error(errorMessage));
+          console.log(errorMessage, `error from   qualifications.JS`);
+        } else {
+          dispatch(Qualifications_Success(newData)); // &&
         }
       });
   };

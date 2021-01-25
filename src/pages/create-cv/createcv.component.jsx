@@ -203,7 +203,26 @@ const CreateCv = (props) => {
       position: "top-right",
     });
   };
+
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    GetNameOfCv(currentUser, id);
+    if (CvLabel) {
+      setCvName({
+        label: CvLabel,
+      });
+      setTimeout(() => {
+        setLoading(false);
+      }, 100);
+    }
+  }, [GetNameOfCv, currentUser, id, CvLabel]);
+
+  const [array, setArray] = useState([]);
+
+  const [lastModified, setLastModified] = useState(new Date());
+  /*useEffect(() => {
     if (!currentUser) {
       return;
     }
@@ -231,12 +250,7 @@ const CreateCv = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-
-  console.log(CvLabel, `CvLabel`);
-
-  const [array, setArray] = useState([]);
-
-  const [lastModified, setLastModified] = useState(new Date());
+*/
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   /* const FetchData = async (value) => {
@@ -290,13 +304,6 @@ const CreateCv = (props) => {
    */
 
   const [flag, setFlag] = useState(true);
-
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    GetNameOfCv(currentUser, id);
-  }, [GetNameOfCv]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -792,7 +799,7 @@ const CreateCv = (props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   sectionData: state.data,
-  CvLabel: state.createnewcv,
+  CvLabel: state.createnewcv.data.label,
 });
 const mapDispatchToProps = (dispatch) => ({
   Get_allSection: (currentUser, id, toast) =>

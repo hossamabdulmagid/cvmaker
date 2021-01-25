@@ -47,23 +47,9 @@ const OldCv = ({
   currentUser,
   match,
   Get_oldCv,
-  OldCvForUsers = [],
+  OldCvForUsers,
   Delete_Single_CV,
 }) => {
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    Get_oldCv(currentUser);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    return () => {
-      setLoading(true);
-    };
-  }, [Get_oldCv, currentUser]);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = useRef();
@@ -90,6 +76,7 @@ const OldCv = ({
     setLastModified(new Date().toString());
   };
   let { id } = match.params;
+
   let btnRef = useRef();
 
   const createAnewCv = async () => {
@@ -238,6 +225,14 @@ const OldCv = ({
       );
     });
   };
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Get_oldCv(currentUser);
+
+    setLoading(false);
+  }, [Get_oldCv, currentUser, OldCvForUsers]);
   return (
     <Fragment>
       <NavGuest />

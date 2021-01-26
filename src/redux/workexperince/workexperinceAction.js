@@ -31,6 +31,7 @@ const Workexperince_Error = (errorMessage) => {
 
 export const Get_Workexperince = (currentUser, id) => {
   return (dispatch) => {
+    let hasError = false;
     dispatch(Workexperince_Start());
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
@@ -44,10 +45,13 @@ export const Get_Workexperince = (currentUser, id) => {
           querySnapshot.error &&
           errorMessage
         ) {
+          hasError = true;
           dispatch(Workexperince_Error(errorMessage));
           console.log(errorMessage, `error from workexperinceAction.JS`);
         } else {
-          dispatch(Workexperince_Success(newData));
+          if (!hasError) {
+            dispatch(Workexperince_Success(newData));
+          }
         }
       })
       .catch((errorMessage, newData) => {

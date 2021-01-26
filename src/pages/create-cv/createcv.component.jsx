@@ -217,7 +217,7 @@ const CreateCv = (props) => {
         setLoading(false);
       }, 100);
     }
-  }, [GetNameOfCv, currentUser, id, CvLabel]);
+  }, [GetNameOfCv, currentUser, id]);
 
   const [array, setArray] = useState([]);
 

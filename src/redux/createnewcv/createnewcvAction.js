@@ -31,6 +31,7 @@ export const GetNameOfCv = (currentUser, id) => {
           !newData
         ) {
           dispatch(GetNameOfCv_Error(errorMessage));
+          console.log(errorMessage, `errorMessage`);
         } else {
           dispatch(GetNameOfCv_Success(newData));
         }

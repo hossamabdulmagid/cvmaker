@@ -39,7 +39,7 @@ import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { Spinner, useToast, Button, useDisclosure } from "@chakra-ui/core";
+import { Spinner, useToast, useDisclosure } from "@chakra-ui/core";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import { Get_oldCv, Delete_Single_CV } from "../../redux/oldcv/oldcvAction";
 import { Row } from "react-bootstrap";
@@ -47,7 +47,7 @@ const OldCv = ({
   currentUser,
   match,
   Get_oldCv,
-  OldCvForUsers,
+  OldCvForUsers = [],
   Delete_Single_CV,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,6 +61,8 @@ const OldCv = ({
   const handleClose = () => setShow(false);
 
   const toast = useToast();
+
+  const [loading, setLoading] = useState(false);
 
   const handleShow = () => setShow(true);
 
@@ -109,8 +111,15 @@ const OldCv = ({
       console.log(`SomeThing Worng here`);
     }
   };
-
-  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Get_oldCv(currentUser);
+    setTimeout(() => {
+      console.log(OldCvForUsers, `oldcv for users`);
+    }, 3000);
+  }, [Get_oldCv, currentUser]);
 
   /*const GetData = async () => {
     await firestore
@@ -225,14 +234,7 @@ const OldCv = ({
       );
     });
   };
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    Get_oldCv(currentUser);
 
-    setLoading(false);
-  }, [Get_oldCv, currentUser, OldCvForUsers]);
   return (
     <Fragment>
       <NavGuest />

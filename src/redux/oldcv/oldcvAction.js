@@ -62,11 +62,11 @@ export const Get_oldCv = (currentUser) => {
         }
       })
       .catch((errorMessage, newData) => {
-        {
-          errorMessage && !newData
-            ? dispatch(Oldcv_Error(errorMessage)) &&
-              console.log(errorMessage, `error from OldcvAction.JS`)
-            : dispatch(Oldcv_Success(array));
+        if (errorMessage && !newData) {
+          dispatch(Oldcv_Error(errorMessage));
+          console.log(errorMessage, `error from OldcvAction.JS`);
+        } else {
+          dispatch(Oldcv_Success(array));
         }
       });
   };

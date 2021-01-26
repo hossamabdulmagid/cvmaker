@@ -49,3 +49,53 @@ export const GetNameOfCv = (currentUser, id) => {
       });
   };
 };
+
+const ChangeName_Start = () => ({
+  type: createnewcvTypeAction.CHANGENAMECV_START,
+});
+
+const ChangeName_Success = (data) => ({
+  type: createnewcvTypeAction.CHANGENAMECV_SUCCESS,
+  payload: data,
+});
+
+const ChangeName_Error = (errorMessage) => ({
+  type: createnewcvTypeAction.CHANGENAMECV_ERROR,
+  payload: errorMessage,
+});
+
+export const DoChangeNameofCv = (currentUser, id, sawsaw, toast) => {
+  let hasError = false;
+  return (dispatch) => {
+    dispatch(ChangeName_Start());
+    db.collection(`users/${currentUser.id}/cvs`)
+      .doc(`${id}`)
+      .update("label", sawsaw)
+      .then((errorMessage) => {
+        if (errorMessage) {
+          hasError = true;
+          dispatch(ChangeName_Error(errorMessage));
+          console.log(errorMessage, `errorMessage`);
+        } else {
+          if (!hasError) {
+            dispatch(ChangeName_Success());
+            toast({
+              title: "cv name updated.",
+              description: `your cvname updated  to : ${sawsaw} `,
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+              position: "top-right",
+            });
+          }
+        }
+      })
+      .catch((errorMessage, newData) => {
+        if (hasError) {
+          dispatch(ChangeName_Error(errorMessage));
+        } else {
+          dispatch(ChangeName_Success());
+        }
+      });
+  };
+};

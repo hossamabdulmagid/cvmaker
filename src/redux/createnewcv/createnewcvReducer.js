@@ -35,6 +35,27 @@ const createnewcvReducer = (state = INITAIL_STATE, action) => {
         isFetching: false,
         errorMessage: action.payload.errorMessage,
       };
+
+    case createnewcvTypeAction.CHANGENAMECV_START:
+      return {
+        ...state,
+        isFetching: true,
+      };
+
+    case createnewcvTypeAction.CHANGENAMECV_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        data: {
+          label: action.payload,
+        },
+      };
+    case createnewcvTypeAction.CHANGENAMECV_ERROR:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload.errorMessage,
+      };
     default:
       return state;
   }

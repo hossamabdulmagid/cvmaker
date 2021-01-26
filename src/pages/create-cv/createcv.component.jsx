@@ -56,7 +56,10 @@ import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import InputCheckBox from "./checkbox";
 import { Get_allSection } from "../../redux/allsections/allsectionsAction";
-import { GetNameOfCv } from "../../redux/createnewcv/createnewcvAction";
+import {
+  GetNameOfCv,
+  DoChangeNameofCv,
+} from "../../redux/createnewcv/createnewcvAction";
 const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     {
@@ -94,7 +97,14 @@ const CreateCv = (props) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const { currentUser, details, Get_allSection, GetNameOfCv, CvLabel } = props;
+  const {
+    currentUser,
+    details,
+    Get_allSection,
+    GetNameOfCv,
+    CvLabel,
+    DoChangeNameofCv,
+  } = props;
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
@@ -184,24 +194,21 @@ const CreateCv = (props) => {
   };
 
   const [cvName, setCvName] = useState({
-    label: "your CvName",
+    label: "YOUR CV NAME",
   });
 
   const [loading, setLoading] = useState(true);
 
-  const onSubmitLabel = async (value) => {
-    await firestore
-      .collection(`users/${currentUser.id}/cvs`)
-      .doc(`${id}`)
-      .update("label", cvName.label);
-    toast({
-      title: "cv name updated.",
-      description: `your cvname updated  to : ${cvName.label} `,
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "top-right",
-    });
+  let sawsaw = cvName.label;
+  console.log(sawsaw, `sawsaw.sawsaw`);
+
+  const onSubmitLabel = async (data) => {
+    await DoChangeNameofCv(currentUser, id, sawsaw, toast);
+    /* await firestore
+     .collection(`users/${currentUser.id}/cvs`)
+     .doc(`${id}`)  
+     .update("label", cvName.label);
+     */
   };
 
   useEffect(() => {
@@ -209,15 +216,13 @@ const CreateCv = (props) => {
       return;
     }
     GetNameOfCv(currentUser, id);
-    if (CvLabel) {
+    setTimeout(() => {
       setCvName({
-        label: CvLabel,
+        label: CvLabel.data.label,
       });
-      setTimeout(() => {
-        setLoading(false);
-      }, 100);
-    }
-  }, [GetNameOfCv, currentUser, id]);
+      setLoading(false);
+    }, 1000);
+  }, [GetNameOfCv, currentUser, id, CvLabel.data.label]);
 
   const [array, setArray] = useState([]);
 
@@ -317,7 +322,7 @@ const CreateCv = (props) => {
         }
       }, 50);
     }
-  }, [sectionData]);
+  }, [sectionData, currentUser, array.length, id, toast, Get_allSection]);
   return (
     <Fragment>
       <NavGuest />
@@ -341,14 +346,13 @@ const CreateCv = (props) => {
               <div className="col" xs={10} s={12} md={12} lg={12}>
                 <RapperdForms>
                   <form onSubmit={handleSubmit(onSubmitLabel)}>
-                    <Editable defaultValue={cvName.labelName || ""}>
+                    <Editable defaultValue={""}>
                       <EditablePreview />
                       <EditableInput
                         width="110px"
-                        placeholder="cvName here"
                         type="text"
                         name="label"
-                        value={cvName.label}
+                        value={cvName.label || ""}
                         ref={register()}
                         onChange={handleChange}
                       />
@@ -799,11 +803,13 @@ const CreateCv = (props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   sectionData: state.data,
-  CvLabel: state.createnewcv.data.label,
+  CvLabel: state.createnewcv,
 });
 const mapDispatchToProps = (dispatch) => ({
   Get_allSection: (currentUser, id, toast) =>
     dispatch(Get_allSection(currentUser, id, toast)),
   GetNameOfCv: (currnetUser, id) => dispatch(GetNameOfCv(currnetUser, id)),
+  DoChangeNameofCv: (currentUser, id, sawsaw, toast) =>
+    dispatch(DoChangeNameofCv(currentUser, id, sawsaw, toast)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCv);

@@ -29,6 +29,7 @@ const EDUCATION_ERROR = (errorMessage) => {
 };
 
 export const GET_Education = (currentUser, id, toast) => {
+  let hasError = false;
   return (dispatch) => {
     dispatch(EDUCTION_START());
     db.doc(`users/${currentUser.id}`)
@@ -43,10 +44,13 @@ export const GET_Education = (currentUser, id, toast) => {
           querySnapshot.errors &&
           errorMessage
         ) {
+          hasError = true;
           dispatch(EDUCATION_ERROR(errorMessage));
           console.log(errorMessage, `error from educationAction.Js`);
         } else {
-          dispatch(EDUCATION_SUCCESS(newData));
+          if (!hasError) {
+            dispatch(EDUCATION_SUCCESS(newData));
+          }
         }
       })
       .catch((errorMessage, newData) => {

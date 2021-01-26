@@ -30,6 +30,7 @@ const SectionError = (errorMessage) => {
 };
 
 export const Get_allSection = (currentUser, id, toast) => {
+  let hasError = false;
   return (dispatch) => {
     dispatch(SectionStart());
     db.doc(`users/${currentUser.id}`)
@@ -46,10 +47,13 @@ export const Get_allSection = (currentUser, id, toast) => {
             querySnapshot.errors &&
             errorMessage
           ) {
+            hasError = true;
             dispatch(SectionError(errorMessage));
             console.log(errorMessage, `error from dataAction.JS`);
           } else {
-            dispatch(SectionSuccess(newData));
+            if (!hasError) {
+              dispatch(SectionSuccess(newData));
+            }
           }
         });
       })

@@ -30,6 +30,7 @@ const BasicInfoError = (errorMessage) => {
 };
 
 export const GetBasicInfo = (currentUser, id, toast) => {
+  let hasError = false;
   return (dispatch) => {
     dispatch(BasicInfoStart());
     db.doc(`users/${currentUser.id}`)
@@ -44,10 +45,13 @@ export const GetBasicInfo = (currentUser, id, toast) => {
           querySnapshot.errors &&
           errorMessage
         ) {
+          hasError = true;
           dispatch(BasicInfoError(errorMessage));
           console.log(errorMessage, `error from redux files basicinfo`);
         } else {
-          dispatch(BasicInfoSuccess(newData));
+          if (!hasError) {
+            dispatch(BasicInfoSuccess(newData));
+          }
         }
       })
       .catch((errorMessage, newData) => {

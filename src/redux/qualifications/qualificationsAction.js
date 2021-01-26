@@ -29,6 +29,8 @@ const Qualifications_Error = (errorMessage) => {
 };
 
 export const Get_Qualifications = (currentUser, id) => {
+  let hasError = false;
+
   return (dispatch) => {
     dispatch(Qualifications_Start());
     db.doc(`users/${currentUser.id}`)
@@ -43,10 +45,13 @@ export const Get_Qualifications = (currentUser, id) => {
           querySnapshot.error &&
           errorMessage
         ) {
+          hasError = true;
           dispatch(Qualifications_Error(errorMessage));
           console.log(errorMessage, `error from   qualifications.JS`);
         } else {
-          dispatch(Qualifications_Success(newData));
+          if (!hasError) {
+            dispatch(Qualifications_Success(newData));
+          }
         }
       })
       .catch((errorMessage, newData) => {

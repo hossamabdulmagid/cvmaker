@@ -30,6 +30,7 @@ const Referenes_Error = (errorMessage) => {
 
 export const Get_References = (currentUser, id) => {
   return (dispatch) => {
+    let hasError = false;
     dispatch(Referenes_Start());
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
@@ -43,10 +44,13 @@ export const Get_References = (currentUser, id) => {
           querySnapshot.error &&
           errorMessage
         ) {
+          hasError = true;
           dispatch(Referenes_Error(errorMessage));
           console.log(errorMessage, `error from referencesAction.JS`);
         } else {
-          dispatch(Referenes_Success(newData));
+          if (!hasError) {
+            dispatch(Referenes_Success(newData));
+          }
         }
       })
       .catch((errorMessage, newData) => {

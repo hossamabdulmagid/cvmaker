@@ -29,6 +29,7 @@ const Interest_Error = (errorMessage) => {
 };
 
 export const Get_Interest = (currentUser, id) => {
+  let hasError = false;
   return (dispatch) => {
     dispatch(Interest_Start());
     db.doc(`users/${currentUser.id}`)
@@ -43,11 +44,14 @@ export const Get_Interest = (currentUser, id) => {
           querySnapshot.errors &&
           errorMessage
         ) {
+          hasError = true;
           dispatch(Interest_Error(errorMessage));
           console.log(errorMessage, `error from   InterestsAction.JS`);
         } else {
-          dispatch(Interest_Success(newData));
-          //console.log(newData, ` data Coming from InterestsAction.JS`);
+          if (!hasError) {
+            dispatch(Interest_Success(newData));
+            //console.log(newData, ` data Coming from InterestsAction.JS`);
+          }
         }
       })
       .catch((errorMessage, newData) => {

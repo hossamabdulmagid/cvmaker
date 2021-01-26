@@ -18,6 +18,7 @@ const GetNameOfCv_Error = (errorMessage) => ({
 });
 
 export const GetNameOfCv = (currentUser, id) => {
+  let hasError = false;
   return (dispatch) => {
     dispatch(GetNameOfCv_Start());
     db.doc(`users/${currentUser.id}/cvs/${id}`)
@@ -30,10 +31,13 @@ export const GetNameOfCv = (currentUser, id) => {
           errorMessage &&
           !newData
         ) {
+          hasError = true;
           dispatch(GetNameOfCv_Error(errorMessage));
           console.log(errorMessage, `errorMessage`);
         } else {
-          dispatch(GetNameOfCv_Success(newData));
+          if (!hasError) {
+            dispatch(GetNameOfCv_Success(newData));
+          }
         }
       })
       .catch((errorMessage, newData) => {

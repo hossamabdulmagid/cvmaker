@@ -5,18 +5,51 @@ import { firestore } from "../../firebase/firebase.utils";
 const db = firestore;
 
 const GetNameOfCv_Start = () => ({
-  type: createnewcvTypeAction.CREATENEWCV_START,
+  type: createnewcvTypeAction.GETNAMEOFCV_START,
 });
 
 const GetNameOfCv_Success = (data) => ({
-  type: createnewcvTypeAction.CREATENEWCV_SUCCESS,
+  type: createnewcvTypeAction.GETNAMEOFCV_SUCCESS,
   payload: data,
 });
-const GetNameOfCv_Error = (errorMessage) => ({
-  type: createnewcvTypeAction.CREATENEWCV_ERROR,
-  payload: errorMessage,
+const GetNameOfCv_Error = (errorMessage) => {
+  if (errorMessage && typeof errorMessage === "object") {
+    for (let key in errorMessage) {
+      if (typeof errorMessage[key] === "object") {
+        if (errorMessage[key][0]) {
+          console.log(errorMessage, `error from createnewCvAction.Js`);
+        }
+      }
+    }
+  }
+  return {
+    type: createnewcvTypeAction.GETNAMEOFCV_ERROR,
+    payload: errorMessage,
+  };
+};
+const ChangeName_Start = () => ({
+  type: createnewcvTypeAction.CHANGENAMECV_START,
 });
 
+const ChangeName_Success = () => ({
+  type: createnewcvTypeAction.CHANGENAMECV_SUCCESS,
+});
+
+const ChangeName_Error = (errorMessage) => {
+  if (errorMessage && typeof errorMessage === "object") {
+    for (let key in errorMessage) {
+      if (typeof errorMessage[key] === "object") {
+        if (errorMessage[key][0]) {
+          console.log(errorMessage, `error from createnewCvAction.Js`);
+        }
+      }
+    }
+  }
+  return {
+    type: createnewcvTypeAction.CHANGENAMECV_ERROR,
+    payload: errorMessage,
+  };
+};
 export const GetNameOfCv = (currentUser, id) => {
   let hasError = false;
   return (dispatch) => {
@@ -50,20 +83,6 @@ export const GetNameOfCv = (currentUser, id) => {
   };
 };
 
-const ChangeName_Start = () => ({
-  type: createnewcvTypeAction.CHANGENAMECV_START,
-});
-
-const ChangeName_Success = (data) => ({
-  type: createnewcvTypeAction.CHANGENAMECV_SUCCESS,
-  payload: data,
-});
-
-const ChangeName_Error = (errorMessage) => ({
-  type: createnewcvTypeAction.CHANGENAMECV_ERROR,
-  payload: errorMessage,
-});
-
 export const DoChangeNameofCv = (currentUser, id, sawsaw, toast) => {
   let hasError = false;
   return (dispatch) => {
@@ -79,6 +98,7 @@ export const DoChangeNameofCv = (currentUser, id, sawsaw, toast) => {
         } else {
           if (!hasError) {
             dispatch(ChangeName_Success());
+            dispatch(GetNameOfCv(currentUser, id));
             toast({
               title: "cv name updated.",
               description: `your cvname updated  to : ${sawsaw} `,

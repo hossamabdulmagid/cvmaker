@@ -12,13 +12,13 @@ const INITAIL_STATE = {
 
 const createnewcvReducer = (state = INITAIL_STATE, action) => {
   switch (action.type) {
-    case createnewcvTypeAction.CREATENEWCV_START:
+    case createnewcvTypeAction.GETNAMEOFCV_START:
       return {
         ...state,
         isFetching: true,
       };
 
-    case createnewcvTypeAction.CREATENEWCV_SUCCESS:
+    case createnewcvTypeAction.GETNAMEOFCV_SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -29,7 +29,7 @@ const createnewcvReducer = (state = INITAIL_STATE, action) => {
         },
       };
 
-    case createnewcvTypeAction.CREATENEWCV_ERROR:
+    case createnewcvTypeAction.GETNAMEOFCV_ERROR:
       return {
         ...state,
         isFetching: false,
@@ -46,9 +46,6 @@ const createnewcvReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        data: {
-          label: action.payload,
-        },
       };
     case createnewcvTypeAction.CHANGENAMECV_ERROR:
       return {

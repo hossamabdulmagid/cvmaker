@@ -221,12 +221,28 @@ const CreateCv = (props) => {
         label: CvLabel.data.label,
       });
       setLoading(false);
-    }, 1000);
+    }, 100);
   }, [GetNameOfCv, currentUser, id, CvLabel.data.label]);
 
   const [array, setArray] = useState([]);
 
   const [lastModified, setLastModified] = useState(new Date());
+
+  const [flag, setFlag] = useState(true);
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    Get_allSection(currentUser, id, toast);
+    if (sectionData) {
+      setTimeout(() => {
+        if (array.length > 6) {
+          setFlag(false);
+        }
+      }, 50);
+    }
+  }, [sectionData, currentUser, array.length, id, toast, Get_allSection]);
   /*useEffect(() => {
     if (!currentUser) {
       return;
@@ -308,21 +324,6 @@ const CreateCv = (props) => {
 
    */
 
-  const [flag, setFlag] = useState(true);
-
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    Get_allSection(currentUser, id, toast);
-    if (sectionData) {
-      setTimeout(() => {
-        if (array.length > 6) {
-          setFlag(false);
-        }
-      }, 50);
-    }
-  }, [sectionData, currentUser, array.length, id, toast, Get_allSection]);
   return (
     <Fragment>
       <NavGuest />

@@ -104,7 +104,10 @@ const CreateCv = (props) => {
     GetNameOfCv,
     CvLabel,
     DoChangeNameofCv,
+    allNameOfSections = [],
+    tryflag,
   } = props;
+  console.log(allNameOfSections, `@@@@@>>>@@@>>>allNameOfSections`);
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
@@ -234,15 +237,33 @@ const CreateCv = (props) => {
     if (!currentUser) {
       return;
     }
+
+    console.log(array, `array@`);
+
+    console.log(allNameOfSections, `allNameOfSections.length @@>>>`);
+
     Get_allSection(currentUser, id, toast);
-    if (sectionData) {
+
+    if (allNameOfSections.length > 6) {
+      setFlag(false);
+
+      setArray(allNameOfSections);
+
       setTimeout(() => {
-        if (array.length > 6) {
-          setFlag(false);
-        }
-      }, 50);
+        console.log(array, `array after setting to allnameofsections`);
+
+        console.log(
+          allNameOfSections,
+          `allNameOfSections after setting to allnameofsections`
+        );
+
+        console.log(tryflag, `tryflag`);
+      }, 1000);
+    } else {
+      setFlag(true);
     }
-  }, [sectionData, currentUser, array.length, id, toast, Get_allSection]);
+  }, [toast, Get_allSection, currentUser, id, array]);
+
   /*useEffect(() => {
     if (!currentUser) {
       return;
@@ -271,7 +292,7 @@ const CreateCv = (props) => {
         console.log(error, `there is was an error`);
       });
   }, [currentUser, id]);
-*/
+  */
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   /* const FetchData = async (value) => {
@@ -316,12 +337,12 @@ const CreateCv = (props) => {
      if (!currentUser) {
        return;
      }
- 
+   
      return () => {
        
      };
    }, [array, currentUser]);
-
+  
    */
 
   return (
@@ -416,7 +437,7 @@ const CreateCv = (props) => {
             <Col lg={3} xl={3} md={3}>
               <Ul>
                 {!flag
-                  ? array.map((singleRouteforSidebar, x) => (
+                  ? allNameOfSections.map((singleRouteforSidebar, x) => (
                       <Li
                         key={x}
                         href="#"
@@ -805,6 +826,8 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   sectionData: state.data,
   CvLabel: state.createnewcv,
+  allNameOfSections: state.allSections.section,
+  tryflag: state.allSections.Flag,
 });
 const mapDispatchToProps = (dispatch) => ({
   Get_allSection: (currentUser, id, toast) =>

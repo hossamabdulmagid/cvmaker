@@ -2,8 +2,9 @@ import { dataActionType } from "./allsectionsType";
 
 const INITIAL_STATE = {
   isFetching: false,
-  data: {},
+  section: [],
   errorMessage: null,
+  Flag: true,
 };
 
 const allSectionReducer = (state = INITIAL_STATE, action) => {
@@ -12,26 +13,21 @@ const allSectionReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: true,
+        Flag: true,
       };
     case dataActionType.GET_SECTIONS_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        data: {
-          Basicinfo: { ...action.payload.Basicinfo },
-          Qualifications: { ...action.payload.Qualifications },
-          Interests: { ...action.payload.Interests },
-          References: { ...action.payload.References },
-          Education: { ...action.payload.Education },
-          workexperence: [action.payload.workexperence],
-          ...action.payload,
-        },
+        section: [...action.payload],
+        Flag: false,
       };
     case dataActionType.GET_SECTIONS_ERROR:
       return {
         ...state,
         isFetching: false,
         errorMessage: action.payload,
+        Flag: true,
       };
     default:
       return state;

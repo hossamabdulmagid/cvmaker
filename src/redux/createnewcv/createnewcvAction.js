@@ -115,6 +115,7 @@ export const DoChangeNameofCv = (currentUser, id, sawsaw, toast) => {
           dispatch(ChangeName_Error(errorMessage));
         } else {
           dispatch(ChangeName_Success());
+          dispatch(GetNameOfCv(currentUser, id));
         }
       });
   };

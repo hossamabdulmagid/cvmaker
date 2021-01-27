@@ -8,9 +8,9 @@ const SectionStart = () => ({
   type: dataActionType.GET_SECTIONS_START,
 });
 
-const SectionSuccess = (collections) => ({
+const SectionSuccess = (section) => ({
   type: dataActionType.GET_SECTIONS_SUCCESS,
-  payload: collections,
+  payload: section,
 });
 
 const SectionError = (errorMessage) => {
@@ -30,6 +30,7 @@ const SectionError = (errorMessage) => {
 };
 
 export const Get_allSection = (currentUser, id, toast) => {
+  let array = [];
   let hasError = false;
   return (dispatch) => {
     dispatch(SectionStart());
@@ -38,11 +39,17 @@ export const Get_allSection = (currentUser, id, toast) => {
       .get()
       .then((querySnapshot, errorMessage) => {
         querySnapshot.forEach(function (doc) {
-          const data = doc.data();
-          const newData = doc.id;
+          let data = doc.data();
+          let sectionName = doc.id;
+          if (data) {
+            array.push({
+              section: sectionName.toString(),
+              type: data.type,
+            });
+          }
           if (
             !data &&
-            !newData &&
+            !sectionName &&
             querySnapshot.error &&
             querySnapshot.errors &&
             errorMessage
@@ -52,17 +59,18 @@ export const Get_allSection = (currentUser, id, toast) => {
             console.log(errorMessage, `error from dataAction.JS`);
           } else {
             if (!hasError) {
-              dispatch(SectionSuccess(newData));
+              dispatch(SectionSuccess(array));
             }
           }
         });
       })
-      .catch((errorMessage, data, newData) => {
-        if (errorMessage && !data && !newData) {
+      .catch((errorMessage, data, sectionName) => {
+        if (errorMessage && !data && !sectionName) {
           dispatch(SectionError(errorMessage));
           console.log(errorMessage, `error from dataAction.JS`);
         } else {
-          dispatch(SectionSuccess(newData));
+          dispatch(SectionSuccess(array));
+          console.log(array, `@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
         }
       });
   };

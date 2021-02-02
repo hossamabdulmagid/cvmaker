@@ -204,6 +204,8 @@ const CreateCv = (props) => {
   const [loading, setLoading] = useState(true);
 
   let sawsaw = cvName.label;
+
+  const isCurrent = useRef(true);
   console.log(sawsaw, `sawsaw.sawsaw`);
 
   const onSubmitLabel = async (data) => {
@@ -215,6 +217,12 @@ const CreateCv = (props) => {
      DoRefreshLastModified = (currentUser, id, timenow, toast)
      */
   };
+  useEffect(() => {
+    return () => {
+      //cleaning
+      isCurrent.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!currentUser) {
@@ -222,10 +230,12 @@ const CreateCv = (props) => {
     }
     GetNameOfCv(currentUser, id);
     setTimeout(() => {
-      setCvName({
-        label: CvLabel.data.label,
-      });
-      setLoading(false);
+      if (isCurrent.current) {
+        setCvName({
+          label: CvLabel.data.label,
+        });
+        setLoading(false);
+      }
     }, 100);
   }, [GetNameOfCv, currentUser, id, CvLabel.data.label]);
 
@@ -240,26 +250,13 @@ const CreateCv = (props) => {
       return;
     }
 
-    console.log(array, `array@`);
-
-    console.log(allNameOfSections, `allNameOfSections.length @@>>>`);
-
     Get_allSection(currentUser, id, toast);
 
     if (Array.isArray(allNameOfSections) && allNameOfSections.length > 7) {
       setArray(allNameOfSections);
 
-      console.log(`iam array.isArray true`);
       setTimeout(() => {
-        console.log(array, `array after setting to allnameofsections`);
         setFlag(false);
-
-        console.log(
-          allNameOfSections,
-          `allNameOfSections after setting to allnameofsections`
-        );
-
-        console.log(tryflag, `tryflag`);
       }, 1000);
     } else {
       setFlag(true);
@@ -393,7 +390,7 @@ const CreateCv = (props) => {
                         type="text"
                         name="label"
                         value={cvName.label || ""}
-                        ref={register()}
+                        refVal={register()}
                         onChange={handleChange}
                       />
                       <Button

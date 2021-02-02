@@ -133,7 +133,8 @@ const Refresh_Error = (errorlastModified) => ({
   payload: errorlastModified,
 });
 
-export const DoRefreshLastModified = (currentUser, id, timenow, toast) => {
+export const DoRefreshLastModified = (currentUser, id) => {
+  const timenow = new Date().toString();
   let hasError = false;
   return (dispatch) => {
     dispatch(Refresh_Start());
@@ -148,15 +149,7 @@ export const DoRefreshLastModified = (currentUser, id, timenow, toast) => {
         } else {
           if (!hasError) {
             dispatch(Refresh_Success());
-            console.log(timenow, `timenow`);
-            toast({
-              title: "cv name updated.",
-              description: `your cvname updated  to : ${timenow} `,
-              status: "success",
-              duration: 5000,
-              isClosable: true,
-              position: "top-right",
-            });
+            dispatch(Get_oldCv(currentUser));
           }
         }
       })

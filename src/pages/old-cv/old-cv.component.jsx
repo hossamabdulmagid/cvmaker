@@ -80,11 +80,6 @@ const OldCv = ({
 
   const [lastModified, setLastModified] = useState(new Date().toString());
 
-  const refreshlastModified = useCallback(() => {
-    console.log(`lastmodified got called with ${lastModified}`);
-    setLastModified(new Date().toString());
-  }, [lastModified]);
-
   let { id } = match.params;
 
   let btnRef = useRef();
@@ -131,10 +126,8 @@ const OldCv = ({
     Get_oldCv(currentUser);
   }, [Get_oldCv, currentUser]);
 
-  const timenow = new Date().toString();
-
-  const Refresh = (data) => {
-    DoRefreshLastModified(currentUser, id, timenow, toast);
+  const Refresh = (currentUser, id) => {
+    DoRefreshLastModified(currentUser, id);
     /* await firestore
      .collection(`users/${currentUser.id}/cvs`)
      .doc(`${id}`)  
@@ -143,7 +136,19 @@ const OldCv = ({
      */
   };
 
-  /*const GetData = async () => {
+  /*
+   const refreshlastModified = useCallback(() => {
+    console.log(`lastmodified got called with ${lastModified}`);
+    setLastModified(new Date().toString());
+  }, [lastModified]);
+
+  
+  
+    useEffect(() => {
+    DoRefreshLastModified(currentUser, id, toast)
+  })
+
+  const GetData = async () => {
     await firestore
       .doc(`users/${currentUser.id}`)
       .collection(`cvs`)
@@ -246,7 +251,10 @@ const OldCv = ({
           </td>
 
           <td>
-            <Linkcv to={"create-cv/" + `${id}`} onClick={() => Refresh()}>
+            <Linkcv
+              to={"create-cv/" + `${id}`}
+              onClick={() => Refresh(currentUser, id)}
+            >
               Edit now
               <Iconedit />
             </Linkcv>
@@ -429,8 +437,8 @@ const mapDispatchToProps = (dispatch) => ({
   Get_oldCv: (currentUser) => dispatch(Get_oldCv(currentUser)),
   Delete_Single_CV: (id, currentUser, toast) =>
     dispatch(Delete_Single_CV(id, currentUser, toast)),
-  DoRefreshLastModified: (currentUser, id, timenow, toast) =>
-    dispatch(DoRefreshLastModified(currentUser, id, timenow, toast)),
+  DoRefreshLastModified: (currentUser, id) =>
+    dispatch(DoRefreshLastModified(currentUser, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OldCv);

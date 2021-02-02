@@ -4,7 +4,6 @@ const INITAIL_STATE = {
   isFetching: false,
   oldCv: [],
   errorMessage: null,
-  lastmodified: null,
   errorlastModified: null,
 };
 

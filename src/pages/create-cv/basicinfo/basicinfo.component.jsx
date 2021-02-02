@@ -71,6 +71,7 @@ const BasicInfo = (props) => {
     setDataform({ ...dataform, [name]: value });
   };
   const [FlagButton, setFlagButton] = useState(true);
+
   const onSubmit = async (value, data) => {
     const cvRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/Basicinfo`
@@ -111,6 +112,13 @@ const BasicInfo = (props) => {
     }
     GetBasicInfo(currentUser, id, toast);
   });
+  const isCurrent = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isCurrent.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!currentUser) {
@@ -124,17 +132,19 @@ const BasicInfo = (props) => {
       .then(function (querySnapshot) {
         const newData = querySnapshot.data();
         if (newData) {
-          setDataform({
-            title: newData.basicinfo.title,
-            fullname: newData.basicinfo.fullname,
-            phone: newData.basicinfo.phone,
-            address1: newData.basicinfo.address1,
-            address2: newData.basicinfo.address2,
-            address3: newData.basicinfo.address3,
-            webSites: newData.basicinfo.webSites,
-            email: newData.basicinfo.email,
-            lastModified: newData.basicinfo.lastModified,
-          });
+          if (isCurrent.current) {
+            setDataform({
+              title: newData.basicinfo.title,
+              fullname: newData.basicinfo.fullname,
+              phone: newData.basicinfo.phone,
+              address1: newData.basicinfo.address1,
+              address2: newData.basicinfo.address2,
+              address3: newData.basicinfo.address3,
+              webSites: newData.basicinfo.webSites,
+              email: newData.basicinfo.email,
+              lastModified: newData.basicinfo.lastModified,
+            });
+          }
         }
         setLoading(false);
         //        setFlagButton(false)
@@ -264,6 +274,11 @@ const BasicInfo = (props) => {
                       ref={register({ required: "*input is required" })}
                       placeholder="Full Name"
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="1"
                     />
                     <small className="errorSectionName">
                       {errors.fullname && errors.fullname.message}
@@ -276,6 +291,11 @@ const BasicInfo = (props) => {
                       onChange={handleChange}
                       ref={register({ required: "*input is required" })}
                       required
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="2"
                     />
                     <small className="errorSectionName">
                       {errors.phone && errors.phone.message}
@@ -290,6 +310,11 @@ const BasicInfo = (props) => {
                       placeholder="Country"
                       value={dataform.address1}
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="3"
                     />
 
                     <small className="errorSectionName">
@@ -302,6 +327,11 @@ const BasicInfo = (props) => {
                       ref={register()}
                       value={dataform.address3}
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="4"
                     />
 
                     <small className="errorSectionName">
@@ -318,6 +348,11 @@ const BasicInfo = (props) => {
                       placeholder="Email"
                       ref={register({ required: "*input is required" })}
                       required
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="5"
                     />
                     <small className="errorSectionName">
                       {errors.email && errors.email.message}
@@ -329,6 +364,11 @@ const BasicInfo = (props) => {
                       ref={register()}
                       value={dataform.webSites}
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="6"
                     />
                     <small className="errorSectionName">
                       {errors.websites && errors.websites.message}
@@ -341,6 +381,11 @@ const BasicInfo = (props) => {
                       placeholder="City"
                       value={dataform.address2}
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="7"
                     />
                     <small className="errorSectionName">
                       {errors.address2 && errors.address2.message}
@@ -375,6 +420,11 @@ const BasicInfo = (props) => {
                       ref={register({ required: "*input is required" })}
                       placeholder="Full Name"
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="1"
                     />
                     <small className="errorSectionName">
                       {errors.fullname && errors.fullname.message}
@@ -387,6 +437,11 @@ const BasicInfo = (props) => {
                       onChange={handleChange}
                       ref={register({ required: "*input is required" })}
                       required
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="2"
                     />
                     <small className="errorSectionName">
                       {errors.phone && errors.phone.message}
@@ -400,6 +455,11 @@ const BasicInfo = (props) => {
                       placeholder="Country"
                       value={dataform.address1}
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="3"
                     />
 
                     <small className="errorSectionName">
@@ -412,6 +472,11 @@ const BasicInfo = (props) => {
                       ref={register()}
                       value={dataform.address3}
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="4"
                     />
 
                     <small className="errorSectionName">
@@ -426,6 +491,11 @@ const BasicInfo = (props) => {
                       placeholder="Email"
                       ref={register({ required: "*input is required" })}
                       required
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="5"
                     />
                     <small className="errorSectionName">
                       {errors.email && errors.email.message}
@@ -437,6 +507,11 @@ const BasicInfo = (props) => {
                       ref={register()}
                       value={dataform.webSites}
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="6"
                     />
                     <small className="errorSectionName">
                       {errors.websites && errors.websites.message}
@@ -448,6 +523,11 @@ const BasicInfo = (props) => {
                       placeholder="City"
                       value={dataform.address2}
                       onChange={handleChange}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      tabIndex="7"
                     />
                     <small className="errorSectionName">
                       {errors.address2 && errors.address2.message}

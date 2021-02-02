@@ -41,14 +41,20 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import { Spinner, useToast, useDisclosure } from "@chakra-ui/core";
 import NavGuest from "../../components/nav-guest/navGuest.component";
-import { Get_oldCv, Delete_Single_CV } from "../../redux/oldcv/oldcvAction";
+import {
+  Get_oldCv,
+  Delete_Single_CV,
+  DoRefreshLastModified,
+} from "../../redux/oldcv/oldcvAction";
 import { Row } from "react-bootstrap";
+
 const OldCv = ({
   currentUser,
   match,
   Get_oldCv,
   OldCvForUsers = [],
   Delete_Single_CV,
+  DoRefreshLastModified,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -74,15 +80,18 @@ const OldCv = ({
 
   const [lastModified, setLastModified] = useState(new Date().toString());
 
-  const refreshlastModified = () => {
+  const refreshlastModified = useCallback(() => {
+    console.log(`lastmodified got called with ${lastModified}`);
     setLastModified(new Date().toString());
-  };
+  }, [lastModified]);
+
   let { id } = match.params;
 
   let btnRef = useRef();
 
   const createAnewCv = async () => {
     const label = "Simple Cv";
+
     if (btnRef.current) {
       btnRef.current.setAttribute("disabled", "disabled");
     }
@@ -105,21 +114,34 @@ const OldCv = ({
       });
 
       const newCvPath = `create-cv/${docRef.id}`;
+
       history.push(newCvPath);
+
       return;
     } else {
       console.log(`SomeThing Worng here`);
     }
   };
+
   useEffect(() => {
     if (!currentUser) {
       return;
     }
+
     Get_oldCv(currentUser);
-    setTimeout(() => {
-      console.log(OldCvForUsers, `oldcv for users`);
-    }, 3000);
   }, [Get_oldCv, currentUser]);
+
+  const timenow = new Date().toString();
+
+  const Refresh = (data) => {
+    DoRefreshLastModified(currentUser, id, timenow, toast);
+    /* await firestore
+     .collection(`users/${currentUser.id}/cvs`)
+     .doc(`${id}`)  
+     .update("label", cvName.label);
+     DoRefreshLastModified = (currentUser, id, timenow, toast)
+     */
+  };
 
   /*const GetData = async () => {
     await firestore
@@ -132,7 +154,6 @@ const OldCv = ({
           obj.id = doc.id;
           obj.lastModified = new Date().toString();
           allcv.push(obj);
-
           setLoading(false);
         });
       });
@@ -146,10 +167,13 @@ const OldCv = ({
   };
 
   useEffect(() => {
+    
     if (!currentUser) {
       return;
     }
+
     GetData();
+
   }, [data, currentUser, id, allcv]);
 
   const deleteCv = async (id) => {
@@ -222,10 +246,7 @@ const OldCv = ({
           </td>
 
           <td>
-            <Linkcv
-              to={"create-cv/" + `${id}`}
-              onClick={() => refreshlastModified()}
-            >
+            <Linkcv to={"create-cv/" + `${id}`} onClick={() => Refresh()}>
               Edit now
               <Iconedit />
             </Linkcv>
@@ -408,6 +429,8 @@ const mapDispatchToProps = (dispatch) => ({
   Get_oldCv: (currentUser) => dispatch(Get_oldCv(currentUser)),
   Delete_Single_CV: (id, currentUser, toast) =>
     dispatch(Delete_Single_CV(id, currentUser, toast)),
+  DoRefreshLastModified: (currentUser, id, timenow, toast) =>
+    dispatch(DoRefreshLastModified(currentUser, id, timenow, toast)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OldCv);

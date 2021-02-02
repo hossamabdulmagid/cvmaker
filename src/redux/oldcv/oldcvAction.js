@@ -120,3 +120,52 @@ export const Delete_Single_CV = (id, currentUser, toast) => {
       });
   };
 };
+
+const Refresh_Start = () => ({
+  type: oldcvActionType.REFRESH_LASTMODIFIED_START,
+});
+const Refresh_Success = () => ({
+  type: oldcvActionType.REFRESH_LASTMODIFIED_SUCCESS,
+});
+
+const Refresh_Error = (errorlastModified) => ({
+  type: oldcvActionType.REFRESH_LASTMODIFIED_ERROR,
+  payload: errorlastModified,
+});
+
+export const DoRefreshLastModified = (currentUser, id, timenow, toast) => {
+  let hasError = false;
+  return (dispatch) => {
+    dispatch(Refresh_Start());
+    db.collection(`users/${currentUser.id}/cvs`)
+      .doc(`${id}`)
+      .update("lastModified", timenow)
+      .then((errorlastModified) => {
+        if (errorlastModified) {
+          hasError = true;
+          dispatch(Refresh_Error(errorlastModified));
+          console.log(errorlastModified, `errorMessage`);
+        } else {
+          if (!hasError) {
+            dispatch(Refresh_Success());
+            console.log(timenow, `timenow`);
+            toast({
+              title: "cv name updated.",
+              description: `your cvname updated  to : ${timenow} `,
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+              position: "top-right",
+            });
+          }
+        }
+      })
+      .catch((errorlastModified) => {
+        if (hasError) {
+          dispatch(Refresh_Error(errorlastModified));
+        } else {
+          dispatch(Refresh_Success());
+        }
+      });
+  };
+};

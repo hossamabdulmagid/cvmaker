@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, useRef } from "react";
+import { useState, useEffect, Fragment, useRef, useLayoutEffect } from "react";
 import {
   RapperColor,
   Containers,
@@ -49,8 +49,9 @@ import {
   Input,
   useToast,
   Spinner,
+  Button,
 } from "@chakra-ui/core";
-import { Button, Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { Editable, EditableInput, EditablePreview } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
@@ -104,7 +105,7 @@ const CreateCv = (props) => {
     GetNameOfCv,
     CvLabel,
     DoChangeNameofCv,
-    allNameOfSections = [],
+    allNameOfSections,
     tryflag,
   } = props;
   console.log(allNameOfSections, `@@@@@>>>@@@>>>allNameOfSections`);
@@ -211,6 +212,7 @@ const CreateCv = (props) => {
      .collection(`users/${currentUser.id}/cvs`)
      .doc(`${id}`)  
      .update("label", cvName.label);
+     DoRefreshLastModified = (currentUser, id, timenow, toast)
      */
   };
 
@@ -244,13 +246,13 @@ const CreateCv = (props) => {
 
     Get_allSection(currentUser, id, toast);
 
-    if (allNameOfSections.length > 6) {
-      setFlag(false);
-
+    if (Array.isArray(allNameOfSections) && allNameOfSections.length > 7) {
       setArray(allNameOfSections);
 
+      console.log(`iam array.isArray true`);
       setTimeout(() => {
         console.log(array, `array after setting to allnameofsections`);
+        setFlag(false);
 
         console.log(
           allNameOfSections,
@@ -335,16 +337,32 @@ const CreateCv = (props) => {
 
   /* useEffect(() => {
      if (!currentUser) {
+      
        return;
-     }
+     
+      }
    
      return () => {
-       
+
+
      };
    }, [array, currentUser]);
   
-   */
+   
+    const [valuez, setValuez] = useState(0);
 
+    useLayoutEffect(() => {
+      if (valuez === 0) {
+        setValuez(10 + Math.random() * 200);
+      }
+    }, [valuez]);
+
+    console.log('render', valuez);
+    <div onClick={() => setValuez(0)}>
+        value: {valuez}
+      </div>
+
+    */
   return (
     <Fragment>
       <NavGuest />
@@ -379,8 +397,8 @@ const CreateCv = (props) => {
                         onChange={handleChange}
                       />
                       <Button
-                        variant="outline-info"
-                        size="sm"
+                        variantColor="blue"
+                        size="xs"
                         className="buttonforlabelcv"
                         type="submit"
                       >
@@ -437,7 +455,7 @@ const CreateCv = (props) => {
             <Col lg={3} xl={3} md={3}>
               <Ul>
                 {!flag
-                  ? allNameOfSections.map((singleRouteforSidebar, x) => (
+                  ? array.map((singleRouteforSidebar, x) => (
                       <Li
                         key={x}
                         href="#"
@@ -750,17 +768,17 @@ const CreateCv = (props) => {
                             </ModalBody>
                             <ModalFooter>
                               <Button
-                                variantcolor="blue"
+                                variantColor="blue"
                                 mr={3}
                                 type="submit"
-                                className="buttonForSaveNewSection"
+                                className="buttonForSaveNewSection Deal"
                                 onOpen
                               >
                                 {!flagButton ? <Spinner /> : "Save"}
                               </Button>
                               <Button
                                 onClick={onClose}
-                                className="buttonForCancleNewSection"
+                                className="buttonForCancleNewSection Deal"
                               >
                                 Cancel
                               </Button>
@@ -822,6 +840,7 @@ const CreateCv = (props) => {
     </Fragment>
   );
 };
+
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   sectionData: state.data,
@@ -829,6 +848,7 @@ const mapStateToProps = (state) => ({
   allNameOfSections: state.allSections.section,
   tryflag: state.allSections.Flag,
 });
+
 const mapDispatchToProps = (dispatch) => ({
   Get_allSection: (currentUser, id, toast) =>
     dispatch(Get_allSection(currentUser, id, toast)),
@@ -836,4 +856,5 @@ const mapDispatchToProps = (dispatch) => ({
   DoChangeNameofCv: (currentUser, id, sawsaw, toast) =>
     dispatch(DoChangeNameofCv(currentUser, id, sawsaw, toast)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCv);

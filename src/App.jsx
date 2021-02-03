@@ -22,6 +22,7 @@ import { selectCurrentUser } from "./redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
 import ForgetPassword from "./components/forget-password/forget-password.component";
 import { Spinner } from "@chakra-ui/core";
+import NotFound from "./pages/notfound/notfound.component";
 
 class App extends Component {
   unsubscribeFormAuth = null;
@@ -63,7 +64,8 @@ class App extends Component {
                   render={() =>
                     currentUser ? <Redirect to="/cv" /> : <SigninSignup />
                   }
-                />
+                />{" "}
+                {/**/}
                 <PrivateRoute exact path="/login" component={SigninSignup} />
                 <Route path="/policy" component={Privacy} />
                 <Route path="/contact" component={Contact} />
@@ -78,7 +80,12 @@ class App extends Component {
                   }
                   component={CreateCv}
                 />
-                {/*<PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} />*/}
+                {/* 
+                <Route path='*' component={NotFound} />
+
+                <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} />
+                
+                */}
                 <PrivateRoute
                   exact
                   path="/cv"
@@ -97,6 +104,7 @@ class App extends Component {
     );
   }
 }
+
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
@@ -104,4 +112,5 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);

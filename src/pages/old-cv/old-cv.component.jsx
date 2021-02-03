@@ -47,7 +47,7 @@ import {
   DoRefreshLastModified,
 } from "../../redux/oldcv/oldcvAction";
 import { Row } from "react-bootstrap";
-
+import { CreateNewCv } from "../../redux/createnewcv/createnewcvAction";
 const OldCv = ({
   currentUser,
   match,
@@ -55,6 +55,7 @@ const OldCv = ({
   OldCvForUsers = [],
   Delete_Single_CV,
   DoRefreshLastModified,
+  CreateNewCv,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -68,7 +69,7 @@ const OldCv = ({
 
   const toast = useToast();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleShow = () => setShow(true);
 
@@ -85,11 +86,13 @@ const OldCv = ({
   let btnRef = useRef();
 
   const createAnewCv = async () => {
-    const label = "Simple Cv";
+    await CreateNewCv(currentUser, history, toast);
 
     if (btnRef.current) {
       btnRef.current.setAttribute("disabled", "disabled");
     }
+    /*
+    //const label = "Simple Cv";
     const docRef = await firestore
       .doc(`users/${currentUser.id}`)
       .collection("cvs")
@@ -98,7 +101,6 @@ const OldCv = ({
         label,
         lastModified,
       });
-    if (docRef.id) {
       toast({
         title: `Successfuly created new cv `,
         description: `Your cv name is : ${label}`,
@@ -107,15 +109,15 @@ const OldCv = ({
         position: "top",
         isClosable: true,
       });
+      if (docRef.id) {
 
       const newCvPath = `create-cv/${docRef.id}`;
 
       history.push(newCvPath);
 
       return;
-    } else {
-      console.log(`SomeThing Worng here`);
     }
+*/
   };
 
   useEffect(() => {
@@ -124,6 +126,12 @@ const OldCv = ({
     }
 
     Get_oldCv(currentUser);
+
+    setTimeout(() => {
+      if (OldCvForUsers && Array.isArray(OldCvForUsers)) {
+        setLoading(false);
+      }
+    }, 250);
   }, [Get_oldCv, currentUser]);
 
   const Refresh = (currentUser, id) => {
@@ -439,6 +447,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(Delete_Single_CV(id, currentUser, toast)),
   DoRefreshLastModified: (currentUser, id) =>
     dispatch(DoRefreshLastModified(currentUser, id)),
+  CreateNewCv: (currentUser, history, toast) =>
+    dispatch(CreateNewCv(currentUser, history, toast)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OldCv);

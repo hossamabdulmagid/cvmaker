@@ -12,6 +12,24 @@ const INITAIL_STATE = {
 
 const createnewcvReducer = (state = INITAIL_STATE, action) => {
   switch (action.type) {
+    case createnewcvTypeAction.CREATENEWCV_START:
+      return {
+        ...state,
+        isFetching: true,
+      };
+
+    case createnewcvTypeAction.CREATENEWCV_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case createnewcvTypeAction.CREATENEWCV_ERROR:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload.errorMessage,
+      };
+
     case createnewcvTypeAction.GETNAMEOFCV_START:
       return {
         ...state,

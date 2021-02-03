@@ -108,7 +108,6 @@ const CreateCv = (props) => {
     allNameOfSections,
     tryflag,
   } = props;
-  console.log(allNameOfSections, `@@@@@>>>@@@>>>allNameOfSections`);
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
@@ -210,12 +209,6 @@ const CreateCv = (props) => {
 
   const onSubmitLabel = async (data) => {
     await DoChangeNameofCv(currentUser, id, sawsaw, toast);
-    /* await firestore
-     .collection(`users/${currentUser.id}/cvs`)
-     .doc(`${id}`)  
-     .update("label", cvName.label);
-     DoRefreshLastModified = (currentUser, id, timenow, toast)
-     */
   };
   useEffect(() => {
     return () => {
@@ -263,6 +256,12 @@ const CreateCv = (props) => {
     }
   }, [toast, Get_allSection, currentUser, id, array]);
 
+  /* await firestore
+      .collection(`users/${currentUser.id}/cvs`)
+      .doc(`${id}`)  
+      .update("label", cvName.label);
+      DoRefreshLastModified = (currentUser, id, timenow, toast)
+      */
   /*useEffect(() => {
     if (!currentUser) {
       return;

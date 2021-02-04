@@ -107,6 +107,7 @@ const CreateCv = (props) => {
     DoChangeNameofCv,
     allNameOfSections,
     tryflag,
+    OldCvForUsers,
   } = props;
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
@@ -223,6 +224,7 @@ const CreateCv = (props) => {
       return;
     }
     GetNameOfCv(currentUser, id);
+
     setTimeout(() => {
       if (isCurrent.current) {
         setCvName({
@@ -249,9 +251,11 @@ const CreateCv = (props) => {
   }, [Get_allSection, currentUser, id]);
 
   useEffect(() => {
-    console.log(`iam Runniing second Re Render`);
+    //console.log(OldCvForUsers, `OldCvForUsers`)
+    //console.log(allNameOfSections, `allNameOfSections`)
 
     if (allNameOfSections.length > 5) {
+      // console.log(`${currentUser.id}/cvs/${id}`, `checkthe Route Of Cv`)
       setFlag(false);
     } else {
       setFlag(true);
@@ -263,7 +267,7 @@ const CreateCv = (props) => {
       .doc(`${id}`)  
       .update("label", cvName.label);
       DoRefreshLastModified = (currentUser, id, timenow, toast)
- 
+   
       useEffect(() => {
      if (!currentUser) {
       return;
@@ -341,25 +345,25 @@ const CreateCv = (props) => {
       }
    
      return () => {
-
-
+   
+   
      };
    }, [array, currentUser]);
-  
+   
    
     const [valuez, setValuez] = useState(0);
-
+   
     useLayoutEffect(() => {
       if (valuez === 0) {
         setValuez(10 + Math.random() * 200);
       }
     }, [valuez]);
-
+   
     console.log('render', valuez);
     <div onClick={() => setValuez(0)}>
         value: {valuez}
       </div>
-
+   
     */
   return (
     <Fragment>
@@ -422,12 +426,14 @@ const CreateCv = (props) => {
 
           <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
             <Col xs={0} md={0} lg={4} />
+
             <Col xs={6} md={5} lg={4}>
               <AllCvLinks to="/cv">
                 Show All Cv
                 <Aroow />
               </AllCvLinks>
             </Col>
+
             <Col xs={6} md={7} lg={4}>
               <Buttons size="xs" variant="success">
                 <AiOutlineExclamation />
@@ -438,10 +444,12 @@ const CreateCv = (props) => {
                 <AiTwotoneFileExcel />
                 Quick preview
               </Buttons>
+
               <Buttons size="xs" variant="success">
                 <AiTwotonePlaySquare />
                 Save
               </Buttons>
+
               <Buttons size="xs" variant="success">
                 <AiTwotoneFolderOpen />
                 Download
@@ -506,6 +514,7 @@ const CreateCv = (props) => {
                             required: true,
                           })}
                         />
+
                         <div className="col-12">
                           {errors && errors.section && (
                             <label className="error">
@@ -513,6 +522,7 @@ const CreateCv = (props) => {
                             </label>
                           )}
                         </div>
+
                         {errors.section && errors.section.message}
                         <InputCheckBox
                           refVal={register({ required: true })}
@@ -590,7 +600,6 @@ const CreateCv = (props) => {
                   * Click and drag section names in the above list to reorder
                   sections in your CV.
                 </small>
-
                 <small>
                   * If you leave the fields in a section empty, the section will
                   not appear in your CV.
@@ -844,6 +853,7 @@ const mapStateToProps = (state) => ({
   CvLabel: state.createnewcv,
   allNameOfSections: state.allSections.section,
   tryflag: state.allSections.Flag,
+  OldCvForUsers: state.allOldCv.oldCv,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -41,10 +41,12 @@ export const Get_allSection = (currentUser, id, toast) => {
         querySnapshot.forEach(function (doc) {
           let data = doc.data();
           let sectionName = doc.id;
+          let _ID = `${id}`;
           if (data) {
             array.push({
               section: sectionName.toString(),
               type: data.type,
+              _ID,
             });
           }
           if (

@@ -22,7 +22,7 @@ import { selectCurrentUser } from "./redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
 import ForgetPassword from "./components/forget-password/forget-password.component";
 import { Spinner } from "@chakra-ui/core";
-import NotFound from "./pages/notfound/notfound.component";
+import { NotFound } from "./pages/notfound/notfound.component";
 
 class App extends Component {
   unsubscribeFormAuth = null;
@@ -80,10 +80,10 @@ class App extends Component {
                   }
                   component={CreateCv}
                 />
-                {/* 
-                <Route path='*' component={NotFound} />
-
+                {/*  <Route path='*' component={NotFound} />
                 <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} />
+
+                
                 
                 */}
                 <PrivateRoute

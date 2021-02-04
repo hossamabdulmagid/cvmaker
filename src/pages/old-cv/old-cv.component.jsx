@@ -33,7 +33,6 @@ import {
   AccordionPanel,
   Box,
 } from "@chakra-ui/core";
-import { firestore } from "../../firebase/firebase.utils";
 import { useHistory } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { Redirect, Route } from "react-router-dom";
@@ -46,7 +45,6 @@ import {
   Delete_Single_CV,
   DoRefreshLastModified,
 } from "../../redux/oldcv/oldcvAction";
-import { Row } from "react-bootstrap";
 import { CreateNewCv } from "../../redux/createnewcv/createnewcvAction";
 const OldCv = ({
   currentUser,
@@ -79,8 +77,6 @@ const OldCv = ({
 
   const history = useHistory();
 
-  const [lastModified, setLastModified] = useState(new Date().toString());
-
   let { id } = match.params;
 
   let btnRef = useRef();
@@ -91,35 +87,7 @@ const OldCv = ({
     if (btnRef.current) {
       btnRef.current.setAttribute("disabled", "disabled");
     }
-    /*
-    //const label = "Simple Cv";
-    const docRef = await firestore
-      .doc(`users/${currentUser.id}`)
-      .collection("cvs")
-      .add({
-        createdAt: new Date().toString(),
-        label,
-        lastModified,
-      });
-      toast({
-        title: `Successfuly created new cv `,
-        description: `Your cv name is : ${label}`,
-        status: "success",
-        duration: 5000,
-        position: "top",
-        isClosable: true,
-      });
-      if (docRef.id) {
-
-      const newCvPath = `create-cv/${docRef.id}`;
-
-      history.push(newCvPath);
-
-      return;
-    }
-*/
   };
-
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -134,15 +102,44 @@ const OldCv = ({
     }, 250);
   }, [Get_oldCv, currentUser]);
 
-  const Refresh = (currentUser, id) => {
-    DoRefreshLastModified(currentUser, id);
-    /* await firestore
-     .collection(`users/${currentUser.id}/cvs`)
-     .doc(`${id}`)  
-     .update("label", cvName.label);
-     DoRefreshLastModified = (currentUser, id, timenow, toast)
-     */
+  const Refresh = async (currentUser, id) => {
+    await DoRefreshLastModified(currentUser, id);
   };
+
+  /*
+  //const label = "Simple Cv";
+  const docRef = await firestore
+    .doc(`users/${currentUser.id}`)
+    .collection("cvs")
+    .add({
+      createdAt: new Date().toString(),
+      label,
+      lastModified,
+    });
+    toast({
+      title: `Successfuly created new cv `,
+      description: `Your cv name is : ${label}`,
+      status: "success",
+      duration: 5000,
+      position: "top",
+      isClosable: true,
+    });
+    if (docRef.id) {
+
+    const newCvPath = `create-cv/${docRef.id}`;
+
+    history.push(newCvPath);
+
+    return;
+  }
+*/
+
+  /* await firestore
+   .collection(`users/${currentUser.id}/cvs`)
+   .doc(`${id}`)  
+   .update("label", cvName.label);
+   DoRefreshLastModified = (currentUser, id, timenow, toast)
+   */
 
   /*
    const refreshlastModified = useCallback(() => {
@@ -260,7 +257,7 @@ const OldCv = ({
 
           <td>
             <Linkcv
-              to={"create-cv/" + `${id}`}
+              to={`create-cv/` + `${id}`}
               onClick={() => Refresh(currentUser, id)}
             >
               Edit now

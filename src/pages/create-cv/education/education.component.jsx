@@ -216,6 +216,7 @@ const Education = (props) => {
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
+        blockScrollOnMount={true}
       >
         <ModalOverlay />
         <ModalContent>

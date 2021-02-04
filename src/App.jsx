@@ -80,10 +80,11 @@ class App extends Component {
                   }
                   component={CreateCv}
                 />
-                {/*  <Route path='*' component={NotFound} />
-                <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} />
-
+                {/* 
+                <Route path='*' component={NotFound} />
                 
+                
+                <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} />
                 
                 */}
                 <PrivateRoute

@@ -205,14 +205,15 @@ const CreateCv = (props) => {
   let sawsaw = cvName.label;
 
   const isCurrent = useRef(true);
-  console.log(sawsaw, `sawsaw.sawsaw`);
 
   const onSubmitLabel = async (data) => {
     await DoChangeNameofCv(currentUser, id, sawsaw, toast);
   };
+
   useEffect(() => {
     return () => {
-      //cleaning
+      //cleaning Ref
+
       isCurrent.current = false;
     };
   }, []);
@@ -239,33 +240,36 @@ const CreateCv = (props) => {
   const [flag, setFlag] = useState(true);
 
   useEffect(() => {
+    //  if (Array.isArray(allNameOfSections) && allNameOfSections.length > 6) {
+    //   console.log(allNameOfSections, `after if Condition`)
+    //  }
     if (!currentUser) {
       return;
     }
 
-    Get_allSection(currentUser, id, toast);
+    Get_allSection(currentUser, id);
 
-    if (Array.isArray(allNameOfSections) && allNameOfSections.length > 7) {
-      setArray(allNameOfSections);
+    setTimeout(() => {
+      if (allNameOfSections.length > 5) {
+        setArray(allNameOfSections);
 
-      setTimeout(() => {
         setFlag(false);
-      }, 1000);
-    } else {
-      setFlag(true);
-    }
-  }, [toast, Get_allSection, currentUser, id, array]);
+      } else {
+        setFlag(true);
+      }
+    }, 2000);
+  }, [Get_allSection, currentUser, id]);
 
   /* await firestore
       .collection(`users/${currentUser.id}/cvs`)
       .doc(`${id}`)  
       .update("label", cvName.label);
       DoRefreshLastModified = (currentUser, id, timenow, toast)
-      */
-  /*useEffect(() => {
-    if (!currentUser) {
+ 
+      useEffect(() => {
+     if (!currentUser) {
       return;
-    }
+      }
     firestore
       .doc(`users/${currentUser.id}/cvs/${id}`)
       .get()
@@ -451,7 +455,7 @@ const CreateCv = (props) => {
             <Col lg={3} xl={3} md={3}>
               <Ul>
                 {!flag
-                  ? array.map((singleRouteforSidebar, x) => (
+                  ? allNameOfSections.map((singleRouteforSidebar, x) => (
                       <Li
                         key={x}
                         href="#"
@@ -460,7 +464,7 @@ const CreateCv = (props) => {
                           setActiveSection(singleRouteforSidebar.type);
                         }}
                       >
-                        <LINK>{singleRouteforSidebar.section}</LINK>
+                        <LINK to>{singleRouteforSidebar.section}</LINK>
                       </Li>
                     ))
                   : sidebarRoutes.map((singleRouteforSidebar, x) => (
@@ -472,7 +476,7 @@ const CreateCv = (props) => {
                         }}
                         key={x}
                       >
-                        <LINK>{singleRouteforSidebar.section}</LINK>
+                        <LINK to>{singleRouteforSidebar.section}</LINK>
                       </Li>
                     ))}
                 <ButtonForAddNewSection onClick={onOpen} variant="success">
@@ -485,7 +489,7 @@ const CreateCv = (props) => {
                   onClose={onClose}
                   closeOnEsc={true}
                   autoFocus={true}
-                  blockScrollOnMount={false}
+                  blockScrollOnMount={true}
                   allowPinchZoom={false}
                 >
                   <ModalOverlay />
@@ -685,7 +689,6 @@ const CreateCv = (props) => {
                         autoFocus={true}
                         blockScrollOnMount={true}
                         allowPinchZoom={false}
-                        blockScrollOnMount={true}
                       >
                         <ModalOverlay />
                         <ModalContent>

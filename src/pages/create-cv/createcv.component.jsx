@@ -251,11 +251,7 @@ const CreateCv = (props) => {
   }, [Get_allSection, currentUser, id]);
 
   useEffect(() => {
-    //console.log(OldCvForUsers, `OldCvForUsers`)
-    //console.log(allNameOfSections, `allNameOfSections`)
-
     if (allNameOfSections.length > 5) {
-      // console.log(`${currentUser.id}/cvs/${id}`, `checkthe Route Of Cv`)
       setFlag(false);
     } else {
       setFlag(true);

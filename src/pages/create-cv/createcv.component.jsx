@@ -239,26 +239,24 @@ const CreateCv = (props) => {
 
   const [flag, setFlag] = useState(true);
 
-  useEffect(() => {
-    //  if (Array.isArray(allNameOfSections) && allNameOfSections.length > 6) {
-    //   console.log(allNameOfSections, `after if Condition`)
-    //  }
+  useLayoutEffect(() => {
+    console.log(`iam Runniing First Re Render`);
     if (!currentUser) {
       return;
     }
 
     Get_allSection(currentUser, id);
-
-    setTimeout(() => {
-      if (allNameOfSections.length > 5) {
-        setArray(allNameOfSections);
-
-        setFlag(false);
-      } else {
-        setFlag(true);
-      }
-    }, 2000);
   }, [Get_allSection, currentUser, id]);
+
+  useEffect(() => {
+    console.log(`iam Runniing second Re Render`);
+
+    if (allNameOfSections.length > 5) {
+      setFlag(false);
+    } else {
+      setFlag(true);
+    }
+  }, [setFlag, allNameOfSections.length]);
 
   /* await firestore
       .collection(`users/${currentUser.id}/cvs`)

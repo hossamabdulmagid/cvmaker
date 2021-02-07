@@ -46,7 +46,7 @@ const Editor = ({
   const isCurrent = useRef(true);
 
   const [state, setState] = useState({
-    concept: details,
+    concept: "",
     content_new: "",
     type: "entry",
   });
@@ -59,20 +59,14 @@ const Editor = ({
   const HandleChange = (event) => {
     const target = event.target;
     const { name, value } = target;
-    if (isCurrent.current) {
-      setState({ ...state, [name]: value });
-    }
+    setState({ [name]: value, concept: details });
   };
 
   const HandleCkEditorState = (event, editor) => {
     const data = editor.getData();
-    if (isCurrent.current) {
-      setState({ ...state, content_new: data });
-    }
+    setState({ content_new: data });
   };
   const { id } = useParams();
-
-  const [updateTitle, setUpdateTitle] = useState(true);
 
   const createMarkup = () => {
     return { __html: state.content_new };
@@ -86,48 +80,51 @@ const Editor = ({
     if (!currentUser && id) {
       return;
     }
+    console.log(value, `value while typing`);
+    const url = details;
 
-    const url = state.concept;
-    const info = data.content_new;
-    console.log(info, `infoooooooooooooooooooooooooooooo state.content_NEw`);
     let dataToBeSaved = {
-      concept: state.concept || "",
-      content_new: content_new || "",
+      concept: details || "",
+      content_new: state.content_new || "",
       type: state.type || "entry",
     };
 
-    Do_Submiting_newCkEditor(currentUser, id, url, dataToBeSaved, toast);
+    await Do_Submiting_newCkEditor(currentUser, id, url, dataToBeSaved, toast);
 
     setFlagButton(false);
-    setLoading(false);
 
     setTimeout(() => {
       setFlagButton(true);
     }, 2000);
   };
-  const [flag, setFlag] = useState(false);
 
-  const [lastModified, setLastModified] = useState(new Date());
-
-  console.log(`oldCkData`, oldCkData);
   useEffect(() => {
     if (!currentUser) {
       return;
     }
     GetOLdDataForCkEditor(currentUser, id);
-    setTimeout(() => {
-      if (Object.keys(oldCkData).includes("content_new" || "concept")) {
-        setState({
-          concept: oldCkData.concept,
-          content_new: oldCkData.content_new,
-        });
-      } else {
-        console.log(`iam False`);
+
+    console.log(oldCkData, `oldCkData`);
+    console.log(
+      Object.keys(oldCkData).includes("content_new" || "concept"),
+      `Object.keys(oldCkData)`
+    );
+    if (Object.keys(oldCkData).includes("content_new" || "concept")) {
+      console.log(oldCkData, `oldCkData`);
+      if (oldCkData) {
+        setTimeout(() => {
+          setState({
+            concept: oldCkData.concept,
+            content_new: oldCkData.content_new,
+          });
+        }, 2200);
       }
-    }, 1200);
+    } else {
+      console.log(`iam False`);
+    }
   }, [currentUser, id, GetOLdDataForCkEditor]);
 
-  const [loading, setLoading] = useState(true);
+  useLayoutEffect(() => {}, [oldCkData.concept, details]);
   return (
     <Fragment>
       <Container>
@@ -141,21 +138,14 @@ const Editor = ({
         </Row>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {oldCkData.concept ? (
-            <span className="text-center1">
-              Title For Section:
-              <h1 className="text-center">{oldCkData.concept}</h1>
-            </span>
-          ) : (
-            <Input
-              refVal={register({ required: true })}
-              placeholder="title for new Section"
-              name="concept"
-              type="text"
-              value={details}
-              onChange={HandleChange}
-            />
-          )}
+          <Input
+            refVal={register({ required: true })}
+            placeholder="title for new Section"
+            name="concept"
+            type="hidden"
+            value={details || oldCkData.concept}
+            onChange={HandleChange}
+          />
 
           <CKEditor
             refVal={register({ required: true })}
@@ -163,7 +153,7 @@ const Editor = ({
             editor={ClassicEditor}
             onInit={(Editor) => {}}
             onChange={HandleCkEditorState}
-            data={state.content_new || ""}
+            data={oldCkData.content_new || state.content_new || ""}
             name={content_new}
           />
           <div

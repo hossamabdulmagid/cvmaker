@@ -96,7 +96,9 @@ export const Do_Submiting_newCkEditor = (
 ) => {
   return (dispatch) => {
     dispatch(SubmitingCk_Start());
-    db.doc(`users/${currentUser.id}/cvs/${id}/data/${url}`)
+    db.doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .doc(`${url}`)
       .set(dataToBeSaved)
       .then((errorMessage) => {
         if (errorMessage) {

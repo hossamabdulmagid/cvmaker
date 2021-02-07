@@ -100,7 +100,6 @@ const CreateCv = (props) => {
 
   const {
     currentUser,
-    details,
     Get_allSection,
     GetNameOfCv,
     CvLabel,
@@ -523,7 +522,14 @@ const CreateCv = (props) => {
               ) : null}
 
               {activeSection === "entry" ? (
-                <Editor details={value.section} />
+                <Editor
+                  details={sectionData.section}
+                  array={array}
+                  setLastModified={setLastModified}
+                  lastModified={lastModified}
+                  setFlag={setFlag}
+                  flag={flag}
+                />
               ) : null}
             </Col>
           </Row>

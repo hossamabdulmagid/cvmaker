@@ -37,7 +37,7 @@ export const Get_Workexperince = (currentUser, id) => {
       .collection(`cvs/${id}/data`)
       .doc(`Workexperience`)
       .get()
-      .then(function (querySnapshot, errorMessage) {
+      .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
         if (
           !newData &&

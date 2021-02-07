@@ -38,9 +38,8 @@ export const Get_oldCv = (currentUser) => {
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs`)
       .get()
-
-      .then(function (querySnapshot, errorMessage) {
-        querySnapshot.forEach(function (doc) {
+      .then((querySnapshot, errorMessage) => {
+        querySnapshot.forEach((doc) => {
           let newData = doc.data();
           newData.id = doc.id;
           array.push(newData);

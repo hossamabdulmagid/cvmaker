@@ -37,7 +37,7 @@ export const Get_Qualifications = (currentUser, id) => {
       .collection(`cvs/${id}/data`)
       .doc(`Qualifications`)
       .get()
-      .then(function (querySnapshot, errorMessage) {
+      .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
         if (
           !newData &&

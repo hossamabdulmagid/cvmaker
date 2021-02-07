@@ -36,7 +36,7 @@ export const Get_References = (currentUser, id) => {
       .collection(`cvs/${id}/data`)
       .doc(`References`)
       .get()
-      .then(function (querySnapshot, errorMessage) {
+      .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
         if (
           !newData &&

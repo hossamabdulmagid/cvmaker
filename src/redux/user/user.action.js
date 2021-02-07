@@ -29,8 +29,8 @@ export const GetInfo = (id, currentUser) => {
       .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
           console.log(doc.id, " => ", doc.data(), `here should show data`);
         });
       })

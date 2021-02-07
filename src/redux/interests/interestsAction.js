@@ -36,7 +36,7 @@ export const Get_Interest = (currentUser, id) => {
       .collection(`cvs/${id}/data`)
       .doc(`Interests`)
       .get()
-      .then(function (querySnapshot, errorMessage) {
+      .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
         if (
           !newData &&

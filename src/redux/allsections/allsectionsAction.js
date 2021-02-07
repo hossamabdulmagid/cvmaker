@@ -38,7 +38,7 @@ export const Get_allSection = (currentUser, id, toast) => {
       .collection(`cvs/${id}/data`)
       .get()
       .then((querySnapshot, errorMessage) => {
-        querySnapshot.forEach(function (doc) {
+        querySnapshot.forEach((doc) => {
           let data = doc.data();
           let sectionName = doc.id;
           let _ID = `${id}`;

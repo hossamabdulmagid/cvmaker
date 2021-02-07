@@ -34,8 +34,8 @@ export const GetOLdDataForCkEditor = (currentUser, id) => {
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .get()
-      .then(function (querySnapshot, errorMessage) {
-        querySnapshot.forEach(function (doc, errorMessage) {
+      .then((querySnapshot, errorMessage) => {
+        querySnapshot.forEach((doc, errorMessage) => {
           const data = doc.data();
 
           const newData = doc.id;

@@ -156,6 +156,7 @@ const Editor = ({
               onChange={HandleChange}
             />
           )}
+
           <CKEditor
             refVal={register({ required: true })}
             config={editorConfiguration}
@@ -165,7 +166,6 @@ const Editor = ({
             data={state.content_new || ""}
             name={content_new}
           />
-
           <div
             dangerouslySetInnerHTML={createMarkup()}
             className="editor"

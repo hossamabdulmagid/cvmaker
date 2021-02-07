@@ -12,6 +12,7 @@ import qualificationsReducer from "./qualifications/qualificationsReducer";
 import referencesReducer from "./references/referencesReducer";
 import workexperinceReducer from "./workexperince/workexperinceReducer";
 import createnewcvReducer from "./createnewcv/createnewcvReducer";
+import newckeditorReducer from "./newckeditor/newckeditorReducer";
 //blacklist
 const persistConfig = {
   key: "root",
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   sectionQualifications: qualificationsReducer,
   sectionReferences: referencesReducer,
   sectionWorkexperince: workexperinceReducer,
+  newSectionCkEditor: newckeditorReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

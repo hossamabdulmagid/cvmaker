@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -8,6 +8,7 @@ import { Spinner, Input, Button, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
 import { firestore } from "../firebase/firebase.utils";
 import { Container, Row, Col } from "react-bootstrap";
+import { GetOLdDataForCkEditor } from "../redux/newckeditor/newckeditorAction";
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -25,7 +26,21 @@ const editorConfiguration = {
     ],
   },
 };
-const Editor = ({ details, currentUser, array = [] }) => {
+const Editor = ({
+  details,
+  currentUser,
+  array = [],
+  GetOLdDataForCkEditor,
+  oldCkData,
+}) => {
+  useEffect(() => {
+    return () => {
+      isCurrent.current = false;
+    };
+  }, []);
+
+  const isCurrent = useRef(true);
+
   const [state, setState] = useState({
     concept: "",
     content_new: "",
@@ -40,13 +55,16 @@ const Editor = ({ details, currentUser, array = [] }) => {
   const HandleChange = (event) => {
     const target = event.target;
     const { name, value } = target;
-    setState({ [name]: value });
+    if (isCurrent.current) {
+      setState({ [name]: value });
+    }
   };
 
   const HandleCkEditorState = (event, editor) => {
     const data = editor.getData();
-
-    setState({ content_new: data });
+    if (isCurrent.current) {
+      setState({ content_new: data });
+    }
   };
   const { id } = useParams();
 
@@ -55,13 +73,13 @@ const Editor = ({ details, currentUser, array = [] }) => {
   const createMarkup = () => {
     return { __html: state.content_new };
   };
+
   const [flagButton, setFlagButton] = useState(true);
 
   const value = getValues();
 
   const onSubmit = async (value, data) => {
     const info = state.content_new;
-
     if (!currentUser.id) {
       return;
     }
@@ -76,7 +94,9 @@ const Editor = ({ details, currentUser, array = [] }) => {
     };
 
     await SecRef.set(dataToBeSaved);
+
     setLoading(false);
+
     setTimeout(() => {
       toast({
         title: "Section Updated.",
@@ -87,7 +107,9 @@ const Editor = ({ details, currentUser, array = [] }) => {
         position: "bottom-left",
       });
     }, 2000);
+
     setFlagButton(false);
+
     setTimeout(() => {
       setFlagButton(true);
     }, 2000);
@@ -95,6 +117,9 @@ const Editor = ({ details, currentUser, array = [] }) => {
   const [flag, setFlag] = useState(false);
 
   const [lastModified, setLastModified] = useState(new Date());
+
+  //
+  /*
   const FetchData = async (value) => {
     await firestore
       .doc(`users/${currentUser.id}`)
@@ -103,16 +128,18 @@ const Editor = ({ details, currentUser, array = [] }) => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           const data = doc.data();
+  
           const newData = doc.id;
+  
           setLastModified(lastModified);
-
-          if (Object.keys(data).includes("concept")) {
+  
+          if (Object.keys(data).includes("content_new")) {
             setState({
               concept: data.concept,
               content_new: data.content_new,
             });
           }
-
+  
           return;
         });
       })
@@ -128,9 +155,32 @@ const Editor = ({ details, currentUser, array = [] }) => {
         console.log(error, `there is was an error`);
       });
   };
+  */
+
+  useLayoutEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    GetOLdDataForCkEditor(currentUser, id);
+  }, [GetOLdDataForCkEditor, currentUser, id]);
+
   useEffect(() => {
-    FetchData();
-  }, [currentUser, array]);
+    if (!currentUser) {
+      return;
+    }
+    setTimeout(() => {
+      if (Object.keys(oldCkData).includes("content_new")) {
+        if (isCurrent.current) {
+          setState({
+            concept: oldCkData.concept,
+            content_new: oldCkData.content_new,
+          });
+        }
+      } else {
+        console.log(`iam False`);
+      }
+    }, 500);
+  }, [currentUser, array, GetOLdDataForCkEditor, id, setState]);
 
   const [loading, setLoading] = useState(true);
   return (
@@ -151,23 +201,15 @@ const Editor = ({ details, currentUser, array = [] }) => {
             placeholder="title for new Section"
             name="concept"
             type="text"
-            value={details || concept}
+            value={state.concept || details}
             onChange={HandleChange}
           />
-
-          <strong className="col-12">
-            {errors && errors.title && (
-              <label className="error">
-                {errors.title.message || "title is required"}
-              </label>
-            )}
-          </strong>
 
           <CKEditor
             refVal={register({ required: true })}
             config={editorConfiguration}
             editor={ClassicEditor}
-            // onInit={(Editor) => { }}
+            onInit={(Editor) => {}}
             onChange={HandleCkEditorState}
             data={state.content_new || ""}
             name={content_new}
@@ -193,5 +235,12 @@ const Editor = ({ details, currentUser, array = [] }) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  oldCkData: state.newSectionCkEditor.newckEditor,
 });
-export default connect(mapStateToProps, null)(Editor);
+
+const mapDispatchToProps = (dispatch) => ({
+  GetOLdDataForCkEditor: (currentUser, id) =>
+    dispatch(GetOLdDataForCkEditor(currentUser, id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);

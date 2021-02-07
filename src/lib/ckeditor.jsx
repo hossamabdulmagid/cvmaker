@@ -91,7 +91,7 @@ const Editor = ({
     const info = data.content_new;
     console.log(info, `infoooooooooooooooooooooooooooooo state.content_NEw`);
     let dataToBeSaved = {
-      concept: url || "",
+      concept: state.concept || "",
       content_new: content_new || "",
       type: state.type || "entry",
     };
@@ -116,7 +116,7 @@ const Editor = ({
     }
     GetOLdDataForCkEditor(currentUser, id);
     setTimeout(() => {
-      if (Object.keys(oldCkData).includes("content_new")) {
+      if (Object.keys(oldCkData).includes("content_new" || "concept")) {
         setState({
           concept: oldCkData.concept,
           content_new: oldCkData.content_new,
@@ -124,7 +124,7 @@ const Editor = ({
       } else {
         console.log(`iam False`);
       }
-    }, 200);
+    }, 1200);
   }, [currentUser, id, GetOLdDataForCkEditor]);
 
   const [loading, setLoading] = useState(true);

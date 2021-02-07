@@ -42,13 +42,13 @@ export const GetOLdDataForCkEditor = (currentUser, id) => {
 
           if (errorMessage && !data && !newData) {
             dispatch(CkOldData_Error(errorMessage));
+          } else if (Object.keys(data).includes("content_new")) {
+            dispatch(CkOldData_Success(data));
             console.log(
               data,
               newData,
               `data For New CkeEditor From ConsoleLog`
             );
-          } else if (Object.keys(data).includes("content_new")) {
-            dispatch(CkOldData_Success(data));
           }
           return;
         });
@@ -56,6 +56,7 @@ export const GetOLdDataForCkEditor = (currentUser, id) => {
       .catch((errorMessage) => {
         if (errorMessage) {
           dispatch(CkOldData_Error(errorMessage));
+          console.log(errorMessage, `errorMessage`);
         }
       });
   };

@@ -209,7 +209,7 @@ const Editor = ({
             refVal={register({ required: true })}
             config={editorConfiguration}
             editor={ClassicEditor}
-            onInit={(Editor) => {}}
+            // onInit={(Editor) => { }}
             onChange={HandleCkEditorState}
             data={state.content_new || ""}
             name={content_new}

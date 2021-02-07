@@ -8,7 +8,10 @@ import { Spinner, Input, Button, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
 import { firestore } from "../firebase/firebase.utils";
 import { Container, Row, Col } from "react-bootstrap";
-import { GetOLdDataForCkEditor } from "../redux/newckeditor/newckeditorAction";
+import {
+  GetOLdDataForCkEditor,
+  Do_Submiting_newCkEditor,
+} from "../redux/newckeditor/newckeditorAction";
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -32,6 +35,7 @@ const Editor = ({
   array = [],
   GetOLdDataForCkEditor,
   oldCkData,
+  Do_Submiting_newCkEditor,
 }) => {
   useEffect(() => {
     return () => {
@@ -42,13 +46,13 @@ const Editor = ({
   const isCurrent = useRef(true);
 
   const [state, setState] = useState({
-    concept: "",
+    concept: details,
     content_new: "",
     type: "entry",
   });
   const { content_new, concept } = state;
 
-  const { handleSubmit, register, getValues, errors, data } = useForm();
+  const { handleSubmit, register, getValues, errors } = useForm();
 
   const toast = useToast();
 
@@ -56,14 +60,14 @@ const Editor = ({
     const target = event.target;
     const { name, value } = target;
     if (isCurrent.current) {
-      setState({ [name]: value });
+      setState({ ...state, [name]: value });
     }
   };
 
   const HandleCkEditorState = (event, editor) => {
     const data = editor.getData();
     if (isCurrent.current) {
-      setState({ content_new: data });
+      setState({ ...state, content_new: data });
     }
   };
   const { id } = useParams();
@@ -79,36 +83,23 @@ const Editor = ({
   const value = getValues();
 
   const onSubmit = async (value, data) => {
-    const info = state.content_new;
-    if (!currentUser.id) {
+    if (!currentUser && id) {
       return;
     }
-    const SecRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/${value.concept}`
-    );
-    console.log(value.concept, `value concept`);
+
+    const url = state.concept;
+    const info = data.content_new;
+    console.log(info, `infoooooooooooooooooooooooooooooo state.content_NEw`);
     let dataToBeSaved = {
-      concept: value.concept || "",
-      content_new: info || "",
+      concept: url || "",
+      content_new: content_new || "",
       type: state.type || "entry",
     };
 
-    await SecRef.set(dataToBeSaved);
-
-    setLoading(false);
-
-    setTimeout(() => {
-      toast({
-        title: "Section Updated.",
-        description: `Your new Section  name is : ${value.concept}`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-    }, 2000);
+    Do_Submiting_newCkEditor(currentUser, id, url, dataToBeSaved, toast);
 
     setFlagButton(false);
+    setLoading(false);
 
     setTimeout(() => {
       setFlagButton(true);
@@ -118,69 +109,23 @@ const Editor = ({
 
   const [lastModified, setLastModified] = useState(new Date());
 
-  //
-  /*
-  const FetchData = async (value) => {
-    await firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          const data = doc.data();
-  
-          const newData = doc.id;
-  
-          setLastModified(lastModified);
-  
-          if (Object.keys(data).includes("content_new")) {
-            setState({
-              concept: data.concept,
-              content_new: data.content_new,
-            });
-          }
-  
-          return;
-        });
-      })
-      .catch((error) => {
-        setFlag(false);
-        toast({
-          title: `there is was an error`,
-          description: `${error} `,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        console.log(error, `there is was an error`);
-      });
-  };
-  */
-
-  useLayoutEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    GetOLdDataForCkEditor(currentUser, id);
-  }, [GetOLdDataForCkEditor, currentUser, id]);
-
+  console.log(`oldCkData`, oldCkData);
   useEffect(() => {
     if (!currentUser) {
       return;
     }
+    GetOLdDataForCkEditor(currentUser, id);
     setTimeout(() => {
       if (Object.keys(oldCkData).includes("content_new")) {
-        if (isCurrent.current) {
-          setState({
-            concept: oldCkData.concept,
-            content_new: oldCkData.content_new,
-          });
-        }
+        setState({
+          concept: oldCkData.concept,
+          content_new: oldCkData.content_new,
+        });
       } else {
         console.log(`iam False`);
       }
-    }, 500);
-  }, [currentUser, array, GetOLdDataForCkEditor, id, setState]);
+    }, 200);
+  }, [currentUser, id, GetOLdDataForCkEditor]);
 
   const [loading, setLoading] = useState(true);
   return (
@@ -196,20 +141,26 @@ const Editor = ({
         </Row>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            ref={register({ required: true })}
-            placeholder="title for new Section"
-            name="concept"
-            type="text"
-            value={state.concept || details}
-            onChange={HandleChange}
-          />
-
+          {oldCkData.concept ? (
+            <span className="text-center1">
+              Title For Section:
+              <h1 className="text-center">{oldCkData.concept}</h1>
+            </span>
+          ) : (
+            <Input
+              refVal={register({ required: true })}
+              placeholder="title for new Section"
+              name="concept"
+              type="text"
+              value={details}
+              onChange={HandleChange}
+            />
+          )}
           <CKEditor
             refVal={register({ required: true })}
             config={editorConfiguration}
             editor={ClassicEditor}
-            // onInit={(Editor) => { }}
+            onInit={(Editor) => {}}
             onChange={HandleCkEditorState}
             data={state.content_new || ""}
             name={content_new}
@@ -241,6 +192,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   GetOLdDataForCkEditor: (currentUser, id) =>
     dispatch(GetOLdDataForCkEditor(currentUser, id)),
+  Do_Submiting_newCkEditor: (currentUser, id, url, dataToBeSaved, toast) =>
+    dispatch(
+      Do_Submiting_newCkEditor(currentUser, id, url, dataToBeSaved, toast)
+    ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

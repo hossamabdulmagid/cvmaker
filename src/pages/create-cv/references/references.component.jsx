@@ -120,7 +120,7 @@ const References = ({ currentUser, Get_References }) => {
         console.error(error, `there is was an error`);
         console.log(error, `there is was an error`);
       });
-  }, [currentUser]);
+  }, [currentUser, id]);
   return (
     <Container>
       <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">

@@ -1,4 +1,11 @@
-import { useEffect, Fragment, useState, useRef } from "react";
+import {
+  useEffect,
+  Fragment,
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import {
   Input,
   Label,
@@ -114,11 +121,17 @@ const BasicInfo = (props) => {
     };
   }, []);
 
+  const Tags = useMemo(() => {
+    if (!currentUser) {
+      return;
+    }
+    return GetBasicInfo(currentUser, id, toast);
+  }, [GetBasicInfo]);
+
   useEffect(() => {
     if (!currentUser) {
       return;
     }
-
     GetBasicInfo(currentUser, id, toast);
 
     if (basicInfoState) {
@@ -136,12 +149,13 @@ const BasicInfo = (props) => {
         });
         setTimeout(() => {
           setLoading(false);
-        }, 400);
+        }, 2000);
       }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [GetBasicInfo, currentUser, id, toast]);
+  }, [GetBasicInfo, currentUser, id, toast, Tags]);
+  useEffect(() => dataform, [basicInfoState]);
 
   const [color, setColor] = useState("");
 

@@ -114,15 +114,20 @@ const OldCv = ({
     });
   };
 
+  const removeSingleCv = useCallback(
+    (id, currentUser) => {
+      Delete_Single_CV(id, currentUser, toast);
+    },
+    [id, currentUser]
+  );
+
   const RenderTBodyForTable = () => {
     return OldCvForUsers.map(({ label, lastModified, createdAt, id }) => {
       return (
         <tr key={id}>
           <td>
             {label}
-            <ButtonForDeleteCv
-              onClick={() => Delete_Single_CV(id, currentUser, toast)}
-            >
+            <ButtonForDeleteCv onClick={() => removeSingleCv(id, currentUser)}>
               delete
               <Icon />
             </ButtonForDeleteCv>

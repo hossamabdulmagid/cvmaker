@@ -34,7 +34,10 @@ import {
   FormLabel,
 } from "@chakra-ui/core";
 import ImageUpload from "./uploadimage";
-import { GetBasicInfo } from "../../../redux/basicinfo/basicinfoAction";
+import {
+  GetBasicInfo,
+  Do_Submiting_BasicInfo,
+} from "../../../redux/basicinfo/basicinfoAction";
 const BasicInfo = (props) => {
   const {
     currentUser,
@@ -44,6 +47,7 @@ const BasicInfo = (props) => {
     basicinfo,
     GetBasicInfo,
     basicInfoState,
+    Do_Submiting_BasicInfo,
   } = props;
 
   const { id } = useParams();
@@ -80,9 +84,6 @@ const BasicInfo = (props) => {
   const [FlagButton, setFlagButton] = useState(true);
 
   const onSubmit = async (value, data) => {
-    const cvRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/Basicinfo`
-    );
     let dataToBeSaved = {
       basicinfo: {
         title: dataform.title || "",
@@ -97,36 +98,30 @@ const BasicInfo = (props) => {
       },
       type: dataform.type || "basicinfo",
     };
-    await cvRef.set(dataToBeSaved);
+    await Do_Submiting_BasicInfo(currentUser, id, dataToBeSaved, toast);
     setFlagButton(false);
-
     setTimeout(() => {
       setFlagButton(true);
-      toast({
-        title: "Section updated.",
-        description: `your section basicinfo has been updated`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-right",
-      });
     }, 2000);
   };
 
   const isCurrent = useRef(true);
+
+  const getStateFromUpdates = (basicInfoState) => basicInfoState;
+
+  const Tags = useMemo(() => {
+    if (!currentUser) {
+      return;
+    }
+
+    return getStateFromUpdates(basicInfoState);
+  }, [currentUser, basicInfoState]);
 
   useEffect(() => {
     return () => {
       isCurrent.current = false;
     };
   }, []);
-
-  const Tags = useMemo(() => {
-    if (!currentUser) {
-      return;
-    }
-    return GetBasicInfo(currentUser, id, toast);
-  }, [GetBasicInfo]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -149,12 +144,13 @@ const BasicInfo = (props) => {
         });
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 200);
       }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [GetBasicInfo, currentUser, id, toast, Tags]);
+  }, [GetBasicInfo, currentUser, id, toast]);
+
   useEffect(() => dataform, [basicInfoState]);
 
   const [color, setColor] = useState("");
@@ -647,5 +643,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   GetBasicInfo: (currentUser, id, toast) =>
     dispatch(GetBasicInfo(currentUser, id, toast)),
+  Do_Submiting_BasicInfo: (currentUser, id, dataToBeSaved, toast) =>
+    dispatch(Do_Submiting_BasicInfo(currentUser, id, dataToBeSaved, toast)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(BasicInfo);

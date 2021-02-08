@@ -21,6 +21,22 @@ const INITIAL_STATE = {
 
 const basicinfoReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case basicInfoActionType.SUBMITING_BASICINFO_START:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case basicInfoActionType.SUBMITING_BASICINFO_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case basicInfoActionType.SUBMITING_BASICINFO_ERROR:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload.errorMessage,
+      };
     case basicInfoActionType.GET_BASICINFO_START:
       return {
         ...state,

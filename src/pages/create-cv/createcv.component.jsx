@@ -362,7 +362,7 @@ const CreateCv = (props) => {
                           setActiveSection(singleRouteforSidebar.type);
                         }}
                       >
-                        <LINK to>{singleRouteforSidebar.section}</LINK>
+                        <LINK to="#">{singleRouteforSidebar.section}</LINK>
                       </Li>
                     ))
                   : sidebarRoutes.map((singleRouteforSidebar, x) => (
@@ -374,7 +374,7 @@ const CreateCv = (props) => {
                         }}
                         key={x}
                       >
-                        <LINK to>{singleRouteforSidebar.section}</LINK>
+                        <LINK to="#">{singleRouteforSidebar.section}</LINK>
                       </Li>
                     ))}
                 <ButtonForAddNewSection onClick={onOpen} variant="success">
@@ -561,7 +561,7 @@ const CreateCv = (props) => {
                                 setActiveSection(singleRouteforSidebar.type);
                               }}
                             >
-                              <LINK onClick={() => setExpanded(false)}>
+                              <LINK onClick={() => setExpanded(false)} to="#">
                                 {singleRouteforSidebar.section}
                               </LINK>
                             </Li>
@@ -575,7 +575,7 @@ const CreateCv = (props) => {
                               }}
                               key={x}
                             >
-                              <LINK onClick={() => setExpanded(false)}>
+                              <LINK onClick={() => setExpanded(false)} to="#">
                                 {singleRouteforSidebar.section}
                               </LINK>
                             </Li>

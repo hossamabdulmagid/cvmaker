@@ -48,17 +48,16 @@ export const GetBasicInfo = (currentUser, id, toast) => {
           hasError = true;
           dispatch(BasicInfoError(errorMessage));
           console.log(errorMessage, `error from redux files basicinfo`);
-        } else {
-          if (!hasError) {
-            dispatch(BasicInfoSuccess(newData));
-          }
+        }
+        if (!hasError) {
+          dispatch(BasicInfoSuccess(newData));
         }
       })
       .catch((errorMessage, newData) => {
         if (errorMessage && !newData) {
           dispatch(BasicInfoError(errorMessage));
           console.log(errorMessage, `error from redux files basicinfo`);
-        } else {
+        } else if ((!errorMessage, newData)) {
           dispatch(BasicInfoSuccess(newData));
         }
       });

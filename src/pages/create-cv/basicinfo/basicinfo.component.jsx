@@ -36,7 +36,7 @@ const BasicInfo = (props) => {
     info,
     basicinfo,
     GetBasicInfo,
-    basicInfoData,
+    basicInfoState,
   } = props;
 
   const { id } = useParams();
@@ -106,12 +106,6 @@ const BasicInfo = (props) => {
     }, 2000);
   };
 
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    GetBasicInfo(currentUser, id, toast);
-  });
   const isCurrent = useRef(true);
 
   useEffect(() => {
@@ -124,72 +118,30 @@ const BasicInfo = (props) => {
     if (!currentUser) {
       return;
     }
-    firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
-      .doc(`Basicinfo`)
-      .get()
-      .then(function (querySnapshot) {
-        const newData = querySnapshot.data();
-        if (newData) {
-          if (isCurrent.current) {
-            setDataform({
-              title: newData.basicinfo.title,
-              fullname: newData.basicinfo.fullname,
-              phone: newData.basicinfo.phone,
-              address1: newData.basicinfo.address1,
-              address2: newData.basicinfo.address2,
-              address3: newData.basicinfo.address3,
-              webSites: newData.basicinfo.webSites,
-              email: newData.basicinfo.email,
-              lastModified: newData.basicinfo.lastModified,
-            });
-          }
-        }
-        setLoading(false);
-        //        setFlagButton(false)
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error, `there is was an error`);
-      });
-  }, [currentUser, id, setDataform]);
 
-  const [image, setImage] = useState(null);
-  const [url, setUrl] = useState("");
-  const [progress, setProgress] = useState(0);
+    GetBasicInfo(currentUser, id, toast);
 
-  const handleChangeImage = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
-  const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("images")
-          .child(image.name)
-          .getDownloadURL()
-          .then((url) => {
-            setUrl(url);
-          });
+    if (basicInfoState) {
+      if (isCurrent.current) {
+        setDataform({
+          title: basicInfoState.title,
+          fullname: basicInfoState.fullname,
+          phone: basicInfoState.phone,
+          address1: basicInfoState.address1,
+          address2: basicInfoState.address2,
+          address3: basicInfoState.address3,
+          webSites: basicInfoState.webSites,
+          email: basicInfoState.email,
+          lastModified: basicInfoState.lastModified,
+        });
+        setTimeout(() => {
+          setLoading(false);
+        }, 400);
       }
-    );
-  };
+    }
 
-  //  console.log("image :", image);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [GetBasicInfo, currentUser, id, toast]);
 
   const [color, setColor] = useState("");
 
@@ -234,7 +186,45 @@ const BasicInfo = (props) => {
     });
   };
 
-  useEffect(() => {}, [dataform.title]);
+  /*
+  
+    const [image, setImage] = useState(null);
+    const [url, setUrl] = useState("");
+    const [progress, setProgress] = useState(0);
+  
+    const handleChangeImage = (e) => {
+      if (e.target.files[0]) {
+        setImage(e.target.files[0]);
+      }
+    };
+    const handleUpload = () => {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+            });
+        }
+      );
+    };
+  
+    //  console.log("image :", image);
+  */
+
   return (
     <Fragment>
       <Containers>
@@ -638,7 +628,7 @@ const BasicInfo = (props) => {
 };
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
-  basicInfoData: state.basicinfo,
+  basicInfoState: state.sectionBasicInfo.data.basicinfo,
 });
 const mapDispatchToProps = (dispatch) => ({
   GetBasicInfo: (currentUser, id, toast) =>

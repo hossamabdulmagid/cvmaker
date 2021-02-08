@@ -35,8 +35,7 @@ export const CreateNewCv = (currentUser, history, toast) => {
 
   return (dispatch) => {
     dispatch(createdCv_Start());
-    const DocRef = db
-      .doc(`users/${currentUser.id}`)
+    db.doc(`users/${currentUser.id}`)
       .collection("cvs")
       .add({
         createdAt: new Date().toString(),

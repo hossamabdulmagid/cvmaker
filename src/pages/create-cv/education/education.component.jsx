@@ -23,29 +23,23 @@ import {
   StrongMobile,
 } from "./education.styles";
 import { connect } from "react-redux";
-import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
-import { GET_Education } from "../../../redux/education/educationAction";
+import { Row, Col } from "react-bootstrap";
+import {
+  GET_Education,
+  Do_Submiting_Education,
+} from "../../../redux/education/educationAction";
 const Education = (props) => {
-  const { currentUser, GET_Education } = props;
-
-  useEffect(() => {
-    GET_Education(currentUser, id, toast);
-  }, [GET_Education]);
+  const {
+    currentUser,
+    GET_Education,
+    Do_Submiting_Education,
+    EducationState,
+  } = props;
 
   const { id } = useParams();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const initialRef = useRef();
-  const finalRef = useRef();
-
-  const { handleSubmit, register, getValues, errors } = useForm();
-
-  const value = getValues();
 
   const toast = useToast();
-
   const [education, setEducation] = useState({
     education: {
       collagename: "",
@@ -57,6 +51,37 @@ const Education = (props) => {
     },
   });
 
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
+    GET_Education(currentUser, id, toast);
+
+    if (EducationState) {
+      console.log(`iam already Setting the State`);
+      setEducation({
+        collagename: EducationState.collagename,
+        startgraduationyear: EducationState.startgraduationyear,
+        endgraduationyear: EducationState.endgraduationyear,
+        eduactionmajor: EducationState.eduactionmajor,
+        lastModified: EducationState.lastModified,
+      });
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, [GET_Education, currentUser, id, toast]);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef = useRef();
+  const finalRef = useRef();
+
+  const { handleSubmit, register, getValues, errors } = useForm();
+
+  const value = getValues();
   const {
     collagename,
     startgraduationyear,
@@ -68,9 +93,6 @@ const Education = (props) => {
   const [FlagButton, setFlagButton] = useState(true);
 
   const onSubmit = async (value) => {
-    const cvRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/Education`
-    );
     let dataToBeSaved = {
       education: {
         collagename: collagename || "",
@@ -81,18 +103,14 @@ const Education = (props) => {
       },
       type: "education",
     };
-    await cvRef.set(dataToBeSaved);
-    setFlagButton(false);
+
+    await Do_Submiting_Education(currentUser, id, dataToBeSaved, toast);
+    setTimeout(() => {
+      setFlagButton(false);
+    }, 1000);
+
     setTimeout(() => {
       onClose();
-      toast({
-        title: "Section updated.",
-        description: `your cvs section education has been updated`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-right",
-      });
     }, 2000);
   };
   useEffect(() => {
@@ -107,38 +125,6 @@ const Education = (props) => {
   };
 
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-
-    firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
-      .doc(`Education`)
-      .get()
-      .then(function (querySnapshot) {
-        const eduactionData = querySnapshot.data();
-
-        if (eduactionData) {
-          setEducation({
-            collagename: eduactionData.education.collagename,
-            startgraduationyear: eduactionData.education.startgraduationyear,
-            endgraduationyear: eduactionData.education.endgraduationyear,
-            eduactionmajor: eduactionData.education.eduactionmajor,
-            lastModified: eduactionData.education.lastModified,
-          });
-        }
-
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-
-        console.log(error, `there is was an error`);
-      });
-  }, [currentUser, id]);
 
   return (
     <div className="container">
@@ -293,10 +279,13 @@ const Education = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  EducationState: state.sectionEducation.data.education,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   GET_Education: (currentUser, id, toast) =>
     dispatch(GET_Education(currentUser, id, toast)),
+  Do_Submiting_Education: (currentUser, id, dataToBeSaved, toast) =>
+    dispatch(Do_Submiting_Education(currentUser, id, dataToBeSaved, toast)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Education);

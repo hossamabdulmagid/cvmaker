@@ -16,6 +16,22 @@ const INITIAL_STATE = {
 };
 const educationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case educationActionType.SUBMITING_EDUCATION_START:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case educationActionType.SUBMITING_EDUCATION_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case educationActionType.SUBMITING_EDUCATION_ERROR:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload.errorMessage,
+      };
     case educationActionType.GET_EDUCATION_START:
       return {
         ...state,

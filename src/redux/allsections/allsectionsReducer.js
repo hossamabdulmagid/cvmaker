@@ -19,7 +19,7 @@ const allSectionReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        section: [...action.payload],
+        section: action.payload,
         Flag: false,
       };
     case dataActionType.GET_SECTIONS_ERROR:

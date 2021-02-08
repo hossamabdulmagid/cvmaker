@@ -8,9 +8,9 @@ const SectionStart = () => ({
   type: dataActionType.GET_SECTIONS_START,
 });
 
-const SectionSuccess = (section) => ({
+const SectionSuccess = (data) => ({
   type: dataActionType.GET_SECTIONS_SUCCESS,
-  payload: section,
+  payload: data,
 });
 
 const SectionError = (errorMessage) => {
@@ -42,7 +42,7 @@ export const Get_allSection = (currentUser, id, toast) => {
           let data = doc.data();
           let sectionName = doc.id;
           let _ID = `${id}`;
-          if (data) {
+          if (data && sectionName) {
             array.push({
               section: sectionName.toString(),
               type: data.type,
@@ -59,18 +59,17 @@ export const Get_allSection = (currentUser, id, toast) => {
             hasError = true;
             dispatch(SectionError(errorMessage));
             console.log(errorMessage, `error from dataAction.JS`);
-          } else {
-            if (!hasError) {
-              dispatch(SectionSuccess(array));
-            }
           }
         });
+        if (!hasError) {
+          dispatch(SectionSuccess(array));
+        }
       })
       .catch((errorMessage, data, sectionName) => {
         if (errorMessage && !data && !sectionName) {
           dispatch(SectionError(errorMessage));
           console.log(errorMessage, `error from dataAction.JS`);
-        } else {
+        } else if ((!errorMessage, !data, !sectionName)) {
           dispatch(SectionSuccess(array));
           console.log(array, `@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
         }

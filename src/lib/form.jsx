@@ -75,12 +75,6 @@ const FormDeatils = (props) => {
 
     await SecRef.set(dataToBeSaved);
 
-    /*sidebarRoutes.push({
-      section: value.concept,
-      type: state.type,
-      lastModified: new Date(),
-    });
-*/
     array.push({
       section: data.title,
       type: state.type,

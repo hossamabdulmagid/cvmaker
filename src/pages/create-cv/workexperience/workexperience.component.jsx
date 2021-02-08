@@ -30,9 +30,18 @@ import {
 import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { Get_Workexperince } from "../../../redux/workexperince/workexperinceAction";
+import {
+  Get_Workexperince,
+  Do_Submiting_WorkExp,
+} from "../../../redux/workexperince/workexperinceAction";
 const Workexperience = (props) => {
-  const { AddToList, currentUser, Get_Workexperince } = props;
+  const {
+    AddToList,
+    currentUser,
+    Get_Workexperince,
+    Do_Submiting_WorkExp,
+    StateWorkExp,
+  } = props;
 
   const { id } = useParams();
 
@@ -74,31 +83,20 @@ const Workexperience = (props) => {
 
   const [loading, setLoading] = useState(true);
 
-  const onSubmit = async (_ID) => {
-    const cvRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/Workexperience`
-    );
-
+  const onSubmit = async (data, value) => {
     allworkexp.unshift(workexperinceform);
 
-    let dataToBeSave = {
+    let dataToBeSaved = {
       allwork: [...allworkexp],
       type: "workexperience",
     };
-
-    await cvRef.set(dataToBeSave);
     setFlagButton(false);
+
+    await Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
+
     setTimeout(() => {
       onClose();
-      toast({
-        title: "Section updated.",
-        description: `your cvs section workexperince has been updated`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-right",
-      });
-    }, 200);
+    }, 2000);
     setLoading(false);
   };
 
@@ -111,7 +109,7 @@ const Workexperience = (props) => {
       .collection(`cvs/${id}/data`)
       .doc(`Workexperience`)
       .get()
-      .then(function (querySnapshot) {
+      .then((querySnapshot) => {
         const workexpData = querySnapshot.data();
 
         if (workexpData) {
@@ -360,12 +358,15 @@ const Workexperience = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  StateWorkExp: state.sectionWorkexperince.workexperince,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   AddToList: () => dispatch(AddToList()),
   Get_Workexperince: (currentUser, id) =>
     dispatch(Get_Workexperince(currentUser, id)),
+  Do_Submiting_WorkExp: (currentUser, id, dataToBeSaved, toast) =>
+    dispatch(Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workexperience);

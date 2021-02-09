@@ -2,7 +2,9 @@ import { workexperinceActionType } from "./workexperinceType";
 
 const INITAIL_STATE = {
   isFetching: false,
-  workexperince: [{}],
+  workexperince: {
+    allwork: [],
+  },
   errorMessage: null,
 };
 

@@ -87,46 +87,54 @@ const Workexperience = (props) => {
     allworkexp.unshift(workexperinceform);
 
     let dataToBeSaved = {
-      allwork: [...allworkexp],
+      allwork: allworkexp,
       type: "workexperience",
     };
     setFlagButton(false);
 
     await Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
 
+    //    setLoading(false);
+
     setTimeout(() => {
+      setFlagButton(true);
+
       onClose();
     }, 2000);
-    setLoading(false);
+
+    setTimeout(() => {
+      // setLoading(false);
+    }, 5000);
   };
-
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
-      .doc(`Workexperience`)
-      .get()
-      .then((querySnapshot) => {
-        const workexpData = querySnapshot.data();
-
-        if (workexpData) {
-          workexpData.allwork.map((Singlejob) => allworkexp.push(Singlejob));
-
-          setTimeout(() => {
-            setLoading(false);
-          }, 300);
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error, `there is was an error`);
-      });
-  }, [currentUser, id]);
-
-  const [FlagButton, setFlagButton] = useState(true);
+  /*
+    useEffect(() => {
+      if (!currentUser) {
+        return;
+      }
+      firestore
+        .doc(`users/${currentUser.id}`)
+        .collection(`cvs/${id}/data`)
+        .doc(`Workexperience`)
+        .get()
+        .then((querySnapshot) => {
+          const workexpData = querySnapshot.data();
+          console.log(workexpData, `workexpData`)
+   
+          if (workexpData) {
+            workexpData.allwork.map((Singlejob) => allworkexp.push(Singlejob));
+   
+            setTimeout(() => {
+              setLoading(false);
+            }, 300);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error, `there is was an error`);
+        });
+    }, [currentUser, id]);
+  */
+  const [flagButton, setFlagButton] = useState(true);
 
   useEffect(() => {
     setFlagButton(true);
@@ -137,7 +145,7 @@ const Workexperience = (props) => {
       .collection(`users/${currentUser.id}/cvs/${id}/data`)
       .doc(`Workexperience`)
       .delete()
-      .then(function () {
+      .then(() => {
         setAllWorkexp([]);
         console.log("Document successfully deleted!");
         toast({
@@ -149,16 +157,53 @@ const Workexperience = (props) => {
           position: "bottom-right",
         });
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.error("Error removing document: ", error);
       });
   };
+
+  const [displayData, setDisplayData] = useState(true);
+
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    if (!currentUser) {
+    if (!currentUser && !id) {
       return;
     }
     Get_Workexperince(currentUser, id);
-  }, [Get_Workexperince]);
+
+    // console.log(StateWorkExp.allwork, `StateWorkExp`)
+
+    setDisplayData(false);
+    //  setLoading(false)
+
+    if (Array.isArray(StateWorkExp)) {
+      setTimeout(() => {
+        //allworkexp.push(pp)
+        //   console.log(`allworkexp`, allworkexp)
+      }, 2000);
+
+      setTimeout(() => {
+        //  setAllWorkexp(StateWorkExp.allwork)
+        console.log(`runing`);
+      }, 5000);
+
+      console.log(`true`);
+      console.log(allworkexp, `allworkexp in useEffect`);
+      console.log(StateWorkExp.allwork, `StateWorkExp.allwork`);
+    } else {
+      console.log(`iam false`);
+      // setLoading(false)
+    }
+
+    setTimeout(() => {
+      //  console.log(StateWorkExp.allwork, `true true`);
+    }, 5000);
+    return () => {
+      //  console.log(StateWorkExp.allwork, `StateWorkExp`)
+    };
+  }, [Get_Workexperince, currentUser, id]);
+
   return (
     <Container>
       <Row>
@@ -172,7 +217,7 @@ const Workexperience = (props) => {
           </ButtonForWork>
         </Col>
         <Col xs={12} s={12} md={5} lg={5} xl={5}>
-          {allworkexp.length ? (
+          {!loading ? (
             <ButtonFordeleteWork
               className="buttonforpremium"
               variant="success"
@@ -188,82 +233,68 @@ const Workexperience = (props) => {
         {!loading ? (
           <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              {allworkexp.length ? (
-                allworkexp.map((single, key) => (
-                  <Col
-                    md={12}
-                    lg={12}
-                    xl={12}
-                    className="text-center"
-                    key={key}
-                    id="idforcss"
-                  >
-                    <P>
-                      CompanyName:
-                      <Strong>{single.companyname}</Strong>
-                    </P>
-                    <hr />
-                    <P>
-                      Start Work:
-                      <Strong>{single.startwork}</Strong>
-                    </P>
-                    <hr />
-                    <P>
-                      End Work:
-                      <Strong>{single.endwork}</Strong>
-                    </P>
-                    <hr />
-                    <P>
-                      Position:
-                      <Strong>{single.position}</Strong>
-                    </P>
-                  </Col>
-                ))
-              ) : (
-                <Col className="text-center">
-                  {" "}
-                  <Strongs>Add Your Last Jobs</Strongs>{" "}
+              {StateWorkExp.map((single, key) => (
+                <Col
+                  md={12}
+                  lg={12}
+                  xl={12}
+                  className="text-center"
+                  key={key}
+                  id="idforcss"
+                >
+                  <P>
+                    CompanyName:
+                    <Strong>{single.companyname}</Strong>
+                  </P>
+                  <hr />
+                  <P>
+                    Start Work:
+                    <Strong>{single.startwork}</Strong>
+                  </P>
+                  <hr />
+                  <P>
+                    End Work:
+                    <Strong>{single.endwork}</Strong>
+                  </P>
+                  <hr />
+                  <P>
+                    Position:
+                    <Strong>{single.position}</Strong>
+                  </P>
                 </Col>
-              )}
+              ))}
             </Row>
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              {allworkexp.length ? (
-                allworkexp.map((single, key) => (
-                  <Col
-                    xs={12}
-                    s={12}
-                    className="text-center"
-                    key={key}
-                    id="idforcss"
-                  >
-                    <p>
-                      CompanyName
-                      <StrongMobile>{single.companyname}</StrongMobile>
-                    </p>
-                    <hr />
-                    <p>
-                      Start Work
-                      <StrongMobile>{single.startwork}</StrongMobile>
-                    </p>
-                    <hr />
-                    <p>
-                      End Work
-                      <StrongMobile>{single.endwork}</StrongMobile>
-                    </p>
-                    <hr />
-                    <p>
-                      Position
-                      <StrongMobile>{single.position}</StrongMobile>
-                    </p>
-                  </Col>
-                ))
-              ) : (
-                <Col className="text-center">
-                  {" "}
-                  <Strongs>Add Your Last Jobs</Strongs>{" "}
+              {StateWorkExp.map((single, key) => (
+                <Col
+                  xs={12}
+                  s={12}
+                  className="text-center"
+                  key={key}
+                  id="idforcss"
+                >
+                  <p>
+                    CompanyName
+                    <StrongMobile>{single.companyname}</StrongMobile>
+                  </p>
+                  <hr />
+                  <p>
+                    Start Work
+                    <StrongMobile>{single.startwork}</StrongMobile>
+                  </p>
+                  <hr />
+                  <p>
+                    End Work
+                    <StrongMobile>{single.endwork}</StrongMobile>
+                  </p>
+                  <hr />
+                  <p>
+                    Position
+                    <StrongMobile>{single.position}</StrongMobile>
+                  </p>
                 </Col>
-              )}
+              ))}
             </Row>
           </Fragment>
         ) : (
@@ -342,10 +373,7 @@ const Workexperience = (props) => {
 
             <ModalFooter>
               <Button variantColor="blue" mr={3} type="submit">
-                Save
-                {/*
-                {!FlagButton ? <Spinner /> : "Save"}
-              */}
+                {!flagButton ? <Spinner /> : "Save"}
               </Button>
               <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
@@ -358,7 +386,7 @@ const Workexperience = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
-  StateWorkExp: state.sectionWorkexperince.workexperince,
+  StateWorkExp: state.sectionWorkexperince.workexperince.allwork,
 });
 
 const mapDispatchToProps = (dispatch) => ({

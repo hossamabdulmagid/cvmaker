@@ -6,9 +6,9 @@ const db = firestore;
 const Workexperince_Start = () => ({
   type: workexperinceActionType.GET_WORKEXPERINCE_START,
 });
-const Workexperince_Success = (workexperince) => ({
+const Workexperince_Success = (data) => ({
   type: workexperinceActionType.GET_WORKEXPERINCE_SUCCESS,
-  payload: workexperince,
+  payload: data,
 });
 const Workexperince_Error = (errorMessage) => {
   if (errorMessage && typeof errorMessage === "object") {
@@ -32,12 +32,15 @@ const Workexperince_Error = (errorMessage) => {
 export const Get_Workexperince = (currentUser, id) => {
   let hasError = false;
   let url = `users/${currentUser.id}/cvs/${id}/data/Workexperience`;
+  let Array = [];
   return (dispatch) => {
     dispatch(Workexperince_Start());
     db.doc(url)
       .get()
       .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
+        Array.push(newData);
+        console.log(Array, `Array.Array()`);
         if (
           !newData &&
           querySnapshot.errors &&
@@ -49,14 +52,14 @@ export const Get_Workexperince = (currentUser, id) => {
           console.log(errorMessage, `error from workexperinceAction.JS`);
         } else if (!hasError) {
           dispatch(Workexperince_Success(newData));
+          console.log(newData, `newData Comming From  GETWorkexperAction.JS`);
+          console.log(newData, `querySnapshot.dazzzzzzzzzzzzzzta()`);
         }
       })
-      .catch((errorMessage, newData) => {
-        if (errorMessage && !newData) {
+      .catch((errorMessage) => {
+        if (errorMessage) {
           dispatch(Workexperince_Error(errorMessage));
           console.log(errorMessage, `error from workexperinceAction.JS`);
-        } else {
-          dispatch(Workexperince_Success(newData));
         }
       });
   };

@@ -66,10 +66,11 @@ const Editor = ({
     const data = editor.getData();
     setState({ content_new: data });
   };
+
   const { id } = useParams();
 
   const createMarkup = () => {
-    return { __html: state.content_new };
+    return { __html: oldCkData.content_new };
   };
 
   const [flagButton, setFlagButton] = useState(true);
@@ -85,7 +86,7 @@ const Editor = ({
 
     let dataToBeSaved = {
       concept: details || "",
-      content_new: state.content_new || "",
+      content_new: oldCkData.content_new || "",
       type: state.type || "entry",
     };
 
@@ -102,6 +103,7 @@ const Editor = ({
     if (!currentUser) {
       return;
     }
+
     GetOLdDataForCkEditor(currentUser, id);
 
     console.log(oldCkData, `oldCkData`);
@@ -153,7 +155,7 @@ const Editor = ({
             editor={ClassicEditor}
             onInit={(Editor) => {}}
             onChange={HandleCkEditorState}
-            data={oldCkData.content_new || state.content_new || ""}
+            data={oldCkData.content_new || ""}
             name={content_new}
           />
           <div

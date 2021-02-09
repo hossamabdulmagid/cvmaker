@@ -122,7 +122,7 @@ export const Do_Submiting_BasicInfo = (
         if (errorMessage && hasError) {
           dispatch(Submiting_BasicInfo_Error(errorMessage));
           console.log(errorMessage, `errorMessage from BasicInfoAction.JS`);
-        } else if (dataToBeSaved) {
+        } else {
           dispatch(Submiting_BasicInfo_Success(dataToBeSaved));
           console.log(dataToBeSaved, `data From BasicInfoAction.JS`);
         }

@@ -270,7 +270,7 @@ const BasicInfo = (props) => {
                     <Label>Full name</Label>
                     <Input
                       name="fullname"
-                      value={dataform.fullname}
+                      defaultValue={"" || dataform.fullname}
                       ref={register({ required: "*input is required" })}
                       placeholder="Full Name"
                       onChange={handleChange}

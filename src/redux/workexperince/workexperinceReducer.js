@@ -2,9 +2,7 @@ import { workexperinceActionType } from "./workexperinceType";
 
 const INITAIL_STATE = {
   isFetching: false,
-  workexperince: {
-    allwork: [],
-  },
+  workexperince: { allwork: [], type: null },
   errorMessage: null,
 };
 
@@ -53,13 +51,14 @@ const workexperinceReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        workexperince: action.payload,
+        workexperince: state.workexperince,
+        ...action.payload,
       };
     case workexperinceActionType.GET_WORKEXPERINCE_ERROR:
       return {
         ...state,
         isFetching: false,
-        errorMessage: action.payload.errorMessage,
+        errorMessage: action.payload,
       };
 
     default:

@@ -33,6 +33,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import {
   Get_Workexperince,
   Do_Submiting_WorkExp,
+  Do_Delete_Cv,
 } from "../../../redux/workexperince/workexperinceAction";
 const Workexperience = (props) => {
   const {
@@ -40,7 +41,8 @@ const Workexperience = (props) => {
     currentUser,
     Get_Workexperince,
     Do_Submiting_WorkExp,
-    StateWorkExp,
+    StateWorkExp = [],
+    Do_Delete_Cv,
   } = props;
 
   const { id } = useParams();
@@ -94,8 +96,6 @@ const Workexperience = (props) => {
 
     await Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
 
-    //    setLoading(false);
-
     setTimeout(() => {
       setFlagButton(true);
 
@@ -103,8 +103,8 @@ const Workexperience = (props) => {
     }, 2000);
 
     setTimeout(() => {
-      // setLoading(false);
-    }, 5000);
+      setLoading(false);
+    }, 3000);
   };
   /*
     useEffect(() => {
@@ -141,25 +141,30 @@ const Workexperience = (props) => {
   }, []);
 
   const DeleteSingleJob = () => {
-    firestore
-      .collection(`users/${currentUser.id}/cvs/${id}/data`)
-      .doc(`Workexperience`)
-      .delete()
-      .then(() => {
-        setAllWorkexp([]);
-        console.log("Document successfully deleted!");
-        toast({
-          title: "jobs has Been deleted.",
-          description: `Document successfully deleted`,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom-right",
+    Do_Delete_Cv(currentUser, id, toast);
+    setTimeout(() => {
+      setLoading(true);
+    }, 2000);
+    /*  firestore
+        .collection(`users/${currentUser.id}/cvs/${id}/data`)
+        .doc(`Workexperience`)
+        .delete()
+        .then(() => {
+          setAllWorkexp([]);
+          console.log("Document successfully deleted!");
+          toast({
+            title: "jobs has Been deleted.",
+            description: `Document successfully deleted`,
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom-right",
+          });
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
         });
-      })
-      .catch((error) => {
-        console.error("Error removing document: ", error);
-      });
+        */
   };
 
   const [displayData, setDisplayData] = useState(true);
@@ -174,36 +179,21 @@ const Workexperience = (props) => {
 
     // console.log(StateWorkExp.allwork, `StateWorkExp`)
 
-    setDisplayData(false);
-    //  setLoading(false)
-
+    //StateWorkExp.allwork = []
+    //  console.log(StateWorkExp, `StateWorkExp`)
     if (Array.isArray(StateWorkExp)) {
-      setTimeout(() => {
-        //allworkexp.push(pp)
-        //   console.log(`allworkexp`, allworkexp)
-      }, 2000);
-
-      setTimeout(() => {
-        //  setAllWorkexp(StateWorkExp.allwork)
-        console.log(`runing`);
-      }, 5000);
-
       console.log(`true`);
-      console.log(allworkexp, `allworkexp in useEffect`);
-      console.log(StateWorkExp.allwork, `StateWorkExp.allwork`);
+      setLoading(false);
     } else {
-      console.log(`iam false`);
-      // setLoading(false)
+      setDisplayData(false);
+      console.log(`iam flase`);
     }
-
-    setTimeout(() => {
-      //  console.log(StateWorkExp.allwork, `true true`);
-    }, 5000);
     return () => {
       //  console.log(StateWorkExp.allwork, `StateWorkExp`)
     };
-  }, [Get_Workexperince, currentUser, id]);
+  }, [Get_Workexperince, currentUser, id, StateWorkExp]);
 
+  useEffect(() => {}, []);
   return (
     <Container>
       <Row>
@@ -262,7 +252,7 @@ const Workexperience = (props) => {
                     <Strong>{single.position}</Strong>
                   </P>
                 </Col>
-              ))}
+              )) || []}
             </Row>
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
@@ -294,7 +284,7 @@ const Workexperience = (props) => {
                     <StrongMobile>{single.position}</StrongMobile>
                   </p>
                 </Col>
-              ))}
+              )) || []}
             </Row>
           </Fragment>
         ) : (
@@ -386,7 +376,7 @@ const Workexperience = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
-  StateWorkExp: state.sectionWorkexperince.workexperince.allwork,
+  StateWorkExp: state.sectionWorkexperince.allwork,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -395,6 +385,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(Get_Workexperince(currentUser, id)),
   Do_Submiting_WorkExp: (currentUser, id, dataToBeSaved, toast) =>
     dispatch(Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast)),
+  Do_Delete_Cv: (currentUser, id, toast) =>
+    dispatch(Do_Delete_Cv(currentUser, id, toast)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workexperience);

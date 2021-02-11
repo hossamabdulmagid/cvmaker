@@ -23,7 +23,6 @@ import {
   ButtonFordeleteWork,
   P,
   Strong,
-  Strongs,
   StrongMobile,
   Icon,
 } from "./workexperience.styles";
@@ -107,33 +106,7 @@ const Workexperience = (props) => {
     }, 3000);
   };
   /*
-    useEffect(() => {
-      if (!currentUser) {
-        return;
-      }
-      firestore
-        .doc(`users/${currentUser.id}`)
-        .collection(`cvs/${id}/data`)
-        .doc(`Workexperience`)
-        .get()
-        .then((querySnapshot) => {
-          const workexpData = querySnapshot.data();
-          console.log(workexpData, `workexpData`)
-   
-          if (workexpData) {
-            workexpData.allwork.map((Singlejob) => allworkexp.push(Singlejob));
-   
-            setTimeout(() => {
-              setLoading(false);
-            }, 300);
-          }
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log(error, `there is was an error`);
-        });
-    }, [currentUser, id]);
-  */
+   */
   const [flagButton, setFlagButton] = useState(true);
 
   useEffect(() => {
@@ -145,26 +118,6 @@ const Workexperience = (props) => {
     setTimeout(() => {
       setLoading(true);
     }, 2000);
-    /*  firestore
-        .collection(`users/${currentUser.id}/cvs/${id}/data`)
-        .doc(`Workexperience`)
-        .delete()
-        .then(() => {
-          setAllWorkexp([]);
-          console.log("Document successfully deleted!");
-          toast({
-            title: "jobs has Been deleted.",
-            description: `Document successfully deleted`,
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom-right",
-          });
-        })
-        .catch((error) => {
-          console.error("Error removing document: ", error);
-        });
-        */
   };
 
   const [displayData, setDisplayData] = useState(true);
@@ -176,11 +129,6 @@ const Workexperience = (props) => {
       return;
     }
     Get_Workexperince(currentUser, id);
-
-    // console.log(StateWorkExp.allwork, `StateWorkExp`)
-
-    //StateWorkExp.allwork = []
-    //  console.log(StateWorkExp, `StateWorkExp`)
     if (Array.isArray(StateWorkExp)) {
       console.log(`true`);
       setLoading(false);
@@ -188,9 +136,7 @@ const Workexperience = (props) => {
       setDisplayData(false);
       console.log(`iam flase`);
     }
-    return () => {
-      //  console.log(StateWorkExp.allwork, `StateWorkExp`)
-    };
+    return () => {};
   }, [Get_Workexperince, currentUser, id, StateWorkExp]);
 
   useEffect(() => {}, []);

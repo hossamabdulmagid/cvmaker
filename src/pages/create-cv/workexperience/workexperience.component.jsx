@@ -142,21 +142,12 @@ const Workexperience = (props) => {
     };
   }, []);
 
-  const Get_Data = useMemo(() => {
+  useLayoutEffect(() => {
     if (!currentUser && !id) {
       return;
     }
-
-    return (currentUser, id) => {
-      if (allworkexp) {
-        Get_Workexperince(currentUser, id);
-      }
-    };
+    Get_Workexperince(currentUser, id);
   }, [Get_Workexperince, currentUser, id, StateWorkExp]);
-
-  useLayoutEffect(() => {
-    Get_Data();
-  });
 
   useEffect(() => {
     if (isCurrent.current) {

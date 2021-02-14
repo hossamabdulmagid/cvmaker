@@ -165,7 +165,6 @@ export const Do_Delete_Cv = (currentUser, id, toast) => {
           console.log(errorMessage, `error from deleteworkrxpaction.js`);
         } else {
           dispatch(Delete_Cv_Success());
-          dispatch(Get_Workexperince(currentUser, id));
           console.log(`WorkExpDeleted SuccessFull`);
           toast({
             title: "jobs has Been deleted.",

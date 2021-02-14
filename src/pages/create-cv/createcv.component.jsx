@@ -552,7 +552,7 @@ const CreateCv = (props) => {
                   <Nav className="mr-auto">
                     <Ul>
                       {!flag
-                        ? array.map((singleRouteforSidebar, x) => (
+                        ? allNameOfSections.map((singleRouteforSidebar, x) => (
                             <Li
                               key={x}
                               href="#"

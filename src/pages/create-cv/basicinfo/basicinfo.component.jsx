@@ -129,6 +129,10 @@ const BasicInfo = (props) => {
     }
     GetBasicInfo(currentUser, id, toast);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [GetBasicInfo, currentUser, id, toast, setDataform]);
+
+  useEffect(() => {
     if (basicInfoState) {
       if (isCurrent.current) {
         setDataform({
@@ -142,16 +146,10 @@ const BasicInfo = (props) => {
           email: basicInfoState.email,
           lastModified: basicInfoState.lastModified,
         });
-        setTimeout(() => {
-          setLoading(false);
-        }, 200);
+        setLoading(false);
       }
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [GetBasicInfo, currentUser, id, toast]);
-
-  useEffect(() => dataform, [basicInfoState]);
+  }, [basicInfoState, setDataform, setLoading]);
 
   const [color, setColor] = useState("");
 

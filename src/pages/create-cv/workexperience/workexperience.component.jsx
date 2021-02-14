@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useMemo, Fragment, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  Fragment,
+  useRef,
+  useCallback,
+} from "react";
 import { useForm } from "react-hook-form";
 import { AddToList } from "../../../redux/addtolist/addtolistAction";
 import { connect } from "react-redux";
@@ -113,12 +120,12 @@ const Workexperience = (props) => {
     setFlagButton(true);
   }, []);
 
-  const DeleteSingleJob = () => {
+  const DeleteSingleJob = useCallback(() => {
     Do_Delete_Cv(currentUser, id, toast);
     setTimeout(() => {
       setLoading(true);
-    }, 2000);
-  };
+    }, 1000);
+  }, [Do_Delete_Cv, currentUser, id]);
 
   const [displayData, setDisplayData] = useState(true);
 
@@ -136,10 +143,14 @@ const Workexperience = (props) => {
       setDisplayData(false);
       console.log(`iam flase`);
     }
-    return () => {};
-  }, [Get_Workexperince, currentUser, id, StateWorkExp]);
+    return () => {
+      setAllWorkexp(StateWorkExp);
+      console.log(allworkexp, `allworkexp >> `);
+      console.log(StateWorkExp, `StateWorkExp >> `);
+      console.log(StateWorkExp, `StateWorkExp....`);
+    };
+  }, [Get_Workexperince, currentUser, id, setAllWorkexp]);
 
-  useEffect(() => {}, []);
   return (
     <Container>
       <Row>

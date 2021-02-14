@@ -40,6 +40,9 @@ const Education = (props) => {
   const { id } = useParams();
 
   const toast = useToast();
+
+  const isCurrent = useRef(true);
+
   const [education, setEducation] = useState({
     education: {
       collagename: "",
@@ -52,6 +55,27 @@ const Education = (props) => {
   });
 
   useEffect(() => {
+    return () => {
+      isCurrent.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isCurrent.current) {
+      if (EducationState) {
+        setEducation({
+          collagename: EducationState.collagename,
+          startgraduationyear: EducationState.startgraduationyear,
+          endgraduationyear: EducationState.endgraduationyear,
+          eduactionmajor: EducationState.eduactionmajor,
+          lastModified: EducationState.lastModified,
+        });
+      }
+      setLoading(false);
+    }
+  }, [setEducation, EducationState]);
+
+  useEffect(() => {
     if (!currentUser) {
       return;
     }
@@ -59,18 +83,7 @@ const Education = (props) => {
     GET_Education(currentUser, id, toast);
 
     if (EducationState) {
-      console.log(`iam already Setting the State`);
-      setEducation({
-        collagename: EducationState.collagename,
-        startgraduationyear: EducationState.startgraduationyear,
-        endgraduationyear: EducationState.endgraduationyear,
-        eduactionmajor: EducationState.eduactionmajor,
-        lastModified: EducationState.lastModified,
-      });
-
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      console.log(EducationState, `iam already Setting the State`);
     }
   }, [GET_Education, currentUser, id, toast]);
 
@@ -82,6 +95,7 @@ const Education = (props) => {
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const value = getValues();
+
   const {
     collagename,
     startgraduationyear,

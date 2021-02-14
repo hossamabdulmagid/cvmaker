@@ -91,6 +91,7 @@ const Submiting_WorkExp_Error = (errorMessage) => {
 export const Do_Submiting_WorkExp = (currentUser, id, dataToBeSaved, toast) => {
   let hasError = false;
   const url = `users/${currentUser.id}/cvs/${id}/data/Workexperience`;
+  console.log(`data got called With ${dataToBeSaved}`);
   return (dispatch) => {
     dispatch(Submiting_WorkExp_Start());
     db.doc(url)

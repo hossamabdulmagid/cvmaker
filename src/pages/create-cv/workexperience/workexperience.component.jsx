@@ -131,11 +131,20 @@ const Workexperience = (props) => {
 
   const [data, setData] = useState([]);
 
+  const isCurrent = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isCurrent.current = false;
+    };
+  }, []);
+
   useEffect(() => {
     if (!currentUser && !id) {
       return;
     }
     Get_Workexperince(currentUser, id);
+    /*
     if (Array.isArray(StateWorkExp)) {
       console.log(`true`);
       setLoading(false);
@@ -149,7 +158,19 @@ const Workexperience = (props) => {
       console.log(StateWorkExp, `StateWorkExp >> `);
       console.log(StateWorkExp, `StateWorkExp....`);
     };
+    */
   }, [Get_Workexperince, currentUser, id, setAllWorkexp]);
+
+  useEffect(() => {
+    if (isCurrent.current) {
+      if (StateWorkExp) {
+        setAllWorkexp(StateWorkExp);
+        setLoading(false);
+      } else {
+        setLoading(true);
+      }
+    }
+  }, [setWorkexperinceform, StateWorkExp]);
 
   return (
     <Container>
@@ -180,7 +201,7 @@ const Workexperience = (props) => {
         {!loading ? (
           <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              {StateWorkExp.map((single, key) => (
+              {allworkexp.map((single, key) => (
                 <Col
                   md={12}
                   lg={12}
@@ -213,7 +234,7 @@ const Workexperience = (props) => {
             </Row>
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              {StateWorkExp.map((single, key) => (
+              {allworkexp.map((single, key) => (
                 <Col
                   xs={12}
                   s={12}

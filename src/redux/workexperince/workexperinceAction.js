@@ -10,24 +10,10 @@ const Workexperince_Success = (data) => ({
   type: workexperinceActionType.GET_WORKEXPERINCE_SUCCESS,
   payload: data,
 });
-const Workexperince_Error = (errorMessage) => {
-  if (errorMessage && typeof errorMessage === "object") {
-    for (let key in errorMessage) {
-      if (typeof errorMessage[key] === "object") {
-        if (errorMessage[key][0]) {
-          console.log(
-            errorMessage[key][0],
-            `error from workexperinceAction.JS`
-          );
-        }
-      }
-    }
-  }
-  return {
-    type: workexperinceActionType.GET_WORKEXPERINCE_ERROR,
-    payload: errorMessage,
-  };
-};
+const Workexperince_Error = (error) => ({
+  type: workexperinceActionType.GET_WORKEXPERINCE_ERROR,
+  payload: error,
+});
 
 export const Get_Workexperince = (currentUser, id) => {
   let hasError = false;
@@ -39,16 +25,21 @@ export const Get_Workexperince = (currentUser, id) => {
       .get()
       .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
+
         array.push(newData);
+
         //  console.log(array, `Array.Array()`);
         if (!newData) {
           hasError = true;
+
           dispatch(Workexperince_Error(errorMessage));
+
           console.log(errorMessage, `error from workexperinceAction.JS`);
-        } else if (!hasError && newData) {
+        } else if (!hasError) {
           dispatch(Workexperince_Success(newData));
-          console.log(newData, `newData Comming From  GETWorkexperAction.JS`);
-          console.log(newData, `querySnapshot.dazzzzzzzzzzzzzzta()`);
+
+          //   console.log(newData, `newData Comming From  GETWorkexperAction.JS`);
+          // console.log(newData, `querySnapshot.dazzzzzzzzzzzzzzta()`);
         }
       })
       .catch((errorMessage) => {

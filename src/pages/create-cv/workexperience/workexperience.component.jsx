@@ -5,6 +5,7 @@ import React, {
   Fragment,
   useRef,
   useCallback,
+  useLayoutEffect,
 } from "react";
 import { useForm } from "react-hook-form";
 import { AddToList } from "../../../redux/addtolist/addtolistAction";
@@ -98,6 +99,7 @@ const Workexperience = (props) => {
       allwork: allworkexp,
       type: "workexperience",
     };
+
     setFlagButton(false);
 
     await Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
@@ -108,9 +110,9 @@ const Workexperience = (props) => {
       onClose();
     }, 2000);
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    setLoading(false);
+
+    setDisplayData(false);
   };
   /*
    */
@@ -122,6 +124,7 @@ const Workexperience = (props) => {
 
   const DeleteSingleJob = useCallback(() => {
     Do_Delete_Cv(currentUser, id, toast);
+
     setTimeout(() => {
       setLoading(true);
     }, 1000);
@@ -139,38 +142,41 @@ const Workexperience = (props) => {
     };
   }, []);
 
-  useEffect(() => {
+  const Get_Data = useMemo(() => {
     if (!currentUser && !id) {
       return;
     }
-    Get_Workexperince(currentUser, id);
-    /*
-    if (Array.isArray(StateWorkExp)) {
-      console.log(`true`);
-      setLoading(false);
-    } else {
-      setDisplayData(false);
-      console.log(`iam flase`);
-    }
-    return () => {
-      setAllWorkexp(StateWorkExp);
-      console.log(allworkexp, `allworkexp >> `);
-      console.log(StateWorkExp, `StateWorkExp >> `);
-      console.log(StateWorkExp, `StateWorkExp....`);
+
+    return (currentUser, id) => {
+      if (allworkexp) {
+        Get_Workexperince(currentUser, id);
+      }
     };
-    */
-  }, [Get_Workexperince, currentUser, id, setAllWorkexp]);
+  }, [Get_Workexperince, currentUser, id, StateWorkExp]);
+
+  useLayoutEffect(() => {
+    Get_Data();
+  });
 
   useEffect(() => {
     if (isCurrent.current) {
-      if (StateWorkExp) {
-        setAllWorkexp(StateWorkExp);
-        setLoading(false);
-      } else {
-        setLoading(true);
+      console.log(StateWorkExp, `StateWorkExp`);
+
+      if (StateWorkExp.length > 0) {
+        console.log(`iam Ready...got Called @@@@@@`);
+
+        setTimeout(() => {
+          setLoading(false);
+
+          setDisplayData(false);
+        }, 1000);
+
+        console.log(StateWorkExp.length, `StateWorkExp.length`);
       }
     }
-  }, [setWorkexperinceform, StateWorkExp]);
+  }, [StateWorkExp, StateWorkExp.length]);
+
+  // console.log(allworkexp, `allworkexp`)
 
   return (
     <Container>
@@ -185,7 +191,7 @@ const Workexperience = (props) => {
           </ButtonForWork>
         </Col>
         <Col xs={12} s={12} md={5} lg={5} xl={5}>
-          {!loading ? (
+          {!displayData ? (
             <ButtonFordeleteWork
               className="buttonforpremium"
               variant="success"
@@ -201,7 +207,7 @@ const Workexperience = (props) => {
         {!loading ? (
           <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              {allworkexp.map((single, key) => (
+              {(StateWorkExp || []).map((single, key) => (
                 <Col
                   md={12}
                   lg={12}
@@ -230,11 +236,11 @@ const Workexperience = (props) => {
                     <Strong>{single.position}</Strong>
                   </P>
                 </Col>
-              )) || []}
+              ))}
             </Row>
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              {allworkexp.map((single, key) => (
+              {(StateWorkExp || []).map((single, key) => (
                 <Col
                   xs={12}
                   s={12}
@@ -262,7 +268,7 @@ const Workexperience = (props) => {
                     <StrongMobile>{single.position}</StrongMobile>
                   </p>
                 </Col>
-              )) || []}
+              ))}
             </Row>
           </Fragment>
         ) : (
@@ -354,7 +360,7 @@ const Workexperience = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
-  StateWorkExp: state.sectionWorkexperince.allwork,
+  StateWorkExp: state.sectionWorkexperince.data.allwork,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,5 +1,6 @@
 import { UserTypeAction } from "./userType";
 import { firestore } from "../../firebase/firebase.utils";
+
 const setCurrentUser = (user) => {
   return {
     type: UserTypeAction.SET_CURRENT_USER,
@@ -17,6 +18,7 @@ export const Data_Success = (data) => ({
   type: UserTypeAction.GET_DATA_SUCCESS,
   payload: data,
 });
+
 export const Data_Error = (error) => ({
   type: UserTypeAction.GET_DATA_ERROR,
   payload: error,

@@ -63,6 +63,7 @@ export const Get_allSection = (currentUser, id, toast) => {
         });
         if (!hasError) {
           dispatch(SectionSuccess(array));
+          console.log(array, `array from allsections.???`);
         }
       })
       .catch((errorMessage, data, sectionName) => {

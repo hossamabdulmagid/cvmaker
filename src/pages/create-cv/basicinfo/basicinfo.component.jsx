@@ -48,6 +48,7 @@ const BasicInfo = (props) => {
     GetBasicInfo,
     basicInfoState,
     Do_Submiting_BasicInfo,
+    oldId = [],
   } = props;
 
   const { id } = useParams();
@@ -99,6 +100,7 @@ const BasicInfo = (props) => {
       type: dataform.type || "basicinfo",
     };
     await Do_Submiting_BasicInfo(currentUser, id, dataToBeSaved, toast);
+
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
@@ -131,25 +133,52 @@ const BasicInfo = (props) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [GetBasicInfo, currentUser, id, toast, setDataform]);
+  const found = oldId.map((x) => x._ID);
+  console.log(found);
 
   useEffect(() => {
+    console.log(found, `found before setting State`);
+    console.log(`id?>????/`, id);
     if (basicInfoState) {
+      console.log("true the same id", found.toString(), `after string`);
+
+      setLoading(false);
+
       if (isCurrent.current) {
-        setDataform({
-          title: basicInfoState.title,
-          fullname: basicInfoState.fullname,
-          phone: basicInfoState.phone,
-          address1: basicInfoState.address1,
-          address2: basicInfoState.address2,
-          address3: basicInfoState.address3,
-          webSites: basicInfoState.webSites,
-          email: basicInfoState.email,
-          lastModified: basicInfoState.lastModified,
-        });
-        setLoading(false);
+        if (found.toString() === id) {
+          console.log(`@@@@@@@@@@`);
+
+          setDataform({
+            title: basicInfoState.title,
+            fullname: basicInfoState.fullname,
+            phone: basicInfoState.phone,
+            address1: basicInfoState.address1,
+            address2: basicInfoState.address2,
+            address3: basicInfoState.address3,
+            webSites: basicInfoState.webSites,
+            email: basicInfoState.email,
+            lastModified: basicInfoState.lastModified,
+          });
+        } else {
+          setDataform({
+            title: "",
+            fullname: "",
+            phone: "",
+            address1: "",
+            address2: "",
+            address3: "",
+            webSites: "",
+            email: "",
+            lastModified: "",
+          });
+        }
       }
+    } else {
+      console.log("false not equal");
     }
-  }, [basicInfoState, setDataform, setLoading]);
+    console.log(basicInfoState, `basicInfoState`);
+    console.log(oldId, `oldId from basic info compoenent`);
+  }, [basicInfoState, setDataform, setLoading, oldId, id]);
 
   const [color, setColor] = useState("");
 
@@ -637,6 +666,7 @@ const BasicInfo = (props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   basicInfoState: state.sectionBasicInfo.data.basicinfo,
+  oldId: state.allSections.section,
 });
 const mapDispatchToProps = (dispatch) => ({
   GetBasicInfo: (currentUser, id, toast) =>

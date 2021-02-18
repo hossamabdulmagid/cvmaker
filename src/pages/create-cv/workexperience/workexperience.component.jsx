@@ -150,19 +150,17 @@ const Workexperience = (props) => {
   }, [Get_Workexperince, currentUser, id, StateWorkExp]);
 
   useEffect(() => {
-    if (isCurrent.current) {
-      console.log(StateWorkExp, `StateWorkExp`);
-
-      if (StateWorkExp.length > 0) {
-        console.log(`iam Ready...got Called @@@@@@`);
-
-        setTimeout(() => {
-          setLoading(false);
-
-          setDisplayData(false);
-        }, 1000);
-
-        console.log(StateWorkExp.length, `StateWorkExp.length`);
+    if (StateWorkExp) {
+      if (isCurrent.current) {
+        console.log(StateWorkExp, `StateWorkExp`);
+        if (StateWorkExp.length > 0) {
+          console.log(`iam Ready...got Called @@@@@@`);
+          setTimeout(() => {
+            setLoading(false);
+            setDisplayData(false);
+          }, 1000);
+          console.log(StateWorkExp.length, `StateWorkExp.length`);
+        }
       }
     }
   }, [StateWorkExp, StateWorkExp.length]);

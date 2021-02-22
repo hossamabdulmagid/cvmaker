@@ -147,7 +147,7 @@ const Workexperience = (props) => {
       return;
     }
     Get_Workexperince(currentUser, id);
-  }, [Get_Workexperince, currentUser, id, StateWorkExp]);
+  }, [Get_Workexperince, currentUser, id]);
 
   useEffect(() => {
     if (StateWorkExp) {

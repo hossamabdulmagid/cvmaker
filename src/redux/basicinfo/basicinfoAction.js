@@ -8,9 +8,9 @@ const BasicInfoStart = () => ({
   type: basicInfoActionType.GET_BASICINFO_START,
 });
 
-const BasicInfoSuccess = (basicinfo) => ({
+const BasicInfoSuccess = (data) => ({
   type: basicInfoActionType.GET_BASICINFO_SUCCESS,
-  payload: basicinfo,
+  payload: data,
 });
 
 const BasicInfoError = (errorMessage) => {
@@ -38,7 +38,7 @@ export const GetBasicInfo = (currentUser, id, toast) => {
       .doc(`Basicinfo`)
       .get()
       .then((querySnapshot, errorMessage) => {
-        const newData = querySnapshot.data();
+        let newData = querySnapshot.data();
         if (
           !newData &&
           querySnapshot.error &&
@@ -48,17 +48,16 @@ export const GetBasicInfo = (currentUser, id, toast) => {
           hasError = true;
           dispatch(BasicInfoError(errorMessage));
           console.log(errorMessage, `error from redux files basicinfo`);
-        }
-        if (!hasError) {
+        } else if (newData && !hasError) {
           dispatch(BasicInfoSuccess(newData));
+          console.log(newData, `new Dataaaaaaaaaaaz`);
+          console.log(newData, `newData`);
         }
       })
       .catch((errorMessage, newData) => {
         if (errorMessage && !newData) {
           dispatch(BasicInfoError(errorMessage));
           console.log(errorMessage, `error from redux files basicinfo`);
-        } else if ((!errorMessage, newData)) {
-          dispatch(BasicInfoSuccess(newData));
         }
       });
   };

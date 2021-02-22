@@ -130,55 +130,30 @@ const BasicInfo = (props) => {
       return;
     }
     GetBasicInfo(currentUser, id, toast);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [GetBasicInfo, currentUser, id, toast, setDataform]);
-  const found = oldId.map((x) => x._ID);
-  console.log(found);
-
-  useEffect(() => {
-    console.log(found, `found before setting State`);
-    console.log(`id?>????/`, id);
     if (basicInfoState) {
       console.log("true the same id", found.toString(), `after string`);
 
       setLoading(false);
 
       if (isCurrent.current) {
-        if (found.toString() === id) {
-          console.log(`@@@@@@@@@@`);
+        console.log(`@@@@@@@@@@`);
 
-          setDataform({
-            title: basicInfoState.title,
-            fullname: basicInfoState.fullname,
-            phone: basicInfoState.phone,
-            address1: basicInfoState.address1,
-            address2: basicInfoState.address2,
-            address3: basicInfoState.address3,
-            webSites: basicInfoState.webSites,
-            email: basicInfoState.email,
-            lastModified: basicInfoState.lastModified,
-          });
-        } else {
-          setDataform({
-            title: "",
-            fullname: "",
-            phone: "",
-            address1: "",
-            address2: "",
-            address3: "",
-            webSites: "",
-            email: "",
-            lastModified: "",
-          });
-        }
+        setDataform({
+          title: basicInfoState.title,
+          fullname: basicInfoState.fullname,
+          phone: basicInfoState.phone,
+          address1: basicInfoState.address1,
+          address2: basicInfoState.address2,
+          address3: basicInfoState.address3,
+          webSites: basicInfoState.webSites,
+          email: basicInfoState.email,
+          lastModified: basicInfoState.lastModified,
+        });
       }
-    } else {
-      console.log("false not equal");
     }
-    console.log(basicInfoState, `basicInfoState`);
-    console.log(oldId, `oldId from basic info compoenent`);
-  }, [basicInfoState, setDataform, setLoading, oldId, id]);
+  }, [GetBasicInfo, currentUser, id, basicInfoState]);
+  const found = oldId.map((x) => x._ID);
+  console.log(found);
 
   const [color, setColor] = useState("");
 

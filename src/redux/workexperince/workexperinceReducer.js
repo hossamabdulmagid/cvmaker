@@ -64,12 +64,6 @@ const workexperinceReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        data: {
-          allwork: [],
-        },
-
-        type: null,
-
         errorMessage: action.payload,
       };
 

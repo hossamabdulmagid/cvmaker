@@ -4,17 +4,18 @@ const INITIAL_STATE = {
   isFetching: false,
   data: {
     basicinfo: {
+      title: "",
       fullname: "",
-      webSites: "",
+      phone: "",
       email: "",
       address1: "",
       address2: "",
       address3: "",
-      title: "",
-      phone: "",
-      lastModified: "",
+      webSites: "",
+      lastModified: new Date(),
+      id: null,
     },
-    type: "basicinfo",
+    type: null,
   },
   errorMessage: null,
 };
@@ -47,25 +48,15 @@ const basicinfoReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isFetching: false,
         data: {
-          basicinfo: {
-            fullname: action.payload.basicinfo.fullname,
-            webSites: action.payload.basicinfo.webSites,
-            email: action.payload.basicinfo.email,
-            address1: action.payload.basicinfo.address1,
-            address2: action.payload.basicinfo.address2,
-            address3: action.payload.basicinfo.address3,
-            phone: action.payload.basicinfo.phone,
-            title: action.payload.basicinfo.title,
-            lastModified: action.payload.basicinfo.lastModified,
-          },
+          basicinfo: action.payload.basicinfo,
           type: action.payload.type,
         },
       };
     case basicInfoActionType.GET_BASICINFO_ERROR:
       return {
-        ...state,
+        ...INITIAL_STATE,
         isFetching: false,
-        errorMessage: action.payload.errorMessage,
+        errorMessage: action.payload,
       };
     default:
       return state;

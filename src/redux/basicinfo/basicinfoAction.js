@@ -13,21 +13,10 @@ const BasicInfoSuccess = (data) => ({
   payload: data,
 });
 
-const BasicInfoError = (errorMessage) => {
-  if (errorMessage && typeof errorMessage === "object") {
-    for (let key in errorMessage) {
-      if (typeof errorMessage[key] === "object") {
-        if (errorMessage[key][0]) {
-          console.log(errorMessage, `error from redux files basicinfo`);
-        }
-      }
-    }
-  }
-  return {
-    type: basicInfoActionType.GET_BASICINFO_ERROR,
-    payload: errorMessage,
-  };
-};
+const BasicInfoError = (errorMessage) => ({
+  type: basicInfoActionType.GET_BASICINFO_ERROR,
+  payload: errorMessage,
+});
 
 export const GetBasicInfo = (currentUser, id, toast) => {
   let hasError = false;
@@ -38,24 +27,21 @@ export const GetBasicInfo = (currentUser, id, toast) => {
       .doc(`Basicinfo`)
       .get()
       .then((querySnapshot, errorMessage) => {
-        let newData = querySnapshot.data();
-        if (
-          !newData &&
-          querySnapshot.error &&
-          querySnapshot.errors &&
-          errorMessage
-        ) {
-          hasError = true;
+        let data = querySnapshot.data();
+        if (data) {
+          dispatch(BasicInfoSuccess(data));
+          console.log(
+            data,
+            `data.......??????????????????????????????????????`
+          );
+          console.log(`iam runder`);
+        } else {
           dispatch(BasicInfoError(errorMessage));
           console.log(errorMessage, `error from redux files basicinfo`);
-        } else if (newData && !hasError) {
-          dispatch(BasicInfoSuccess(newData));
-          console.log(newData, `new Dataaaaaaaaaaaz`);
-          console.log(newData, `newData`);
         }
       })
-      .catch((errorMessage, newData) => {
-        if (errorMessage && !newData) {
+      .catch((errorMessage) => {
+        if (errorMessage) {
           dispatch(BasicInfoError(errorMessage));
           console.log(errorMessage, `error from redux files basicinfo`);
         }

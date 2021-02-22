@@ -46,7 +46,7 @@ const BasicInfo = (props) => {
     info,
     basicinfo,
     GetBasicInfo,
-    basicInfoState,
+    basicInfoState = {},
     Do_Submiting_BasicInfo,
     oldId = [],
   } = props;
@@ -96,6 +96,7 @@ const BasicInfo = (props) => {
         address3: dataform.address3 || "",
         webSites: dataform.webSites || "",
         lastModified: new Date(),
+        id,
       },
       type: dataform.type || "basicinfo",
     };
@@ -109,16 +110,6 @@ const BasicInfo = (props) => {
 
   const isCurrent = useRef(true);
 
-  const getStateFromUpdates = (basicInfoState) => basicInfoState;
-
-  const Tags = useMemo(() => {
-    if (!currentUser) {
-      return;
-    }
-
-    return getStateFromUpdates(basicInfoState);
-  }, [currentUser, basicInfoState]);
-
   useEffect(() => {
     return () => {
       isCurrent.current = false;
@@ -129,31 +120,55 @@ const BasicInfo = (props) => {
     if (!currentUser) {
       return;
     }
+
     GetBasicInfo(currentUser, id, toast);
-    if (basicInfoState) {
-      console.log("true the same id", found.toString(), `after string`);
 
-      setLoading(false);
+    // console.log(Object.keys(basicInfoState).length === 0, `Object.keys(basicInfoState).length > 10`)
 
+    if (Object.keys(basicInfoState).length === 0) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+      setDataform({});
+      //  console.log(basicInfoState, `basicinfoState..>>>>>>>>>>>>>>>`);
+
+      console.log(dataform, `iam setting state with empty object {{}}`);
+    } else {
       if (isCurrent.current) {
-        console.log(`@@@@@@@@@@`);
-
-        setDataform({
-          title: basicInfoState.title,
-          fullname: basicInfoState.fullname,
-          phone: basicInfoState.phone,
-          address1: basicInfoState.address1,
-          address2: basicInfoState.address2,
-          address3: basicInfoState.address3,
-          webSites: basicInfoState.webSites,
-          email: basicInfoState.email,
-          lastModified: basicInfoState.lastModified,
-        });
+        if (basicInfoState.id) {
+          setDataform({
+            title: basicInfoState.title,
+            fullname: basicInfoState.fullname,
+            phone: basicInfoState.phone,
+            address1: basicInfoState.address1,
+            address2: basicInfoState.address2,
+            address3: basicInfoState.address3,
+            webSites: basicInfoState.webSites,
+            email: basicInfoState.email,
+            lastModified: basicInfoState.lastModified,
+          });
+        } else {
+          setDataform({
+            basicinfo: {
+              title: "",
+              fullname: "",
+              phone: "",
+              email: "",
+              address1: "",
+              address2: "",
+              address3: "",
+              webSites: "",
+              lastModified: new Date(),
+            },
+            type: "basicinfo",
+          });
+        }
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       }
     }
-  }, [GetBasicInfo, currentUser, id, basicInfoState]);
-  const found = oldId.map((x) => x._ID);
-  console.log(found);
+  }, [GetBasicInfo, currentUser, id, basicInfoState.id]);
 
   const [color, setColor] = useState("");
 
@@ -187,7 +202,9 @@ const BasicInfo = (props) => {
         "basicinfo.lastModified",
         new Date()
       );
+
     onClose();
+
     toast({
       title: "section name updated.",
       description: `your SectionName updated  to : ${sectionName.sectionlabel} `,

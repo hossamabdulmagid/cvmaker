@@ -64,8 +64,7 @@ class App extends Component {
                   render={() =>
                     currentUser ? <Redirect to="/cv" /> : <SigninSignup />
                   }
-                />{" "}
-                {/**/}
+                />
                 <PrivateRoute exact path="/login" component={SigninSignup} />
                 <Route path="/policy" component={Privacy} />
                 <Route path="/contact" component={Contact} />

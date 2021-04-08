@@ -8,9 +8,9 @@ import {
   ColorModeProvider,
   CSSReset,
 } from "@chakra-ui/core";
+import * as serviceWorker from "./serviceWorker";
 
 import { Provider } from "react-redux";
-import * as serviceWorker from "./serviceWorker";
 
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
@@ -19,18 +19,18 @@ import { unregister } from "./registerServiceWorker";
 unregister();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <ColorModeProvider>
-          <PersistGate persistor={persistor}>
-            <CSSReset />
+  <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <ColorModeProvider>
+        <PersistGate persistor={persistor}>
+          <CSSReset />
+          <Provider store={store}>
             <App />
-          </PersistGate>
-        </ColorModeProvider>
-      </ThemeProvider>
-    </BrowserRouter>
-  </Provider>,
+          </Provider>
+        </PersistGate>
+      </ColorModeProvider>
+    </ThemeProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

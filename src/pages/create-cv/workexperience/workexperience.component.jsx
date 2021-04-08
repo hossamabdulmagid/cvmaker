@@ -7,6 +7,7 @@ import React, {
   useCallback,
   useLayoutEffect,
 } from "react";
+import generateRandom from "../../../lib/random";
 import { useForm } from "react-hook-form";
 import { AddToList } from "../../../redux/addtolist/addtolistAction";
 import { connect } from "react-redux";
@@ -68,6 +69,8 @@ const Workexperience = (props) => {
 
   const [allworkexp, setAllWorkexp] = useState([]);
 
+  let identiferId = generateRandom();
+
   const [workexperinceform, setWorkexperinceform] = useState({
     companyname: "",
     startwork: "",
@@ -77,6 +80,8 @@ const Workexperience = (props) => {
     type: "workexperience",
   });
 
+  let wonder = generateRandom();
+  workexperinceform.identiferId = wonder;
   const {
     companyname,
     startwork,
@@ -84,9 +89,9 @@ const Workexperience = (props) => {
     position,
     lastModified,
   } = workexperinceform;
-
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setWorkexperinceform({ ...workexperinceform, [name]: value });
   };
 
@@ -165,7 +170,7 @@ const Workexperience = (props) => {
     }
   }, [StateWorkExp, StateWorkExp.length]);
 
-  // console.log(allworkexp, `allworkexp`)
+  //0 console.log(allworkexp, `allworkexp`)
 
   return (
     <Container>

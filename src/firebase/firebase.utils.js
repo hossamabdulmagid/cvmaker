@@ -1,16 +1,17 @@
 import firebase from "firebase/firebase";
+
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
 
 const config = {
-  apiKey: "AIzaSyAUmsbpy_RnDfwsBoX3FjHu7I9ZdNU7DH4",
-  authDomain: "cvmaker-458b6.firebaseapp.com",
-  databaseURL: "https://cvmaker-458b6.firebaseio.com",
-  projectId: "cvmaker-458b6",
-  storageBucket: "cvmaker-458b6.appspot.com",
-  messagingSenderId: "461496911166",
-  appId: "1:461496911166:web:21746be85d64be440b586f",
+  apiKey: "AIzaSyCmDnA061AM2AvuBmcUg_9QyXz3tikWLUg",
+  authDomain: "cvmaker-9134f.firebaseapp.com",
+  databaseURL: "https://cvmaker-9134f-default-rtdb.firebaseio.com",
+  projectId: "cvmaker-9134f",
+  storageBucket: "cvmaker-9134f.appspot.com",
+  messagingSenderId: "445950295481",
+  appId: "1:445950295481:web:a7775ec76428ed32c74a68",
 };
 
 firebase.initializeApp(config);
@@ -28,7 +29,9 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     const { displayName, email } = userAuth;
 
     const createdAt = new Date();
+
     console.log(userRef, `userRef`);
+
     try {
       console.log(`if snapShot Exits show here`);
       await userRef.set({
@@ -47,7 +50,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 export const convertCollectionsSnapshotToMap = (collections) => {
   const transformedCollection = collections.docs.map((doc) => {
     const { title, items } = doc.data();
-
     return {
       routeName: encodeURI(title.toLowerCase()),
       id: doc.id,
@@ -55,7 +57,6 @@ export const convertCollectionsSnapshotToMap = (collections) => {
       items,
     };
   });
-
   return transformedCollection.reduce((accumulator, collection) => {
     accumulator[collection.title.toLowerCase()] = collection;
     return accumulator;

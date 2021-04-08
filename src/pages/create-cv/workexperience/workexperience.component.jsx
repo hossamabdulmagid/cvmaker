@@ -94,10 +94,13 @@ const Workexperience = (props) => {
 
     setWorkexperinceform({ ...workexperinceform, [name]: value });
   };
+  const [displayData, setDisplayData] = useState(true);
 
   const [loading, setLoading] = useState(true);
+  const [flagButton, setFlagButton] = useState(true);
 
-  const onSubmit = async (data, value) => {
+  const onSubmit = useCallback(() => {
+    // eslint-disable-next-line no-unused-expressions
     allworkexp.unshift(workexperinceform);
 
     let dataToBeSaved = {
@@ -107,7 +110,7 @@ const Workexperience = (props) => {
 
     setFlagButton(false);
 
-    await Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
+    Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
 
     setTimeout(() => {
       setFlagButton(true);
@@ -118,10 +121,16 @@ const Workexperience = (props) => {
     setLoading(false);
 
     setDisplayData(false);
-  };
+  }, [
+    allworkexp.length,
+    allworkexp,
+    workexperinceform,
+    StateWorkExp.length,
+    StateWorkExp,
+  ]);
+
   /*
    */
-  const [flagButton, setFlagButton] = useState(true);
 
   useEffect(() => {
     setFlagButton(true);
@@ -132,10 +141,9 @@ const Workexperience = (props) => {
 
     setTimeout(() => {
       setLoading(true);
+      setAllWorkexp([]);
     }, 1000);
   }, [Do_Delete_Cv, currentUser, id]);
-
-  const [displayData, setDisplayData] = useState(true);
 
   const [data, setData] = useState([]);
 
@@ -161,9 +169,10 @@ const Workexperience = (props) => {
         if (StateWorkExp.length > 0) {
           console.log(`iam Ready...got Called @@@@@@`);
           setTimeout(() => {
+            setAllWorkexp([...StateWorkExp]);
             setLoading(false);
             setDisplayData(false);
-          }, 1000);
+          }, 2000);
           console.log(StateWorkExp.length, `StateWorkExp.length`);
         }
       }
@@ -201,7 +210,7 @@ const Workexperience = (props) => {
         {!loading ? (
           <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              {(StateWorkExp || []).map((single, key) => (
+              {allworkexp.map((single, key) => (
                 <Col
                   md={12}
                   lg={12}
@@ -234,7 +243,7 @@ const Workexperience = (props) => {
             </Row>
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              {(StateWorkExp || []).map((single, key) => (
+              {allworkexp.map((single, key) => (
                 <Col
                   xs={12}
                   s={12}

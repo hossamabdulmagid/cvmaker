@@ -173,13 +173,16 @@ const Workexperience = (props) => {
             setLoading(false);
             setDisplayData(false);
           }, 2000);
+
           console.log(StateWorkExp.length, `StateWorkExp.length`);
+        } else if (StateWorkExp.length === 0) {
+          setAllWorkexp([]);
         }
       }
     }
-  }, [StateWorkExp, StateWorkExp.length]);
+  }, [StateWorkExp, StateWorkExp.length, allworkexp, allworkexp.length]);
 
-  //0 console.log(allworkexp, `allworkexp`)
+  console.log(allworkexp, `allworkexp`);
 
   return (
     <Container>

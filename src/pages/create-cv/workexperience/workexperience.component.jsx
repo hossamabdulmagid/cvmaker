@@ -91,16 +91,15 @@ const Workexperience = (props) => {
   } = workexperinceform;
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setWorkexperinceform({ ...workexperinceform, [name]: value });
   };
   const [displayData, setDisplayData] = useState(true);
 
   const [loading, setLoading] = useState(true);
+
   const [flagButton, setFlagButton] = useState(true);
 
-  const onSubmit = useCallback(() => {
-    // eslint-disable-next-line no-unused-expressions
+  const onSubmit = () => {
     allworkexp.unshift(workexperinceform);
 
     let dataToBeSaved = {
@@ -114,23 +113,12 @@ const Workexperience = (props) => {
 
     setTimeout(() => {
       setFlagButton(true);
-
       onClose();
-    }, 2000);
+    }, 300);
 
     setLoading(false);
-
     setDisplayData(false);
-  }, [
-    allworkexp.length,
-    allworkexp,
-    workexperinceform,
-    StateWorkExp.length,
-    StateWorkExp,
-  ]);
-
-  /*
-   */
+  };
 
   useEffect(() => {
     setFlagButton(true);
@@ -138,18 +126,18 @@ const Workexperience = (props) => {
 
   const DeleteSingleJob = useCallback(() => {
     Do_Delete_Cv(currentUser, id, toast);
+    setLoading(true);
+    setAllWorkexp([...data]);
 
-    setTimeout(() => {
-      setLoading(true);
-      setAllWorkexp([]);
-    }, 1000);
-  }, [Do_Delete_Cv, currentUser, id]);
+    console.log(data, `data`);
+    console.log(data, `data after Setting cleaning....`);
+  }, []);
 
   const [data, setData] = useState([]);
 
   const isCurrent = useRef(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     return () => {
       isCurrent.current = false;
     };
@@ -165,16 +153,12 @@ const Workexperience = (props) => {
   useEffect(() => {
     if (StateWorkExp) {
       if (isCurrent.current) {
-        console.log(StateWorkExp, `StateWorkExp`);
         if (StateWorkExp.length > 0) {
-          console.log(`iam Ready...got Called @@@@@@`);
           setTimeout(() => {
             setAllWorkexp([...StateWorkExp]);
             setLoading(false);
             setDisplayData(false);
-          }, 1000);
-
-          console.log(StateWorkExp.length, `StateWorkExp.length`);
+          }, 800);
         } else if (StateWorkExp.length === 0) {
           setAllWorkexp([]);
           setDisplayData(true);
@@ -183,7 +167,7 @@ const Workexperience = (props) => {
     }
   }, [StateWorkExp, StateWorkExp.length, allworkexp, allworkexp.length]);
 
-  console.log(allworkexp, `allworkexp`);
+  //  console.log(allworkexp, `allworkexp`);
 
   return (
     <Container>
@@ -202,7 +186,7 @@ const Workexperience = (props) => {
             <ButtonFordeleteWork
               className="buttonforpremium"
               variant="success"
-              onClick={() => DeleteSingleJob()}
+              onClick={() => DeleteSingleJob(currentUser, id)}
             >
               - ClearYourJobs
               <Icon />
@@ -214,7 +198,7 @@ const Workexperience = (props) => {
         {!loading ? (
           <Fragment>
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
-              {allworkexp.map((single, key) => (
+              {StateWorkExp.map((single, key) => (
                 <Col
                   md={12}
                   lg={12}
@@ -247,7 +231,7 @@ const Workexperience = (props) => {
             </Row>
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
-              {allworkexp.map((single, key) => (
+              {StateWorkExp.map((single, key) => (
                 <Col
                   xs={12}
                   s={12}

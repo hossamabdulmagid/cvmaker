@@ -94,6 +94,7 @@ export const Do_Submiting_WorkExp = (currentUser, id, dataToBeSaved, toast) => {
           console.log(errorMessage, `error from workexperinceAction.JS`);
         } else if (!hasError && dataToBeSaved) {
           dispatch(Submiting_WorkExp_Success(dataToBeSaved));
+          dispatch(Get_Workexperince(currentUser, id));
 
           toast({
             title: "Section updated.",
@@ -103,7 +104,7 @@ export const Do_Submiting_WorkExp = (currentUser, id, dataToBeSaved, toast) => {
             isClosable: true,
             position: "bottom-right",
           });
-          console.log(dataToBeSaved, `data Comming From WorkexperAction.JS`);
+          //  console.log(dataToBeSaved, `data Comming From WorkexperAction.JS`);
         }
       })
       .catch((errorMessage, hasError, dataToBeSaved) => {
@@ -112,13 +113,14 @@ export const Do_Submiting_WorkExp = (currentUser, id, dataToBeSaved, toast) => {
           console.log(errorMessage, `error from workexperinceAction.JS`);
         } else if (!hasError && dataToBeSaved) {
           dispatch(Submiting_WorkExp_Success(dataToBeSaved));
-          console.log(dataToBeSaved, `data Comming From WorkexperAction.JS`);
+          dispatch(Get_Workexperince(currentUser, id));
         } else {
           console.log(errorMessage, `error from workexperinceAction.JS`);
         }
       });
   };
 };
+
 const Delete_Cv_Start = () => ({
   type: workexperinceActionType.DELETE_WORKEXP_START,
 });
@@ -126,6 +128,7 @@ const Delete_Cv_Start = () => ({
 const Delete_Cv_Success = () => ({
   type: workexperinceActionType.DELETE_WORKEXP_SUCCESS,
 });
+
 const Delete_CV_Error = (errorMessage) => {
   if (errorMessage && typeof errorMessage === "object") {
     for (let key in errorMessage) {
@@ -157,6 +160,7 @@ export const Do_Delete_Cv = (currentUser, id, toast) => {
           console.log(errorMessage, `error from deleteworkrxpaction.js`);
         } else {
           dispatch(Delete_Cv_Success());
+          dispatch(Get_Workexperince(currentUser, id));
           console.log(`WorkExpDeleted SuccessFull`);
           toast({
             title: "jobs has Been deleted.",

@@ -12,6 +12,7 @@ import {
   GetOLdDataForCkEditor,
   Do_Submiting_newCkEditor,
 } from "../redux/newckeditor/newckeditorAction";
+
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -29,6 +30,7 @@ const editorConfiguration = {
     ],
   },
 };
+
 const Editor = ({
   details,
   currentUser,
@@ -59,18 +61,19 @@ const Editor = ({
   const HandleChange = (event) => {
     const target = event.target;
     const { name, value } = target;
-    setState({ [name]: value, concept: details });
+    setState({ ...state, [name]: value });
   };
 
   const HandleCkEditorState = (event, editor) => {
-    const data = editor.getData();
-    setState({ content_new: data });
+    const Olddata = editor.getData();
+    console.log(Olddata, `Olddata.....`);
+    setState({ content_new: `${Olddata}` });
   };
 
   const { id } = useParams();
 
   const createMarkup = () => {
-    return { __html: oldCkData.content_new };
+    return { __html: state.content_new };
   };
 
   const [flagButton, setFlagButton] = useState(true);
@@ -81,12 +84,14 @@ const Editor = ({
     if (!currentUser && id) {
       return;
     }
+
     console.log(value, `value while typing`);
+
     const url = details;
 
     let dataToBeSaved = {
       concept: details || "",
-      content_new: oldCkData.content_new || "",
+      content_new: state.content_new || "",
       type: state.type || "entry",
     };
 
@@ -105,14 +110,12 @@ const Editor = ({
     }
 
     GetOLdDataForCkEditor(currentUser, id);
-
     console.log(oldCkData, `oldCkData`);
     console.log(
       Object.keys(oldCkData).includes("content_new" || "concept"),
       `Object.keys(oldCkData)`
     );
     if (Object.keys(oldCkData).includes("content_new" || "concept")) {
-      console.log(oldCkData, `oldCkData`);
       if (oldCkData) {
         setTimeout(() => {
           setState({
@@ -126,7 +129,10 @@ const Editor = ({
     }
   }, [currentUser, id, GetOLdDataForCkEditor]);
 
-  useLayoutEffect(() => {}, [oldCkData.concept, details]);
+  useLayoutEffect(() => {
+    console.log(`iam here`);
+  }, [oldCkData.concept, details]);
+  console.log(oldCkData, `oldCkData`);
   return (
     <Fragment>
       <Container>
@@ -138,7 +144,6 @@ const Editor = ({
             </Small>
           </Col>
         </Row>
-
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             refVal={register({ required: true })}
@@ -148,6 +153,7 @@ const Editor = ({
             value={details || oldCkData.concept}
             onChange={HandleChange}
           />
+          <h1>{state.concept}</h1>
 
           <CKEditor
             refVal={register({ required: true })}
@@ -155,13 +161,10 @@ const Editor = ({
             editor={ClassicEditor}
             onInit={(Editor) => {}}
             onChange={HandleCkEditorState}
-            data={oldCkData.content_new || ""}
+            data={content_new}
             name={content_new}
           />
-          <div
-            dangerouslySetInnerHTML={createMarkup()}
-            className="editor"
-          ></div>
+          <div dangerouslySetInnerHTML={createMarkup()} className="editor" />
           <Button
             type="submit"
             size="sm"

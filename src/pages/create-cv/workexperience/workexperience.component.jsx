@@ -1,7 +1,6 @@
-import React, {
+import {
   useState,
   useEffect,
-  useMemo,
   Fragment,
   useRef,
   useCallback,
@@ -35,7 +34,6 @@ import {
   StrongMobile,
   Icon,
 } from "./workexperience.styles";
-import { firestore } from "../../../firebase/firebase.utils";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import {
@@ -167,8 +165,6 @@ const Workexperience = (props) => {
     }
   }, [StateWorkExp, StateWorkExp.length, allworkexp, allworkexp.length]);
 
-  //  console.log(allworkexp, `allworkexp`);
-
   return (
     <Container>
       <Row>
@@ -197,7 +193,10 @@ const Workexperience = (props) => {
       <Rapperd>
         {!loading ? (
           <Fragment>
-            <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
+            <Row
+              bsPr
+              efix="d-none d-md-block d-lg-block  d-xl-block center-item"
+            >
               {StateWorkExp.map((single, key) => (
                 <Col
                   md={12}
@@ -274,7 +273,6 @@ const Workexperience = (props) => {
           </>
         )}
       </Rapperd>
-
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -335,7 +333,6 @@ const Workexperience = (props) => {
               </small>
               <br />
             </ModalBody>
-
             <ModalFooter>
               <Button variantColor="blue" mr={3} type="submit">
                 {!flagButton ? <Spinner /> : "Save"}

@@ -3,8 +3,8 @@ import { newCkEdtiorTypeAction } from "./newckeditorType";
 const INITAIL_STATE = {
   isFetching: false,
   newckEditor: {
-    concept: null,
-    content_new: null,
+    concept: "",
+    content_new: "",
     type: "entry",
   },
   errorMessage: null,

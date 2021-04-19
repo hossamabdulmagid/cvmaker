@@ -6,7 +6,6 @@ import { Small } from "./styles";
 import { useForm } from "react-hook-form";
 import { Spinner, Input, Button, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
-import { firestore } from "../firebase/firebase.utils";
 import { Container, Row, Col } from "react-bootstrap";
 import {
   GetOLdDataForCkEditor,
@@ -85,8 +84,6 @@ const Editor = ({
       return;
     }
 
-    console.log(value, `value while typing`);
-
     const url = details;
 
     let dataToBeSaved = {
@@ -154,7 +151,6 @@ const Editor = ({
             onChange={HandleChange}
           />
           <h1>{state.concept}</h1>
-
           <CKEditor
             refVal={register({ required: true })}
             config={editorConfiguration}
@@ -187,6 +183,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   GetOLdDataForCkEditor: (currentUser, id) =>
     dispatch(GetOLdDataForCkEditor(currentUser, id)),
+
   Do_Submiting_newCkEditor: (currentUser, id, url, dataToBeSaved, toast) =>
     dispatch(
       Do_Submiting_newCkEditor(currentUser, id, url, dataToBeSaved, toast)

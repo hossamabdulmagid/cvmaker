@@ -25,27 +25,23 @@ export const Get_Workexperince = (currentUser, id) => {
       .get()
       .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
-
         array.push(newData);
-
         //  console.log(array, `Array.Array()`);
         if (!newData) {
           hasError = true;
-
           dispatch(Workexperince_Error(errorMessage));
-
           console.log(errorMessage, `error from workexperinceAction.JS`);
         } else if (!hasError) {
           dispatch(Workexperince_Success(newData));
-
           //   console.log(newData, `newData Comming From  GETWorkexperAction.JS`);
-          // console.log(newData, `querySnapshot.dazzzzzzzzzzzzzzta()`);
         }
       })
-      .catch((errorMessage) => {
+      .catch((errorMessage, newData) => {
         if (errorMessage) {
           dispatch(Workexperince_Error(errorMessage));
           console.log(errorMessage, `error from workexperinceAction.JS`);
+        } else {
+          dispatch(Workexperince_Success(newData));
         }
       });
   };
@@ -95,7 +91,6 @@ export const Do_Submiting_WorkExp = (currentUser, id, dataToBeSaved, toast) => {
         } else if (!hasError && dataToBeSaved) {
           dispatch(Submiting_WorkExp_Success(dataToBeSaved));
           dispatch(Get_Workexperince(currentUser, id));
-
           toast({
             title: "Section updated.",
             description: `your cvs section workexperince has been updated`,
@@ -150,7 +145,7 @@ const Delete_CV_Error = (errorMessage) => {
 
 export const Do_Delete_Cv = (currentUser, id, toast) => {
   const url = `users/${currentUser.id}/cvs/${id}/data/Workexperience`;
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(Delete_Cv_Start());
     db.doc(url)
       .delete()

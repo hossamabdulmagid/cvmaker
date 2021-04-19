@@ -26,7 +26,6 @@ import { NotFound } from "./pages/notfound/notfound.component";
 
 class App extends Component {
   unsubscribeFormAuth = null;
-
   componentDidMount() {
     const { setCurrentUser } = this.props;
     this.unsubscribeFormAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -79,7 +78,6 @@ class App extends Component {
                   }
                   component={CreateCv}
                 />
-
                 {/* 
                 <Route path='*' component={NotFound} />    
                 <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} />

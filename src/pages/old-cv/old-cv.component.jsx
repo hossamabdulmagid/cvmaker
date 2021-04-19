@@ -45,6 +45,19 @@ import {
   Delete_Single_CV,
   DoRefreshLastModified,
 } from "../../redux/oldcv/oldcvAction";
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Text,
+  Button,
+} from "@chakra-ui/core";
+
 import { CreateNewCv } from "../../redux/createnewcv/createnewcvAction";
 const OldCv = ({
   currentUser,
@@ -117,6 +130,9 @@ const OldCv = ({
   const removeSingleCv = useCallback(
     (id, currentUser) => {
       Delete_Single_CV(id, currentUser, toast);
+      setTimeout(() => {
+        onClose();
+      }, 200);
     },
     [id, currentUser]
   );
@@ -127,22 +143,46 @@ const OldCv = ({
         <tr key={id}>
           <td>
             {label}
-            <ButtonForDeleteCv onClick={() => removeSingleCv(id, currentUser)}>
+            <ButtonForDeleteCv onClick={() => onOpen()}>
               delete
               <Icon />
             </ButtonForDeleteCv>
+            <>
+              <Modal
+                blockScrollOnMount={false}
+                isOpen={isOpen}
+                onClose={onClose}
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Action</ModalHeader>
+                  <ModalCloseButton />
+                  <hr />
+                  <ModalBody>
+                    <Text fontWeight="bold" mb="1rem">
+                      to delete this cv click Recycle Bin
+                    </Text>
+                  </ModalBody>
+                  <ModalFooter>
+                    <ButtonForDeleteCv
+                      size="sm"
+                      onClick={() => removeSingleCv(id, currentUser)}
+                    >
+                      <Icon />
+                    </ButtonForDeleteCv>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
           </td>
-
           <td>
             <Moment format="MMMM Do YYYY, h:mm a">{createdAt}</Moment>
             <IconCalendar />
           </td>
-
           <td>
             <Moment format="MMMM Do YYYY, h:mm a">{lastModified}</Moment>
             <IconCalendar />
           </td>
-
           <td>
             <Linkcv
               to={`create-cv/` + `${id}`}
@@ -244,7 +284,10 @@ const OldCv = ({
                     <h1>
                       Go <Strong>Premium </Strong> ❤
                     </h1>
-                    <Span> {show ? "Show details ★" : "Hide details ★"} </Span>
+                    <Span>
+                      {" "}
+                      {handleShow ? "Show details ★" : "Hide details ★"}{" "}
+                    </Span>
                   </Box>
                 </AccordionHeader>
                 <AccordionPanel pb={4}>

@@ -163,7 +163,7 @@ const Workexperience = (props) => {
         }
       }
     }
-  }, [StateWorkExp, StateWorkExp.length, allworkexp, allworkexp.length]);
+  }, [StateWorkExp.length, allworkexp.length]);
 
   return (
     <Container>

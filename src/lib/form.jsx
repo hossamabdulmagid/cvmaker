@@ -156,7 +156,7 @@ const FormDeatils = (props) => {
         setLoading(false);
         console.log(error, `there is was an error`);
       });
-  }, [currentUser, id]);
+  }, [currentUser, id, state.title]);
 
   return (
     <Fragment>

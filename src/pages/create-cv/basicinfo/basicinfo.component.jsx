@@ -165,7 +165,7 @@ const BasicInfo = (props) => {
         }
         setTimeout(() => {
           setLoading(false);
-        }, 1000);
+        }, 500);
       }
     }
   }, [GetBasicInfo, currentUser, id, basicInfoState.id]);

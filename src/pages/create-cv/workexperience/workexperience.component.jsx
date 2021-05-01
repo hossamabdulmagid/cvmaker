@@ -156,7 +156,7 @@ const Workexperience = (props) => {
             setAllWorkexp([...StateWorkExp]);
             setLoading(false);
             setDisplayData(false);
-          }, 800);
+          }, 200);
         } else if (StateWorkExp.length === 0) {
           setAllWorkexp([]);
           setDisplayData(true);

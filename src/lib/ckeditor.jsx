@@ -119,12 +119,12 @@ const Editor = ({
             concept: oldCkData.concept,
             content_new: oldCkData.content_new,
           });
-        }, 2200);
+        }, 200);
       }
     } else {
       console.log(`iam False`);
     }
-  }, [currentUser, id, GetOLdDataForCkEditor]);
+  }, [currentUser, id, GetOLdDataForCkEditor, state.content_new.length]);
 
   useLayoutEffect(() => {
     console.log(`iam here`);

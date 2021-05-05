@@ -194,16 +194,7 @@ const OldCv = ({
           </ButtonforcreateCv>
         </Content>
         <div className="container">
-          <Table
-            striped
-            bordered
-            hover
-            size="xs"
-            responsive="xl"
-            responsive="sm"
-            responsive="md"
-            responsive="lg"
-          >
+          <Table striped bordered hover size="xs" responsive>
             <thead>
               <tr>{RenderTHeaderForTable()}</tr>
             </thead>

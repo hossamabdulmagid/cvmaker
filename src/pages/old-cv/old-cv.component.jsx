@@ -1,13 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Fragment,
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-  useLayoutEffect,
-} from "react";
+import { Fragment, useEffect, useState, useRef, useCallback } from "react";
 import {
   ButtonForPremium,
   Content,
@@ -32,10 +24,17 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Text,
 } from "@chakra-ui/core";
-import { useHistory } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { Spinner, useToast, useDisclosure } from "@chakra-ui/core";
@@ -45,19 +44,6 @@ import {
   Delete_Single_CV,
   DoRefreshLastModified,
 } from "../../redux/oldcv/oldcvAction";
-
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Text,
-  Button,
-} from "@chakra-ui/core";
-
 import { CreateNewCv } from "../../redux/createnewcv/createnewcvAction";
 const OldCv = ({
   currentUser,

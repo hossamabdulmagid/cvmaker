@@ -15,8 +15,6 @@ import {
 const editorConfiguration = {
   toolbar: {
     items: [
-      "heading",
-      "|",
       "alignment",
       "bold",
       "italic",

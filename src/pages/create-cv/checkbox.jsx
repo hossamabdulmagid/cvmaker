@@ -22,7 +22,6 @@ const InputCheckBox = ({
       onChange(val);
     }
   };
-  //line for comment/ /ssss
   return (
     <>
       {options ? (
@@ -43,7 +42,7 @@ const InputCheckBox = ({
               className="checkbox-custom-label"
               htmlFor={`${htmlId}checkbox-1`}
             >
-              {options.label}
+              {options.label || ""}
             </label>
             <span className="hintforecheckbox">
               {hint ? <small className="m-l-sm">{hint}</small> : null}

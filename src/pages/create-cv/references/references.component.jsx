@@ -12,8 +12,6 @@ import { Get_References } from "../../../redux/references/referencesAction";
 const editorConfiguration = {
   toolbar: {
     items: [
-      "heading",
-      "|",
       "alignment",
       "bold",
       "italic",

@@ -12,8 +12,6 @@ import { Get_Qualifications } from "../../../redux/qualifications/qualifications
 const editorConfiguration = {
   toolbar: {
     items: [
-      "heading",
-      "|",
       "bold",
       "italic",
       "link",

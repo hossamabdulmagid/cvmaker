@@ -12,8 +12,6 @@ import { Get_Interest } from "../../../redux/interests/interestsAction";
 const editorConfiguration = {
   toolbar: {
     items: [
-      "heading",
-      "|",
       "bold",
       "italic",
       "link",

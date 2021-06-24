@@ -37,7 +37,7 @@ import Table from "react-bootstrap/Table";
 import { Redirect, Route, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { Spinner, useToast, useDisclosure } from "@chakra-ui/core";
+import { Spinner, useToast, useDisclosure, Button } from "@chakra-ui/core";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
   Get_oldCv,
@@ -146,16 +146,23 @@ const OldCv = ({
                   <hr />
                   <ModalBody>
                     <Text fontWeight="bold" mb="1rem">
-                      to delete this cv click Recycle Bin
+                      Are you sure you want to delete{" "}
+                      <strong style={{ color: "#e53e3e" }}>{label} </strong>,
+                      will be deleted immediately. You can't undo this action.
                     </Text>
                   </ModalBody>
                   <ModalFooter>
-                    <ButtonForDeleteCv
-                      size="sm"
+                    <Button
+                      variantColor="red"
+                      mr={3}
+                      type="submit"
                       onClick={() => removeSingleCv(id, currentUser)}
                     >
-                      <Icon />
-                    </ButtonForDeleteCv>
+                      Delete
+                    </Button>
+                    <Button onClick={onClose} className="">
+                      Cancel
+                    </Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
@@ -183,6 +190,10 @@ const OldCv = ({
     });
   };
 
+  let [flagHide, setFlagHide] = useState(true);
+  const HandleAcordionChange = () => {
+    setFlagHide(!flagHide);
+  };
   return (
     <Fragment>
       <NavGuest />
@@ -251,9 +262,7 @@ const OldCv = ({
             <Accordion
               defaultIndex={[0]}
               allowToggle
-              show={show}
-              handleClose={handleClose}
-              handleChange={handleShow}
+              onClick={HandleAcordionChange}
             >
               <AccordionItem className="AccordionItem">
                 <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
@@ -262,8 +271,7 @@ const OldCv = ({
                       Go <Strong>Premium </Strong> ❤
                     </h1>
                     <Span>
-                      {" "}
-                      {handleShow ? "Show details ★" : "Hide details ★"}{" "}
+                      {!flagHide ? "Show details ★" : "Hide details ★"}
                     </Span>
                   </Box>
                 </AccordionHeader>

@@ -47,7 +47,7 @@ const Editor = ({
   const [state, setState] = useState({
     concept: "",
     content_new: "",
-    type: "entry",
+    type: "",
   });
   const { content_new, concept } = state;
 
@@ -127,7 +127,9 @@ const Editor = ({
   useLayoutEffect(() => {
     console.log(`iam here`);
   }, [oldCkData.concept, details]);
+
   console.log(oldCkData, `oldCkData`);
+
   return (
     <Fragment>
       <Container>

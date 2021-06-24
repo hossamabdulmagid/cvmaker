@@ -16,6 +16,35 @@ const config = {
 
 firebase.initializeApp(config);
 
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
+
+export const auth = firebase.auth();
+
+export const firestore = firebase.firestore();
+
+export const storage = firebase.storage();
+
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+googleProvider.setCustomParameters({ prompt: "select_account" });
+
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
+
+export const facebookProvider = new firebase.auth.FacebookAuthProvider();
+
+facebookProvider.setCustomParameters({ prompt: "select_account" });
+
+export const signInWithFacebook = () => auth.signInWithPopup(facebookProvider);
+
+export default firebase;
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -62,32 +91,3 @@ export const convertCollectionsSnapshotToMap = (collections) => {
     return accumulator;
   }, {});
 };
-
-export const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
-      unsubscribe();
-      resolve(userAuth);
-    }, reject);
-  });
-};
-
-export const auth = firebase.auth();
-
-export const firestore = firebase.firestore();
-
-export const storage = firebase.storage();
-
-export const googleProvider = new firebase.auth.GoogleAuthProvider();
-
-googleProvider.setCustomParameters({ prompt: "select_account" });
-
-export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
-
-export const facebookProvider = new firebase.auth.FacebookAuthProvider();
-
-facebookProvider.setCustomParameters({ prompt: "select_account" });
-
-export const signInWithFacebook = () => auth.signInWithPopup(facebookProvider);
-
-export default firebase;

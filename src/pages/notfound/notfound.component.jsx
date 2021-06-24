@@ -1,11 +1,14 @@
-export const NotFound = () => {
+const NotFound = () => {
   return (
-    <div className="container text-center">
-      <div className="row">
-        <div className="col">
-          <h1> Page Not Found</h1>
-        </div>
+    <div
+      className="container text-center"
+      style={{ marginTop: "100px", padding: "20px" }}
+    >
+      <div className="col" style={{ fontSize: "40px" }}>
+        {" "}
+        Page Not Found !
       </div>
     </div>
   );
 };
+export default NotFound;

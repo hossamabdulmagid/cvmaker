@@ -82,18 +82,16 @@ const OldCv = ({
 
   const createAnewCv = async () => {
     await CreateNewCv(currentUser, history, toast);
-
     if (btnRef.current) {
       btnRef.current.setAttribute("disabled", "disabled");
     }
   };
+
   useEffect(() => {
     if (!currentUser) {
       return;
     }
-
     Get_oldCv(currentUser);
-
     setTimeout(() => {
       if (OldCvForUsers && Array.isArray(OldCvForUsers)) {
         setLoading(false);
@@ -107,15 +105,35 @@ const OldCv = ({
 
   const RenderTHeaderForTable = () => {
     let headerElement = ["Name", "Create At", "Last Modified", "Options"];
-
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
     });
   };
 
+  const [cv, setCv] = useState({
+    id: "",
+    label: "",
+    createdAt: "",
+    lastModified: "",
+    userId: "",
+  });
+
+  const selecting = (selecting) => {
+    console.log(`this is selecting from this function`, selecting);
+    setCv({
+      ...cv,
+      id: selecting.id,
+      label: selecting.label,
+      createdAt: selecting.createdAt,
+      lastModified: selecting.lastModified,
+      userId: currentUser,
+    });
+    console.log(cv, `cv`);
+  };
+
   const removeSingleCv = useCallback(
     (id, currentUser) => {
-      Delete_Single_CV(id, currentUser, toast);
+      Delete_Single_CV(cv, onClose(), toast);
       setTimeout(() => {
         onClose();
       }, 200);
@@ -124,12 +142,17 @@ const OldCv = ({
   );
 
   const RenderTBodyForTable = () => {
-    return OldCvForUsers.map(({ label, lastModified, createdAt, id }) => {
+    return OldCvForUsers.map((singleCv) => {
       return (
         <tr key={id}>
           <td>
-            {label}
-            <ButtonForDeleteCv onClick={() => onOpen()}>
+            {singleCv.label}
+            <ButtonForDeleteCv
+              onClick={() => {
+                onOpen();
+                selecting(singleCv);
+              }}
+            >
               delete
               <Icon />
             </ButtonForDeleteCv>
@@ -146,9 +169,9 @@ const OldCv = ({
                   <hr />
                   <ModalBody>
                     <Text fontWeight="bold" mb="1rem">
-                      Are you sure you want to delete{" "}
-                      <strong style={{ color: "#e53e3e" }}>{label} </strong>,
-                      will be deleted immediately. You can't undo this action.
+                      Are you sure you want to delete
+                      <strong style={{ color: "#e53e3e" }}> {cv.label} </strong>
+                      , will be deleted immediately. You can't undo this action.
                     </Text>
                   </ModalBody>
                   <ModalFooter>
@@ -156,7 +179,9 @@ const OldCv = ({
                       variantColor="red"
                       mr={3}
                       type="submit"
-                      onClick={() => removeSingleCv(id, currentUser)}
+                      onClick={() => {
+                        Delete_Single_CV(cv, onClose(), toast);
+                      }}
                     >
                       Delete
                     </Button>
@@ -169,17 +194,19 @@ const OldCv = ({
             </>
           </td>
           <td>
-            <Moment format="MMMM Do YYYY, h:mm a">{createdAt}</Moment>
+            <Moment format="MMMM Do YYYY, h:mm a">{singleCv.createdAt}</Moment>
             <IconCalendar />
           </td>
           <td>
-            <Moment format="MMMM Do YYYY, h:mm a">{lastModified}</Moment>
+            <Moment format="MMMM Do YYYY, h:mm a">
+              {singleCv.lastModified}
+            </Moment>
             <IconCalendar />
           </td>
           <td>
             <Linkcv
-              to={`create-cv/` + `${id}`}
-              onClick={() => Refresh(currentUser, id)}
+              to={`create-cv/` + `${singleCv.id}`}
+              onClick={() => Refresh(currentUser, singleCv.id)}
             >
               Edit now
               <Iconedit />
@@ -356,8 +383,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   Get_oldCv: (currentUser) => dispatch(Get_oldCv(currentUser)),
-  Delete_Single_CV: (id, currentUser, toast) =>
-    dispatch(Delete_Single_CV(id, currentUser, toast)),
+  Delete_Single_CV: (cv, onClose, toast) =>
+    dispatch(Delete_Single_CV(cv, onClose, toast)),
   DoRefreshLastModified: (currentUser, id) =>
     dispatch(DoRefreshLastModified(currentUser, id)),
   CreateNewCv: (currentUser, history, toast) =>

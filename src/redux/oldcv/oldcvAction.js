@@ -83,15 +83,15 @@ const Delete_Error = (errorMessage) => ({
   payload: errorMessage,
 });
 
-export const Delete_Single_CV = (id, currentUser, toast) => {
+export const Delete_Single_CV = (cv, onClose, toast) => {
+  console.log(`currentUser : ${cv.userId.id}`);
+  console.log(`cvID : ${cv.id}`);
+  console.log(`cvName: ${cv.label}`);
   let hasError = false;
 
-  console.log(id, `id here`);
   return (dispatch) => {
-    console.log(id, `id after asyncrouns`);
-
     dispatch(Delete_Start());
-    db.doc(`users/${currentUser.id}/cvs/${id}`)
+    db.doc(`users/${cv.userId.id}/cvs/${cv.id}`)
       .delete()
       .then((errorMessage, data) => {
         if (errorMessage) {
@@ -101,10 +101,10 @@ export const Delete_Single_CV = (id, currentUser, toast) => {
         } else {
           if (!hasError) {
             dispatch(Delete_Success());
-            dispatch(Get_oldCv(currentUser));
+            dispatch(Get_oldCv(cv.userId));
             toast({
-              title: "Your Cv Successfully Deleted!",
-              description: "cv deleted you can Create new one.",
+              title: `Your cv name ${cv.label} Successfully Deleted!`,
+              description: `your cv deleted you can Create new one.`,
               status: "error",
               duration: 9000,
               isClosable: true,

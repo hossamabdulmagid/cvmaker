@@ -88,7 +88,6 @@ export const Delete_Single_CV = (cv, onClose, toast) => {
   console.log(`cvID : ${cv.id}`);
   console.log(`cvName: ${cv.label}`);
   let hasError = false;
-
   return (dispatch) => {
     dispatch(Delete_Start());
     db.doc(`users/${cv.userId.id}/cvs/${cv.id}`)
@@ -104,8 +103,8 @@ export const Delete_Single_CV = (cv, onClose, toast) => {
             dispatch(Get_oldCv(cv.userId));
             toast({
               title: `Your cv name ${cv.label} Successfully Deleted!`,
-              description: `your cv deleted you can Create new one.`,
-              status: "error",
+              //     description: `your cv deleted you can Create new one.`,
+              status: "success",
               duration: 9000,
               isClosable: true,
               position: "top-right",

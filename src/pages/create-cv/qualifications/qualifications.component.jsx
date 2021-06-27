@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { Get_Qualifications } from "../../../redux/qualifications/qualificationsAction";
+
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -23,6 +24,7 @@ const editorConfiguration = {
     ],
   },
 };
+
 const Qualifications = ({ currentUser, Get_Qualifications }) => {
   useEffect(() => {
     if (!currentUser) {
@@ -48,6 +50,7 @@ const Qualifications = ({ currentUser, Get_Qualifications }) => {
   const [loading, setLoading] = useState(true);
 
   const [flagButton, setFlagButton] = useState(true);
+
   const { id } = useParams();
 
   const HandleCkEditorState = (event, editor) => {
@@ -58,15 +61,18 @@ const Qualifications = ({ currentUser, Get_Qualifications }) => {
   const createMarkup = () => {
     return { __html: state.content_Qualifications };
   };
+
   const onSubmit = async () => {
     const info = state.content_Qualifications;
 
     if (!currentUser.id) {
       return;
     }
+
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/Qualifications`
     );
+
     let dataToBeSaved = {
       concept: state.concept || "Qualifications",
       content_Qualifications: info || "",
@@ -75,6 +81,7 @@ const Qualifications = ({ currentUser, Get_Qualifications }) => {
 
     await SecRef.set(dataToBeSaved);
     setLoading(false);
+
     setTimeout(() => {
       toast({
         title: "Section Updated.",
@@ -85,11 +92,14 @@ const Qualifications = ({ currentUser, Get_Qualifications }) => {
         position: "bottom-left",
       });
     }, 2000);
+
     setFlagButton(false);
+
     setTimeout(() => {
       setFlagButton(true);
     }, 2000);
   };
+
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -128,7 +138,7 @@ const Qualifications = ({ currentUser, Get_Qualifications }) => {
         </Col>
       </Row>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Title> Qualifications </Title>
+        <Title>Qualifications</Title>
         <CKEditor
           config={editorConfiguration}
           editor={ClassicEditor}
@@ -156,8 +166,10 @@ const Qualifications = ({ currentUser, Get_Qualifications }) => {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
+
 const mapDispatchToProps = (dispatch) => ({
   Get_Qualifications: (currentUser, id) =>
     dispatch(Get_Qualifications(currentUser, id)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(Qualifications);

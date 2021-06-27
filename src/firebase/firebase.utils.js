@@ -33,13 +33,17 @@ export const storage = firebase.storage();
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-googleProvider.setCustomParameters({ prompt: "select_account" });
+googleProvider.setCustomParameters({
+  prompt: "select_account",
+});
 
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export const facebookProvider = new firebase.auth.FacebookAuthProvider();
 
-facebookProvider.setCustomParameters({ prompt: "select_account" });
+facebookProvider.setCustomParameters({
+  prompt: "select_account",
+});
 
 export const signInWithFacebook = () => auth.signInWithPopup(facebookProvider);
 
@@ -75,7 +79,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   }
   return userRef;
 };
-
+/*
 export const convertCollectionsSnapshotToMap = (collections) => {
   const transformedCollection = collections.docs.map((doc) => {
     const { title, items } = doc.data();
@@ -91,3 +95,4 @@ export const convertCollectionsSnapshotToMap = (collections) => {
     return accumulator;
   }, {});
 };
+*/

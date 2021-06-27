@@ -99,14 +99,11 @@ const Workexperience = (props) => {
 
   const onSubmit = () => {
     allworkexp.unshift(workexperinceform);
-
     let dataToBeSaved = {
       allwork: allworkexp,
       type: "workexperience",
     };
-
     setFlagButton(false);
-
     Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
 
     setTimeout(() => {
@@ -125,7 +122,6 @@ const Workexperience = (props) => {
   const DeleteSingleJob = useCallback(() => {
     Do_Delete_Cv(currentUser, id, toast);
     setLoading(true);
-    setAllWorkexp([...data]);
 
     console.log(data, `data`);
     console.log(data, `data after Setting cleaning....`);
@@ -163,7 +159,7 @@ const Workexperience = (props) => {
         }
       }
     }
-  }, [StateWorkExp.length, allworkexp.length]);
+  }, [StateWorkExp.length, allworkexp.length, StateWorkExp]);
 
   return (
     <Container>
@@ -225,6 +221,13 @@ const Workexperience = (props) => {
                     Position:
                     <Strong>{single.position}</Strong>
                   </P>
+                  <hr
+                    style={{
+                      color: "red",
+                      backgroundColor: "red",
+                      marginTop: "10px",
+                    }}
+                  />
                 </Col>
               ))}
             </Row>
@@ -262,15 +265,37 @@ const Workexperience = (props) => {
             </Row>
           </Fragment>
         ) : (
-          <>
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="lg"
-            />
-          </>
+          <Fragment>
+            <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
+              <Col
+                md={12}
+                lg={12}
+                xl={12}
+                className="text-center"
+                id="idforcss"
+              >
+                <P>CompanyName:</P>
+                <hr />
+                <P>Start Work:</P>
+                <hr />
+                <P>End Work:</P>
+                <hr />
+                <P>Position:</P>
+              </Col>
+            </Row>
+
+            <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
+              <Col xs={12} s={12} className="text-center" id="idforcss">
+                <p>CompanyName</p>
+                <hr />
+                <p>Start Work</p>
+                <hr />
+                <p>End Work</p>
+                <hr />
+                <p>Position</p>
+              </Col>
+            </Row>
+          </Fragment>
         )}
       </Rapperd>
       <Modal

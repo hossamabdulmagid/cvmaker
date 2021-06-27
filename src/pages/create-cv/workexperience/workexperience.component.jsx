@@ -53,8 +53,6 @@ const Workexperience = (props) => {
 
   const [allworkexp, setAllWorkexp] = useState([]);
 
-  let identiferId = generateRandom();
-
   const [workexperinceform, setWorkexperinceform] = useState({
     companyname: "",
     startwork: "",
@@ -64,9 +62,9 @@ const Workexperience = (props) => {
     type: "workexperience",
   });
 
-  let wonder = generateRandom();
+  let identiferId = generateRandom();
 
-  workexperinceform.identiferId = wonder;
+  workexperinceform.identiferId = identiferId;
   const {
     companyname,
     startwork,

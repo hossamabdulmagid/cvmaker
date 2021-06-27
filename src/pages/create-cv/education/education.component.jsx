@@ -1,20 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import { useForm } from "react-hook-form";
-import {
-  Button,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-  Spinner,
-  useToast,
-} from "@chakra-ui/core";
+import { useDisclosure, Spinner, useToast } from "@chakra-ui/core";
+import AddEducation from "./addEducation.component";
 import {
   ButtonForEducation,
   P,
@@ -29,6 +15,7 @@ import {
   GET_Education,
   Do_Submiting_Education,
 } from "../../../redux/education/educationAction";
+
 const Education = (props) => {
   const {
     currentUser,
@@ -61,6 +48,10 @@ const Education = (props) => {
   }, []);
 
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    GET_Education(currentUser, id, toast);
     if (isCurrent.current) {
       if (EducationState) {
         setEducation({
@@ -73,28 +64,20 @@ const Education = (props) => {
       }
       setLoading(false);
     }
-  }, [setEducation, EducationState]);
-
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-
-    GET_Education(currentUser, id, toast);
-
-    if (EducationState) {
-      console.log(EducationState, `iam already Setting the State`);
-    }
-  }, [GET_Education, currentUser, id, toast]);
+  }, [
+    GET_Education,
+    currentUser,
+    id,
+    toast,
+    setEducation,
+    EducationState.identiferId,
+  ]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = useRef();
+
   const finalRef = useRef();
-
-  const { handleSubmit, register, getValues, errors } = useForm();
-
-  const value = getValues();
 
   const {
     collagename,
@@ -106,37 +89,11 @@ const Education = (props) => {
 
   const [FlagButton, setFlagButton] = useState(true);
 
-  const onSubmit = async (value) => {
-    let dataToBeSaved = {
-      education: {
-        collagename: collagename || "",
-        startgraduationyear: startgraduationyear || "",
-        endgraduationyear: endgraduationyear || "",
-        eduactionmajor: eduactionmajor || "",
-        lastModified: new Date(),
-      },
-      type: "education",
-    };
-
-    await Do_Submiting_Education(currentUser, id, dataToBeSaved, toast);
-    setTimeout(() => {
-      setFlagButton(false);
-    }, 1000);
-
-    setTimeout(() => {
-      onClose();
-    }, 2000);
-  };
   useEffect(() => {
     return () => {
       setFlagButton(true);
     };
   }, []);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setEducation({ ...education, [name]: value });
-  };
 
   const [loading, setLoading] = useState(true);
 
@@ -211,82 +168,26 @@ const Education = (props) => {
         />
       )}
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        blockScrollOnMount={true}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add your Eduction</ModalHeader>
-          <ModalCloseButton />
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <ModalBody pb={6}>
-              <FormLabel>Collage name</FormLabel>
-              <Input
-                name="collagename"
-                value={collagename}
-                onChange={handleChange}
-                ref={register({ required: "this Content is Required" })}
-                placeholder="Collage Name"
-              />
-              <small className="error">
-                {errors.collagename && errors.collagename.message}
-              </small>
-              <br />
-              <FormLabel>Start Year </FormLabel>
-              <Input
-                name="startgraduationyear"
-                value={startgraduationyear}
-                onChange={handleChange}
-                type="date"
-                ref={register({ required: "this Content is Required" })}
-              />
-              <small className="error">
-                {errors.startgraduationyear &&
-                  errors.startgraduationyear.message}
-              </small>
-              <br />
-
-              <FormLabel> End Year </FormLabel>
-              <Input
-                name="endgraduationyear"
-                value={endgraduationyear}
-                onChange={handleChange}
-                type="date"
-                ref={register({ required: "this Content is Required" })}
-              />
-              <small className="error">
-                {errors.endgraduationyear && errors.endgraduationyear.message}
-              </small>
-              <br />
-
-              <FormLabel> Education Majoring </FormLabel>
-              <Input
-                name="eduactionmajor"
-                value={eduactionmajor}
-                onChange={handleChange}
-                type="text"
-                placeholder="Collage Majoring"
-                ref={register({ required: "this Content is Required" })}
-              />
-              <small className="error">
-                {errors.eduactionmajor && errors.eduactionmajor.message}
-              </small>
-              <br />
-            </ModalBody>
-
-            <ModalFooter>
-              <Button variantColor="blue" mr={3} type="submit">
-                {!FlagButton ? <Spinner /> : "Save"}
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
+      <>
+        <AddEducation
+          setFlagButton={setFlagButton}
+          FlagButton={FlagButton}
+          initialRef={initialRef}
+          finalRef={finalRef}
+          isOpen={isOpen}
+          onClose={onClose}
+          Do_Submiting_Education={Do_Submiting_Education}
+          collagename={collagename}
+          startgraduationyear={startgraduationyear}
+          endgraduationyear={endgraduationyear}
+          eduactionmajor={eduactionmajor}
+          setEducation={setEducation}
+          education={education}
+          currentUser={currentUser}
+          id={id}
+          toast={toast}
+        />
+      </>
     </div>
   );
 };

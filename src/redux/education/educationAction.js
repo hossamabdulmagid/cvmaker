@@ -37,28 +37,18 @@ export const GET_Education = (currentUser, id, toast) => {
       .get()
       .then((querySnapshot, errorMessage) => {
         const newData = querySnapshot.data();
-        if (
-          !newData &&
-          querySnapshot.error &&
-          querySnapshot.errors &&
-          errorMessage
-        ) {
+
+        if (!newData) {
           hasError = true;
           dispatch(EDUCATION_ERROR(errorMessage));
           console.log(errorMessage, `error from educationAction.Js`);
         } else {
-          if (!hasError) {
-            dispatch(EDUCATION_SUCCESS(newData));
-          }
+          dispatch(EDUCATION_SUCCESS(newData));
         }
       })
       .catch((errorMessage, newData) => {
-        if (errorMessage && !newData) {
-          dispatch(EDUCATION_ERROR(errorMessage));
-          console.log(errorMessage, `error from EduactionAction.JS`);
-        } else {
-          dispatch(EDUCATION_SUCCESS(newData));
-        }
+        dispatch(EDUCATION_ERROR(errorMessage));
+        console.log(errorMessage, `error from EduactionAction.JS`);
       });
   };
 };

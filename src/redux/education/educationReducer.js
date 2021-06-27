@@ -10,6 +10,7 @@ const INITIAL_STATE = {
       eduactionmajor: "",
       lastModified: "",
       type: "education",
+      identiferId: null,
     },
   },
   errorMessage: null,
@@ -49,13 +50,18 @@ const educationReducer = (state = INITIAL_STATE, action) => {
             lastModified: action.payload.education.lastModified,
             eduactionmajor: action.payload.education.eduactionmajor,
             type: action.payload.education.type,
+            identiferId: action.payload.education.identiferId,
           },
         },
+        errorMessage: null,
       };
     case educationActionType.GET_EDUCATION_ERROR:
       return {
         ...state,
         isFetching: false,
+        data: {
+          education: {},
+        },
         errorMessage: action.payload.errorMessage,
       };
     default:

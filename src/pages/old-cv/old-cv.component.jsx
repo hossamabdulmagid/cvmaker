@@ -45,6 +45,8 @@ import {
   DoRefreshLastModified,
 } from "../../redux/oldcv/oldcvAction";
 import { CreateNewCv } from "../../redux/createnewcv/createnewcvAction";
+import ModalDeletedOldCv from "./deleteModal";
+import AccordionComponent from "./accordion";
 const OldCv = ({
   currentUser,
   match,
@@ -56,23 +58,9 @@ const OldCv = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = useRef();
-
-  const finalRef = useRef();
-
-  const [show, setShow] = useState(true);
-
-  const handleClose = () => setShow(false);
-
   const toast = useToast();
 
   const [loading, setLoading] = useState(true);
-
-  const handleShow = () => setShow(true);
-
-  const [allcv, setAllcv] = useState([]);
-
-  const [data, setData] = useState([]);
 
   const history = useHistory();
 
@@ -119,7 +107,6 @@ const OldCv = ({
   });
 
   const selecting = (selecting) => {
-    console.log(`this is selecting from this function`, selecting);
     setCv({
       ...cv,
       id: selecting.id,
@@ -128,18 +115,7 @@ const OldCv = ({
       lastModified: selecting.lastModified,
       userId: currentUser,
     });
-    console.log(cv, `cv`);
   };
-
-  const removeSingleCv = useCallback(
-    (id, currentUser) => {
-      Delete_Single_CV(cv, onClose(), toast);
-      setTimeout(() => {
-        onClose();
-      }, 200);
-    },
-    [id, currentUser]
-  );
 
   const RenderTBodyForTable = () => {
     return OldCvForUsers.map((singleCv) => {
@@ -157,40 +133,13 @@ const OldCv = ({
               <Icon />
             </ButtonForDeleteCv>
             <>
-              <Modal
-                blockScrollOnMount={false}
+              <ModalDeletedOldCv
                 isOpen={isOpen}
                 onClose={onClose}
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Action</ModalHeader>
-                  <ModalCloseButton />
-                  <hr />
-                  <ModalBody>
-                    <Text fontWeight="bold" mb="1rem">
-                      Are you sure you want to delete
-                      <strong style={{ color: "#e53e3e" }}> {cv.label} </strong>
-                      , will be deleted immediately. You can't undo this action.
-                    </Text>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button
-                      variantColor="red"
-                      mr={3}
-                      type="submit"
-                      onClick={() => {
-                        Delete_Single_CV(cv, onClose(), toast);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                    <Button onClick={onClose} className="">
-                      Cancel
-                    </Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
+                Delete_Single_CV={Delete_Single_CV}
+                cv={cv}
+                toast={toast}
+              />
             </>
           </td>
           <td>
@@ -286,76 +235,10 @@ const OldCv = ({
             </tbody>
           </Table>
           <div className="container">
-            <Accordion
-              defaultIndex={[0]}
-              allowToggle
-              onClick={HandleAcordionChange}
-            >
-              <AccordionItem className="AccordionItem">
-                <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
-                  <Box flex="1" textAlign="left">
-                    <h1>
-                      Go <Strong>Premium </Strong> ❤
-                    </h1>
-                    <Span>
-                      {!flagHide ? "Show details ★" : "Hide details ★"}
-                    </Span>
-                  </Box>
-                </AccordionHeader>
-                <AccordionPanel pb={4}>
-                  CV Creator is absolutely FREE with no restrictions, but you
-                  can get a lot more out of it and support its continued
-                  development by going premium for a nominal annual subscription
-                  fee.
-                  <div className="container">
-                    <div className="row">
-                      <Col xs={12} lg={6} md={6} className="center-item">
-                        <H2> Free</H2>
-                        <Small>Basic templates</Small>
-                        <Small>Add custom plain sections to your CV</Small>
-                        <Small>Basic rich text editor</Small>
-                        <Small>$0</Small>
-                      </Col>
-                      <Col xs={12} lg={6} md={6}>
-                        <H2> Premium</H2>
-                        <Small>
-                          <Green>★</Green>
-                          Premium templates in addition to the free ones
-                        </Small>
-                        <Small>
-                          <Green>★</Green>
-                          Add custom plain and special sections (similar to
-                          education and work) to your CV
-                        </Small>
-                        <Small>
-                          <Green>★</Green>
-                          Advanced rich text editor. Choose fonts, text colors
-                          and more
-                        </Small>
-                        <Small>
-                          <Green>★</Green>
-                          One-click e-mail. Send your resume directly to your
-                          e-mail easily from your mobile or tablet that doesn't
-                          allow file downloads
-                        </Small>
-                        <Small>
-                          <Green>★</Green>
-                          Continued access to upcoming premium features and
-                          templates
-                        </Small>
-                        <Small>$16 / year</Small>
-                        <div className="container text-center center-item">
-                          <ButtonForPremium>
-                            Upgrade to Premium ♥
-                          </ButtonForPremium>
-                          <img src="paypal.png" alt="" className="imgpaypal" />
-                        </div>
-                      </Col>
-                    </div>
-                  </div>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
+            <AccordionComponent
+              HandleAcordionChange={HandleAcordionChange}
+              flagHide={flagHide}
+            />
           </div>
         </div>
       </RapperdColor>

@@ -6,24 +6,9 @@ import {
   useCallback,
   useLayoutEffect,
 } from "react";
-import { useForm } from "react-hook-form";
 import { AddToList } from "../../../redux/addtolist/addtolistAction";
 import { connect } from "react-redux";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Button,
-  FormLabel,
-  Input,
-  Spinner,
-  useToast,
-} from "@chakra-ui/core";
+import { useDisclosure, useToast } from "@chakra-ui/core";
 import {
   ButtonForWork,
   Rapperd,
@@ -90,15 +75,10 @@ const Workexperience = (props) => {
     lastModified,
   } = workexperinceform;
 
-  const DeleteSingleJob = useCallback(() => {
+  const DeleteJobs = useCallback(() => {
     Do_Delete_Cv(currentUser, id, toast);
     setLoading(true);
-
-    console.log(data, `data`);
-    console.log(data, `data after Setting cleaning....`);
   }, []);
-
-  const [data, setData] = useState([]);
 
   const isCurrent = useRef(true);
 
@@ -149,7 +129,7 @@ const Workexperience = (props) => {
             <ButtonFordeleteWork
               className="buttonforpremium"
               variant="success"
-              onClick={() => DeleteSingleJob(currentUser, id)}
+              onClick={() => DeleteJobs(currentUser, id)}
             >
               - ClearYourJobs
               <Icon />

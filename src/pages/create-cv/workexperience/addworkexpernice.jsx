@@ -7,7 +7,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
   Button,
   FormLabel,
   Input,
@@ -15,11 +14,6 @@ import {
   useToast,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
-import {
-  Get_Workexperince,
-  Do_Submiting_WorkExp,
-  Do_Delete_Cv,
-} from "../../../redux/workexperince/workexperinceAction";
 const AddWorkExp = (props) => {
   const {
     Do_Submiting_WorkExp,
@@ -35,9 +29,12 @@ const AddWorkExp = (props) => {
     currentUser,
     id,
   } = props;
-  const { handleSubmit, register, getValues, errors } = useForm();
+
+  const { handleSubmit, register, errors } = useForm();
+
   const toast = useToast();
-  const value = getValues();
+
+  const [flagButton, setFlagButton] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -60,7 +57,6 @@ const AddWorkExp = (props) => {
     setLoading(false);
     setDisplayData(false);
   };
-  const [flagButton, setFlagButton] = useState(true);
 
   useEffect(() => {
     setFlagButton(true);

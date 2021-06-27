@@ -6,7 +6,6 @@ import {
   useCallback,
   useLayoutEffect,
 } from "react";
-import generateRandom from "../../../lib/random";
 import { useForm } from "react-hook-form";
 import { AddToList } from "../../../redux/addtolist/addtolistAction";
 import { connect } from "react-redux";
@@ -41,6 +40,8 @@ import {
   Do_Submiting_WorkExp,
   Do_Delete_Cv,
 } from "../../../redux/workexperince/workexperinceAction";
+import generateRandom from "../../../lib/random";
+import AddWorkExp from "./addworkexpernice";
 const Workexperience = (props) => {
   const {
     AddToList,
@@ -61,9 +62,9 @@ const Workexperience = (props) => {
 
   const finalRef = useRef();
 
-  const { handleSubmit, register, getValues, errors } = useForm();
+  const [displayData, setDisplayData] = useState(true);
 
-  const value = getValues();
+  const [loading, setLoading] = useState(true);
 
   const [allworkexp, setAllWorkexp] = useState([]);
 
@@ -79,6 +80,7 @@ const Workexperience = (props) => {
   });
 
   let wonder = generateRandom();
+
   workexperinceform.identiferId = wonder;
   const {
     companyname,
@@ -87,37 +89,6 @@ const Workexperience = (props) => {
     position,
     lastModified,
   } = workexperinceform;
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setWorkexperinceform({ ...workexperinceform, [name]: value });
-  };
-  const [displayData, setDisplayData] = useState(true);
-
-  const [loading, setLoading] = useState(true);
-
-  const [flagButton, setFlagButton] = useState(true);
-
-  const onSubmit = () => {
-    allworkexp.unshift(workexperinceform);
-    let dataToBeSaved = {
-      allwork: allworkexp,
-      type: "workexperience",
-    };
-    setFlagButton(false);
-    Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
-
-    setTimeout(() => {
-      setFlagButton(true);
-      onClose();
-    }, 300);
-
-    setLoading(false);
-    setDisplayData(false);
-  };
-
-  useEffect(() => {
-    setFlagButton(true);
-  }, []);
 
   const DeleteSingleJob = useCallback(() => {
     Do_Delete_Cv(currentUser, id, toast);
@@ -298,75 +269,22 @@ const Workexperience = (props) => {
           </Fragment>
         )}
       </Rapperd>
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        blockScrollOnMount={true}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>Add your WorkExpernice</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <FormLabel>Company Name</FormLabel>
-              <Input
-                ref={register({ required: "Company Name Required" })}
-                name="companyname"
-                //value={"" }
-                onChange={handleChange}
-                placeholder="CompanyName"
-              />
-              <small className="error">
-                {errors.companyname && errors.companyname.message}
-              </small>
-              <br />
-              <FormLabel> Start Year</FormLabel>
-              <Input
-                ref={register({ required: "Start Work Required" })}
-                name="startwork"
-                onChange={handleChange}
-                type="date"
-              />
-              <small className="error">
-                {errors.startwork && errors.startwork.message}
-              </small>
-              <br />
-              <FormLabel> End Year</FormLabel>
-              <Input
-                ref={register({ required: "End Work  Required" })}
-                name="endwork"
-                onChange={handleChange}
-                type="date"
-              />
-              <small className="error">
-                {errors.endwork && errors.endwork.message}
-              </small>
-              <br />
-              <FormLabel> Postion</FormLabel>
-              <Input
-                ref={register({ required: "Position Required" })}
-                name="position"
-                placeholder="Position"
-                onChange={handleChange}
-                type="text"
-              />
-              <small className="error">
-                {errors.position && errors.position.message}
-              </small>
-              <br />
-            </ModalBody>
-            <ModalFooter>
-              <Button variantColor="blue" mr={3} type="submit">
-                {!flagButton ? <Spinner /> : "Save"}
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
+      <>
+        <AddWorkExp
+          initialRef={initialRef}
+          finalRef={finalRef}
+          isOpen={isOpen}
+          onClose={onClose}
+          workexperinceform={workexperinceform}
+          setWorkexperinceform={setWorkexperinceform}
+          allworkexp={allworkexp}
+          setLoading={setLoading}
+          setDisplayData={setDisplayData}
+          currentUser={currentUser}
+          id={id}
+          Do_Submiting_WorkExp={Do_Submiting_WorkExp}
+        />
+      </>
     </Container>
   );
 };

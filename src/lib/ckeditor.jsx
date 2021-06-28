@@ -11,7 +11,7 @@ import {
   GetOLdDataForCkEditor,
   Do_Submiting_newCkEditor,
 } from "../redux/newckeditor/newckeditorAction";
-
+import generateRandom from "./random";
 const editorConfiguration = {
   toolbar: {
     items: [
@@ -28,43 +28,30 @@ const editorConfiguration = {
   },
 };
 
-const Editor = ({
-  details,
-  currentUser,
-  array = [],
-  GetOLdDataForCkEditor,
-  oldCkData,
-  Do_Submiting_newCkEditor,
-}) => {
-  useEffect(() => {
-    return () => {
-      isCurrent.current = false;
-    };
-  }, []);
-
-  const isCurrent = useRef(true);
-
-  const [state, setState] = useState({
-    concept: "",
-    content_new: "",
-    type: "",
-  });
-  const { content_new, concept } = state;
+const Editor = (props) => {
+  const {
+    details,
+    currentUser,
+    GetOLdDataForCkEditor,
+    oldCkData,
+    Do_Submiting_newCkEditor,
+    state,
+    setState,
+  } = props;
 
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const toast = useToast();
 
-  const HandleChange = (event) => {
+  const HandleChange = async (event) => {
     const target = event.target;
     const { name, value } = target;
-    setState({ ...state, [name]: value });
+    await setState({ ...state, [name]: value });
   };
 
-  const HandleCkEditorState = (event, editor) => {
+  const HandleCkEditorState = async (event, editor) => {
     const Olddata = editor.getData();
-    console.log(Olddata, `Olddata.....`);
-    setState({ content_new: `${Olddata}` });
+    await setState({ ...state, content_new: `${Olddata}` });
   };
 
   const { id } = useParams();
@@ -82,15 +69,14 @@ const Editor = ({
       return;
     }
 
-    const url = details;
-
     let dataToBeSaved = {
       concept: details || "",
       content_new: state.content_new || "",
       type: state.type || "entry",
+      identiferId: generateRandom(),
     };
 
-    await Do_Submiting_newCkEditor(currentUser, id, url, dataToBeSaved, toast);
+    await Do_Submiting_newCkEditor(currentUser, id, dataToBeSaved, toast);
 
     setFlagButton(false);
 
@@ -98,37 +84,6 @@ const Editor = ({
       setFlagButton(true);
     }, 2000);
   };
-
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-
-    GetOLdDataForCkEditor(currentUser, id);
-    console.log(oldCkData, `oldCkData`);
-    console.log(
-      Object.keys(oldCkData).includes("content_new" || "concept"),
-      `Object.keys(oldCkData)`
-    );
-    if (Object.keys(oldCkData).includes("content_new" || "concept")) {
-      if (oldCkData) {
-        setTimeout(() => {
-          setState({
-            concept: oldCkData.concept,
-            content_new: oldCkData.content_new,
-          });
-        }, 200);
-      }
-    } else {
-      console.log(`iam False`);
-    }
-  }, [currentUser, id, GetOLdDataForCkEditor, state.content_new.length]);
-
-  useLayoutEffect(() => {
-    console.log(`iam here`);
-  }, [oldCkData.concept, details]);
-
-  console.log(oldCkData, `oldCkData`);
 
   return (
     <Fragment>
@@ -147,18 +102,18 @@ const Editor = ({
             placeholder="title for new Section"
             name="concept"
             type="hidden"
-            value={details || oldCkData.concept}
+            value={details}
             onChange={HandleChange}
           />
-          <h1>{state.concept}</h1>
+          {/*    <h1>{"" || state.concept}</h1> */}
           <CKEditor
             refVal={register({ required: true })}
             config={editorConfiguration}
             editor={ClassicEditor}
             onInit={(Editor) => {}}
             onChange={HandleCkEditorState}
-            data={content_new}
-            name={content_new}
+            data={state.content_new || ""}
+            name="state.content_new"
           />
           <div dangerouslySetInnerHTML={createMarkup()} className="editor" />
           <Button
@@ -184,10 +139,8 @@ const mapDispatchToProps = (dispatch) => ({
   GetOLdDataForCkEditor: (currentUser, id) =>
     dispatch(GetOLdDataForCkEditor(currentUser, id)),
 
-  Do_Submiting_newCkEditor: (currentUser, id, url, dataToBeSaved, toast) =>
-    dispatch(
-      Do_Submiting_newCkEditor(currentUser, id, url, dataToBeSaved, toast)
-    ),
+  Do_Submiting_newCkEditor: (currentUser, id, dataToBeSaved, toast) =>
+    dispatch(Do_Submiting_newCkEditor(currentUser, id, dataToBeSaved, toast)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

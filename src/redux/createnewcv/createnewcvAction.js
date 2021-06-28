@@ -153,13 +153,13 @@ export const GetNameOfCv = (currentUser, id) => {
   };
 };
 
-export const DoChangeNameofCv = (currentUser, id, sawsaw, toast) => {
+export const DoChangeNameofCv = (currentUser, id, NameCv, toast) => {
   let hasError = false;
   return (dispatch) => {
     dispatch(ChangeName_Start());
     db.collection(`users/${currentUser.id}/cvs`)
       .doc(`${id}`)
-      .update("label", sawsaw)
+      .update("label", NameCv)
       .then((errorMessage) => {
         if (errorMessage) {
           hasError = true;
@@ -171,7 +171,7 @@ export const DoChangeNameofCv = (currentUser, id, sawsaw, toast) => {
             dispatch(GetNameOfCv(currentUser, id));
             toast({
               title: "cv name updated.",
-              description: `your cvname updated  to : ${sawsaw} `,
+              description: `your cvname updated  to : ${NameCv} `,
               status: "success",
               duration: 5000,
               isClosable: true,

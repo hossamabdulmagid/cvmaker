@@ -90,7 +90,6 @@ const SubmitingCk_Error = (errorMessage) => {
 export const Do_Submiting_newCkEditor = (
   currentUser,
   id,
-  url,
   dataToBeSaved,
   toast
 ) => {
@@ -98,24 +97,22 @@ export const Do_Submiting_newCkEditor = (
     dispatch(SubmitingCk_Start());
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
-      .doc(`${url}`)
+      .doc(`${dataToBeSaved.concept}`)
       .set(dataToBeSaved)
       .then((errorMessage) => {
         if (errorMessage) {
           dispatch(SubmitingCk_Error(errorMessage));
         } else {
           dispatch(SubmitingCk_Success(dataToBeSaved));
-          console.log(dataToBeSaved, `dataToBeSaved`);
-
+          // console.log(dataToBeSaved, `dataToBeSaved`);
           toast({
             title: "Section Updated.",
-            description: `Your new Section  name is : ${url}`,
+            description: `Wooow Your new Section  name is : ${dataToBeSaved.concept}`,
             status: "success",
             duration: 5000,
             isClosable: true,
             position: "top-left",
           });
-          console.log(`Wooow`);
         }
       })
       .catch((errorMessage) => {

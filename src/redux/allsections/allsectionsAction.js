@@ -42,11 +42,14 @@ export const Get_allSection = (currentUser, id, toast) => {
           let data = doc.data();
           let sectionName = doc.id;
           let _ID = `${id}`;
+
           if (data && sectionName) {
+            //    console.log(data, `doc.data( from ActionsFile)`)
             array.push({
               section: sectionName.toString(),
               type: data.type,
               _ID,
+              data,
             });
           }
           if (
@@ -63,7 +66,7 @@ export const Get_allSection = (currentUser, id, toast) => {
         });
         if (!hasError) {
           dispatch(SectionSuccess(array));
-          console.log(array, `array from allsections.???`);
+          //      console.log(array, `array from allsections.???`);
         }
       })
       .catch((errorMessage, data, sectionName) => {
@@ -72,7 +75,7 @@ export const Get_allSection = (currentUser, id, toast) => {
           console.log(errorMessage, `error from dataAction.JS`);
         } else if ((!errorMessage, !data, !sectionName)) {
           dispatch(SectionSuccess(array));
-          console.log(array, `@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
+          // console.log(array, `@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
         }
       });
   };

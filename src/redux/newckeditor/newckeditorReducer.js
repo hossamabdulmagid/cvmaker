@@ -6,6 +6,7 @@ const INITAIL_STATE = {
     concept: "",
     content_new: "",
     type: "entry",
+    identiferId: null,
   },
   errorMessage: null,
 };
@@ -41,6 +42,7 @@ const newckeditorReducer = (state = INITAIL_STATE, action) => {
           concept: action.payload.concept,
           content_new: action.payload.content_new,
           type: state.newckEditor.type,
+          identiferId: action.payload.identiferId,
         },
       };
     case newCkEdtiorTypeAction.GET_OLD_CKEDIOTR_DATA_ERROR:

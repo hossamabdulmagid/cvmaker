@@ -1,14 +1,19 @@
-import { useState, useEffect, Fragment, useRef, useLayoutEffect } from "react";
+import {
+  useState,
+  useEffect,
+  Fragment,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import {
   RapperColor,
   Containers,
   Alert,
   Buttons,
-  IMG,
   Ul,
   Li,
   P,
-  RapperSidebar,
   AllCvLinks,
   SmallSideBar,
   LinkOption,
@@ -17,7 +22,7 @@ import {
   Aroow,
   RapperdForms,
 } from "./createcv.styles";
-import { Col, Row, Container } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import FormDeatils from "../../lib/form";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
@@ -32,9 +37,8 @@ import Workexperience from "./workexperience/workexperience.component";
 import References from "./references/references.component";
 import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
-import { firestore } from "../../firebase/firebase.utils";
 import InputRadioBox from "./radiobox";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Editor from "../../lib/ckeditor";
 import {
   Modal,
@@ -67,31 +71,67 @@ const CreateCv = (props) => {
       section: "Basicinfo",
       type: "basicinfo",
       lastModified: new Date(),
+      data: {
+        concept: "",
+        content_new: "",
+        type: "",
+        identiferId: null,
+      },
     },
     {
       section: "Workexperience",
       type: "workexperience",
       lastModified: new Date(),
+      data: {
+        concept: "",
+        content_new: "",
+        type: "",
+        identiferId: null,
+      },
     },
     {
       section: "Qualifications",
       type: "qualifications",
       lastModified: new Date(),
+      data: {
+        concept: "",
+        content_new: "",
+        type: "",
+        identiferId: null,
+      },
     },
     {
       section: "Education",
       type: "education",
       lastModified: new Date(),
+      data: {
+        concept: "",
+        content_new: "",
+        type: "",
+        identiferId: null,
+      },
     },
     {
       section: "Interests",
       type: "interests",
       lastModified: new Date(),
+      data: {
+        concept: "",
+        content_new: "",
+        type: "",
+        identiferId: null,
+      },
     },
     {
       section: "References",
       type: "references",
       lastModified: new Date(),
+      data: {
+        concept: "",
+        content_new: "",
+        type: "",
+        identiferId: null,
+      },
     },
   ]);
   const [displayDataToUI, setDisplayDataToUI] = useState(true);
@@ -108,6 +148,12 @@ const CreateCv = (props) => {
     tryflag,
     OldCvForUsers,
   } = props;
+  const [state, setState] = useState({
+    concept: "",
+    content_new: "",
+    type: "",
+    identiferId: null,
+  });
 
   const [activeSection, setActiveSection] = useState(sidebarRoutes[0].type);
 
@@ -178,6 +224,7 @@ const CreateCv = (props) => {
       type: value.type,
       lastModified: new Date(),
     });
+    setState({});
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
@@ -186,7 +233,8 @@ const CreateCv = (props) => {
       onClose();
       toast({
         title: "Section created.",
-        description: `Your new Section  name is : ${sectionData.section}`,
+        description: ` If you leave the fields in a section empty, the section will not
+        appear in your CV : ${sectionData.section}`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -202,12 +250,12 @@ const CreateCv = (props) => {
 
   const [loading, setLoading] = useState(true);
 
-  let sawsaw = cvName.label;
+  let NameCv = cvName.label;
 
   const isCurrent = useRef(true);
 
   const onSubmitLabel = async (data) => {
-    await DoChangeNameofCv(currentUser, id, sawsaw, toast);
+    await DoChangeNameofCv(currentUser, id, NameCv, toast);
   };
 
   useEffect(() => {
@@ -240,22 +288,42 @@ const CreateCv = (props) => {
 
   const [flag, setFlag] = useState(true);
 
-  useLayoutEffect(() => {
-    console.log(`iam Runniing First Re Render`);
-    if (!currentUser) {
-      return;
-    }
-
-    Get_allSection(currentUser, id);
-  }, [Get_allSection, currentUser, id]);
-
-  useEffect(() => {
+  const getLength = useCallback(() => {
     if (allNameOfSections.length > 5) {
       setFlag(false);
     } else {
       setFlag(true);
     }
-  }, [setFlag, allNameOfSections.length]);
+  }, [allNameOfSections.length]);
+
+  useLayoutEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
+    Get_allSection(currentUser, id);
+
+    getLength();
+  }, [
+    Get_allSection,
+    currentUser,
+    id,
+    allNameOfSections.length,
+    allNameOfSections,
+    setFlag,
+    getLength,
+  ]);
+
+  const getSelection = (newSelection) => {
+    setState({
+      concept: section || state.concept,
+      identiferId: newSelection.data.identiferId || state.identiferId,
+      content_new: newSelection.data.content_new || state.content_new,
+      type: newSelection.data.type || state.type,
+    });
+    console.log(newSelection, `getSelection`);
+    console.log(state, `state`);
+  };
 
   return (
     <Fragment>
@@ -360,6 +428,7 @@ const CreateCv = (props) => {
                         onClick={(e) => {
                           e.preventDefault();
                           setActiveSection(singleRouteforSidebar.type);
+                          getSelection(singleRouteforSidebar);
                         }}
                       >
                         <LINK to="#">{singleRouteforSidebar.section}</LINK>
@@ -371,6 +440,7 @@ const CreateCv = (props) => {
                         onClick={(e) => {
                           e.preventDefault();
                           setActiveSection(singleRouteforSidebar.type);
+                          //  getSelection(singleRouteforSidebar)
                         }}
                         key={x}
                       >
@@ -524,7 +594,8 @@ const CreateCv = (props) => {
               {activeSection === "entry" ? (
                 <Editor
                   details={sectionData.section}
-                  array={array}
+                  state={state}
+                  setState={setState}
                   setLastModified={setLastModified}
                   lastModified={lastModified}
                   setFlag={setFlag}
@@ -559,6 +630,7 @@ const CreateCv = (props) => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 setActiveSection(singleRouteforSidebar.type);
+                                getSelection(singleRouteforSidebar);
                               }}
                             >
                               <LINK onClick={() => setExpanded(false)} to="#">
@@ -572,6 +644,7 @@ const CreateCv = (props) => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 setActiveSection(singleRouteforSidebar.type);
+                                // getSelection(singleRouteforSidebar)
                               }}
                               key={x}
                             >
@@ -730,8 +803,9 @@ const CreateCv = (props) => {
 
               {activeSection === "entry" ? (
                 <Editor
-                  details={value.section}
-                  array={array}
+                  details={sectionData.section}
+                  state={state}
+                  setState={setState}
                   setLastModified={setLastModified}
                   lastModified={lastModified}
                   setFlag={setFlag}
@@ -759,8 +833,8 @@ const mapDispatchToProps = (dispatch) => ({
   Get_allSection: (currentUser, id, toast) =>
     dispatch(Get_allSection(currentUser, id, toast)),
   GetNameOfCv: (currnetUser, id) => dispatch(GetNameOfCv(currnetUser, id)),
-  DoChangeNameofCv: (currentUser, id, sawsaw, toast) =>
-    dispatch(DoChangeNameofCv(currentUser, id, sawsaw, toast)),
+  DoChangeNameofCv: (currentUser, id, NameCv, toast) =>
+    dispatch(DoChangeNameofCv(currentUser, id, NameCv, toast)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCv);

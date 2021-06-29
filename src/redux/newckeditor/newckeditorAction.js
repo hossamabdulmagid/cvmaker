@@ -93,6 +93,9 @@ export const Do_Submiting_newCkEditor = (
   dataToBeSaved,
   toast
 ) => {
+  console.log(`id ${id}`);
+  console.log(`currnetUser ${currentUser.id}`);
+  console.log(`dataToBeSaved ${dataToBeSaved}`);
   return (dispatch) => {
     dispatch(SubmitingCk_Start());
     db.doc(`users/${currentUser.id}`)

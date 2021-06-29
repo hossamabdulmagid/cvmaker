@@ -72,7 +72,7 @@ const Editor = (props) => {
       concept: details || "",
       content_new: ckeditorState.content_new || "",
       type: ckeditorState.type || "entry",
-      identiferId: generateRandom(),
+      identiferId: generateRandom() || "",
     };
 
     await Do_Submiting_newCkEditor(currentUser, id, dataToBeSaved, toast);

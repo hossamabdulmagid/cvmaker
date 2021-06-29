@@ -8,10 +8,9 @@ In the project directory, you can run:
 
 ### `npm start`
 
-
 Runs the app in the development mode.
 <br />
-https://cvmaker-9134f.web.app/
+https://cvmaker-75fa9.web.app
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.

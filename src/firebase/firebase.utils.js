@@ -18,12 +18,13 @@ import "firebase/storage";
   */
 
 const config = {
-  apiKey: "AIzaSyA3NxHw3P_msRAFUT9m-N5C8jGqYunDaRY",
-  authDomain: "cvmaker-61a2f.firebaseapp.com",
-  projectId: "cvmaker-61a2f",
-  storageBucket: "cvmaker-61a2f.appspot.com",
-  messagingSenderId: "615677232032",
-  appId: "1:615677232032:web:06eba30868fc4b51841ac5",
+  apiKey: "AIzaSyCbVpE9zD8aEhEQOBwKv9385vmDGZp0UXs",
+  authDomain: "cvmaker-75fa9.firebaseapp.com",
+  projectId: "cvmaker-75fa9",
+  storageBucket: "cvmaker-75fa9.appspot.com",
+  messagingSenderId: "583140071977",
+  appId: "1:583140071977:web:d4a7c81c46772758d29a38",
+  measurementId: "G-D7GRQTZZ1J",
 };
 
 firebase.initializeApp(config);

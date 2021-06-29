@@ -35,8 +35,8 @@ const Editor = (props) => {
     GetOLdDataForCkEditor,
     oldCkData,
     Do_Submiting_newCkEditor,
-    state,
-    setState,
+    ckeditorState,
+    setCkeditorState,
   } = props;
 
   const { handleSubmit, register, getValues, errors } = useForm();
@@ -46,18 +46,18 @@ const Editor = (props) => {
   const HandleChange = async (event) => {
     const target = event.target;
     const { name, value } = target;
-    await setState({ ...state, [name]: value });
+    await setCkeditorState({ ...ckeditorState, [name]: value });
   };
 
   const HandleCkEditorState = async (event, editor) => {
     const Olddata = editor.getData();
-    await setState({ ...state, content_new: `${Olddata}` });
+    await setCkeditorState({ ...ckeditorState, content_new: `${Olddata}` });
   };
 
   const { id } = useParams();
 
   const createMarkup = () => {
-    return { __html: state.content_new };
+    return { __html: ckeditorState.content_new };
   };
 
   const [flagButton, setFlagButton] = useState(true);
@@ -68,11 +68,10 @@ const Editor = (props) => {
     if (!currentUser && id) {
       return;
     }
-
     let dataToBeSaved = {
       concept: details || "",
-      content_new: state.content_new || "",
-      type: state.type || "entry",
+      content_new: ckeditorState.content_new || "",
+      type: ckeditorState.type || "entry",
       identiferId: generateRandom(),
     };
 
@@ -112,8 +111,8 @@ const Editor = (props) => {
             editor={ClassicEditor}
             onInit={(Editor) => {}}
             onChange={HandleCkEditorState}
-            data={state.content_new || ""}
-            name="state.content_new"
+            data={ckeditorState.content_new || ""}
+            name="ckeditorState.content_new"
           />
           <div dangerouslySetInnerHTML={createMarkup()} className="editor" />
           <Button

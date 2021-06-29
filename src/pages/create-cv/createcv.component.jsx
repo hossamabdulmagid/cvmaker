@@ -148,7 +148,8 @@ const CreateCv = (props) => {
     tryflag,
     OldCvForUsers,
   } = props;
-  const [state, setState] = useState({
+
+  const [ckeditorState, setCkeditorState] = useState({
     concept: "",
     content_new: "",
     type: "",
@@ -179,7 +180,7 @@ const CreateCv = (props) => {
 
   const value = getValues();
 
-  const [sectionData, setSectionData] = useState({
+  const [formState, setFormState] = useState({
     sectionName: {
       section: {
         title: "",
@@ -193,7 +194,7 @@ const CreateCv = (props) => {
     },
   });
 
-  const { section, type } = sectionData;
+  const { section, type } = formState;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -202,7 +203,7 @@ const CreateCv = (props) => {
 
   const handleChangeSection = (event) => {
     const { name, value } = event.target;
-    setSectionData({ ...sectionData, [name]: value });
+    setFormState({ ...formState, [name]: value });
   };
 
   const [turnOf, setTurnOf] = useState("disabled='disabled'");
@@ -224,7 +225,7 @@ const CreateCv = (props) => {
       type: value.type,
       lastModified: new Date(),
     });
-    setState({});
+    setCkeditorState({});
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
@@ -234,7 +235,7 @@ const CreateCv = (props) => {
       toast({
         title: "Section created.",
         description: ` If you leave the fields in a section empty, the section will not
-        appear in your CV : ${sectionData.section}`,
+        appear in your CV : ${formState.section}`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -288,13 +289,7 @@ const CreateCv = (props) => {
 
   const [flag, setFlag] = useState(true);
 
-  const getLength = useCallback(() => {
-    if (allNameOfSections.length > 5) {
-      setFlag(false);
-    } else {
-      setFlag(true);
-    }
-  }, [allNameOfSections.length]);
+  const getLength = useCallback(() => {}, [allNameOfSections.length]);
 
   useLayoutEffect(() => {
     if (!currentUser) {
@@ -303,26 +298,20 @@ const CreateCv = (props) => {
 
     Get_allSection(currentUser, id);
 
-    getLength();
-  }, [
-    Get_allSection,
-    currentUser,
-    id,
-    allNameOfSections.length,
-    allNameOfSections,
-    setFlag,
-    getLength,
-  ]);
+    if (allNameOfSections.length > 5) {
+      setFlag(false);
+    } else {
+      setFlag(true);
+    }
+  }, [Get_allSection, currentUser, id, allNameOfSections]);
 
   const getSelection = (newSelection) => {
-    setState({
-      concept: section || state.concept,
-      identiferId: newSelection.data.identiferId || state.identiferId,
-      content_new: newSelection.data.content_new || state.content_new,
-      type: newSelection.data.type || state.type,
+    setCkeditorState({
+      concept: section || ckeditorState.concept,
+      identiferId: newSelection.data.identiferId || ckeditorState.identiferId,
+      content_new: newSelection.data.content_new || ckeditorState.content_new,
+      type: newSelection.data.type || ckeditorState.type,
     });
-    console.log(newSelection, `getSelection`);
-    console.log(state, `state`);
   };
 
   return (
@@ -593,9 +582,9 @@ const CreateCv = (props) => {
 
               {activeSection === "entry" ? (
                 <Editor
-                  details={sectionData.section}
-                  state={state}
-                  setState={setState}
+                  details={formState.section}
+                  ckeditorState={ckeditorState}
+                  setCkeditorState={setCkeditorState}
                   setLastModified={setLastModified}
                   lastModified={lastModified}
                   setFlag={setFlag}
@@ -803,9 +792,9 @@ const CreateCv = (props) => {
 
               {activeSection === "entry" ? (
                 <Editor
-                  details={sectionData.section}
-                  state={state}
-                  setState={setState}
+                  details={formState.section}
+                  ckeditorState={ckeditorState}
+                  setCkeditorState={setCkeditorState}
                   setLastModified={setLastModified}
                   lastModified={lastModified}
                   setFlag={setFlag}

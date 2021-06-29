@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { Rapperd, RapperdForm, Small, P } from "./styles";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { Col } from "react-bootstrap";
+import generateRandom from "./random";
+
 const FormDeatils = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const {
@@ -36,6 +38,7 @@ const FormDeatils = (props) => {
       start: "",
       end: "",
       description: "",
+      identiferId: null,
     },
     type: "text",
   });
@@ -69,6 +72,7 @@ const FormDeatils = (props) => {
         start: start || "",
         end: end || "",
         description: description || "",
+        identiferId: generateRandom(),
       },
       type: type || "text",
     };
@@ -138,8 +142,10 @@ const FormDeatils = (props) => {
                 start: DataFromFireBase.title.start || "",
                 end: DataFromFireBase.title.end || "",
                 description: DataFromFireBase.title.description || "",
+                identiferId: DataFromFireBase.title.identiferId,
               },
             });
+            console.log(state, `state withen iDentiferUniqeId`);
             setObjectHaveTypeText(state);
 
             setTimeout(() => {

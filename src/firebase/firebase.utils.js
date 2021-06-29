@@ -3,8 +3,8 @@ import firebase from "firebase/firebase";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
-
-const config = {
+/*
+  Old firebase Api key
   apiKey: "AIzaSyCmDnA061AM2AvuBmcUg_9QyXz3tikWLUg",
   authDomain: "cvmaker-9134f.firebaseapp.com",
   databaseURL: "https://cvmaker-9134f-default-rtdb.firebaseio.com",
@@ -12,6 +12,18 @@ const config = {
   storageBucket: "cvmaker-9134f.appspot.com",
   messagingSenderId: "445950295481",
   appId: "1:445950295481:web:a7775ec76428ed32c74a68",
+
+  
+
+  */
+
+const config = {
+  apiKey: "AIzaSyA3NxHw3P_msRAFUT9m-N5C8jGqYunDaRY",
+  authDomain: "cvmaker-61a2f.firebaseapp.com",
+  projectId: "cvmaker-61a2f",
+  storageBucket: "cvmaker-61a2f.appspot.com",
+  messagingSenderId: "615677232032",
+  appId: "1:615677232032:web:06eba30868fc4b51841ac5",
 };
 
 firebase.initializeApp(config);

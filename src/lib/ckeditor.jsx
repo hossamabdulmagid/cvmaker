@@ -30,14 +30,15 @@ const editorConfiguration = {
 
 const Editor = (props) => {
   const {
-    details,
     currentUser,
     GetOLdDataForCkEditor,
     oldCkData,
     Do_Submiting_newCkEditor,
     ckeditorState,
     setCkeditorState,
+    title,
   } = props;
+  console.log(`props   title  ${title}`);
 
   const { handleSubmit, register, getValues, errors } = useForm();
 
@@ -46,7 +47,7 @@ const Editor = (props) => {
   const HandleChange = async (event) => {
     const target = event.target;
     const { name, value } = target;
-    await setCkeditorState({ ...ckeditorState, [name]: value });
+    const x = title;
   };
 
   const HandleCkEditorState = async (event, editor) => {
@@ -69,11 +70,12 @@ const Editor = (props) => {
       return;
     }
     let dataToBeSaved = {
-      concept: details || "",
+      concept: title,
       content_new: ckeditorState.content_new || "",
       type: ckeditorState.type || "entry",
       identiferId: generateRandom() || "",
     };
+    console.log(dataToBeSaved, `dataToBeSaved while Sending data`);
 
     await Do_Submiting_newCkEditor(currentUser, id, dataToBeSaved, toast);
 
@@ -83,6 +85,11 @@ const Editor = (props) => {
       setFlagButton(true);
     }, 2000);
   };
+
+  useEffect(() => {
+    GetOLdDataForCkEditor(currentUser, id);
+    console.log(`data ${oldCkData}`);
+  }, [GetOLdDataForCkEditor, currentUser, id]);
 
   return (
     <Fragment>
@@ -99,9 +106,9 @@ const Editor = (props) => {
           <Input
             refVal={register({ required: true })}
             placeholder="title for new Section"
-            name="concept"
+            name="ckeditorState.concept"
             type="hidden"
-            value={details}
+            value={title}
             onChange={HandleChange}
           />
           {/*    <h1>{"" || state.concept}</h1> */}

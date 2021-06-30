@@ -36,8 +36,8 @@ const AccordionComponent = (props) => {
   const { HandleAcordionChange, flagHide } = props;
   return (
     <>
-      <Accordion defaultIndex={[0]} allowToggle onClick={HandleAcordionChange}>
-        <AccordionItem className="AccordionItem">
+      <Accordion defaultIndex={[0]} allowToggle>
+        <AccordionItem className="AccordionItem" onClick={HandleAcordionChange}>
           <AccordionHeader _expanded={{ bg: "gray", color: "darkgray" }}>
             <Box flex="1" textAlign="left">
               <h1>

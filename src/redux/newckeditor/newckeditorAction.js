@@ -37,9 +37,7 @@ export const GetOLdDataForCkEditor = (currentUser, id) => {
       .then((querySnapshot, errorMessage) => {
         querySnapshot.forEach((doc, errorMessage) => {
           const data = doc.data();
-
           const newData = doc.id;
-
           if (errorMessage && !data && !newData) {
             dispatch(CkOldData_Error(errorMessage));
           } else if (Object.keys(data).includes("content_new")) {
@@ -96,9 +94,10 @@ export const Do_Submiting_newCkEditor = (
   console.log(`id ${id}`);
   console.log(`currnetUser ${currentUser.id}`);
   console.log(`dataToBeSaved ${dataToBeSaved}`);
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(SubmitingCk_Start());
-    db.doc(`users/${currentUser.id}`)
+    await db
+      .doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .doc(`${dataToBeSaved.concept}`)
       .set(dataToBeSaved)

@@ -181,20 +181,14 @@ const CreateCv = (props) => {
   const value = getValues();
 
   const [formState, setFormState] = useState({
-    sectionName: {
-      section: {
-        title: "",
-        name: "",
-        start: "",
-        end: "",
-        description: "",
-      },
-      type: "",
-      lastModified: new Date(),
-    },
+    concept: "",
+    name: "",
+    start: "",
+    end: "",
+    description: "",
+    type: "",
+    lastModified: new Date(),
   });
-
-  const { section, type } = formState;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -204,6 +198,9 @@ const CreateCv = (props) => {
   const handleChangeSection = (event) => {
     const { name, value } = event.target;
     setFormState({ ...formState, [name]: value });
+    setCkeditorState({ ...ckeditorState, [name]: value });
+    console.log(`formState   ${formState.concept} while Changing`);
+    console.log(`ckeditorState   ${ckeditorState.concept} while Changing`);
   };
 
   const [turnOf, setTurnOf] = useState("disabled='disabled'");
@@ -216,12 +213,12 @@ const CreateCv = (props) => {
 
   const onSubmit = async (value, isChecked) => {
     sidebarRoutes.push({
-      section: value.section,
+      section: value.concept,
       type: value.type,
       lastModified: new Date(),
     });
     array.push({
-      section: value.section,
+      section: value.concept,
       type: value.type,
       lastModified: new Date(),
     });
@@ -235,7 +232,7 @@ const CreateCv = (props) => {
       toast({
         title: "Section created.",
         description: ` If you leave the fields in a section empty, the section will not
-        appear in your CV : ${formState.section}`,
+        appear in your CV : ${formState.concept}`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -302,16 +299,20 @@ const CreateCv = (props) => {
       setFlag(false);
     } else {
       setFlag(true);
+      //allNameOfSections
     }
-  }, [Get_allSection, currentUser, id, allNameOfSections]);
+  }, [Get_allSection, currentUser, id]);
 
-  const getSelection = (newSelection) => {
-    setCkeditorState({
-      concept: section || ckeditorState.concept,
+  const getSelection = async (newSelection) => {
+    console.log(newSelection, `newSelection`);
+    await setCkeditorState({
+      ...ckeditorState,
+      concept: newSelection.data.concept || ckeditorState.concept,
       identiferId: newSelection.data.identiferId || ckeditorState.identiferId,
       content_new: newSelection.data.content_new || ckeditorState.content_new,
       type: newSelection.data.type || ckeditorState.type,
     });
+    console.log(ckeditorState);
   };
 
   return (
@@ -459,7 +460,7 @@ const CreateCv = (props) => {
                         <Input
                           placeholder="SectionName"
                           type="text"
-                          name="section"
+                          name="concept"
                           onChange={handleChangeSection}
                           ref={register({
                             required: true,
@@ -469,12 +470,12 @@ const CreateCv = (props) => {
                         <div className="col-12">
                           {errors && errors.section && (
                             <label className="error">
-                              {errors.section.message || "Section is required"}
+                              {errors.concept.message || "Section is required"}
                             </label>
                           )}
                         </div>
 
-                        {errors.section && errors.section.message}
+                        {errors.concept && errors.concept.message}
                         <InputCheckBox
                           refVal={register({ required: true })}
                           name="role"
@@ -571,7 +572,8 @@ const CreateCv = (props) => {
               {activeSection === "text" ? (
                 <FormDeatils
                   array={array}
-                  details={value.section}
+                  formState={formState}
+                  setFormState={setFormState}
                   displayDataToUI={displayDataToUI}
                   setDisplayDataToUI={setDisplayDataToUI}
                   sidebarRoutes={sidebarRoutes}
@@ -582,7 +584,7 @@ const CreateCv = (props) => {
 
               {activeSection === "entry" ? (
                 <Editor
-                  details={formState.section}
+                  title={formState.concept}
                   ckeditorState={ckeditorState}
                   setCkeditorState={setCkeditorState}
                   setLastModified={setLastModified}
@@ -668,21 +670,21 @@ const CreateCv = (props) => {
                               <Input
                                 placeholder="SectionName"
                                 type="text"
-                                name="section"
+                                name="concept"
                                 onChange={handleChangeSection}
                                 ref={register({
                                   required: true,
                                 })}
                               />
                               <div className="col-12">
-                                {errors && errors.section && (
+                                {errors && errors.concept && (
                                   <label className="error">
-                                    {errors.section.message ||
+                                    {errors.concept.message ||
                                       "Section is required"}
                                   </label>
                                 )}
                               </div>
-                              {errors.section && errors.section.message}
+                              {errors.concept && errors.concept.message}
                               <InputCheckBox
                                 refVal={register({ required: true })}
                                 name="role"
@@ -782,7 +784,8 @@ const CreateCv = (props) => {
               {activeSection === "text" ? (
                 <FormDeatils
                   array={array}
-                  details={value.section}
+                  formState={formState}
+                  setFormState={setFormState}
                   displayDataToUI={displayDataToUI}
                   setDisplayDataToUI={setDisplayDataToUI}
                   sidebarRoutes={sidebarRoutes}
@@ -792,8 +795,8 @@ const CreateCv = (props) => {
 
               {activeSection === "entry" ? (
                 <Editor
-                  details={formState.section}
                   ckeditorState={ckeditorState}
+                  title={formState.concept}
                   setCkeditorState={setCkeditorState}
                   setLastModified={setLastModified}
                   lastModified={lastModified}

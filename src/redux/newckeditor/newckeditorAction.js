@@ -42,11 +42,8 @@ export const GetOLdDataForCkEditor = (currentUser, id) => {
             dispatch(CkOldData_Error(errorMessage));
           } else if (Object.keys(data).includes("content_new")) {
             dispatch(CkOldData_Success(data));
-            console.log(
-              data,
-              newData,
-              `data For New CkeEditor From ConsoleLog`
-            );
+            console.log(data, `data For New CkeEditor From ConsoleLog`);
+            console.log(newData, `new Data Doc.id`);
           }
           return;
         });
@@ -93,11 +90,10 @@ export const Do_Submiting_newCkEditor = (
 ) => {
   console.log(`id ${id}`);
   console.log(`currnetUser ${currentUser.id}`);
-  console.log(`dataToBeSaved ${dataToBeSaved}`);
-  return async (dispatch) => {
+  console.log(dataToBeSaved, `dataToBeSaved`);
+  return (dispatch) => {
     dispatch(SubmitingCk_Start());
-    await db
-      .doc(`users/${currentUser.id}`)
+    db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .doc(`${dataToBeSaved.concept}`)
       .set(dataToBeSaved)

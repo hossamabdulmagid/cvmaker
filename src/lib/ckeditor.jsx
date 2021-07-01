@@ -7,10 +7,7 @@ import { useForm } from "react-hook-form";
 import { Spinner, Input, Button, useToast } from "@chakra-ui/core";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
-import {
-  GetOLdDataForCkEditor,
-  Do_Submiting_newCkEditor,
-} from "../redux/newckeditor/newckeditorAction";
+import { Do_Submiting_newCkEditor } from "../redux/newckeditor/newckeditorAction";
 import generateRandom from "./random";
 const editorConfiguration = {
   toolbar: {
@@ -31,28 +28,18 @@ const editorConfiguration = {
 const Editor = (props) => {
   const {
     currentUser,
-    GetOLdDataForCkEditor,
-    oldCkData,
     Do_Submiting_newCkEditor,
     ckeditorState,
     setCkeditorState,
-    title,
   } = props;
-  console.log(`props   title  ${title}`);
 
   const { handleSubmit, register, getValues, errors } = useForm();
 
   const toast = useToast();
 
-  const HandleChange = async (event) => {
-    const target = event.target;
-    const { name, value } = target;
-    const x = title;
-  };
-
   const HandleCkEditorState = async (event, editor) => {
-    const Olddata = editor.getData();
-    await setCkeditorState({ ...ckeditorState, content_new: `${Olddata}` });
+    const data = editor.getData();
+    await setCkeditorState({ ...ckeditorState, content_new: `${data}` });
   };
 
   const { id } = useParams();
@@ -69,27 +56,20 @@ const Editor = (props) => {
     if (!currentUser && id) {
       return;
     }
+    console.log(data, `data OnSubmit`);
     let dataToBeSaved = {
-      concept: title,
+      concept: ckeditorState.concept,
       content_new: ckeditorState.content_new || "",
       type: ckeditorState.type || "entry",
       identiferId: generateRandom() || "",
     };
     console.log(dataToBeSaved, `dataToBeSaved while Sending data`);
-
     await Do_Submiting_newCkEditor(currentUser, id, dataToBeSaved, toast);
-
     setFlagButton(false);
-
     setTimeout(() => {
       setFlagButton(true);
     }, 2000);
   };
-
-  useEffect(() => {
-    GetOLdDataForCkEditor(currentUser, id);
-    console.log(`data ${oldCkData}`);
-  }, [GetOLdDataForCkEditor, currentUser, id]);
 
   return (
     <Fragment>
@@ -103,14 +83,6 @@ const Editor = (props) => {
           </Col>
         </Row>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            refVal={register({ required: true })}
-            placeholder="title for new Section"
-            name="ckeditorState.concept"
-            type="hidden"
-            value={title}
-            onChange={HandleChange}
-          />
           {/*    <h1>{"" || state.concept}</h1> */}
           <CKEditor
             refVal={register({ required: true })}
@@ -138,13 +110,9 @@ const Editor = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
-  oldCkData: state.newSectionCkEditor.newckEditor,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  GetOLdDataForCkEditor: (currentUser, id) =>
-    dispatch(GetOLdDataForCkEditor(currentUser, id)),
-
   Do_Submiting_newCkEditor: (currentUser, id, dataToBeSaved, toast) =>
     dispatch(Do_Submiting_newCkEditor(currentUser, id, dataToBeSaved, toast)),
 });

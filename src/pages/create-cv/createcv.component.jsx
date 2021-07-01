@@ -13,7 +13,6 @@ import {
   Buttons,
   Ul,
   Li,
-  P,
   AllCvLinks,
   SmallSideBar,
   LinkOption,
@@ -188,6 +187,7 @@ const CreateCv = (props) => {
     description: "",
     type: "",
     lastModified: new Date(),
+    identiferId: null,
   });
 
   const handleChange = (e) => {
@@ -199,8 +199,8 @@ const CreateCv = (props) => {
     const { name, value } = event.target;
     setFormState({ ...formState, [name]: value });
     setCkeditorState({ ...ckeditorState, [name]: value });
-    console.log(`formState   ${formState.concept} while Changing`);
-    console.log(`ckeditorState   ${ckeditorState.concept} while Changing`);
+    console.log(` ${formState.concept}`, `formState  while Changing`);
+    console.log(` ${ckeditorState.concept}`, `ckeditorState   while Changing`);
   };
 
   const [turnOf, setTurnOf] = useState("disabled='disabled'");
@@ -222,7 +222,7 @@ const CreateCv = (props) => {
       type: value.type,
       lastModified: new Date(),
     });
-    setCkeditorState({});
+    setCkeditorState({ ...ckeditorState, content_new: "" });
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
@@ -240,6 +240,7 @@ const CreateCv = (props) => {
       });
       setTurnOf(isChecked);
     }, 2000);
+    //  setFormState({})
   };
 
   const [cvName, setCvName] = useState({
@@ -249,7 +250,7 @@ const CreateCv = (props) => {
   const [loading, setLoading] = useState(true);
 
   let NameCv = cvName.label;
-
+  let c;
   const isCurrent = useRef(true);
 
   const onSubmitLabel = async (data) => {
@@ -286,7 +287,14 @@ const CreateCv = (props) => {
 
   const [flag, setFlag] = useState(true);
 
-  const getLength = useCallback(() => {}, [allNameOfSections.length]);
+  const getLength = useCallback(() => {
+    if (allNameOfSections.length > 5) {
+      setFlag(false);
+    } else {
+      setFlag(true);
+      //allNameOfSections
+    }
+  }, [allNameOfSections.length]);
 
   useLayoutEffect(() => {
     if (!currentUser) {
@@ -295,24 +303,29 @@ const CreateCv = (props) => {
 
     Get_allSection(currentUser, id);
 
-    if (allNameOfSections.length > 5) {
-      setFlag(false);
-    } else {
-      setFlag(true);
-      //allNameOfSections
-    }
-  }, [Get_allSection, currentUser, id]);
+    getLength();
+  }, [Get_allSection, currentUser, id, getLength, allNameOfSections.length]);
 
-  const getSelection = async (newSelection) => {
+  const getSelection = (newSelection) => {
     console.log(newSelection, `newSelection`);
-    await setCkeditorState({
+    setCkeditorState({
       ...ckeditorState,
       concept: newSelection.data.concept || ckeditorState.concept,
       identiferId: newSelection.data.identiferId || ckeditorState.identiferId,
       content_new: newSelection.data.content_new || ckeditorState.content_new,
       type: newSelection.data.type || ckeditorState.type,
     });
-    console.log(ckeditorState);
+    setFormState({
+      ...formState,
+      concept: newSelection.data.concept || formState.concept,
+      name: newSelection.data.name || formState.name,
+      start: newSelection.data.start || formState.start,
+      end: newSelection.data.end || formState.end,
+      description: newSelection.data.description || formState.description,
+      type: newSelection.data.type || formState.type,
+      lastModified: newSelection.data.lastModified || formState.lastModified,
+      identiferId: newSelection.data.identiferId || formState.identiferId,
+    });
   };
 
   return (
@@ -376,30 +389,25 @@ const CreateCv = (props) => {
 
           <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
             <Col xs={0} md={0} lg={4} />
-
             <Col xs={6} md={5} lg={4}>
               <AllCvLinks to="/cv">
                 Show All Cv
                 <Aroow />
               </AllCvLinks>
             </Col>
-
             <Col xs={6} md={7} lg={4}>
               <Buttons size="xs" variant="success">
                 <AiOutlineExclamation />
                 Help
               </Buttons>
-
               <Buttons size="xs" variant="success">
                 <AiTwotoneFileExcel />
                 Quick preview
               </Buttons>
-
               <Buttons size="xs" variant="success">
                 <AiTwotonePlaySquare />
                 Save
               </Buttons>
-
               <Buttons size="xs" variant="success">
                 <AiTwotoneFolderOpen />
                 Download
@@ -572,6 +580,7 @@ const CreateCv = (props) => {
               {activeSection === "text" ? (
                 <FormDeatils
                   array={array}
+                  concept={formState.concept}
                   formState={formState}
                   setFormState={setFormState}
                   displayDataToUI={displayDataToUI}
@@ -584,13 +593,8 @@ const CreateCv = (props) => {
 
               {activeSection === "entry" ? (
                 <Editor
-                  title={formState.concept}
                   ckeditorState={ckeditorState}
                   setCkeditorState={setCkeditorState}
-                  setLastModified={setLastModified}
-                  lastModified={lastModified}
-                  setFlag={setFlag}
-                  flag={flag}
                 />
               ) : null}
             </Col>
@@ -785,6 +789,7 @@ const CreateCv = (props) => {
                 <FormDeatils
                   array={array}
                   formState={formState}
+                  concept={formState.concept}
                   setFormState={setFormState}
                   displayDataToUI={displayDataToUI}
                   setDisplayDataToUI={setDisplayDataToUI}
@@ -796,12 +801,7 @@ const CreateCv = (props) => {
               {activeSection === "entry" ? (
                 <Editor
                   ckeditorState={ckeditorState}
-                  title={formState.concept}
                   setCkeditorState={setCkeditorState}
-                  setLastModified={setLastModified}
-                  lastModified={lastModified}
-                  setFlag={setFlag}
-                  flag={flag}
                 />
               ) : null}
             </Col>

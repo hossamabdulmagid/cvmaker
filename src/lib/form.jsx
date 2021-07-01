@@ -20,6 +20,9 @@ const FormDeatils = (props) => {
     setDisplayDataToUI,
     activeSection,
     setActiveSection,
+    formState,
+    setFormState,
+    title,
   } = props;
   const { handleSubmit, register, getValues, errors, data } = useForm();
 
@@ -29,27 +32,15 @@ const FormDeatils = (props) => {
 
   useEffect(() => {}, [displayDataToUI]);
 
-  console.log(activeSection, `activeSection`);
-
-  const [state, setState] = useState({
-    title: {
-      concept: "",
-      name: "",
-      start: "",
-      end: "",
-      description: "",
-      identiferId: null,
-    },
-    type: "text",
-  });
+  console.log(props, `props`);
 
   const { id } = useParams();
 
-  const { concept, name, start, end, description, type } = state;
+  const { concept, name, start, end, description, type } = formState;
 
   const HandleChangenewData = (event) => {
     const { name, value } = event.target;
-    setState({ ...state, [name]: value });
+    setFormState({ ...formState, [name]: value });
   };
 
   const [FlagButton, setFlagButton] = useState(true);
@@ -63,25 +54,23 @@ const FormDeatils = (props) => {
       return;
     }
     const SecRef = firestore.doc(
-      `users/${currentUser.id}/cvs/${id}/data/${value.concept}`
+      `users/${currentUser.id}/cvs/${id}/data/${title}`
     );
     let dataToBeSaved = {
-      title: {
-        concept: value.concept || "",
-        name: name || "",
-        start: start || "",
-        end: end || "",
-        description: description || "",
-        identiferId: generateRandom(),
-      },
+      concept: title || "",
+      name: name || "",
+      start: start || "",
+      end: end || "",
+      description: description || "",
+      identiferId: generateRandom(),
       type: type || "text",
     };
 
     await SecRef.set(dataToBeSaved);
 
     array.push({
-      section: data.title,
-      type: state.type,
+      section: data.concept,
+      type: formState.type,
       lastModified: new Date(),
     });
 
@@ -90,12 +79,14 @@ const FormDeatils = (props) => {
       setFlagButton(true);
       toast({
         title: "Section Updated.",
-        description: `Your new Section  name is : ${value.concept}`,
+        description: `Your new Section  name is : ${title}`,
         status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom-left",
       });
+      setFormState({});
+
       setLoading(false);
     }, 2000);
 
@@ -104,7 +95,7 @@ const FormDeatils = (props) => {
     }, 3500);
   };
 
-  useEffect(() => {}, [currentUser, id, details, sidebarRoutes]);
+  useEffect(() => {}, [currentUser, id, title, sidebarRoutes]);
 
   const [loading, setLoading] = useState(true);
 
@@ -114,55 +105,56 @@ const FormDeatils = (props) => {
 
   const [objectHaveTypeText, setObjectHaveTypeText] = useState({});
 
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-    firestore
-      .doc(`users/${currentUser.id}`)
-      .collection(`cvs/${id}/data`)
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          console.log(doc.id, `doC`);
-          const DataFromFireBase = doc.data();
-          console.log(doc.data(), `doc/data()`);
-          if (
-            DataFromFireBase.type === "text" &&
-            DataFromFireBase.title.concept === doc.id
-          ) {
-            dataTypeText.push(DataFromFireBase.title);
-            console.log(dataTypeText, `dataTypeText`);
-            setObjectHaveTypeText(DataFromFireBase.title);
-            console.log(objectHaveTypeText);
+  /*useEffect(() => {
+   if (!currentUser) {
+     return;
+   }
+   firestore
+     .doc(`users/${currentUser.id}`)
+     .collection(`cvs/${id}/data`)
+     .get()
+     .then(function (querySnapshot) {
+       querySnapshot.forEach(function (doc) {
+         // console.log(doc.id, `doC`);
+         const DataFromFireBase = doc.data();
+         // console.log(doc.data(), `doc/data()`);
+         if (
+           DataFromFireBase.type === "text" &&
+           DataFromFireBase.title.concept === doc.id
+         ) {
+           dataTypeText.push(DataFromFireBase.title);
+           //   console.log(dataTypeText, `dataTypeText`);
+           setObjectHaveTypeText(DataFromFireBase.title);
+           //    console.log(objectHaveTypeText);
             setState({
-              title: {
-                concept: "" || DataFromFireBase.title.concept,
-                name: DataFromFireBase.title.name || "",
-                start: DataFromFireBase.title.start || "",
-                end: DataFromFireBase.title.end || "",
-                description: DataFromFireBase.title.description || "",
-                identiferId: DataFromFireBase.title.identiferId,
-              },
-            });
-            console.log(state, `state withen iDentiferUniqeId`);
-            setObjectHaveTypeText(state);
+               title: {
+                 concept: "" || DataFromFireBase.title.concept,
+                 name: DataFromFireBase.title.name || "",
+                 start: DataFromFireBase.title.start || "",
+                 end: DataFromFireBase.title.end || "",
+                 description: DataFromFireBase.title.description || "",
+                 identiferId: DataFromFireBase.title.identiferId,
+               },
+             });
+             
+           //   console.log(state, `state withen iDentiferUniqeId`);
+           setObjectHaveTypeText(state);
 
-            setTimeout(() => {
-              setDisplayDataToUI(false);
-            }, 100);
-          } else {
-            console.log(`Iam Falseeeee`);
-          }
-        });
+           setTimeout(() => {
+             //   setDisplayDataToUI(false);
+           }, 100);
+         } else {
+           console.log(`Iam Falseeeee`);
+         }
+       });
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error, `there is was an error`);
-      });
-  }, [currentUser, id, state.title]);
+       setLoading(false);
+     })
+     .catch((error) => {
+       setLoading(false);
+       console.log(error, `there is was an error`);
+     });
+ }, [currentUser, id, formState]);*/
 
   return (
     <Fragment>
@@ -181,7 +173,7 @@ const FormDeatils = (props) => {
                   placeholder="title for new Section"
                   name="concept"
                   type="text"
-                  value={details}
+                  value={title}
                   onChange={HandleChangenewData}
                 />
 
@@ -197,6 +189,7 @@ const FormDeatils = (props) => {
                   placeholder="name"
                   name="name"
                   type="text"
+                  value={formState.name || ""}
                   onChange={HandleChangenewData}
                 />
                 <strong className="col-12">
@@ -211,6 +204,7 @@ const FormDeatils = (props) => {
                   placeholder="start"
                   name="start"
                   type="text"
+                  value={formState.start || ""}
                   onChange={HandleChangenewData}
                 />
                 <strong className="col-12">
@@ -225,6 +219,7 @@ const FormDeatils = (props) => {
                   placeholder="end"
                   name="end"
                   type="text"
+                  value={formState.end || ""}
                   onChange={HandleChangenewData}
                 />
                 <strong className="col-12">
@@ -239,6 +234,7 @@ const FormDeatils = (props) => {
                   placeholder="description  here"
                   type="textarea"
                   name="description"
+                  value={formState.description || ""}
                   onChange={HandleChangenewData}
                 />
                 <strong className="col-12">
@@ -277,35 +273,35 @@ const FormDeatils = (props) => {
               <P className="text-center">
                 Title :
                 <strong>
-                  {!displayDataToUI ? state.title.concept || "" : <Spinner />}
+                  {!displayDataToUI ? formState.concept || "" : <Spinner />}
                 </strong>
               </P>
 
               <P className="text-center">
                 Name :
                 <strong>
-                  {!displayDataToUI ? state.title.name || "" : <Spinner />}
+                  {!displayDataToUI ? formState.name || "" : <Spinner />}
                 </strong>
               </P>
 
               <P className="text-center">
                 Start :
                 <strong>
-                  {!displayDataToUI ? state.title.start || "" : <Spinner />}
+                  {!displayDataToUI ? formState.start || "" : <Spinner />}
                 </strong>
               </P>
 
               <P className="text-center">
                 End :
                 <strong>
-                  {!displayDataToUI ? state.title.end || "" : <Spinner />}
+                  {!displayDataToUI ? formState.end || "" : <Spinner />}
                 </strong>
               </P>
 
               <P className="text-center">
                 Description :
                 <strong>
-                  {!displayDataToUI ? state.title.description : <Spinner />}
+                  {!displayDataToUI ? formState.description : <Spinner />}
                 </strong>
               </P>
               <Button

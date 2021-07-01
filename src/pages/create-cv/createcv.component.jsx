@@ -151,7 +151,7 @@ const CreateCv = (props) => {
   const [ckeditorState, setCkeditorState] = useState({
     concept: "",
     content_new: "",
-    type: "",
+    type: "entry",
     identiferId: null,
   });
 
@@ -185,7 +185,7 @@ const CreateCv = (props) => {
     start: "",
     end: "",
     description: "",
-    type: "",
+    type: "text",
     lastModified: new Date(),
     identiferId: null,
   });
@@ -240,7 +240,13 @@ const CreateCv = (props) => {
       });
       setTurnOf(isChecked);
     }, 2000);
-    //  setFormState({})
+    setFormState({
+      ...formState,
+      name: "",
+      start: "",
+      end: "",
+      description: "",
+    });
   };
 
   const [cvName, setCvName] = useState({
@@ -292,7 +298,6 @@ const CreateCv = (props) => {
       setFlag(false);
     } else {
       setFlag(true);
-      //allNameOfSections
     }
   }, [allNameOfSections.length]);
 
@@ -302,7 +307,7 @@ const CreateCv = (props) => {
     }
     Get_allSection(currentUser, id);
     getLength();
-  }, [Get_allSection, currentUser, id, getLength, allNameOfSections.length]);
+  }, [Get_allSection, currentUser, id, getLength, allNameOfSections]);
 
   const getSelection = (newSelection) => {
     console.log(newSelection, `newSelection`);
@@ -311,7 +316,7 @@ const CreateCv = (props) => {
       concept: newSelection.data.concept || ckeditorState.concept,
       identiferId: newSelection.data.identiferId || ckeditorState.identiferId,
       content_new: newSelection.data.content_new || ckeditorState.content_new,
-      type: newSelection.data.type || ckeditorState.type,
+      type: ckeditorState.type,
     });
     setFormState({
       ...formState,
@@ -320,12 +325,12 @@ const CreateCv = (props) => {
       start: newSelection.data.start || formState.start,
       end: newSelection.data.end || formState.end,
       description: newSelection.data.description || formState.description,
-      type: newSelection.data.type || formState.type,
+      type: formState.type,
       lastModified: newSelection.data.lastModified || formState.lastModified,
       identiferId: newSelection.data.identiferId || formState.identiferId,
     });
   };
-
+  console.log(allNameOfSections, `allNameOfSections`);
   return (
     <Fragment>
       <NavGuest />

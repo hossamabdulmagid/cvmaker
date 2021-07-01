@@ -306,6 +306,7 @@ const CreateCv = (props) => {
       return;
     }
     Get_allSection(currentUser, id);
+
     getLength();
   }, [Get_allSection, currentUser, id, getLength, allNameOfSections]);
 

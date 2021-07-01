@@ -22,7 +22,7 @@ import {
   RapperdForms,
 } from "./createcv.styles";
 import { Col, Row } from "react-bootstrap";
-import FormDeatils from "../../lib/form";
+import AddForm from "../../lib/form";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
   AiOutlineExclamation,
@@ -38,7 +38,7 @@ import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
 import InputRadioBox from "./radiobox";
 import { useParams, useHistory } from "react-router-dom";
-import Editor from "../../lib/ckeditor";
+import AddEditor from "../../lib/ckeditor";
 import {
   Modal,
   ModalOverlay,
@@ -300,9 +300,7 @@ const CreateCv = (props) => {
     if (!currentUser) {
       return;
     }
-
     Get_allSection(currentUser, id);
-
     getLength();
   }, [Get_allSection, currentUser, id, getLength, allNameOfSections.length]);
 
@@ -578,21 +576,15 @@ const CreateCv = (props) => {
               {activeSection === sidebarRoutes[4].type ? <Interests /> : null}
               {activeSection === sidebarRoutes[5].type ? <References /> : null}
               {activeSection === "text" ? (
-                <FormDeatils
+                <AddForm
                   array={array}
-                  concept={formState.concept}
                   formState={formState}
                   setFormState={setFormState}
-                  displayDataToUI={displayDataToUI}
-                  setDisplayDataToUI={setDisplayDataToUI}
-                  sidebarRoutes={sidebarRoutes}
-                  activeSection={activeSection}
-                  setActiveSection={setActiveSection}
                 />
               ) : null}
 
               {activeSection === "entry" ? (
-                <Editor
+                <AddEditor
                   ckeditorState={ckeditorState}
                   setCkeditorState={setCkeditorState}
                 />
@@ -786,20 +778,15 @@ const CreateCv = (props) => {
               {activeSection === sidebarRoutes[4].type ? <Interests /> : null}
               {activeSection === sidebarRoutes[5].type ? <References /> : null}
               {activeSection === "text" ? (
-                <FormDeatils
+                <AddForm
                   array={array}
                   formState={formState}
-                  concept={formState.concept}
                   setFormState={setFormState}
-                  displayDataToUI={displayDataToUI}
-                  setDisplayDataToUI={setDisplayDataToUI}
-                  sidebarRoutes={sidebarRoutes}
-                  activeSection={activeSection}
                 />
               ) : null}
 
               {activeSection === "entry" ? (
-                <Editor
+                <AddEditor
                   ckeditorState={ckeditorState}
                   setCkeditorState={setCkeditorState}
                 />

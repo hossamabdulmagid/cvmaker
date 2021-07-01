@@ -25,7 +25,7 @@ const editorConfiguration = {
   },
 };
 
-const Editor = (props) => {
+const AddEditor = (props) => {
   const {
     currentUser,
     Do_Submiting_newCkEditor,
@@ -117,4 +117,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(Do_Submiting_newCkEditor(currentUser, id, dataToBeSaved, toast)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEditor);

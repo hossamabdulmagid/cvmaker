@@ -31,10 +31,7 @@ const SigninSignup = () => {
           </Row>
           <Row>
             <Col xs={6} md={0} lg={8}></Col>
-            <Col xs={6} md={0} lg={4}>
-              <small>No time to signup? </small>
-              <LINK size="xs">Create a resume without signing up</LINK>
-            </Col>
+            <Col xs={6} md={0} lg={4}></Col>
           </Row>
         </Container>
       </Color>

@@ -22,7 +22,7 @@ import {
   RapperdForms,
 } from "./createcv.styles";
 import { Col, Row } from "react-bootstrap";
-import AddForm from "../../lib/form";
+import AddForm from "../../lib/addform";
 import NavGuest from "../../components/nav-guest/navGuest.component";
 import {
   AiOutlineExclamation,
@@ -38,7 +38,7 @@ import Qualifications from "./qualifications/qualifications.component";
 import Interests from "./interests/interests.component";
 import InputRadioBox from "./radiobox";
 import { useParams, useHistory } from "react-router-dom";
-import AddEditor from "../../lib/ckeditor";
+import AddEditor from "../../lib/addckeditor";
 import {
   Modal,
   ModalOverlay,

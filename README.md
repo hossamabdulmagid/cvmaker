@@ -10,6 +10,8 @@ In the project directory, you can run:
 
 Runs the app in the development mode.
 <br />
+if any problems in (signIn or signUp ) methods try to use new window incognito
+
 https://cvmkr-dd45a.web.app
 
 The page will reload if you make edits.<br />
@@ -23,9 +25,11 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br />
+
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br />
+
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.

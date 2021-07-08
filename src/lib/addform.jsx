@@ -36,9 +36,11 @@ const AddForm = (props) => {
     if (!currentUser.id) {
       return;
     }
+
     const SecRef = firestore.doc(
       `users/${currentUser.id}/cvs/${id}/data/${concept}`
     );
+
     let dataToBeSaved = {
       concept: concept || "",
       name: name || "",
@@ -58,8 +60,10 @@ const AddForm = (props) => {
     });
 
     setFlagButton(false);
+
     setTimeout(() => {
       setFlagButton(true);
+
       toast({
         title: "Section Updated.",
         description: `Your new Section  name is : ${concept}`,

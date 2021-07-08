@@ -56,16 +56,22 @@ const AddEditor = (props) => {
     if (!currentUser && id) {
       return;
     }
+
     console.log(data, `data OnSubmit`);
+
     let dataToBeSaved = {
       concept: ckeditorState.concept,
       content_new: ckeditorState.content_new || "",
       type: ckeditorState.type || "entry",
       identiferId: generateRandom() || "",
     };
+
     console.log(dataToBeSaved, `dataToBeSaved while Sending data`);
+
     await Do_Submiting_newCkEditor(currentUser, id, dataToBeSaved, toast);
+
     setFlagButton(false);
+
     setTimeout(() => {
       setFlagButton(true);
     }, 2000);

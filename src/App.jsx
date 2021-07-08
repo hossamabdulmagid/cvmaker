@@ -41,7 +41,6 @@ class App extends Component {
       setCurrentUser(userAuth);
     });
   }
-
   componentWillUnmount() {
     this.unsubscribeFormAuth();
   }
@@ -78,10 +77,6 @@ class App extends Component {
                   }
                   component={CreateCv}
                 />
-
-                {/* <Route path='*' component={NotFound} />    
-                <PublicOnlyRoute exact path="/create-cv" redirectPath="/" component={CreateCv} />
-                */}
                 <PrivateRoute
                   exact
                   path="/cv"

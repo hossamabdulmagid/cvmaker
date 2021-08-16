@@ -319,10 +319,7 @@ const CreateCv = (props) => {
       content_new: newSelection.data.content_new || ckeditorState.content_new,
       type: ckeditorState.type,
     });
-<<<<<<< HEAD
 
-=======
->>>>>>> 94d5b7defadc4a9c20b19f04995d52f668859c5b
     setFormState({
       ...formState,
       concept: newSelection.data.concept || formState.concept,

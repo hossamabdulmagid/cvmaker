@@ -1,0 +1,227 @@
+// Overrides
+$theme-colors: (
+  "primary": #6bc9d5,
+  "danger": #b23636,
+);
+
+// Import Bootstrap and its default variables
+@import "~bootstrap/scss/bootstrap.scss";
+
+.btn-primary {
+  color: #fff;
+}
+:root {
+  --blue: #6bc9d5;
+}
+.wrapper {
+  margin: 20px auto 0;
+  padding: 15px;
+}
+.rbc-header {
+  background-color: green;
+  color: white;
+}
+.rbc-day-bg {
+  background-color: #93ab93;
+  color: white;
+}
+.rbc-show-more {
+  background-color: rgba(81, 81, 81, 0.3);
+  z-index: 4;
+  color: white;
+  font-weight: bold;
+  font-size: 85%;
+  height: auto;
+  line-height: normal;
+}
+.rbc-show-more a:hover {
+  color: #18c7e1;
+}
+.rbc-time-content > .rbc-time-gutter {
+  background-color: #18c7e1;
+  color: white;
+}
+.rbc-time-content > .rbc-day-slot {
+  background-color: #caeaca;
+}
+label,
+legend {
+  font-weight: 600;
+}
+label.error {
+  color: #b23636;
+}
+.m-t-lg {
+  margin-top: 20px;
+}
+.m-t-xlg {
+  margin-top: 40px;
+}
+.m-l-xs {
+  margin-left: 5px;
+}
+.m-l-xs {
+  margin-left: 5px;
+}
+.m-l-sm {
+  margin-left: 10px;
+}
+.m-l-md {
+  margin-left: 15px;
+}
+.m-l-lg {
+  margin-left: 20px;
+}
+.m-l-xlg {
+  margin-left: 25px;
+}
+.padding-xs {
+  padding: 5px;
+}
+
+.padding-sm {
+  padding: 10px;
+}
+.padding-md {
+  padding: 10px;
+}
+.padding-lg {
+  padding: 15px;
+}
+.padding-xlg {
+  padding: 25px;
+}
+.bg-light-grey {
+  background-color: #dddddd;
+}
+
+.footer-position {
+  position: relative;
+  bottom: 0;
+  left: 0;
+}
+.as-link {
+  cursor: pointer;
+}
+.checkbox-custom {
+  opacity: 0;
+  position: absolute;
+  display: inline;
+}
+
+.checkbox-custom,
+.checkbox-custom-label {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 7px;
+  cursor: pointer;
+  line-height: 50px;
+  height: 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox-custom + .checkbox-custom-label:before {
+  content: "";
+  background: #fff;
+  border-radius: 5px;
+  border: 2px solid #18c7e1;
+  display: inline-block;
+  vertical-align: middle;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.checkbox-custom:checked + .checkbox-custom-label:before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 18px;
+  border: solid #18c7e1;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  border-radius: 0px;
+  margin: 0px 19px 5px 5px;
+}
+.bottom {
+  display: block;
+}
+.buttonforcreateclinic {
+  margin: 6px;
+}
+
+.buttonforcreateclinicteam {
+  margin: 6px;
+}
+.buttonforaddacleint {
+  margin: 6px;
+}
+.copyrightclinic2020 {
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: 400;
+}
+.buttoncreatenewquestionnaire {
+  margin: 6px;
+}
+.buttonaddmorequestion {
+  margin: 8px;
+}
+.hintforecheckbox {
+  display: block;
+  margin-left: 2.4%;
+  margin-top: 10px;
+}
+
+.col-form-label {
+  font-size: 14px;
+}
+label:first-letter {
+  text-transform: uppercase;
+}
+
+.event-requested {
+  background: rgb(215, 106, 47);
+}
+.event-accepted {
+  background-color: rgb(31, 49, 160);
+}
+.event-created {
+  background-color: rgb(23, 84, 57);
+}
+.event-confirmed {
+  background-color: rgb(89, 193, 80);
+}
+
+.event-checkin {
+  background-color: rgb(233, 145, 7);
+}
+
+.event-checkout {
+  background-color: rgb(133, 145, 0);
+}
+.event-canceled {
+  background-color: rgb(255, 0, 0);
+}
+
+.border-radius-xs {
+  border-radius: 5px;
+}
+.border-radius-sm {
+  border-radius: 10px;
+}
+.border-radius-md {
+  border-radius: 15px;
+}
+.border-radius-lg {
+  border-radius: 20px;
+}
+.border-radius-xlg {
+  border-radius: 25px;
+}

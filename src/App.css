@@ -1,0 +1,174 @@
+.logotext {
+  margin-top: 10px;
+}
+.relative {
+  position: absolute;
+  width: 55%;
+  margin-top: 210px;
+}
+.logo {
+  margin-right: 5px;
+}
+Button {
+  margin: 5px;
+}
+.imgpaypal {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.edit {
+  display: inline-flex;
+}
+.Label {
+  margin: 20px;
+  font-weight: 350;
+  width: 150px;
+}
+.LabelforSignup {
+  display: inline-flex;
+  margin: 35px;
+  font-weight: 350;
+}
+.checkboxterms {
+  margin: 25px;
+}
+
+.Buttonforgreen {
+  padding: 15px;
+}
+.lock {
+  padding-right: 5 px;
+}
+
+.buttonforlabelcv {
+  margin: 20px;
+  border-radius: 8px;
+}
+
+button {
+  margin: 5px;
+}
+.labelcv {
+  color: #3182ce;
+}
+.buttonForCancleNewSection {
+  padding: 5px;
+  margin: 5px;
+  justify-content: space-between;
+}
+.buttonForSaveNewSection {
+  min-width: auto;
+  margin: 5px;
+  padding: 5px;
+  justify-content: space-between;
+  min-height: auto;
+}
+
+.Deal {
+  min-width: auto;
+  min-height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.error {
+  color: red;
+  float: right;
+  display: inline-flex;
+}
+.errors {
+  color: red;
+  float: left;
+  display: inline-flex;
+}
+.errorForEditSectionName {
+  color: red;
+  float: left;
+  display: inline-flex;
+  padding: 5px;
+}
+.basicinfo {
+  padding-bottom: 20px;
+  border-bottom: 1px dotted darkgray;
+}
+tr {
+  text-align: center;
+}
+td {
+  text-align: center;
+}
+th {
+  text-align: center;
+}
+.pull-right {
+  float: right;
+}
+.errorSectionName {
+  display: block;
+  width: 100px;
+  color: red;
+}
+.inputradiobox {
+  margin: 10px;
+  padding-top: 10px;
+}
+.m-l-lg {
+  color: plum;
+  padding: 5px;
+}
+.buttonSavenewFrom {
+  min-width: auto;
+  min-height: auto;
+}
+
+.someThing {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ck-editor__editable_inline {
+  min-height: 200px;
+  padding-left: 12px;
+}
+p {
+  padding: 4px;
+}
+.cssforeditor {
+  margin-bottom: 26px;
+}
+.alert {
+  border-radius: 20px;
+  width: auto;
+}
+.editor {
+  color: black;
+  padding-left: 20px;
+  background-color: silver;
+}
+.saveEditor {
+  padding: 8px;
+  margin: 15px 0px 10px 10px;
+}
+
+.saveEditorMobile {
+  padding: 8px;
+  margin: 15px 0px 10px 10px;
+}
+.menulabel {
+  float: right;
+}
+#idforcss {
+  padding: 20px;
+}
+.imgforcreateCv {
+  padding-right: 4px;
+}
+.rappertitlebasicinfo {
+  padding: 1px;
+  margin-bottom: 5px;
+  border: 1px solid darkgray;
+}
+.logo {
+  padding-top: 13px;
+}

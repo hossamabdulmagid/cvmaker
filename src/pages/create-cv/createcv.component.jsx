@@ -319,7 +319,7 @@ const CreateCv = (props) => {
       content_new: newSelection.data.content_new || ckeditorState.content_new,
       type: ckeditorState.type,
     });
-
+    // nothing to commit, working tree clean
     setFormState({
       ...formState,
       concept: newSelection.data.concept || formState.concept,

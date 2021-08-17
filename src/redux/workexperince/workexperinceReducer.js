@@ -1,4 +1,6 @@
-import { workexperinceActionType } from "./workexperinceType";
+import {
+  workexperinceActionType
+} from "./workexperinceType";
 
 const INITAIL_STATE = {
   isFetching: false,
@@ -26,7 +28,7 @@ const workexperinceReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        errorMessage: action.payload.errorMessage,
+          errorMessage: action.payload.errorMessage,
       };
     case workexperinceActionType.DELETE_WORKEXP_START:
       return {
@@ -43,7 +45,7 @@ const workexperinceReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        errorMessage: action.payload.errorMessage,
+          errorMessage: action.payload.errorMessage,
       };
 
     case workexperinceActionType.GET_WORKEXPERINCE_START:
@@ -55,21 +57,41 @@ const workexperinceReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        data: {
-          allwork: action.payload.allwork,
-        },
-        type: action.payload.type,
+          data: {
+            allwork: action.payload.allwork,
+          },
+          type: action.payload.type,
       };
     case workexperinceActionType.GET_WORKEXPERINCE_ERROR:
       return {
         ...state,
         isFetching: false,
-        data: { allwork: [] },
-        errorMessage: action.payload,
+          data: {
+            allwork: []
+          },
+          errorMessage: action.payload,
       };
 
-    default:
-      return state;
+
+    case workexperinceActionType.DELETE_SINGLEWORKEXP_START:
+      return {
+        ...state,
+        isFetching: true,
+      }
+      case workexperinceActionType.DELETE_SINGLEWORKEXP_SUCCESS:
+        return {
+          ...state,
+          isFetching: false,
+        }
+        case workexperinceActionType.DELETE_SINGLEWORKEXP_ERROR:
+          return {
+            ...state,
+            isFetching: false,
+              errorMessage: action.payload
+          }
+
+          default:
+            return state;
   }
 };
 export default workexperinceReducer;

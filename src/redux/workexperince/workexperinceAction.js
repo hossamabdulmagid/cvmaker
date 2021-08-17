@@ -1,5 +1,9 @@
-import { workexperinceActionType } from "./workexperinceType";
-import { firestore } from "../../firebase/firebase.utils";
+import {
+  workexperinceActionType
+} from "./workexperinceType";
+import {
+  firestore
+} from "../../firebase/firebase.utils";
 
 const db = firestore;
 
@@ -172,6 +176,62 @@ export const Do_Delete_Cv = (currentUser, id, toast) => {
           dispatch(Delete_CV_Error(errorMessage));
           console.log(errorMessage, `error from deleteworkrxpaction.js`);
         }
+      });
+  };
+};
+
+
+
+const delete_singlework_Start = () => ({
+  type: workexperinceActionType.DELETE_SINGLEWORKEXP_START,
+})
+
+const delete_singlework_Success = () => ({
+  type: workexperinceActionType.DELETE_SINGLEWORKEXP_SUCCESS,
+
+})
+const delete_singlework_Error = (errorMessage) => ({
+  type: workexperinceActionType.DELETE_SINGLEWORKEXP_ERROR,
+  payload: errorMessage
+})
+
+
+export const Delete_Single_Work = (currentUser, id, identiferId) => {
+  let hasError = false;
+  console.log(currentUser, `currentUser`)
+  console.log(id, `id`)
+  console.log(identiferId, 'identiferId')
+  return (dispatch) => {
+    dispatch(delete_singlework_Start());
+    console.log(`On Fire FirstDispatch`)
+    //  db.doc(`users/${currentUser.id}/cvs/${id}`).collection(`data`).doc(`/Workexperience/${identiferId}`).delete()
+    db.doc(`users/${currentUser.id}`)
+      .collection(`cvs/${id}/data`)
+      .doc(`Workexperience/${identiferId}`)
+      .delete()
+      .then((errorMessage) => {
+        if (errorMessage) {
+          hasError = true;
+          console.log(errorMessage, `error`);
+          dispatch(delete_singlework_Error(errorMessage));
+        }
+        if (!hasError) {
+          dispatch(delete_singlework_Success());
+          //  dispatch(Get_oldCv(cv.userId));
+          // toast({
+          //   title: `Your cv name ${cv.label} Successfully Deleted!`,
+          //   description: `your cv deleted you can Create new one.`,
+          //   status: "success",
+          //   duration: 9000,
+          //   isClosable: true,
+          //   position: "top-right",
+          // });
+
+        }
+      })
+      .catch((errorMessage) => {
+        console.log(errorMessage);
+        dispatch(delete_singlework_Error(errorMessage));
       });
   };
 };

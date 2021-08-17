@@ -17,8 +17,11 @@ import {
   Strong,
   StrongMobile,
   Icon,
+  SingleIconDelete,
 } from "./workexperience.styles";
 import { useParams } from "react-router-dom";
+import { BsFillBucketFill } from "react-icons/bs";
+
 import { Container, Row, Col } from "react-bootstrap";
 import {
   Get_Workexperince,
@@ -27,6 +30,7 @@ import {
 } from "../../../redux/workexperince/workexperinceAction";
 import generateRandom from "../../../lib/random";
 import AddWorkExp from "./addworkexpernice";
+import { Delete_Single_Work } from "../../../redux/workexperince/workexperinceAction";
 const Workexperience = (props) => {
   const {
     AddToList,
@@ -35,6 +39,7 @@ const Workexperience = (props) => {
     Do_Submiting_WorkExp,
     StateWorkExp = [],
     Do_Delete_Cv,
+    Delete_Single_Work,
   } = props;
 
   const { id } = useParams();
@@ -110,6 +115,12 @@ const Workexperience = (props) => {
     }
   }, [StateWorkExp.length, allworkexp.length, StateWorkExp]);
 
+  const handleClickedForDelete = async (selection) => {
+    console.log(selection.identiferId, `@@@ID`);
+    selection.identiferId = identiferId;
+    await Delete_Single_Work(currentUser, id, identiferId);
+  };
+
   return (
     <Container>
       <Row>
@@ -138,78 +149,88 @@ const Workexperience = (props) => {
       <Rapperd>
         {!loading ? (
           <Fragment>
-            <Row
-              bsPr
-              efix="d-none d-md-block d-lg-block  d-xl-block center-item"
-            >
+            <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
               {StateWorkExp.map((single, key) => (
-                <Col
-                  md={12}
-                  lg={12}
-                  xl={12}
-                  className="text-center"
-                  key={key}
-                  id="idforcss"
-                >
-                  <P>
-                    CompanyName:
-                    <Strong>{single.companyname}</Strong>
-                  </P>
-                  <hr />
-                  <P>
-                    Start Work:
-                    <Strong>{single.startwork}</Strong>
-                  </P>
-                  <hr />
-                  <P>
-                    End Work:
-                    <Strong>{single.endwork}</Strong>
-                  </P>
-                  <hr />
-                  <P>
-                    Position:
-                    <Strong>{single.position}</Strong>
-                  </P>
-                  <hr
-                    style={{
-                      color: "red",
-                      backgroundColor: "red",
-                      marginTop: "10px",
-                    }}
-                  />
-                </Col>
+                <>
+                  <Col
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className="text-center"
+                    key={key}
+                    id="idforcss"
+                  >
+                    <P>
+                      CompanyName:
+                      <Strong>{single.companyname}</Strong>
+                    </P>
+                    <hr />
+                    <P>
+                      Start Work:
+                      <Strong>{single.startwork}</Strong>
+                    </P>
+                    <hr />
+                    <P>
+                      End Work:
+                      <Strong>{single.endwork}</Strong>
+                    </P>
+                    <hr />
+                    <P>
+                      Position:
+                      <Strong>{single.position}</Strong>
+                    </P>
+                    {/* <SingleIconDelete
+                      className="icons"
+                      onClick={() => handleClickedForDelete(single)}
+                    /> */}
+
+                    <hr
+                      style={{
+                        color: "red",
+                        backgroundColor: "red",
+                        marginTop: "10px",
+                      }}
+                    />
+                  </Col>
+                </>
               ))}
             </Row>
 
             <Row bsPrefix="d-block d-md-none d-lg-none d-xl-none center-item">
               {StateWorkExp.map((single, key) => (
-                <Col
-                  xs={12}
-                  s={12}
-                  className="text-center"
-                  key={key}
-                  id="idforcss"
-                >
-                  <p>
-                    CompanyName
-                    <StrongMobile>{single.companyname}</StrongMobile>
-                  </p>
-                  <hr />
-                  <p>
-                    Start Work
-                    <StrongMobile>{single.startwork}</StrongMobile>
-                  </p>
-                  <hr />
-                  <p>
-                    End Work
-                    <StrongMobile>{single.endwork}</StrongMobile>
-                  </p>
-                  <hr />
-                  <p>
-                    Position
-                    <StrongMobile>{single.position}</StrongMobile>
-                  </p>
-                </Col>
+                <>
+                  <Col
+                    xs={12}
+                    s={12}
+                    className="text-center"
+                    key={key}
+                    id="idforcss"
+                  >
+                    <p>
+                      CompanyName
+                      <StrongMobile>{single.companyname}</StrongMobile>
+                    </p>
+                    <hr />
+                    <p>
+                      Start Work
+                      <StrongMobile>{single.startwork}</StrongMobile>
+                    </p>
+                    <hr />
+                    <p>
+                      End Work
+                      <StrongMobile>{single.endwork}</StrongMobile>
+                    </p>
+                    <hr />
+                    <p>
+                      Position
+                      <StrongMobile>{single.position}</StrongMobile>
+                    </p>
+                    {/* <SingleIconDelete
+                      className="icons"
+                      onClick={handleClickedForDelete}
+                    /> */}
+                  </Col>
+                </>
               ))}
             </Row>
           </Fragment>
@@ -280,6 +301,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast)),
   Do_Delete_Cv: (currentUser, id, toast) =>
     dispatch(Do_Delete_Cv(currentUser, id, toast)),
+  Delete_Single_Work: (currentUser, id, identiferId) =>
+    dispatch(Delete_Single_Work(currentUser, id, identiferId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workexperience);

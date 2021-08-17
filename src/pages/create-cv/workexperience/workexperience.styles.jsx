@@ -36,6 +36,17 @@ export const Rapperd = styled.div`
   border: 1px dotted darkgray;
   padding: 1px;
   margin-bottom: 10px;
+  SingleIconDelete {
+    display: none;
+  }
+  .icons {
+    display: none;
+  }
+  &:hover {
+    .icons {
+      display: block;
+    }
+  }
 `;
 
 export const P = styled.p`
@@ -54,6 +65,13 @@ export const StrongMobile = styled.strong`
   padding: 5px;
   color: black;
   display: block;
+`;
+
+export const SingleIconDelete = styled(BsFillBucketFill)`
+  color: #cf2323;
+  &:hover {
+    color: red;
+  }
 `;
 
 export const ButtonFordeleteWork = styled.button`

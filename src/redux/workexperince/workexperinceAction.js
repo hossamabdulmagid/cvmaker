@@ -204,7 +204,6 @@ export const Delete_Single_Work = (currentUser, id, identiferId) => {
   return (dispatch) => {
     dispatch(delete_singlework_Start());
     console.log(`On Fire FirstDispatch`)
-    //  db.doc(`users/${currentUser.id}/cvs/${id}`).collection(`data`).doc(`/Workexperience/${identiferId}`).delete()
     db.doc(`users/${currentUser.id}`)
       .collection(`cvs/${id}/data`)
       .doc(`Workexperience/${identiferId}`)
@@ -217,16 +216,6 @@ export const Delete_Single_Work = (currentUser, id, identiferId) => {
         }
         if (!hasError) {
           dispatch(delete_singlework_Success());
-          //  dispatch(Get_oldCv(cv.userId));
-          // toast({
-          //   title: `Your cv name ${cv.label} Successfully Deleted!`,
-          //   description: `your cv deleted you can Create new one.`,
-          //   status: "success",
-          //   duration: 9000,
-          //   isClosable: true,
-          //   position: "top-right",
-          // });
-
         }
       })
       .catch((errorMessage) => {

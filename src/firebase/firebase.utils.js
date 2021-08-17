@@ -1,21 +1,7 @@
 import firebase from "firebase/firebase";
-
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
-/*
-  Old firebase Api key
-  apiKey: "AIzaSyCmDnA061AM2AvuBmcUg_9QyXz3tikWLUg",
-  authDomain: "cvmaker-9134f.firebaseapp.com",
-  databaseURL: "https://cvmaker-9134f-default-rtdb.firebaseio.com",
-  projectId: "cvmaker-9134f",
-  storageBucket: "cvmaker-9134f.appspot.com",
-  messagingSenderId: "445950295481",
-  appId: "1:445950295481:web:a7775ec76428ed32c74a68",
-
-  
-
-  */
 
 const config = {
   apiKey: "AIzaSyAz_tTEWQc4QMJ7sIuydSRX30Ey3JC9Tfg",
@@ -71,10 +57,12 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   console.log(snapShot, `SnapShot`);
 
   if (!snapShot.exists) {
-    const { displayName, email } = userAuth;
+    const {
+      displayName,
+      email
+    } = userAuth;
 
     const createdAt = new Date();
-
     console.log(userRef, `userRef`);
 
     try {
@@ -91,21 +79,3 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   }
   return userRef;
 };
-
-/*
-export const convertCollectionsSnapshotToMap = (collections) => {
-  const transformedCollection = collections.docs.map((doc) => {
-    const { title, items } = doc.data();
-    return {
-      routeName: encodeURI(title.toLowerCase()),
-      id: doc.id,
-      title,
-      items,
-    };
-  });
-  return transformedCollection.reduce((accumulator, collection) => {
-    accumulator[collection.title.toLowerCase()] = collection;
-    return accumulator;
-  }, {});
-};
-*/

@@ -48,8 +48,8 @@ class App extends Component {
   render() {
     const { currentUser } = this.props;
     return (
-      <Fragment>
-        <StrictMode>
+      <StrictMode>
+        <Fragment>
           <Suspense fallback={<Spinner />}>
             <ScrollToTop />
             <div>
@@ -90,8 +90,8 @@ class App extends Component {
               <Footer />
             </div>
           </Suspense>
-        </StrictMode>
-      </Fragment>
+        </Fragment>
+      </StrictMode>
     );
   }
 }

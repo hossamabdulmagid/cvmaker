@@ -209,10 +209,12 @@ export const Delete_Single_Work = (currentUser, id, identiferId) => {
       .doc(`Workexperience/${identiferId}`)
       .delete()
       .then((errorMessage) => {
-        if (errorMessage) {
+        if (!errorMessage) {
           hasError = true;
           console.log(errorMessage, `error`);
           dispatch(delete_singlework_Error(errorMessage));
+          dispatch(delete_singlework_Success());
+
         }
         if (!hasError) {
           dispatch(delete_singlework_Success());

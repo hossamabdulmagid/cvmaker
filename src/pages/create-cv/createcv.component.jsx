@@ -308,7 +308,7 @@ const CreateCv = (props) => {
     Get_allSection(currentUser, id);
 
     getLength();
-  }, [Get_allSection, currentUser, id, getLength, allNameOfSections]);
+  }, [Get_allSection, currentUser, id, getLength /*allNameOfSections */]);
 
   const getSelection = (newSelection) => {
     console.log(newSelection, `newSelection`);
@@ -332,6 +332,11 @@ const CreateCv = (props) => {
       identiferId: newSelection.data.identiferId || formState.identiferId,
     });
   };
+  const PrintCv = () => {
+    console.log(`!!@`);
+    window.print();
+  };
+
   console.log(allNameOfSections, `allNameOfSections`);
   return (
     <Fragment>
@@ -406,7 +411,7 @@ const CreateCv = (props) => {
                 Help
               </Buttons>
               <Buttons size="xs" variant="success">
-                <AiTwotoneFileExcel />
+                <AiTwotoneFileExcel onClick={() => PrintCv()} />
                 Quick preview
               </Buttons>
               <Buttons size="xs" variant="success">
@@ -422,7 +427,7 @@ const CreateCv = (props) => {
 
           <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
             <Col lg={3} xl={3} md={3}>
-              <Ul>
+              <Ul className="printme">
                 {!flag
                   ? allNameOfSections.map((singleRouteforSidebar, x) => (
                       <Li

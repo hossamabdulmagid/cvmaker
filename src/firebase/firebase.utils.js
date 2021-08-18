@@ -70,6 +70,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     } = userAuth;
 
     const createdAt = new Date();
+
     console.log(userRef, `userRef`);
 
     try {
@@ -84,5 +85,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
       console.log("error creating user", error.message);
     }
   }
+
   return userRef;
 };

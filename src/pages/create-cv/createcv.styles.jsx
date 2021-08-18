@@ -66,6 +66,22 @@ export const Ul = styled.ul`
   &:hover {
     color: #04b2cc;
   }
+  @media print {
+    .no-printme {
+      display: none;
+    }
+    .printme {
+      font-size: 20px;
+      display: block;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .hide-from-page {
+      display: block;
+    }
+  }
 `;
 
 export const Li = styled.li`

@@ -12,4 +12,4 @@ Runs the app in the development mode.
 <br />
 if any problems in (signIn or signUp ) methods try to use new window incognito
 
-https://production-1d741.web.app/
+https://production-1d741-6fa29.firebaseapp.com

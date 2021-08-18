@@ -5,21 +5,24 @@ import "firebase/storage";
 
 const config = {
 
-  apiKey: "AIzaSyB-NkQNl4lCxJC2k-eYcTtn0ebho_hXS_w",
+  apiKey: "AIzaSyCUfWw3AVYigq4jHVqlpE2fRTLLBQtL8s8",
 
-  authDomain: "production-1d741.firebaseapp.com",
+  authDomain: "production-1d741-6fa29.firebaseapp.com",
 
-  projectId: "production-1d741",
+  projectId: "production-1d741-6fa29",
 
-  storageBucket: "production-1d741.appspot.com",
+  storageBucket: "production-1d741-6fa29.appspot.com",
 
-  messagingSenderId: "1094231730581",
+  messagingSenderId: "347967416186",
 
-  appId: "1:1094231730581:web:370b166ddb4ba8a53cee9c"
+  appId: "1:347967416186:web:98cb3bedc76b1d63c9d8c3"
+
 
 };
 
 firebase.initializeApp(config);
+
+firebase.database().ref('mynode/mychildnode').remove();
 
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
@@ -85,6 +88,5 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
       console.log("error creating user", error.message);
     }
   }
-
   return userRef;
 };

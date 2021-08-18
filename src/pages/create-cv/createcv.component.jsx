@@ -341,7 +341,11 @@ const CreateCv = (props) => {
   console.log(allNameOfSections, `allNameOfSections`);
   return (
     <Fragment>
-      <Paper />
+      <Paper
+        Get_allSection={Get_allSection}
+        currentUser={currentUser}
+        allNameOfSections={allNameOfSections}
+      />
       <NavGuest />
       <RapperColor className="container-fluid">
         <Containers className="container">

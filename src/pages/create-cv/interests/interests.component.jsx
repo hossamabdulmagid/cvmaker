@@ -121,7 +121,7 @@ const Interests = ({ currentUser, Get_Interest }) => {
   }, [Get_Interest, id, currentUser]);
 
   return (
-    <Container>
+    <Container className="no-printme">
       <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
         <Col className="text-center">
           <Small>

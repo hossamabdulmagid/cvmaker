@@ -2,7 +2,7 @@ import { Contents, H5, BoxShadow, IMG } from "./content.styles";
 import { Container, Row, Col } from "react-bootstrap";
 const Content = () => {
   return (
-    <Contents className="container">
+    <Contents className="container no-printme">
       <img src="press.png" alt="" />
       <H5>A wide range of templates to choose from</H5>
       <div className="row">

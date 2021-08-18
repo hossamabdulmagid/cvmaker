@@ -172,3 +172,22 @@ p {
 .logo {
   padding-top: 13px;
 }
+.hide-from-page {
+  display: none;
+}
+@media print {
+  .no-printme {
+    display: none;
+  }
+  .printme {
+    font-size: 20px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .hide-from-page {
+    display: block;
+  }
+}

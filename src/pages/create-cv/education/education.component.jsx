@@ -98,7 +98,7 @@ const Education = (props) => {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="container">
+    <div className="container no-printme">
       <div className="row">
         <div className="col-5">
           <ButtonForEducation
@@ -113,7 +113,7 @@ const Education = (props) => {
 
       {!loading ? (
         <>
-          <Rapperd>
+          <Rapperd className="no-printme">
             <Row bsPrefix="d-none d-md-block d-lg-block  d-xl-block center-item">
               <Col md={12} lg={12} xl={12} className="text-center">
                 <P>

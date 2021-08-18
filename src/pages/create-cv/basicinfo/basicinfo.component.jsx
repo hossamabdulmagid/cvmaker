@@ -256,7 +256,7 @@ const BasicInfo = (props) => {
 
   return (
     <Fragment>
-      <Containers>
+      <Containers className="no-printme">
         {!loading ? (
           <>
             <Container>

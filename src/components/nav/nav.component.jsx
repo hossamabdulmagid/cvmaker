@@ -47,7 +47,7 @@ const Nav = ({ currentUser, displayName }) => {
   ]);
 
   return (
-    <Rapper>
+    <Rapper className="no-printme">
       <Container>
         <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
           <Col xs={4} s={4} lg={6}>

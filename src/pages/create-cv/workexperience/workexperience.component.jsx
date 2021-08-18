@@ -122,7 +122,7 @@ const Workexperience = (props) => {
   };
 
   return (
-    <Container>
+    <Container className="no-printme">
       <Row>
         <Col xs={12} s={12} md={5} lg={5} xl={5}>
           <ButtonForWork

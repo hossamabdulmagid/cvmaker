@@ -62,11 +62,11 @@ const Bottom = () => {
   ]);
 
   return (
-    <Container className="container-fluid">
-      <div className="container">
-        <div className="row">
-          <Col xs={12} md={4} lg={4}>
-            <RapperdCols>
+    <Container className="container-fluid no-printme">
+      <div className="container no-printme">
+        <div className="row no-printme">
+          <Col xs={12} md={4} lg={4} className="no-printme">
+            <RapperdCols className="no-printme">
               <H6>System </H6>
               <RapperText>
                 <p> Secure 256 bit SSL encryption</p>

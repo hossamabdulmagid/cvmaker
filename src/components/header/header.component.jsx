@@ -20,7 +20,7 @@ const Head = () => {
   const [save, setSave] = useState(0);
   return (
     <>
-      <RapperColor>
+      <RapperColor className="no-printme">
         <RapperContent className="container">
           <RapperdRow>
             <Row>

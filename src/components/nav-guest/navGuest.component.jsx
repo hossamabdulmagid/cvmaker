@@ -7,7 +7,7 @@ const NavGuest = () => {
   const [save, setSave] = useState(0);
   return (
     <div>
-      <RapperColor className="container text-center">
+      <RapperColor className="container text-center no-printme">
         <Row>
           <Col xs={4} md={6} lg={6}>
             <Link to="/">

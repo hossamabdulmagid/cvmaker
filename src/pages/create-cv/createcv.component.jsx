@@ -64,6 +64,7 @@ import {
   GetNameOfCv,
   DoChangeNameofCv,
 } from "../../redux/createnewcv/createnewcvAction";
+import Paper from "../../components/paper/paper.component";
 const CreateCv = (props) => {
   const [sidebarRoutes, setSidebarRouter] = useState([
     {
@@ -340,6 +341,7 @@ const CreateCv = (props) => {
   console.log(allNameOfSections, `allNameOfSections`);
   return (
     <Fragment>
+      <Paper />
       <NavGuest />
       <RapperColor className="container-fluid">
         <Containers className="container">
@@ -357,9 +359,9 @@ const CreateCv = (props) => {
           </div>
 
           {!loading ? (
-            <div className="row">
+            <div className="row no-printme">
               <div className="col" xs={10} s={12} md={12} lg={12}>
-                <RapperdForms>
+                <RapperdForms className="no-printme">
                   <form onSubmit={handleSubmit(onSubmitLabel)}>
                     <Editable defaultValue={""}>
                       <EditablePreview />
@@ -397,7 +399,7 @@ const CreateCv = (props) => {
             />
           )}
 
-          <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
+          <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item no-printme">
             <Col xs={0} md={0} lg={4} />
             <Col xs={6} md={5} lg={4}>
               <AllCvLinks to="/cv">
@@ -410,15 +412,15 @@ const CreateCv = (props) => {
                 <AiOutlineExclamation />
                 Help
               </Buttons>
-              <Buttons size="xs" variant="success">
-                <AiTwotoneFileExcel onClick={() => PrintCv()} />
+              <Buttons size="xs" variant="success" onClick={() => PrintCv()}>
+                <AiTwotoneFileExcel />
                 Quick preview
               </Buttons>
-              <Buttons size="xs" variant="success">
+              <Buttons size="xs" variant="success" onClick={() => PrintCv()}>
                 <AiTwotonePlaySquare />
                 Save
               </Buttons>
-              <Buttons size="xs" variant="success">
+              <Buttons size="xs" variant="success" onClick={() => PrintCv()}>
                 <AiTwotoneFolderOpen />
                 Download
               </Buttons>

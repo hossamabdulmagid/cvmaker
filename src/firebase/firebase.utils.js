@@ -22,7 +22,6 @@ const config = {
 
 firebase.initializeApp(config);
 
-firebase.database().ref('mynode/mychildnode').remove();
 
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {

@@ -196,7 +196,7 @@ const Paper = (props) => {
                       <strong className="title">
                         <img
                           alt=""
-                          src="https://www.seekpng.com/png/detail/966-9665493_my-profile-icon-blank-profile-image-circle.png"
+                          src="https://www.pedigreecatworld.co.uk/wp-content/uploads/2019/05/customers-icon-3.png"
                         />
                       </strong>
                     </Col>

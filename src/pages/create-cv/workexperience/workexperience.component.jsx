@@ -99,19 +99,15 @@ const Workexperience = (props) => {
   }, [Get_Workexperince, currentUser, id]);
 
   useEffect(() => {
-    if (StateWorkExp) {
-      if (isCurrent.current) {
-        if (StateWorkExp.length > 0) {
-          setTimeout(() => {
-            setAllWorkexp([...StateWorkExp]);
-            setLoading(false);
-            setDisplayData(false);
-          }, 200);
-        } else if (StateWorkExp.length === 0) {
-          setAllWorkexp([]);
-          setDisplayData(true);
-        }
-      }
+    if (StateWorkExp.length > 0) {
+      setTimeout(() => {
+        setAllWorkexp([...StateWorkExp]);
+        setLoading(false);
+        setDisplayData(false);
+      }, 200);
+    } else if (StateWorkExp.length === 0) {
+      setAllWorkexp([]);
+      setDisplayData(true);
     }
   }, [StateWorkExp.length, allworkexp.length, StateWorkExp]);
 

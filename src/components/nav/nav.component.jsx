@@ -51,7 +51,11 @@ const Nav = ({ currentUser, displayName }) => {
       <Container>
         <Row bsPrefix="d-none d-md-flex d-lg-flex  d-xl-flex center-item">
           <Col xs={4} s={4} lg={6}>
-            <Span>Create, maintain, publish, and share your CVs for free</Span>
+            <LINK to="/">
+              <Span>
+                Create, maintain, publish, and share your CVs for free
+              </Span>
+            </LINK>
           </Col>
           <Col xs={4} s={4} lg={3}>
             <Select>

@@ -309,7 +309,14 @@ const CreateCv = (props) => {
     Get_allSection(currentUser, id);
 
     getLength();
-  }, [Get_allSection, currentUser, id, getLength]);
+  }, [
+    Get_allSection,
+    currentUser,
+    id,
+    getLength,
+    allNameOfSections,
+    allNameOfSections.length,
+  ]);
 
   const getSelection = (newSelection) => {
     console.log(newSelection, `newSelection`);

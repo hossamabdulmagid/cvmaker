@@ -182,10 +182,6 @@ const Paper = (props) => {
     Get_Interest(currentUser, id);
   }, [Get_Interest, currentUser, id, sectionInterests, updatedInterstsFlag]);
 
-  const createMarkupInterests = () => {
-    return { __html: sectionInterests };
-  };
-
   return (
     <Container className="hide-from-page">
       <div className="printme">
@@ -424,11 +420,6 @@ const Paper = (props) => {
                 </div>
               )}
             </div>
-            <div
-              dangerouslySetInnerHTML={createMarkupInterests()}
-              className="printme"
-            ></div>
-            ;
           </Col>
         </Row>
         <hr />

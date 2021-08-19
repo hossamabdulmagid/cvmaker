@@ -92,9 +92,7 @@ const Qualifications = ({ currentUser, Get_Qualifications }) => {
         position: "bottom-left",
       });
     }, 2000);
-
     setFlagButton(false);
-
     setTimeout(() => {
       setFlagButton(true);
     }, 2000);

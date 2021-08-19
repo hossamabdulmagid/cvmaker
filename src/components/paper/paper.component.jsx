@@ -67,7 +67,35 @@ const Paper = (props) => {
     } else {
       updatedFlagWorkExp(false);
     }
-  }, 500);
+    if (EducationState.collagename) {
+      setEducation({
+        collagename: EducationState.collagename,
+        startgraduationyear: EducationState.startgraduationyear,
+        endgraduationyear: EducationState.endgraduationyear,
+        eduactionmajor: EducationState.eduactionmajor,
+        lastModified: EducationState.lastModified,
+      });
+      setEducationFlag(true);
+    } else {
+      setEducationFlag(false);
+    }
+    if (sectionReferences) {
+      UpdateReferencesFlag(true);
+    } else {
+      UpdateReferencesFlag(false);
+    }
+
+    if (sectionInterests) {
+      updatedInterstsFlag(true);
+    } else {
+      updatedInterstsFlag(false);
+    }
+    if (sectionQualifications) {
+      UpdatedQualificationsFlag(true);
+    } else {
+      UpdatedQualificationsFlag(false);
+    }
+  }, 400);
 
   const isCurrent = useRef(true);
 
@@ -81,20 +109,6 @@ const Paper = (props) => {
       return;
     }
     GET_Education(currentUser, id, toast);
-    if (isCurrent.current) {
-      if (EducationState) {
-        setEducation({
-          collagename: EducationState.collagename,
-          startgraduationyear: EducationState.startgraduationyear,
-          endgraduationyear: EducationState.endgraduationyear,
-          eduactionmajor: EducationState.eduactionmajor,
-          lastModified: EducationState.lastModified,
-        });
-        setEducationFlag(true);
-      } else {
-        setEducationFlag(false);
-      }
-    }
   }, [
     GET_Education,
     currentUser,
@@ -102,6 +116,7 @@ const Paper = (props) => {
     toast,
     EducationState.identiferId,
     sectionReferences,
+    EducationState.length,
   ]);
   const {
     collagename,
@@ -145,11 +160,6 @@ const Paper = (props) => {
     Get_References(currentUser, id);
     console.log(`sectionReferences`);
     console.log(sectionReferences);
-    if (sectionReferences.length > 3) {
-      UpdateReferencesFlag(true);
-    } else {
-      UpdateReferencesFlag(false);
-    }
   }, [Get_References, sectionReferences]);
 
   useEffect(() => {
@@ -157,11 +167,6 @@ const Paper = (props) => {
       return;
     }
     Get_Qualifications(currentUser, id);
-    if (sectionQualifications.length > 3) {
-      UpdatedQualificationsFlag(true);
-    } else {
-      UpdatedQualificationsFlag(false);
-    }
   }, [
     Get_Qualifications,
     currentUser,
@@ -174,14 +179,12 @@ const Paper = (props) => {
     if (!currentUser) {
       return;
     }
-
-    if (sectionInterests.length > 3) {
-      updatedInterstsFlag(true);
-    } else {
-      updatedInterstsFlag(false);
-    }
     Get_Interest(currentUser, id);
-  }, [Get_Interest, currentUser, id, sectionInterests]);
+  }, [Get_Interest, currentUser, id, sectionInterests, updatedInterstsFlag]);
+
+  const createMarkupInterests = () => {
+    return { __html: sectionInterests };
+  };
 
   return (
     <Container className="hide-from-page">
@@ -194,56 +197,72 @@ const Paper = (props) => {
                 <div key={idx}>
                   <Row>
                     <Col xs={3} md={3} lg={3} s={3}>
-                      <strong className="title">Contact</strong>
+                      <strong className="title">
+                        <img
+                          alt=""
+                          src="https://www.seekpng.com/png/detail/966-9665493_my-profile-icon-blank-profile-image-circle.png"
+                        />
+                      </strong>
                     </Col>
-
                     <Col xs={6} md={6} lg={6} s={6}>
                       <p>
                         {" "}
                         <strong>fullname : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.fullname) ||
-                          ""}
+                        <span>
+                          {(printSingleSection.data.basicinfo &&
+                            printSingleSection.data.basicinfo.fullname) ||
+                            ""}
+                        </span>
                       </p>
                       <p>
                         <strong>email : </strong>
-
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.email) ||
-                          ""}
+                        <span>
+                          {(printSingleSection.data.basicinfo &&
+                            printSingleSection.data.basicinfo.email) ||
+                            ""}
+                        </span>
                       </p>
                       <p>
                         <strong>phone : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.phone) ||
-                          ""}
+                        <span>
+                          {(printSingleSection.data.basicinfo &&
+                            printSingleSection.data.basicinfo.phone) ||
+                            ""}
+                        </span>{" "}
                       </p>
                       <p>
                         <strong>webSites : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.webSites) ||
-                          ""}
+                        <span>
+                          {(printSingleSection.data.basicinfo &&
+                            printSingleSection.data.basicinfo.webSites) ||
+                            ""}
+                        </span>
                       </p>
                     </Col>
                     <Col xs={3} md={3} lg={3} s={3}>
                       <p>
                         <strong>address1 : </strong>
-
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.address1) ||
-                          ""}
+                        <span>
+                          {(printSingleSection.data.basicinfo &&
+                            printSingleSection.data.basicinfo.address1) ||
+                            ""}
+                        </span>
                       </p>
                       <p>
                         <strong>address2 : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.address2) ||
-                          ""}
+                        <span>
+                          {(printSingleSection.data.basicinfo &&
+                            printSingleSection.data.basicinfo.address2) ||
+                            ""}
+                        </span>
                       </p>
                       <p>
                         <strong>address3 : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.address3) ||
-                          ""}
+                        <span>
+                          {(printSingleSection.data.basicinfo &&
+                            printSingleSection.data.basicinfo.address3) ||
+                            ""}
+                        </span>
                       </p>
                     </Col>
                   </Row>
@@ -252,7 +271,15 @@ const Paper = (props) => {
               );
             })
         ) : (
-          <div>you must submited section Basic Information</div>
+          <>
+            <Row>
+              <Col xs={3} md={3} lg={3} s={3}>
+                <strong className="title">Contact</strong>
+              </Col>
+              <div>you must submited section Basic Information</div>
+            </Row>
+            <hr />
+          </>
         )}
         <div className="primtme">
           <Row>
@@ -266,11 +293,11 @@ const Paper = (props) => {
                 <div>
                   <p>
                     <strong>CollageName : </strong>
-                    {collagename}
+                    <span>{collagename}</span>
                   </p>
                   <p>
-                    <strong> StartGraduationYear : </strong>{" "}
-                    {startgraduationyear}
+                    <strong> StartGraduationYear : </strong>
+                    <span>{startgraduationyear}</span>
                   </p>
                   <p>
                     <strong> EndGraduationYear : </strong>
@@ -278,12 +305,16 @@ const Paper = (props) => {
                   </p>
                   <p>
                     <strong> Education Majoring : </strong>
-                    {eduactionmajor}
+                    <span>{eduactionmajor}</span>
                   </p>
                   <hr />
                 </div>
               ) : (
-                <div>you must submited section Education</div>
+                <>
+                  <Row>
+                    <div>you must submited section Education</div>
+                  </Row>
+                </>
               )}
             </Col>
           </Row>
@@ -303,11 +334,11 @@ const Paper = (props) => {
                     <Col key={idx} xs={4} md={4} lg={4} s={4}>
                       <p>
                         <strong>Company Name : </strong>
-                        {workexp.companyname || ""}
+                        <span>{workexp.companyname || ""}</span>
                       </p>
                       <p>
                         <strong>Position : </strong>
-                        {workexp.position || ""}
+                        <span>{workexp.position || ""} </span>
                       </p>
                       <p>
                         <strong>Start Work : </strong>
@@ -315,7 +346,7 @@ const Paper = (props) => {
                       </p>
                       <p>
                         <strong>End Work : </strong>
-                        {workexp.endwork || ""}
+                        <span>{workexp.endwork || ""}</span>
                       </p>
                     </Col>
                     <hr />
@@ -323,10 +354,12 @@ const Paper = (props) => {
                 )
               )
             ) : (
-              <div>
+              <>
+                <Row>
+                  <div>you must submited section Workexperience</div>
+                </Row>
                 <hr />
-                you must submited section Workexperience{" "}
-              </div>
+              </>
             )}
           </Row>
           <hr />
@@ -373,7 +406,6 @@ const Paper = (props) => {
           </Col>
         </Row>
         <hr />
-
         <Row>
           <Col xs={3} md={3} lg={3} s={3}>
             <strong className="title">Qualifications</strong>
@@ -392,25 +424,14 @@ const Paper = (props) => {
                 </div>
               )}
             </div>
+            <div
+              dangerouslySetInnerHTML={createMarkupInterests()}
+              className="printme"
+            ></div>
+            ;
           </Col>
         </Row>
         <hr />
-
-        {/* <Col>
-        interestsFlag
-          <div className="printme">
-            <div>7</div>
-            <div>8</div>
-            <div>9</div>
-          </div>
-        </Col>
-        <Col>
-          <div className="printme">
-            <div>10</div>
-            <div>11</div>
-            <div>12</div>
-          </div>
-        </Col> */}
       </div>
     </Container>
   );

@@ -47,11 +47,9 @@ export const Get_Interest = (currentUser, id) => {
           hasError = true;
           dispatch(Interest_Error(errorMessage));
           console.log(errorMessage, `error from   InterestsAction.JS`);
-        } else {
-          if (!hasError) {
-            dispatch(Interest_Success(newData));
-            //console.log(newData, ` data Coming from InterestsAction.JS`);
-          }
+        } else if (!hasError) {
+          dispatch(Interest_Success(newData));
+          //console.log(newData, ` data Coming from InterestsAction.JS`);
         }
       })
       .catch((errorMessage, newData) => {

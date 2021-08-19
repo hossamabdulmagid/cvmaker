@@ -1,148 +1,183 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { Get_allSection } from "../../redux/allsections/allsectionsAction";
 import { useParams, useHistory } from "react-router-dom";
 import { useToast, Spinner, Button } from "@chakra-ui/core";
+import { Get_Workexperince } from "../../redux/workexperince/workexperinceAction";
 const Paper = (props) => {
-  const { Get_allSection, currentUser, allNameOfSections, tryflag } = props;
-  console.log(`props from paper`, props);
+  const {
+    Get_allSection,
+    currentUser,
+    allNameOfSections,
+    tryflag,
+    Get_Workexperince,
+    StateWorkExp = [],
+  } = props;
+
   const { id } = useParams();
 
   const toast = useToast();
 
-  useEffect(() => {
-    if (!currentUser) {
-      return;
-    }
-  }, []);
+  //   useEffect(() => {
+  //     if (!currentUser) {
+  //       return;
+  //     }
+  //   }, []);
 
   const [flag, updatdFlag] = useState(false);
+
   const [flagworkexp, updatedFlagWorkExp] = useState(false);
 
-  const testedPrint = () => {
+  setTimeout(() => {
+    updatdFlag(true);
+    if (allNameOfSections.length > 1) {
+      updatdFlag(true);
+    } else {
+      updatdFlag(false);
+    }
+    if (StateWorkExp.length > 1) {
+      updatedFlagWorkExp(true);
+    } else {
+      updatedFlagWorkExp(false);
+    }
+  }, 500);
+
+  const isCurrent = useRef(true);
+
+  useLayoutEffect(() => {
+    return () => {
+      isCurrent.current = false;
+    };
+  }, []);
+
+  useLayoutEffect(() => {
     if (!currentUser) {
       return;
     }
-    // console.log(
-    //   allNameOfSections.map((single) => single.data.allwork),
-    //   `allNameOfSections`
-    // );
-    setTimeout(() => {
-      if (
-        allNameOfSections.map((singleSection) => singleSection.data.basicinfo)
-      ) {
-        updatdFlag(true);
-      } else {
-        // console.log(`false`);
-        updatdFlag(false);
-      }
-      if (
-        allNameOfSections.map((singleSection) => singleSection.data.allwork)
-      ) {
-        // console.log(`true`);
-        updatedFlagWorkExp(true);
-      } else {
-        // console.log(`false`);
-        updatedFlagWorkExp(false);
-      }
-    }, 10000);
-  };
+    if (!id) {
+      return;
+    }
+    Get_Workexperince(currentUser, id);
+  }, [Get_Workexperince, currentUser, id]);
 
-  console.log(testedPrint());
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    if (StateWorkExp) {
+      if (isCurrent.current) {
+        if (StateWorkExp.length > 0) {
+          setTimeout(() => {
+            updatedFlagWorkExp(true);
+          }, 200);
+        } else if (StateWorkExp.length === 0) {
+          updatedFlagWorkExp(false);
+        }
+      }
+    }
+  }, [StateWorkExp.length]);
 
   return (
     <Container className="hide-from-page">
-      <div>
+      <div className="printme">
         <Col>
-          {flag
-            ? allNameOfSections
-                .filter((printSingleSection, idx) => idx < 1)
-                .map((printSingleSection) => {
-                  return (
-                    <div key={printSingleSection.id}>
-                      <strong>Contact :-</strong>
-                      <p>
-                        {" "}
-                        <strong>email : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.email) ||
-                          ""}
-                      </p>
-                      <p>
-                        <strong>fullname : </strong>
+          {flag ? (
+            allNameOfSections
+              .filter((printSingleSection, idx) => idx < 1)
+              .map((printSingleSection, idx) => {
+                return (
+                  <div key={idx}>
+                    <strong>Contact :-</strong>
+                    <p>
+                      {" "}
+                      <strong>email : </strong>
+                      {(printSingleSection.data.basicinfo &&
+                        printSingleSection.data.basicinfo.email) ||
+                        ""}
+                    </p>
+                    <p>
+                      <strong>fullname : </strong>
 
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.fullname) ||
-                          ""}
-                      </p>
-                      <p>
-                        <strong>phone : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.phone) ||
-                          ""}
-                      </p>
-                      <p>
-                        <strong>title : </strong>
+                      {(printSingleSection.data.basicinfo &&
+                        printSingleSection.data.basicinfo.fullname) ||
+                        ""}
+                    </p>
+                    <p>
+                      <strong>phone : </strong>
+                      {(printSingleSection.data.basicinfo &&
+                        printSingleSection.data.basicinfo.phone) ||
+                        ""}
+                    </p>
+                    <p>
+                      <strong>address1 : </strong>
 
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.title) ||
-                          ""}
-                      </p>
-                      <p>
-                        <strong>address1 : </strong>
-
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.address1) ||
-                          ""}
-                      </p>
-                      <p>
-                        <strong>address2 : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.address2) ||
-                          ""}
-                      </p>
-                      <p>
-                        <strong>address3 : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.address3) ||
-                          ""}
-                      </p>
-                      <p>
-                        <strong>address3 : </strong>
-                        {(printSingleSection.data.basicinfo &&
-                          printSingleSection.data.basicinfo.webSites) ||
-                          ""}
-                      </p>
-                    </div>
-                  );
-                })
-            : null}
+                      {(printSingleSection.data.basicinfo &&
+                        printSingleSection.data.basicinfo.address1) ||
+                        ""}
+                    </p>
+                    <p>
+                      <strong>address2 : </strong>
+                      {(printSingleSection.data.basicinfo &&
+                        printSingleSection.data.basicinfo.address2) ||
+                        ""}
+                    </p>
+                    <p>
+                      <strong>address3 : </strong>
+                      {(printSingleSection.data.basicinfo &&
+                        printSingleSection.data.basicinfo.address3) ||
+                        ""}
+                    </p>
+                    <p>
+                      <strong>webSites : </strong>
+                      {(printSingleSection.data.basicinfo &&
+                        printSingleSection.data.basicinfo.webSites) ||
+                        ""}
+                    </p>
+                    <hr />
+                  </div>
+                );
+              })
+          ) : (
+            <div>you must submited section basicInformation</div>
+          )}
         </Col>
         <Col>
-          {flagworkexp
-            ? allNameOfSections
-                .filter((printSingleSection, idx) => idx < 4)
-                .map((singleSection, idx) => (
-                  <div>
-                    <strong>WorkExperince</strong>
-                    <div key={idx}>
-                      {/* {(singleSection.data &&
-                        singleSection.data.allwork.map((singleJob, idx) => (
-                          <div key={idx}>
-                            {(singleJob && singleJob.companyname) || ""}
-                          </div>
-                        ))) ||
-                        "null"} */}
-                    </div>
+          <div className="printme">
+            {flagworkexp ? (
+              StateWorkExp &&
+              StateWorkExp.filter((workexp, idx) => idx < 2).map(
+                (workexp, idx) => (
+                  <div key={idx}>
+                    <strong> Workexperience :-</strong>
+                    <p>
+                      <strong>Company Name : </strong>
+                      {workexp.companyname || ""}
+                    </p>
+                    <p>
+                      <strong>Position : </strong>
+                      {workexp.position || ""}
+                    </p>
+                    <p>
+                      <strong>Start Work : </strong>
+                      {workexp.startwork || ""}
+                    </p>
+                    <p>
+                      <strong>End Work : </strong>
+
+                      {workexp.endwork || ""}
+                    </p>
+                    <hr />
                   </div>
-                ))
-            : null}
-          {/* <div className="printme">
-            <div>4</div>
-            <div>5</div>
-            <div>6</div>
-          </div> */}
+                )
+              )
+            ) : (
+              <div>
+                <hr />
+                you must submited section Workexperience{" "}
+              </div>
+            )}
+          </div>
         </Col>
         {/* <Col>
           <div className="printme">
@@ -163,4 +198,14 @@ const Paper = (props) => {
   );
 };
 
-export default Paper;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+  StateWorkExp: state.sectionWorkexperince.data.allwork,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  Get_Workexperince: (currentUser, id) =>
+    dispatch(Get_Workexperince(currentUser, id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Paper);

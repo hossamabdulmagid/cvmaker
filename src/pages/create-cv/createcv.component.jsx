@@ -309,7 +309,7 @@ const CreateCv = (props) => {
     Get_allSection(currentUser, id);
 
     getLength();
-  }, [Get_allSection, currentUser, id, getLength /*allNameOfSections */]);
+  }, [Get_allSection, currentUser, id, getLength]);
 
   const getSelection = (newSelection) => {
     console.log(newSelection, `newSelection`);
@@ -343,7 +343,6 @@ const CreateCv = (props) => {
     <Fragment>
       <Paper
         Get_allSection={Get_allSection}
-        currentUser={currentUser}
         allNameOfSections={allNameOfSections}
       />
       <NavGuest />

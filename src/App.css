@@ -183,8 +183,8 @@ p {
     font-size: 20px;
     display: block;
     justify-content: center;
-    align-items: center;
-    text-align: center;
+    align-items: left;
+    text-align: left;
     margin: 0 auto;
   }
   .hide-from-page {

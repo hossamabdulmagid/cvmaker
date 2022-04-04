@@ -96,7 +96,7 @@ const AddEducation = (props) => {
                 name="startgraduationyear"
                 value={startgraduationyear}
                 onChange={handleChange}
-                type="date"
+                type="text"
                 ref={register({ required: "this Content is Required" })}
               />
               <small className="error">
@@ -110,7 +110,7 @@ const AddEducation = (props) => {
                 name="endgraduationyear"
                 value={endgraduationyear}
                 onChange={handleChange}
-                type="date"
+                type="text"
                 ref={register({ required: "this Content is Required" })}
               />
               <small className="error">

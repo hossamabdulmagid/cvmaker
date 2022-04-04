@@ -237,7 +237,6 @@ const Paper = (props) => {
                     </Col>
                     <Col xs={3} md={3} lg={3} s={3}>
                       <p>
-                        <strong>address1 : </strong>
                         <span>
                           {(printSingleSection.data.basicinfo &&
                             printSingleSection.data.basicinfo.address1) ||
@@ -245,7 +244,6 @@ const Paper = (props) => {
                         </span>
                       </p>
                       <p>
-                        <strong>address2 : </strong>
                         <span>
                           {(printSingleSection.data.basicinfo &&
                             printSingleSection.data.basicinfo.address2) ||
@@ -253,7 +251,6 @@ const Paper = (props) => {
                         </span>
                       </p>
                       <p>
-                        <strong>address3 : </strong>
                         <span>
                           {(printSingleSection.data.basicinfo &&
                             printSingleSection.data.basicinfo.address3) ||

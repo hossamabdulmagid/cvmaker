@@ -1,36 +1,35 @@
 import {
-  useState,
-  useEffect,
   Fragment,
-  useRef,
   useCallback,
+  useEffect,
   useLayoutEffect,
+  useRef,
+  useState,
 } from "react";
 import { AddToList } from "../../../redux/addtolist/addtolistAction";
 import { connect } from "react-redux";
 import { useDisclosure, useToast } from "@chakra-ui/core";
 import {
-  ButtonForWork,
-  Rapperd,
   ButtonFordeleteWork,
+  ButtonForWork,
+  Icon,
   P,
+  Rapperd,
   Strong,
   StrongMobile,
-  Icon,
-  SingleIconDelete,
 } from "./workexperience.styles";
 import { useParams } from "react-router-dom";
-import { BsFillBucketFill } from "react-icons/bs";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import {
-  Get_Workexperince,
-  Do_Submiting_WorkExp,
+  Delete_Single_Work,
   Do_Delete_Cv,
+  Do_Submiting_WorkExp,
+  Get_Workexperince,
 } from "../../../redux/workexperince/workexperinceAction";
 import generateRandom from "../../../lib/random";
 import AddWorkExp from "./addworkexpernice";
-import { Delete_Single_Work } from "../../../redux/workexperince/workexperinceAction";
+
 const Workexperience = (props) => {
   const {
     AddToList,
@@ -54,7 +53,7 @@ const Workexperience = (props) => {
 
   const [displayData, setDisplayData] = useState(true);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [allworkexp, setAllWorkexp] = useState([]);
 
@@ -99,12 +98,11 @@ const Workexperience = (props) => {
   }, [Get_Workexperince, currentUser, id]);
 
   useEffect(() => {
+    setLoading(true);
     if (StateWorkExp.length > 0) {
-      setTimeout(() => {
-        setAllWorkexp([...StateWorkExp]);
-        setLoading(false);
-        setDisplayData(false);
-      }, 200);
+      setAllWorkexp([...StateWorkExp]);
+      setLoading(false);
+      setDisplayData(false);
     } else if (StateWorkExp.length === 0) {
       setAllWorkexp([]);
       setDisplayData(true);

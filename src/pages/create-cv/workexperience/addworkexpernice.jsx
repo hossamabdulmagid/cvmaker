@@ -1,19 +1,20 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Button,
   FormLabel,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
   useToast,
 } from "@chakra-ui/core";
 import { useForm } from "react-hook-form";
+
 const AddWorkExp = (props) => {
   const {
     Do_Submiting_WorkExp,
@@ -48,11 +49,8 @@ const AddWorkExp = (props) => {
     };
     setFlagButton(false);
     Do_Submiting_WorkExp(currentUser, id, dataToBeSaved, toast);
-
-    setTimeout(() => {
-      setFlagButton(true);
-      onClose();
-    }, 300);
+    setFlagButton(true);
+    onClose();
 
     setLoading(false);
     setDisplayData(false);
@@ -94,7 +92,7 @@ const AddWorkExp = (props) => {
                 ref={register({ required: "Start Work Required" })}
                 name="startwork"
                 onChange={handleChange}
-                type="date"
+                type="text"
               />
               <small className="error">
                 {errors.startwork && errors.startwork.message}
@@ -105,7 +103,7 @@ const AddWorkExp = (props) => {
                 ref={register({ required: "End Work  Required" })}
                 name="endwork"
                 onChange={handleChange}
-                type="date"
+                type="text"
               />
               <small className="error">
                 {errors.endwork && errors.endwork.message}

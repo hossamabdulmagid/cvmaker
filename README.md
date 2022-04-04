@@ -4,12 +4,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm i --save`
+### `npm install --save`
 
 ### `npm start`
 
 Runs the app in the development mode.
-<br />
-if any problems in (signIn or signUp ) methods try to use new window incognito
 
-https://production-1d741-6fa29.firebaseapp.com
+https://cvmkrprod.web.app/
+
+this App Is Created Cv For People For Free

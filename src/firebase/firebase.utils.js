@@ -4,24 +4,16 @@ import "firebase/auth";
 import "firebase/storage";
 
 const config = {
-
-  apiKey: "AIzaSyCUfWw3AVYigq4jHVqlpE2fRTLLBQtL8s8",
-
-  authDomain: "production-1d741-6fa29.firebaseapp.com",
-
-  projectId: "production-1d741-6fa29",
-
-  storageBucket: "production-1d741-6fa29.appspot.com",
-
-  messagingSenderId: "347967416186",
-
-  appId: "1:347967416186:web:98cb3bedc76b1d63c9d8c3"
-
-
+  apiKey: "AIzaSyAHnION9MrZeDQMyEJOFnadBaZ_vOxz-6U",
+  authDomain: "cvmkrprod.firebaseapp.com",
+  projectId: "cvmkrprod",
+  storageBucket: "cvmkrprod.appspot.com",
+  messagingSenderId: "178290871842",
+  appId: "1:178290871842:web:5c26f75cd9b3df72db447b",
 };
+// Your web app's Firebase configuration
 
 firebase.initializeApp(config);
-
 
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
@@ -66,10 +58,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   console.log(snapShot, `SnapShot`);
 
   if (!snapShot.exists) {
-    const {
-      displayName,
-      email
-    } = userAuth;
+    const { displayName, email } = userAuth;
 
     const createdAt = new Date();
 

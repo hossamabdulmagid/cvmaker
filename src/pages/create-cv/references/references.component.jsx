@@ -86,11 +86,11 @@ const References = ({ currentUser, Get_References }) => {
         isClosable: true,
         position: "bottom-left",
       });
-    }, 2000);
+    }, 200);
     setFlagButton(false);
     setTimeout(() => {
       setFlagButton(true);
-    }, 2000);
+    }, 200);
   };
 
   useEffect(() => {
